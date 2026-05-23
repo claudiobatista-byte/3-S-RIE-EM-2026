@@ -24,11 +24,11 @@
                 </div>
             </div>
             <nav class="flex flex-wrap justify-center gap-1 sm:gap-2 text-xs sm:text-sm font-medium">
-                <button id="btn-inicio" onclick="switchTab('inicio')" class="tab-btn px-3 py-2 rounded-lg transition-all text-gray-300 hover:text-white hover:bg-white/10">Início</button>
+                <button id="btn-inicio" onclick="switchTab('inicio')" class="tab-btn px-3 py-2 rounded-lg transition-all text-sky-400 font-bold border-b-2 border-sky-400">Início</button>
                 <button id="btn-saego" onclick="switchTab('saego')" class="tab-btn px-3 py-2 rounded-lg transition-all text-gray-300 hover:text-white hover:bg-white/10">SAEGO</button>
                 <button id="btn-bncc" onclick="switchTab('bncc')" class="tab-btn px-3 py-2 rounded-lg transition-all text-gray-300 hover:text-white hover:bg-white/10">BNCC</button>
                 <button id="btn-enem" onclick="switchTab('enem')" class="tab-btn px-3 py-2 rounded-lg transition-all text-gray-300 hover:text-white hover:bg-white/10">Novo ENEM (CHSA)</button>
-                <button id="btn-habilidades" onclick="switchTab('habilidades')" class="tab-btn px-3 py-2 rounded-lg transition-all text-sky-400 font-bold border-b-2 border-sky-400">Matriz de Habilidades</button>
+                <button id="btn-habilidades" onclick="switchTab('habilidades')" class="tab-btn px-3 py-2 rounded-lg transition-all text-gray-300 hover:text-white hover:bg-white/10">Matriz de Habilidades</button>
                 <button id="btn-atividades" onclick="switchTab('atividades')" class="tab-btn px-3 py-2 rounded-lg transition-all text-gray-300 hover:text-white hover:bg-white/10">Atividades</button>
             </nav>
         </div>
@@ -36,12 +36,12 @@
 
     <section class="bg-gradient-to-b from-[#0d2346] to-[#1a3a6c] text-white py-16 px-4 text-center relative overflow-hidden">
         <div class="max-w-3xl mx-auto z-10 relative space-y-4">
-            <span class="bg-sky-500 text-xs font-bold uppercase px-3 py-1 rounded-full text-white inline-block shadow">Projeto de Integração Pedagógica</span>
+            <span class="bg-sky-500 text-xs font-bold uppercase px-3 py-1 rounded-full text-white inline-block shadow">Projeto de Integration Pedagógica</span>
             <h2 id="hero-title" class="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight">
-                Matriz de Habilidades Essenciais
+                Apresentação do Projeto
             </h2>
             <p id="hero-subtitle" class="text-lg text-gray-200 max-w-2xl mx-auto leading-relaxed">
-                Transcrição e mapeamento literal dos descritores estruturais de DC-GO por eixos de cada disciplina.
+                Uma arquitetura integrada para conectar as competências estruturais da BNCC às exigências contemporâneas de avaliação sistêmica do Ensino Médio.
             </p>
         </div>
         <div class="absolute inset-0 opacity-10 pointer-events-none">
@@ -58,7 +58,7 @@
 
     <main class="container mx-auto px-4 py-12 flex-grow max-w-6xl">
         
-        <div id="content-inicio" class="tab-content hidden space-y-12">
+        <div id="content-inicio" class="tab-content space-y-12">
             <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 grid md:grid-cols-2 gap-8 items-center">
                 <div>
                     <h3 class="text-2xl font-bold text-[#0d2346] mb-4 flex items-center gap-2">
@@ -74,18 +74,219 @@
                     <p class="text-xs text-gray-500">Documento Curricular de Goiás (DC-GO) • Matrizes Oficiais 2026</p>
                 </div>
             </div>
+
+            <div class="space-y-6">
+                <h3 class="text-2xl font-bold text-[#0d2346] text-center">Eixos de Articulação Curricular</h3>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col justify-between hover:shadow-md transition-all">
+                        <div>
+                            <div class="text-sky-600 font-black text-2xl mb-2">01</div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">Matriz SAEGO</h4>
+                            <p class="text-sm text-gray-600 leading-relaxed">Mapeamento diagnóstico baseado em modelos analíticos de critérios recompostos com foco no monitoramento de proficiência.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col justify-between hover:shadow-md transition-all">
+                        <div>
+                            <div class="text-emerald-600 font-black text-2xl mb-2">02</div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">Diretrizes BNCC</h4>
+                            <p class="text-sm text-gray-600 leading-relaxed">Mapeamento e consulta rápida das 10 Competências Gerais essenciais para a formação cidadã do educando.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col justify-between hover:shadow-md transition-all">
+                        <div>
+                            <div class="text-indigo-600 font-black text-2xl mb-2">03</div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">Novo ENEM (CHSA)</h4>
+                            <p class="text-sm text-gray-600 leading-relaxed">Compreensão da matriz técnica de testlets com análises e devolutivas diretas sobre cada opção de resposta da área.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col justify-between hover:shadow-md transition-all">
+                        <div>
+                            <div class="text-amber-600 font-black text-2xl mb-2">04</div>
+                            <h4 class="text-lg font-bold text-gray-900 mb-2">Prática Ativa</h4>
+                            <p class="text-sm text-gray-600 leading-relaxed">Cronograma real de atividades com foco em esquemas conceituais, ABP e dinâmicas de gamificação estruturadas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="content-saego" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-3">
+                <h3 class="text-lg font-bold text-[#0d2346] flex items-center gap-2">
+                    <span class="w-1.5 h-5 bg-sky-500 rounded-full inline-block"></span>
+                    Nota Técnica sobre a Correção Analítica
+                </h3>
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    Para além do formato puramente binário, as avaliações diagnósticas e de proficiência estruturadas pela SEDUC-GO utilizam escalas de avaliação baseadas em subcomponentes do descritor. Isso permite monitorar se o estudante atingiu o desempenho total, parcial ou se necessita de intervenção imediata.
+                </p>
+                <p class="text-xs font-semibold text-sky-600 uppercase tracking-wider">👉 Clique nas opções de resposta abaixo para analisar as chaves de correção e as descrições de desempenho.</p>
             </div>
+
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 pb-3">
+                    <span class="text-xs bg-sky-100 text-sky-800 font-bold px-2.5 py-1 rounded">EXEMPLO 1</span>
+                    <span class="text-xs text-gray-400 italic">Descritor: Analisar continuidades e rupturas em processos históricos estaduais e nacionais.</span>
+                </div>
+                <div class="bg-gray-50 border-l-4 border-[#0d2346] rounded-r-xl p-5 text-sm italic text-gray-700 leading-relaxed font-serif">
+                    "A política em Goiás na transição do século XIX para o XX foi marcada pela hegemonia de clãs familiares rurais estruturados pelo coronelismo, como a tradicional família Bulhões. O controle do eleitorado e as práticas de apadrinhamento moldaram as estruturas oligárquicas locais."
+                </div>
+                <h4 class="text-base font-bold text-[#0d2346]">No cenário histórico regional de Goiás durante a Primeira República, as práticas coronelistas cumpriam o papel de:</h4>
+                <div class="space-y-2 text-sm">
+                    <button onclick="setSaegoCriteria(1, 'A', 'parcial', 'Demonstra domínio parcial sobre a conjuntura histórica local, mas falha ao deduzir o impacto modernizador. O coronelismo goiano era eminentemente agrário e voltado para a manutenção das bases tradicionais latifundiárias.', this)" class="saego-opt-1 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>A)</strong> Modernizar a infraestrutura urbana e promover a industrialização rápida do interior goiano.</button>
+                    <button onclick="setSaegoCriteria(1, 'B', 'pleno', 'O estudante identifica com precisão tanto o mecanismo de controle do eleitorado quanto a finalidade de preservação do poder tradicional das oligarquias nas instâncias estaduais.', this)" class="saego-opt-1 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>B)</strong> Assegurar a manutenção do power político oligárquico e a perpetuação dos clãs familiares tradicionais na administração pública.</button>
+                    <button onclick="setSaegoCriteria(1, 'C', 'incorreto', 'Inversão conceitual grave. O voto de cabresto e os curais eleitorais agiam de forma diametralmente oposta, sufocando a autonomia política do eleitor comum.', this)" class="saego-opt-1 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>C)</strong> Democratizar as instâncias decisórias por meio do sufrágio livre e da inclusão política das minorias rurais.</button>
+                    <button onclick="setSaegoCriteria(1, 'D', 'parcial', 'Identifica o componente de enfrentamento político e dominação, mas equivoca-se na dimensão geográfica. O coronelismo em Goiás se fortalecia justamente pela descentralização e fragmentação do poder no interior, e não por sua centralização metropolitana.', this)" class="saego-opt-1 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>D)</strong> Centralizar o poder político nos centers metropolitanos para combater a influência dos latifundiários tradicionais.</button>
+                    <button onclick="setSaegoCriteria(1, 'E', 'incorreto', 'Erro conceitual de hierarquia de forças. As oligarquias goianas mantinham ampla autonomia federativa, apoiando-se no pacto civil da Política dos Governadores e resistindo a centralizações de cunho militar.', this)" class="saego-opt-1 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>E)</strong> Subordinar as elites agrárias locais ao comando direto e centralizado das forças militares nacionais.</button>
+                </div>
+                <div id="fb-saego-1" class="text-sm font-medium hidden p-4 rounded-xl border shadow-inner"></div>
+            </div>
+
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 pb-3">
+                    <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded">EXEMPLO 2</span>
+                    <span class="text-xs text-gray-400 italic">Descritor: Reconhecer a dinâmica de ocupação territorial e econômica do espaço goiano.</span>
+                </div>
+                <div class="bg-gray-50 border-l-4 border-emerald-600 rounded-r-xl p-5 text-sm italic text-gray-700 leading-relaxed font-serif">
+                    "A transferência da capital de Goiás para Goiânia, idealizada por Pedro Ludovico Teixeira na década de 1930, integrou-se à política nacional de integração rumo ao interior, alterando profundamente a dinâmica econômica e demográfica do estado."
+                </div>
+                <h4 class="text-base font-bold text-[#0d2346]">O principal argumento político e socioeconômico utilizado para justificar estrategicamente a construção de Goiânia residia na necessidade de:</h4>
+                <div class="space-y-2 text-sm">
+                    <button onclick="setSaegoCriteria(2, 'A', 'incorreto', 'Anacronismo geográfico e econômico. O foco da economia estadual no período ludoviquista permaneceu atrelado ao reordenamento do espaço agrário e à interiorização da infraestrutura de transportes, sem relação com a extração de borracha.', this)" class="saego-opt-2 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>A)</strong> Consolidar Goiânia como o principal entreposto mercantil para o escoamento da borracha extraída na região Norte.</button>
+                    <button onclick="setSaegoCriteria(2, 'B', 'pleno', 'O estudante identifica diretamente o eixo central do projeto ludoviquista: romper com o isolamento das antigas oligarquias situadas na Cidade de Goiás e interligar a economia estadual ao mercado nacional através da Marcha para o Oeste.', this)" class="saego-opt-2 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>B)</strong> Romper o isolamento político do estado e deslocar o eixo socioeconômico para o sul e o centro do território goiano, alinhando-o à Marcha para o Oeste.</button>
+                    <button onclick="setSaegoCriteria(2, 'C', 'incorreto', 'Inversão factual. A mudança da capital representou a ascensão das forças ligadas ao ideário de Getúlio Vargas e uma desestruturação do prestígio político da antiga capital oligárquica (Vila Boa).', this)" class="saego-opt-2 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>C)</strong> Fortalecer as estruturas das tradicionais famílias da antiga capital, preservando seu papel central nas decisões estaduais.</button>
+                    <button onclick="setSaegoCriteria(2, 'D', 'incorreto', 'Erro de contexto histórico. A industrialização de base ou metalúrgica pesada em Goiás surge como fenômeno de planejamento apenas na segunda metade do século XX.', this)" class="saego-opt-2 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>D)</strong> Isolar o território estadual das influências econômicas federais para priorizar indústrias manufatureiras locais de capital privado fechado.</button>
+                    <button onclick="setSaegoCriteria(2, 'E', 'incorreto', 'Incoerência cronológica e estrutural. O projeto de construção de Goiânia focava no desenvolvimento econômico interno e na expansão das fronteiras agropecuárias do Centro-Oeste, não possuindo vinculação com as economias açucareiras nordestinas coloniais.', this)" class="saego-opt-2 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>E)</strong> Reestruturar o parque açucareiro goiano para abastecer as demandas de refino das capitais litorâneas do Nordeste.</button>
+                </div>
+                <div id="fb-saego-2" class="text-sm font-medium hidden p-4 rounded-xl border shadow-inner"></div>
+            </div>
+        </div>
 
         <div id="content-bncc" class="tab-content hidden space-y-6">
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-bold text-[#0d2346]">As 10 Competências Gerais da BNCC</h3>
+                <p class="text-gray-500 text-sm mt-1">Eixos estruturantes para a formação integral no Ensino Médio</p>
             </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white border border-gray-100 rounded-xl p-5 shadow-sm border-l-4 border-l-sky-500">
+                    <span class="text-xs font-bold text-sky-600 uppercase tracking-wider block mb-1">1. Conhecimento</span>
+                    <p class="text-sm text-gray-600 leading-relaxed">Valorizar e utilizar os conhecimentos sobre o mundo físico, social, cultural e digital para entender e explicar a realidade.</p>
+                </div>
+                <div class="bg-white border border-gray-100 rounded-xl p-5 shadow-sm border-l-4 border-l-purple-500">
+                    <span class="text-xs font-bold text-purple-600 uppercase tracking-wider block mb-1">2. Pensamento Científico, Crítico e Criativo</span>
+                    <p class="text-sm text-gray-600 leading-relaxed">Exercitar a curiosidade intelectual e recorrer à abordagem própria das ciências para investigar causas e resolver problemas.</p>
+                </div>
+                <div class="bg-white border border-gray-100 rounded-xl p-5 shadow-sm border-l-4 border-l-indigo-500">
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-1">3. Repertório Cultural</span>
+                    <p class="text-sm text-gray-600 leading-relaxed">Valorizar e fruir as diversas manifestações artísticas e culturais, das locais às mundiais.</p>
+                </div>
+                <div class="bg-white border border-gray-100 rounded-xl p-5 shadow-sm border-l-4 border-l-teal-500">
+                    <span class="text-xs font-bold text-teal-600 uppercase tracking-wider block mb-1">4. Comunicação</span>
+                    <p class="text-sm text-gray-600 leading-relaxed">Utilizar diferentes linguagens para expressar-se e partilhar informações, sentimentos e ideias.</p>
+                </div>
+                <div class="bg-white border border-gray-100 rounded-xl p-5 shadow-sm border-l-4 border-l-emerald-500">
+                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider block mb-1">5. Cultura Digital</span>
+                    <p class="text-sm text-gray-600 leading-relaxed">Compreender, utilizar e criar tecnologias digitais de informação e comunicação de forma crítica, significativa, reflexiva e ética.</p>
+                </div>
+                <div class="bg-white border border-gray-100 rounded-xl p-5 shadow-sm border-l-4 border-l-amber-500">
+                    <span class="text-xs font-bold text-amber-600 uppercase tracking-wider block mb-1">6. Trabalho e Projeto de Vida</span>
+                    <p class="text-sm text-gray-600 leading-relaxed">Valorizar a diversidade de saberes e vivências culturais e apropriar-se de conhecimentos para fazer escolhas alinhadas ao seu projeto de vida.</p>
+                </div>
+                <div class="bg-white border border-gray-100 rounded-xl p-5 shadow-sm border-l-4 border-l-rose-500">
+                    <span class="text-xs font-bold text-rose-600 uppercase tracking-wider block mb-1">7. Argumentação</span>
+                    <p class="text-sm text-gray-600 leading-relaxed">Argumentar com base em fatos, dados e informações confiáveis, para formular, negociar e defender ideias e pontos de vista comuns.</p>
+                </div>
+                <div class="bg-white border border-gray-100 rounded-xl p-5 shadow-sm border-l-4 border-l-orange-500">
+                    <span class="text-xs font-bold text-orange-600 uppercase tracking-wider block mb-1">8. Autoconhecimento e Autocuidado</span>
+                    <p class="text-sm text-gray-600 leading-relaxed">Conhecer-se, apreciar-se e cuidar de sua saúde física e emocional, reconhecendo suas emoções e as dos outros.</p>
+                </div>
+                <div class="bg-white border border-gray-100 rounded-xl p-5 shadow-sm border-l-4 border-l-yellow-500">
+                    <span class="text-xs font-bold text-yellow-600 uppercase tracking-wider block mb-1">9. Empatia e Cooperação</span>
+                    <p class="text-sm text-gray-600 leading-relaxed">Exercitar a empatia, o diálogo, a resolução de conflitos e a cooperação, fazendo-se respeitar e promovendo o respeito ao outro.</p>
+                </div>
+                <div class="bg-white border border-gray-100 rounded-xl p-5 shadow-sm border-l-4 border-l-slate-700">
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-1">10. Responsabilidade e Cidadania</span>
+                    <p class="text-sm text-gray-600 leading-relaxed">Agir pessoal e coletivamente com autonomia, responsabilidade, flexibilidade, resiliência e determinação, tomando decisões éticas.</p>
+                </div>
+            </div>
+        </div>
 
         <div id="content-enem" class="tab-content hidden space-y-6">
+            <div class="bg-sky-50 border border-sky-100 text-slate-700 p-5 rounded-xl text-sm shadow-sm">
+                <p><strong>Espaço de Devolutiva Pedagógica (CHSA):</strong> Selecione as alternativas abaixo para analisar a correção imediata e conferir as justificativas sobre as competências de cada item baseado na TRI.</p>
             </div>
 
-        <div id="content-habilidades" class="tab-content space-y-8">
+            <div class="bg-white border border-gray-100 rounded-xl p-6 space-y-3 shadow-sm">
+                <span class="bg-slate-800 text-white font-bold px-2 py-0.5 rounded text-[10px] uppercase tracking-wider inline-block">Texto-Base Coletivo do Testlet</span>
+                <p class="italic text-gray-700 leading-relaxed font-serif text-base">
+                    "Durante o período do Coronelismo na Primeira República, a estrutura agrária brasileira favorecia a manutenção de oligarquias locais. O controle sobre o eleitorado, frequentemente exercido por meio de práticas clientelistas e coerção (voto de cabresto), garantia a sustentação da chamada Política dos Governadores."
+                </p>
+                <p class="text-xs text-gray-400 font-sans border-t border-gray-100 pt-2">
+                    <strong>Referência Bibliográfica:</strong> LEAL, Victor Nunes. <em>Coronelismo, Enxada e Voto</em>. Rio de Janeiro: Nova Fronteira, 1997.
+                </p>
+            </div>
+
+            <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4" id="q-hist-container">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-gray-100 pb-2">
+                    <span class="text-xs bg-purple-100 text-purple-800 font-bold px-2.5 py-0.5 rounded">EIXO 1: HISTÓRIA</span>
+                </div>
+                <h4 class="text-base font-bold text-slate-950">No arranjo institucional da Primeira República, a articulação conhecida como "Política dos Governadores" dependia diretamente do poder local dos coronéis para se sustentar. Essa engrenagem política fundamentava-se na:</h4>
+                <div class="space-y-2 text-sm">
+                    <button onclick="setRealTri('hist', 'A', 'CORRETO', 'Troca de favores recíprocos em que o governo federal garantia verbas e autonomia às oligarquias estaduais em troca do direcionamento dos votos obtidos pelos coronéis locais.', this)" class="hist-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>A)</strong> Troca de favores recíprocos, em que o governo federal garantia verbas e autonomia às oligarquias estaduais em troca do direcionamento dos votos obtidos pelos coronéis locais.</button>
+                    <button onclick="setRealTri('hist', 'B', 'ERRADO', 'A burocracia federal não neutralizava as fraudes; na verdade, a Comissão Verificadora de Poderes costumava legitimar as atas falsas para favorecer aliados.', this)" class="hist-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>B)</strong> Centralização das decisões eleitorais nas mãos de uma burocracia técnica federal, que neutralizava os conflitos nos municípios.</button>
+                    <button onclick="setRealTri('hist', 'C', 'ERRADO', 'Os municípios eram financeiramente dependentes dos estados e dos grandes chefes políticos latifundiários controladores da região.', this)" class="hist-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>C)</strong> Autonomia plena dos municípios, que eliminava a dependência de recursos das esferas estadual e federal por meio da autossuficiência tributária.</button>
+                    <button onclick="setRealTri('hist', 'D', 'ERRADO', 'A Constituição de 1891 barrou explicitamente analfabetos e mulheres do corpo votante nacional.', this)" class="hist-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>D)</strong> Ampliação democrática do sufrágio universal, que incluiu analfabetos e mulheres para enfraquecer os latifundiários.</button>
+                    <button onclick="setRealTri('hist', 'E', 'ERRADO', 'O Exército sofreu um forte processo de afastamento político após os primeiros anos da República, concentrando o poder nas oligarquias civis cafeeiras.', this)" class="hist-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>E)</strong> Intervenção militar constante do exército nos estados federativos para dissolver as assembleias legislativas dominadas pelo capital.</button>
+                </div>
+                <div id="fb-hist" class="text-sm font-medium hidden p-3.5 rounded-lg border shadow-inner"></div>
+            </div>
+
+            <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4" id="q-geo-container">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-gray-100 pb-2">
+                    <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded">EIXO 2: GEOGRAFIA</span>
+                </div>
+                <h4 class="text-base font-bold text-slate-950">A espacialização do poder político dos coronéis na Primeira República estava integrada à organização geográfica da produção econômica da época. No território brasileiro, a base material que sustentava essa influência regional estava associada:</h4>
+                <div class="space-y-2 text-sm">
+                    <button onclick="setRealTri('geo', 'A', 'ERRADO', 'Esse avanço da fronteira e complexos altamente mecanizados de grãos pertencem apenas à segunda metade do século XX.', this)" class="geo-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>A)</strong> Ao avanço da fronteira agrícola no Centro-Oeste pela implantação de complexos agroindustriais de grãos voltados ao mercado interno.</button>
+                    <button onclick="setRealTri('geo', 'B', 'ERRADO', 'O campesinato permaneceu completamente alheio ao consumo urbano e ao desenvolvimento técnico durante o período.', this)" class="geo-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>B)</strong> À modernização técnica das cidades litorâneas, que integrou o campesinato às cadeias produtivas de bens duráveis.</button>
+                    <button onclick="setRealTri('geo', 'C', 'CORRETO', 'A concentração fundiária tradicional fornecia o controle socioespacial sobre a população trabalhadora dependente rural.', this)" class="geo-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>C)</strong> À estrutura fundiária hiperconcentrada no latifúndio agroexportador, onde o controle da terra assegurava o domínio sobre a população rural.</button>
+                    <button onclick="setRealTri('geo', 'D', 'ERRADO', 'Não existia equilíbrio produtivo regional, mas sim uma profunda disparidade econômica e política liderada pelo eixo Sudeste.', this)" class="geo-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>D)</strong> Ao equilíbrio produtivo entre as economias regionais, que descentralizou os eixos de poder e fortaleceu as pequenas propriedades.</button>
+                    <button onclick="setRealTri('geo', 'E', 'ERRADO', 'O Brasil permaneceu como um território eminentemente rural e de economia de base agroexportadora até a década de 1930.', this)" class="geo-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>E)</strong> À rápida urbanização do interior do país, que esvaziou os campos e concentrou a mão de obra em polos industriais estatais.</button>
+                </div>
+                <div id="fb-geo" class="text-sm font-medium hidden p-3.5 rounded-lg border shadow-inner"></div>
+            </div>
+
+            <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4" id="q-soc-container">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-gray-100 pb-2">
+                    <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2.5 py-0.5 rounded">EIXO 3: SOCIOLOGIA</span>
+                </div>
+                <h4 class="text-base font-bold text-slate-950">O fenômeno do clientelismo e do "voto de cabresto" evidencia características marcantes sobre a formação da cidadania no início do século XX. Sob a lente sociológica, essas práticas indicam que:</h4>
+                <div class="space-y-2 text-sm">
+                    <button onclick="setRealTri('soc', 'A', 'ERRADO', 'As relações de trabalho no campo baseavam-se majoritariamente na informalidade e na dependência direta do proprietário de terras.', this)" class="soc-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>A)</strong> O espaço público era consolidado por meio de contratos formais de trabalho que transformavam o trabalhador em ator autônomo.</button>
+                    <button onclick="setRealTri('soc', 'B', 'ERRADO', 'Apesar das tentativas de imposição estatal, as manifestações, crenças e identidades culturais locais resistiram ativas e independentes.', this)" class="soc-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>B)</strong> Ocorreu a eliminação total das identidades culturais regionais devido à imposição de uma identidade cívica nacional padronizada.</button>
+                    <button onclick="setRealTri('soc', 'C', 'ERRADO', 'A organização coletiva ou sindical dos trabalhadores camponeses de âmbito nacional só ganha contornos consolidados décadas mais tarde.', this)" class="soc-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>C)</strong> Havia uma sólida consciência de classe unificada entre os camponeses, gerando frequentes greves gerais nacionais.</button>
+                    <button onclick="setRealTri('soc', 'D', 'ERRADO', 'O voto rural era severamente tutelado e moldado pela repressão violenta e intimidação das redes ligadas aos coronéis.', this)" class="soc-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>D)</strong> O voto funcionava como um instrumento de contestação social espontânea, livre de amarras estruturais econômicas.</button>
+                    <button onclick="setRealTri('soc', 'E', 'CORRETO', 'Os direitos políticos foram instrumentalizados como bens de troca privados, demonstrando a mercantilização do voto e o esvaziamento da cidadania.', this)" class="soc-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>E)</strong> Os direitos políticos foram instrumentalizados como bens de troca privados, em que o voto se tornava uma mercadoria vinculada à subsistência e proteção.</button>
+                </div>
+                <div id="fb-soc" class="text-sm font-medium hidden p-3.5 rounded-lg border shadow-inner"></div>
+            </div>
+
+            <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4" id="q-filo-container">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-gray-100 pb-2">
+                    <span class="text-xs bg-rose-100 text-rose-800 font-bold px-2.5 py-0.5 rounded">EIXO 4: FILOSOFIA</span>
+                </div>
+                <h4 class="text-base font-bold text-slate-950">O conceito moderno de República pressupõe a existência de um pacto social baseado na igualdade jurídica. Confrontando esse ideal filosófico com as práticas do Coronelismo vigentes, constata-se uma violação direta desse princípio porque:</h4>
+                <div class="space-y-2 text-sm">
+                    <button onclick="setRealTri('filo', 'A', 'CORRETO', 'A submissão da vontade do eleitor aos interesses privados do coronel rompe a autonomia da vontade individual e a soberania popular.', this)" class="filo-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>A)</strong> A submissão da vontade do eleitor aos interesses privados do coronel rompe a autonomia da vontade individual, impedindo a manifestação da legítima vontade geral.</button>
+                    <button onclick="setRealTri('filo', 'B', 'ERRADO', 'A descentralização política acabou sendo captured pelo interesse familiar e regional das elites, agredindo a impessoalidade do State.', this)" class="filo-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>B)</strong> A descentralização federativa impedia que o governante central exercesse o poder de forma absolutista sobre a nação.</button>
+                    <button onclick="setRealTri('filo', 'C', 'ERRADO', 'Para o contratualismo, o uso da violência e coerção privada ilegal destrói qualquer fundamento ético e moral de identidade do pacto político.', this)" class="filo-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>C)</strong> O uso da coerção física legitima filosoficamente o poder do Estado ao garantir o cumprimento absoluto da ordem social.</button>
+                    <button onclick="setRealTri('filo', 'D', 'ERRADO', 'Não havia espaços de debates diretos livres ou igualitários nos moldes da ágora grega clássica no cotidiano das fazendas republicanas.', this)" class="filo-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>D)</strong> A ausência de agremiações partidárias centralizadas forçava os indivíduos a debaterem a ética pública de maneira direta na ágora.</button>
+                    <button onclick="setRealTri('filo', 'E', 'ERRADO', 'A amizade cívica em Aristóteles evoca a busca virtuosa pelo bem da comunidade, diferindo totalmente do clientelismo por privilégios privados.', this)" class="filo-opt w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"><strong>E)</strong> O clientelismo reproduzia o conceito aristotélico de amizade cívica, distribuindo os bens públicos conforme o mérito medido de cada clã.</button>
+                </div>
+                <div id="fb-filo" class="text-sm font-medium hidden p-3.5 rounded-lg border shadow-inner"></div>
+            </div>
+        </div>
+
+        <div id="content-habilidades" class="tab-content hidden space-y-8">
             
             <div class="flex justify-center border-b border-gray-200 pb-2">
                 <div class="inline-flex bg-gray-200/80 p-1.5 rounded-2xl gap-1 shadow-inner">
@@ -116,7 +317,7 @@
 
                 <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4">
                     <div class="border-b border-gray-100 pb-2 flex items-center justify-between">
-                        <h4 class="text-lg font-bold text-[#0d2346]">História</h4>
+                        <h4 class="text-lg font-bold text-[#0d2346]">História — 1º Bimestre</h4>
                         <span class="text-xs font-semibold bg-purple-100 text-purple-800 px-2 py-0.5 rounded">3ª Série EM</span>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
@@ -136,7 +337,7 @@
 
                 <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4">
                     <div class="border-b border-gray-100 pb-2 flex items-center justify-between">
-                        <h4 class="text-lg font-bold text-[#0d2346]">Geografia </h4>
+                        <h4 class="text-lg font-bold text-[#0d2346]">Geografia — 1º Bimestre</h4>
                         <span class="text-xs font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">3ª Série EM</span>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-4">
@@ -161,7 +362,7 @@
 
                 <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4">
                     <div class="border-b border-gray-100 pb-2 flex items-center justify-between">
-                        <h4 class="text-lg font-bold text-[#0d2346]">Sociologia</h4>
+                        <h4 class="text-lg font-bold text-[#0d2346]">Sociologia — 1º Bimestre</h4>
                         <span class="text-xs font-semibold bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded">3ª Série EM</span>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
@@ -177,7 +378,7 @@
 
                 <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4">
                     <div class="border-b border-gray-100 pb-2 flex items-center justify-between">
-                        <h4 class="text-lg font-bold text-[#0d2346]">Filosofia </h4>
+                        <h4 class="text-lg font-bold text-[#0d2346]">Filosofia — 1º Bimestre</h4>
                         <span class="text-xs font-semibold bg-rose-100 text-rose-800 px-2 py-0.5 rounded">3ª Série EM</span>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
@@ -193,14 +394,13 @@
             </div>
 
             <div id="pane-bim2" class="bim-pane hidden space-y-6">
-<div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center text-sm font-medium text-blue-800 flex items-center justify-center gap-2">
-    <span>📂</span> Exibindo Conteúdos e Habilidades planejados para o <strong>2º Bimestre</strong>.
-</div>
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center text-sm font-medium text-blue-800 flex items-center justify-center gap-2">
+                    <span>📂</span> Exibindo Conteúdos e Habilidades planejados para o <strong>2º Bimestre</strong>.
+                </div>
                 
-               
- <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4">
+                <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4">
                     <div class="border-b border-gray-100 pb-2 flex items-center justify-between">
-                        <h4 class="text-lg font-bold text-[#0d2346]">História</h4>
+                        <h4 class="text-lg font-bold text-[#0d2346]">História — 2º Bimestre</h4>
                         <span class="text-xs font-semibold bg-purple-100 text-purple-800 px-2 py-0.5 rounded">3ª Série EM</span>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
@@ -217,7 +417,7 @@
 
                 <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4">
                     <div class="border-b border-gray-100 pb-2 flex items-center justify-between">
-                        <h4 class="text-lg font-bold text-[#0d2346]">Geografia</h4>
+                        <h4 class="text-lg font-bold text-[#0d2346]">Geografia — 2º Bimestre</h4>
                         <span class="text-xs font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">3ª Série EM</span>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-4">
@@ -250,7 +450,7 @@
 
                 <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4">
                     <div class="border-b border-gray-100 pb-2 flex items-center justify-between">
-                        <h4 class="text-lg font-bold text-[#0d2346]">Sociologia </h4>
+                        <h4 class="text-lg font-bold text-[#0d2346]">Sociologia — 2º Bimestre</h4>
                         <span class="text-xs font-semibold bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded">3ª Série EM</span>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
@@ -267,7 +467,7 @@
 
                 <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4">
                     <div class="border-b border-gray-100 pb-2 flex items-center justify-between">
-                        <h4 class="text-lg font-bold text-[#0d2346]">Filosofia </h4>
+                        <h4 class="text-lg font-bold text-[#0d2346]">Filosofia — 2º Bimestre</h4>
                         <span class="text-xs font-semibold bg-rose-100 text-rose-800 px-2 py-0.5 rounded">3ª Série EM</span>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
@@ -293,10 +493,131 @@
                     📂 Exibindo Conteúdos e Habilidades planejados para o <strong>4º Bimestre</strong>.
                 </div>
             </div>
+
         </div>
 
         <div id="content-atividades" class="tab-content hidden space-y-6">
+            
+            <div class="flex justify-center border-b border-gray-200 pb-2">
+                <div class="inline-flex bg-gray-200/80 p-1.5 rounded-2xl gap-1 shadow-inner">
+                    <button id="btn-atividades-bim1" onclick="switchAtividadesBimestre('atividades-bim1')" class="atividades-bim-btn px-5 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all text-gray-600 hover:text-[#0d2346]">
+                        1º BIM
+                    </button>
+                    <button id="btn-atividades-bim2" onclick="switchAtividadesBimestre('atividades-bim2')" class="atividades-bim-btn px-5 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all bg-white text-[#0d2346] shadow-sm border border-gray-100">
+                        2º BIM
+                    </button>
+                    <button id="btn-atividades-bim3" onclick="switchAtividadesBimestre('atividades-bim3')" class="atividades-bim-btn px-5 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all text-gray-600 hover:text-[#0d2346]">
+                        3º BIM
+                    </button>
+                    <button id="btn-atividades-bim4" onclick="switchAtividadesBimestre('atividades-bim4')" class="atividades-bim-btn px-5 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all text-gray-600 hover:text-[#0d2346]">
+                        4º BIM
+                    </button>
+                </div>
             </div>
+
+            <div class="text-center mb-4">
+                <h3 class="text-2xl font-bold text-[#0d2346]">Painel de Atividades da Matriz</h3>
+                <p class="text-gray-500 text-sm mt-1">Clique no link para acessar o roteiro interativo e as devolutivas de cada componente</p>
+            </div>
+
+            <div id="pane-atividades-bim1" class="atividades-bim-pane hidden space-y-6">
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 text-center text-sm font-medium text-blue-800">
+                    📂 Não há atividades ativas listadas para o <strong>1º Bimestre</strong>.
+                </div>
+            </div>
+
+            <div id="pane-atividades-bim2" class="atividades-bim-pane space-y-6">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-4 bg-gray-50 border-b border-gray-100 flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="text-sm font-semibold text-gray-700">Cronograma Ativo — Bimestre Vigente</span>
+                        </div>
+                    </div>
+
+                    <div class="divide-y divide-gray-100">
+                        
+                        <div class="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-gray-50/50 transition-colors">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="bg-sky-100 text-sky-800 text-xs font-semibold px-2.5 py-0.5 rounded">REVISA2ºBIM</span>
+                                    <h4 class="text-base font-bold">
+                                        <a href="revisa-2-bim/revhist2bim.html" target="_blank" class="text-gray-900 hover:text-sky-600 hover:underline inline-flex items-center gap-1">
+                                            REVISA 2º BIMESTRE | HISTÓRIA
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <p class="text-sm text-gray-600">Esta atividade contempla todos os textos e questões normativas do roteiro Revisa Goiás direcionados ao componente de HISTÓRIA.</p>
+                            </div>
+                            <span class="self-start md:self-auto bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Aberta</span>
+                        </div>
+
+                        <div class="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-gray-50/50 transition-colors">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="bg-sky-100 text-sky-800 text-xs font-semibold px-2.5 py-0.5 rounded">REVISA2ºBIM</span>
+                                    <h4 class="text-base font-bold">
+                                        <a href="revisa-2-bim/revfilos2bim.html" target="_blank" class="text-gray-900 hover:text-sky-600 hover:underline inline-flex items-center gap-1">
+                                            REVISA 2º BIMESTRE | FILOSOFIA
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <p class="text-sm text-gray-600">Esta atividade contempla todos os textos e questões normativas do roteiro Revisa Goiás direcionados ao componente de FILOSOFIA.</p>
+                            </div>
+                            <span class="self-start md:self-auto bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Aberta</span>
+                        </div>
+
+                        <div class="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-gray-50/50 transition-colors">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="bg-sky-100 text-sky-800 text-xs font-semibold px-2.5 py-0.5 rounded">REVISA2ºBIM</span>
+                                    <h4 class="text-base font-bold">
+                                        <a href="revisa-2-bim/revsoc2bim.html" target="_blank" class="text-gray-900 hover:text-sky-600 hover:underline inline-flex items-center gap-1">
+                                            REVISA 2º BIMESTRE | SOCIOLOGIA
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <p class="text-sm text-gray-600">Esta atividade contempla todos os textos e questões normativas do roteiro Revisa Goiás direcionados ao componente de SOCIOLOGIA.</p>
+                            </div>
+                            <span class="self-start md:self-auto bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Aberta</span>
+                        </div>
+
+                        <div class="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-gray-50/50 transition-colors">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="bg-sky-100 text-sky-800 text-xs font-semibold px-2.5 py-0.5 rounded">REVISA2ºBIM</span>
+                                    <h4 class="text-base font-bold">
+                                        <a href="revisa-2-bim/revgeo2bim.html" target="_blank" class="text-gray-900 hover:text-sky-600 hover:underline inline-flex items-center gap-1">
+                                            REVISA 2º BIMESTRE | GEOGRAFIA
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <p class="text-sm text-gray-600">Esta atividade contempla todos os textos e questões normativas do roteiro Revisa Goiás direcionados ao componente de GEOGRAFIA.</p>
+                            </div>
+                            <span class="self-start md:self-auto bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Aberta</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="pane-atividades-bim3" class="atividades-bim-pane hidden space-y-6">
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 text-center text-sm font-medium text-blue-800">
+                    📂 Não há atividades ativas listadas para o <strong>3º Bimestre</strong>.
+                </div>
+            </div>
+
+            <div id="pane-atividades-bim4" class="atividades-bim-pane hidden space-y-6">
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 text-center text-sm font-medium text-blue-800">
+                    📂 Não há atividades ativas listadas para o <strong>4º Bimestre</strong>.
+                </div>
+            </div>
+
+        </div>
     </main>
 
     <footer class="bg-gray-900 text-gray-400 py-8 text-center text-sm border-t border-gray-800 mt-12">
@@ -340,6 +661,7 @@
             }
         }
 
+        // Controla a navegação de bimestres na aba MATRIZ DE HABILIDADES
         function switchBimestre(bimName) {
             document.querySelectorAll('.bim-pane').forEach(pane => pane.classList.add('hidden'));
             document.querySelectorAll('.bim-btn').forEach(btn => {
@@ -348,6 +670,17 @@
 
             document.getElementById(`pane-${bimName}`).classList.remove('hidden');
             document.getElementById(`btn-${bimName}`).className = "bim-btn px-5 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all bg-white text-[#0d2346] shadow-sm border border-gray-100";
+        }
+
+        // Controla a navegação de bimestres na aba ATIVIDADES
+        function switchAtividadesBimestre(actBimName) {
+            document.querySelectorAll('.atividades-bim-pane').forEach(pane => pane.classList.add('hidden'));
+            document.querySelectorAll('.atividades-bim-btn').forEach(btn => {
+                btn.className = "atividades-bim-btn px-5 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all text-gray-600 hover:text-[#0d2346]";
+            });
+
+            document.getElementById(`pane-${actBimName}`).classList.remove('hidden');
+            document.getElementById(`btn-${actBimName}`).className = "atividades-bim-btn px-5 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all bg-white text-[#0d2346] shadow-sm border border-gray-100";
         }
 
         function setSaegoCriteria(itemNumber, option, evaluationType, feedbackText, element) {
@@ -388,6 +721,13 @@
                 fb.innerHTML = `⚠️ <strong>Devolutiva (Opção ${option}):</strong> ${feedbackText}`;
             }
         }
+
+        // Inicialização padrão do sistema
+        window.onload = function() {
+            switchTab('inicio');
+            switchBimestre('bim1');
+            switchAtividadesBimestre('atividades-bim2'); // Deixa o 2º Bimestre pré-selecionado nas atividades por ser o vigente
+        };
     </script>
 </body>
 </html>
