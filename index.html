@@ -147,11 +147,11 @@
                     <span class="text-xs text-gray-400 italic">Descritor: Reconhecer a dinâmica de ocupação territorial e econômica do espaço goiano.</span>
                 </div>
                 <div class="bg-gray-50 border-l-4 border-emerald-600 rounded-r-xl p-5 text-sm italic text-gray-700 leading-relaxed font-serif">
-                    "A transferência da capital de Goiás para Goiânia, idealizada por Pedro Ludovico Teixeira na década de 1930, integrou-se à política nacional de integração rumo ao interior, alterando profundamente a dinâmica econômica e demográfica do estado."
+                    "A transferência da capital de Goiás para Goiânia, idealizada por Pedro Ludovico Teixeira na década de 1930, integrou-se à política nacional de integration rumo ao interior, alterando profundamente a dinâmica econômica e demográfica do estado."
                 </div>
                 <h4 class="text-base font-bold text-[#0d2346]">O principal argumento político e socioeconômico utilizado para justificar estrategicamente a construção de Goiânia residia na necessidade de:</h4>
                 <div class="space-y-2 text-sm">
-                    <button onclick="setSaegoCriteria(2, 'A', 'incorreto', 'Anacronismo geográfico e econômico. O foco da economia estadual no período ludoviquista permaneceu atrelado ao reordenamento do espaço agrário e à interiorização da infraestrutura de transportes, sem relação com a extração de borracha.', this)" class="saego-opt-2 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>A)</strong> Consolidar Goiânia como o principal entreposto mercantil para o escoamento da borracha extraída na região Norte.</button>
+                    <button onclick="setSaegoCriteria(2, 'A', 'incorreto', 'Anacronismo geográfico e econômico. O foco da economy estadual no período ludoviquista permaneceu atrelado ao reordenamento do espaço agrário e à interiorização da infraestrutura de transportes, sem relação com a extração de borracha.', this)" class="saego-opt-2 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>A)</strong> Consolidar Goiânia como o principal entreposto mercantil para o escoamento da borracha extraída na região Norte.</button>
                     <button onclick="setSaegoCriteria(2, 'B', 'pleno', 'O estudante identifica diretamente o eixo central do projeto ludoviquista: romper com o isolamento das antigas oligarquias situadas na Cidade de Goiás e interligar a economia estadual ao mercado nacional através da Marcha para o Oeste.', this)" class="saego-opt-2 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>B)</strong> Romper o isolamento político do estado e deslocar o eixo socioeconômico para o sul e o centro do território goiano, alinhando-o à Marcha para o Oeste.</button>
                     <button onclick="setSaegoCriteria(2, 'C', 'incorreto', 'Inversão factual. A mudança da capital representou a ascensão das forças ligadas ao ideário de Getúlio Vargas e uma desestruturação do prestígio político da antiga capital oligárquica (Vila Boa).', this)" class="saego-opt-2 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>C)</strong> Fortalecer as estruturas das tradicionais famílias da antiga capital, preservando seu papel central nas decisões estaduais.</button>
                     <button onclick="setSaegoCriteria(2, 'D', 'incorreto', 'Erro de contexto histórico. A industrialização de base ou metalúrgica pesada em Goiás surge como fenômeno de planejamento apenas na segunda metade do século XX.', this)" class="saego-opt-2 w-full text-left p-3.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all"><strong>D)</strong> Isolar o território estadual das influências econômicas federais para priorizar indústrias manufatureiras locais de capital privado fechado.</button>
@@ -290,10 +290,10 @@
             
             <div class="flex justify-center border-b border-gray-200 pb-2">
                 <div class="inline-flex bg-gray-200/80 p-1.5 rounded-2xl gap-1 shadow-inner">
-                    <button id="btn-bim1" onclick="switchBimestre('bim1')" class="bim-btn px-5 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all bg-white text-[#0d2346] shadow-sm border border-gray-100">
+                    <button id="btn-bim1" onclick="switchBimestre('bim1')" class="bim-btn px-5 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all text-gray-600 hover:text-[#0d2346]">
                         1º BIM
                     </button>
-                    <button id="btn-bim2" onclick="switchBimestre('bim2')" class="bim-btn px-5 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all text-gray-600 hover:text-[#0d2346]">
+                    <button id="btn-bim2" onclick="switchBimestre('bim2')" class="bim-btn px-5 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all bg-white text-[#0d2346] shadow-sm border border-gray-100">
                         2º BIM
                     </button>
                     <button id="btn-bim3" onclick="switchBimestre('bim3')" class="bim-btn px-5 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all text-gray-600 hover:text-[#0d2346]">
@@ -310,7 +310,7 @@
                 <p class="text-gray-500 text-sm mt-1">Mapeamento normativo e descritores estruturais do Documento Curricular de Goiás (DC-GO)</p>
             </div>
 
-            <div id="pane-bim1" class="bim-pane space-y-6">
+            <div id="pane-bim1" class="bim-pane hidden space-y-6">
                 <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center text-sm font-medium text-blue-800 flex items-center justify-center gap-2">
                     <span>📂</span> Exibindo Conteúdos e Habilidades planejados para o <strong>1º Bimestre</strong>.
                 </div>
@@ -346,7 +346,7 @@
                                 <strong>(GO-EMCHS302B)</strong> Perceber como a tecnologia (meio técnico científico) tem influenciado na evolução dos processos de produção e reprodução do espaço geográfico, por meio de leituras de textos geográficos, mapas e imagens de satélites (sensoriamento remoto) para entender a evolução das transformações do espaço e as formas como as produções espaciais ocorrem.
                             </p>
                             <p class="text-sm font-bold text-slate-900 leading-relaxed">
-                                <strong>(GO-EMCHS302C)</strong> Entender como as tecnologias e seus impactos influenciam no processo de globalização, nos novos arranjos geopolíticos e econômicos atuais e no meio ambiente em diferentes escalas, lendo textos geográficos e filosóficos sobre ética e tecnologia para discutir os aspects ligados às questões éticas, associadas ao uso das tecnologias emergentes da informação e suas repercussões no mundo dos negócios e na sociedade em geral.
+                                <strong>(GO-EMCHS302C)</strong> Entender como as tecnologias e seus impactos influenciam no processo de globalização, nos novos arranjos geopolíticos e econômicos atuais e no meio ambiente em diferentes escalas, lendo textos geográficos e filosóficos sobre ética e tecnologia para discutir os aspectos ligados às questões éticas, associadas ao uso das tecnologias emergentes da informação e suas repercussões no mundo dos negócios e na sociedade em geral.
                             </p>
                             <p class="text-sm font-bold text-slate-900 leading-relaxed">
                                 <strong>(GO-EMCHS302D)</strong> Compreender a dinâmica socioambiental e cultural na produção do espaço geográfico global, lendo dados (organismos internacionais), textos geográficos, revistas científicas, dados estatísticos (tabelas e gráficos) para analisar como as decisões governamentais (dos países) acerca do meio ambiente interferem nas questões sociais e políticas no mundo atual.
@@ -367,7 +367,7 @@
                     </div>
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
                         <p class="text-sm font-bold text-slate-900 leading-relaxed">
-                            <strong>(GO-EMCHS603D)</strong> Comparar o processo de formação política do Brasil com o dos demais países da América Latina, aplicando os conceitos da Ciência Política como Estado, poder, sistemas, regimes de governo, soberania etc. para analisar os limites da construção da cidadania nestas experiências políticas.
+                            <strong>(GO-EMCHS603D)</strong> Comparar o processo de formation política do Brasil com o dos demais países da América Latina, aplicando os conceitos da Ciência Política como Estado, poder, sistemas, regimes de governo, soberania etc. para analisar os limites da construção da cidadania nestas experiências políticas.
                         </p>
                         <ul class="list-disc pl-5 space-y-1.5 text-sm text-gray-600 font-medium border-t border-gray-200 pt-2">
                             <li>Entender as diferenças entre Liberalismo e Socialismo.</li>
@@ -394,10 +394,6 @@
             </div>
 
             <div id="pane-bim2" class="bim-pane hidden space-y-6">
-                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center text-sm font-medium text-blue-800 flex items-center justify-center gap-2">
-                    <span>📂</span> Exibindo Conteúdos e Habilidades planejados para o <strong>2º Bimestre</strong>.
-                </div>
-                
                 <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-4">
                     <div class="border-b border-gray-100 pb-2 flex items-center justify-between">
                         <h4 class="text-lg font-bold text-[#0d2346]">História — 2º Bimestre</h4>
@@ -493,7 +489,6 @@
                     📂 Exibindo Conteúdos e Habilidades planejados para o <strong>4º Bimestre</strong>.
                 </div>
             </div>
-
         </div>
 
         <div id="content-atividades" class="tab-content hidden space-y-6">
@@ -704,7 +699,7 @@
                 subtitle.innerText = "Sistema de Avaliação da Educação do Estado de Goiás voltado para o monitoramento contínuo das proficiências através de itens baseados em critérios analíticos estruturados.";
             } else if (tabName === 'bncc') {
                 title.innerText = "Competências Gerais da BNCC";
-                subtitle.innerText = "Contribuir para a construção de uma sociedade mais ética, democrática, responsável, inclusiva, sustentável e solidária.";
+                subtitle.innerText = "Contribuir para a construção de uma sociedade mais ética, democrática, responsible, inclusive, sustentável e solidária.";
             } else if (tabName === 'enem') {
                 title.innerText = "Novo ENEM & Transversalidade CHSA";
                 subtitle.innerText = "Análise de como blocos conceituais e testlets cobram simultaneamente as competências e habilidades integradas de Ciências Humanas.";
@@ -756,7 +751,126 @@
             if (paneBim2Visivel) {
                 const boxAtiva = document.getElementById(`box-ativ-${componenteAtivoAtual}`);
                 if (boxAtiva) {
+                    boxAtiva.classList.add('block');
                     boxAtiva.classList.remove('hidden');
+                    
+                    // Injeta dinamicamente as atividades no novo formato de links interativos clicáveis por linha
+                    if (componenteAtivoAtual === 'hist' && !document.getElementById('classroom-activities-wrapper')) {
+                        const wrapper = document.createElement('div');
+                        wrapper.id = 'classroom-activities-wrapper';
+                        wrapper.className = 'w-full pt-4 border-t border-gray-100 mt-6 space-y-2';
+                        wrapper.innerHTML = `
+                            
+
+
+
+<a href="https://warm-raindrop-f06ad4.netlify.app/?authuser=4" target="_blank" class="flex items-center gap-4 bg-white p-4 border border-gray-200 rounded-xl shadow-sm hover:bg-slate-50 hover:border-gray-300 hover:shadow transition-all group">
+                                <div class="flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-500 rounded-full font-bold shrink-0 group-hover:bg-purple-50 group-hover:text-purple-600 transition-colors">📋</div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between flex-grow gap-2">
+                                    <div class="space-y-0.5">
+                                        <div class="flex items-center gap-2">
+                                            <span class="bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">Classroom</span>
+                                            <span class="text-xs text-gray-400 font-medium">História</span>
+                                        </div>
+                                        <h4 class="text-sm font-bold text-gray-800">ATV6SAEGO</h4>
+                                    </div>
+                                    <div class="text-xs text-gray-400 font-medium flex items-center gap-1 shrink-0 bg-gray-50 px-2 py-1 rounded border border-gray-100 group-hover:bg-white group-hover:text-sky-600 transition-colors">
+                                        Abrir Atividade <span class="text-sm">↗</span>
+                                    </div>
+                                </div>
+                            </a>
+ <a href="https://clinquant-cocada-2ffd71.netlify.app/?authuser=4" target="_blank" class="flex items-center gap-4 bg-white p-4 border border-gray-200 rounded-xl shadow-sm hover:bg-slate-50 hover:border-gray-300 hover:shadow transition-all group">
+                                <div class="flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-500 rounded-full font-bold shrink-0 group-hover:bg-purple-50 group-hover:text-purple-600 transition-colors">📋</div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between flex-grow gap-2">
+                                    <div class="space-y-0.5">
+                                        <div class="flex items-center gap-2">
+                                            <span class="bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">Classroom</span>
+                                            <span class="text-xs text-gray-400 font-medium">História</span>
+                                        </div>
+                                        <h4 class="text-sm font-bold text-gray-800">ATV5SAEGO</h4>
+                                    </div>
+                                    <div class="text-xs text-gray-400 font-medium flex items-center gap-1 shrink-0 bg-gray-50 px-2 py-1 rounded border border-gray-100 group-hover:bg-white group-hover:text-sky-600 transition-colors">
+                                        Abrir Atividade <span class="text-sm">↗</span>
+                                    </div>
+                                </div>
+                            </a>
+
+                           
+                            <a href="https://storied-scone-3f42d1.netlify.app/?authuser=4" target="_blank" class="flex items-center gap-4 bg-white p-4 border border-gray-200 rounded-xl shadow-sm hover:bg-slate-50 hover:border-gray-300 hover:shadow transition-all group">
+                                <div class="flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-500 rounded-full font-bold shrink-0 group-hover:bg-purple-50 group-hover:text-purple-600 transition-colors">📋</div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between flex-grow gap-2">
+                                    <div class="space-y-0.5">
+                                        <div class="flex items-center gap-2">
+                                            <span class="bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">Classroom</span>
+                                            <span class="text-xs text-gray-400 font-medium">História</span>
+                                        </div>
+                                        <h4 class="text-sm font-bold text-gray-800">ATV4SAEGO</h4>
+                                    </div>
+                                    <div class="text-xs text-gray-400 font-medium flex items-center gap-1 shrink-0 bg-gray-50 px-2 py-1 rounded border border-gray-100 group-hover:bg-white group-hover:text-sky-600 transition-colors">
+                                        Abrir Atividade <span class="text-sm">↗</span>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="https://lively-sable-ea0211.netlify.app/?authuser=4" target="_blank" class="flex items-center gap-4 bg-white p-4 border border-gray-200 rounded-xl shadow-sm hover:bg-slate-50 hover:border-gray-300 hover:shadow transition-all group">
+                                <div class="flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-500 rounded-full font-bold shrink-0 group-hover:bg-purple-50 group-hover:text-purple-600 transition-colors">📋</div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between flex-grow gap-2">
+                                    <div class="space-y-0.5">
+                                        <div class="flex items-center gap-2">
+                                            <span class="bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">Classroom</span>
+                                            <span class="text-xs text-gray-400 font-medium">História</span>
+                                        </div>
+                                        <h4 class="text-sm font-bold text-gray-800">ATV3SAEGO</h4>
+                                    </div>
+                                    <div class="text-xs text-gray-400 font-medium flex items-center gap-1 shrink-0 bg-gray-50 px-2 py-1 rounded border border-gray-100 group-hover:bg-white group-hover:text-sky-600 transition-colors">
+                                        Abrir Atividade <span class="text-sm">↗</span>
+                                    </div>
+                                </div>
+                            </a>
+
+ <a href="https://bespoke-frangollo-e9109a.netlify.app/?authuser=4" target="_blank" class="flex items-center gap-4 bg-white p-4 border border-gray-200 rounded-xl shadow-sm hover:bg-slate-50 hover:border-gray-300 hover:shadow transition-all group">
+                                <div class="flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-500 rounded-full font-bold shrink-0 group-hover:bg-purple-50 group-hover:text-purple-600 transition-colors">📋</div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between flex-grow gap-2">
+                                    <div class="space-y-0.5">
+                                        <div class="flex items-center gap-2">
+                                            <span class="bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">Classroom</span>
+                                            <span class="text-xs text-gray-400 font-medium">História</span>
+                                        </div>
+                                        <h4 class="text-sm font-bold text-gray-800">ATV2SAEGO</h4>
+                                    </div>
+                                    <div class="text-xs text-gray-400 font-medium flex items-center gap-1 shrink-0 bg-gray-50 px-2 py-1 rounded border border-gray-100 group-hover:bg-white group-hover:text-sky-600 transition-colors">
+                                        Abrir Atividade <span class="text-sm">↗</span>
+                                    </div>
+                                </div>
+                            </a>
+ <a href="https://wayground.com/join?gc=20217665&authuser=4" target="_blank" class="flex items-center gap-4 bg-white p-4 border border-gray-200 rounded-xl shadow-sm hover:bg-slate-50 hover:border-gray-300 hover:shadow transition-all group">
+                                <div class="flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-500 rounded-full font-bold shrink-0 group-hover:bg-purple-50 group-hover:text-purple-600 transition-colors">📋</div>
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between flex-grow gap-2">
+                                    <div class="space-y-0.5">
+                                        <div class="flex items-center gap-2">
+                                            <span class="bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">Classroom</span>
+                                            <span class="text-xs text-gray-400 font-medium">História</span>
+                                        </div>
+                                        <h4 class="text-sm font-bold text-gray-800">ATV1SAEGO</h4>
+                                    </div>
+                                    <div class="text-xs text-gray-400 font-medium flex items-center gap-1 shrink-0 bg-gray-50 px-2 py-1 rounded border border-gray-100 group-hover:bg-white group-hover:text-sky-600 transition-colors">
+                                        Abrir Atividade <span class="text-sm">↗</span>
+                                    </div>
+                                </div>
+                            </a>
+
+                            
+                           `;
+                        boxAtiva.parentNode.appendChild(wrapper);
+                    }
+                }
+            }
+            
+            // Remove os blocos inseridos caso a disciplina mude de História para outra
+            if (componenteAtivoAtual !== 'hist') {
+                const wrapper = document.getElementById('classroom-activities-wrapper');
+                if (wrapper) {
+                    wrapper.remove();
                 }
             }
         }
