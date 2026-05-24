@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foco nos descritores SAEGO - D14</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #fbc02d;
+            --background-color: #f1f8e9;
+            --card-color: #ffffff;
+            --text-color: #2c3e50;
+            --error-color: #d32f2f;
+            --correct-color: #2e7d32;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: var(--card-color);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-top: 10px solid var(--primary-color);
+        }
+
+        .tab {
+            display: none;
+            padding: 40px;
+        }
+
+        .tab.active {
+            display: block;
+        }
+
+        .welcome-screen {
+            text-align: center;
+        }
+
+        .saego-icon-container {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 6px 15px rgba(46, 125, 50, 0.3);
+        }
+
+        .saego-icon-container i {
+            font-size: 60px;
+            color: var(--secondary-color);
+        }
+
+        .welcome-screen h1 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .welcome-screen h2 {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 30px;
+            font-weight: 400;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #edf2f7;
+        }
+
+        .question-number {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .progress-bar {
+            background: #edf2f7;
+            height: 8px;
+            border-radius: 4px;
+            width: 150px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--secondary-color);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .bibliography {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin-bottom: 20px;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .text-base {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: justify;
+            background: #fff;
+            padding: 5px;
+        }
+
+        .enunciado {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 14px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fff;
+        }
+
+        .option-label:hover {
+            background: #f7fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-label input {
+            margin-top: 4px;
+            margin-right: 15px;
+            transform: scale(1.2);
+            accent-color: var(--primary-color);
+        }
+
+        .option-text {
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #edf2f7;
+        }
+
+        button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1b5e20;
+        }
+
+        .btn-secondary {
+            background-color: #edf2f7;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e2e8f0;
+        }
+
+        .result-screen {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 8px solid var(--secondary-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 25px;
+        }
+
+        .score-circle .score-num {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .student-info-result {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-weight: 600;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* ==========================================================================
+           ESTILIZAÇÃO EXCLUSIVA DO RELATÓRIO PDF (MELHORIA DE LAYOUT)
+           ========================================================================== */
+        #pdf-report {
+            display: none;
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: #2c3e50;
+            padding: 0;
+        }
+
+        .pdf-header {
+            border-bottom: 4px solid #2e7d32;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .pdf-title {
+            color: #2e7d32;
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .pdf-meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .pdf-meta-table td {
+            padding: 10px 12px;
+            font-size: 13px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .pdf-card-question {
+            page-break-inside: avoid; /* Impede que uma questão seja cortada no meio da página */
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+        }
+
+        .pdf-card-question.correct-card {
+            border-left: 5px solid var(--correct-color);
+        }
+
+        .pdf-card-question.error-card {
+            border-left: 5px solid var(--error-color);
+        }
+
+        .pdf-q-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1a202c;
+        }
+
+        .pdf-text-base {
+            font-size: 13px;
+            color: #4a5568;
+            background-color: #f7fafc;
+            padding: 12px;
+            border-left: 3px solid #cbd5e0;
+            margin-bottom: 12px;
+            text-align: justify;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .pdf-response-box {
+            font-size: 13px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .pdf-response-box.correct-bg {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        .pdf-response-box.error-bg {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+
+        .pdf-descriptor-focus {
+            font-size: 12px;
+            background-color: #fffde7;
+            border: 1px dashed #fbc02d;
+            padding: 10px;
+            border-radius: 6px;
+            color: #5d4037;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="quiz-container">
+    
+    <div id="tab-0" class="tab active">
+        <div class="welcome-screen">
+            <div class="saego-icon-container">
+                <i class="fa-solid fa-circle-nodes"></i>
+            </div>
+            <h1>Foco nos descritores SAEGO</h1>
+            <h2>D14 - Distinguir um fato da opinião relativa a esse fato.</h2>
+            
+            <div class="input-group">
+                <label for="student-name"><i class="fa-solid fa-user"></i> Nome Completo do Aluno:</label>
+                <input type="text" id="student-name" placeholder="Digite seu nome completo aqui..." required>
+                <div id="name-error" class="error-message"><i class="fa-solid fa-exclamation-triangle"></i> Por favor, insira seu nome completo antes de começar.</div>
+            </div>
+
+            <button type="button" class="btn-primary" onclick="startQuiz()">
+                Iniciar Atividade <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="questions-container"></div>
+
+    <div id="tab-final" class="tab">
+        <div class="result-screen">
+            <div class="saego-icon-container">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h1>Atividade Concluída!</h1>
+            <p class="student-info-result">Aluno(a): <strong id="display-student-name"></strong></p>
+            
+            <div class="score-circle">
+                <span class="score-num" id="score-text">0/10</span>
+                <span style="font-size:0.8rem; color:#777;">Acertos</span>
+            </div>
+
+            <p id="feedback-message" style="margin-bottom: 30px; font-weight: 600; font-size: 1.1rem;"></p>
+
+            <button type="button" class="btn-primary" onclick="generatePDF()">
+                <i class="fa-solid fa-file-pdf"></i> Salvar Resultado em PDF
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<div id="pdf-report">
+    <div class="pdf-header">
+        <h1 class="pdf-title">Diagnóstico de Desempenho — SAEGO</h1>
+        <table class="pdf-meta-table">
+            <tr>
+                <td style="width: 60%;"><strong>Estudante:</strong> <span id="pdf-student-name"></span></td>
+                <td style="width: 40%;"><strong>Data de Emissão:</strong> <span id="pdf-date"></span></td>
+            </tr>
+            <tr>
+                <td><strong>Descritor Estratégico:</strong> D14 — Distinguir fato de opinião.</td>
+                <td><strong>Aproveitamento Global:</strong> <span id="pdf-score" style="font-weight: bold; color: #2e7d32;"></span> acertos.</td>
+            </tr>
+        </table>
+    </div>
+    <div id="pdf-body"></div>
+</div>
+
+<script>
+    const questionsData = [
+        {
+            author: "ASSIS, Machado de. Dom Casmurro. Rio de Janeiro: Garnier, 1899.",
+            text: "“Capitu era Capitu, isto é, uma criatura mui particular, mais mulher do que eu era homem, mais cheia de si, mais sutil, e com uns olhos de ressaca que traziam a gente tonta. Não sei se me faço entender.”",
+            enunciado: "No fragmento de Machado de Assis, o trecho que expressa uma opinião subjetiva de caráter estético e valorativo do narrador em relação à personagem é:",
+            options: [
+                "“Não sei se me faço entender.”",
+                "“Capitu era Capitu, isto é, uma criatura mui particular...”",
+                "“...mais mulher do que eu era homem...”",
+                "“...e com uns olhos de ressaca que traziam a gente tonta.”",
+                "“Rio de Janeiro: Garnier, 1899.”"
+            ],
+            answer: 3
+        },
+        {
+            author: "LISPECTOR, Clarice. A Hora da Estrela. Rio de Janeiro: José Olympio, 1977.",
+            text: "“A moça não sabia que ela era o que era, por isso não se sentia infeliz. Pensando bem, sua vida não continha acontecimentos dignos de nota; era uma rotina opaca de datilógrafa em escritório de terceira categoria.”",
+            enunciado: "Considerando a descrição da vida da personagem Macabéa, o segmento que apresenta explicitamente um julgamento de valor depreciativo por parte do narrador é:",
+            options: [
+                "“...era uma rotina opaca de datilógrafa em escritório de terceira categoria.”",
+                "“A moça não sabia que ela era o que era...”",
+                "“Pensando bem, sua vida não continha acontecimentos...”",
+                "“...por isso não se sentia infeliz.”",
+                "“...sua vida continha uma profissão ativa de datilógrafa.”"
+            ],
+            answer: 0
+        },
+        {
+            author: "ANDRADE, Carlos Drummond de. Sentimento do Mundo. Rio de Janeiro: Casa do Estudante do Brasil, 1940.",
+            text: "“O bonde passa cheio de pernas: pernas brancas pretas amarelas. Para que tanta perna, meu Deus, pergunta meu coração. Porém meus olhos não perguntam nada. O mundo é grande e cabe nesta janela sobre o mar.”",
+            enunciado: "Neste célebre poema de Drummond, a passagem que projeta uma opinião lírica e reflexiva do eu lírico diante do espaço contemplado é:",
+            options: [
+                "“O bonde passa cheio de pernas...”",
+                "“O mundo é grande e cabe nesta janela sobre o mar.”",
+                "“...pernas brancas pretas amarelas.”",
+                "“Porém meus olhos não perguntam nada.”",
+                "“O bonde trafegava pelas vias litorâneas.”"
+            ],
+            answer: 1
+        },
+        {
+            author: "BARRETO, Lima. Triste Fim de Policarpo Quaresma. Rio de Janeiro: Typ. do Jornal do Commercio, 1915.",
+            text: "“Quaresma era um homem miúdo, que vestia-se com extremo apuro de simplicidade. Mas o que o tornava verdadeiramente singular era a sua absurda e inabalável mania patriótica, que todos consideravam um incômodo desvario.”",
+            enunciado: "O fragmento apresenta a introdução da personagem Policarpo Quaresma. O fragmento que expressa a avaliação desfavorável da sociedade sobre o comportamento do protagonista é:",
+            options: [
+                "“Quaresma era um homem miúdo...”",
+                "“...que vestia-se com extremo apuro de simplicidade.”",
+                "...que todos consideravam um incômodo desvario.”",
+                "“...a sua absurda e inabalável mania patriótica...”",
+                "“...o que o tornava verdadeiramente singular...”"
+            ],
+            answer: 2
+        },
+        {
+            author: "ALENCAR, José de. Iracema. Rio de Janeiro: Typ. de Viana & Filhos, 1865.",
+            text: "“Além, muito além daquela serra, que ainda azula no horizonte, nasceu Iracema. Iracema, a virgem dos lábios de mel, que tinha os cabelos mais negros que a asa da graúna, e mais longos que seu talhe de palmeira.”",
+            enunciado: "O narrador romântico constrói a imagem da heroína por meio de comparações hiperbólicas. O segmento que demarca uma opinião baseada na idealização estética do narrador é:",
+            options: [
+                "“Além, muito além daquela serra...”",
+                "“...nasceu Iracema.”",
+                "“...que ainda azula no horizonte...”",
+                "“A serra limitava a visão geográfica do narrador.”",
+                "“Iracema, a virgem dos lábios de mel...”"
+            ],
+            answer: 4
+        },
+        {
+            author: "RAMOS, Graciliano. Vidas Secas. Rio de Janeiro: José Olympio, 1938.",
+            text: "“Na planície avermelhada os juazeiros alargavam duas manchas verdes. Os infelizes tinham caminhado o dia inteiro, estavam cansados e famintos. Ordinariamente andavam pouco, mas como haviam dormido na areia do rio seco, a viagem progredira bem.”",
+            enunciado: "No realismo de Graciliano Ramos, a intervenção do narrador sobre a condição existencial dos retirantes carrega um juízo de valor. Esse juízo é evidencedo em:",
+            options: [
+                "“Na planície avermelhada os juazeiros alargavam duas manchas verdes.”",
+                "“Os infelizes tinham caminhado o dia inteiro...”",
+                "“...estavam cansados e famintos.”",
+                "“...como haviam dormido na areia do rio seco, a viagem progredira bem.”",
+                "“A caminhada dos personagens durou o período de um dia.”"
+            ],
+            answer: 1
+        },
+        {
+            author: "ROSA, João Guimarães. Grande Sertão: Veredas. Rio de Janeiro: José Olympio, 1956.",
+            text: "“O sertão é do tamanho do mundo. O sertão não tem janelas nem portas. O que vale é a coragem da gente, pois viver é um negócio muito perigoso. Quem sabe o que quer não encontra sossego.”",
+            enunciado: "Na voz do jagunço Riobaldo, a existência é posta sob constante escrutínio filosófico. O trecho que expressa uma opinião genérica e sentenciosa sobre a própria essência da vida humana é:",
+            options: [
+                "“O sertão é do tamanho do mundo.”",
+                "“O sertão não tem janelas nem portas.”",
+                "“Quem sabe o que quer não encontra sossego.”",
+                "“...pois viver é um negócio muito perigoso.”",
+                "“O sertão é um espaço geográfico sem divisões urbanas.”"
+            ],
+            answer: 3
+        },
+        {
+            author: "CUNHA, Euclides da. Os Sertões. Rio de Janeiro: Laemmert, 1902.",
+            text: "“O sertanejo é, antes de tudo, um forte. Não tem o raquitismo exaustivo dos mestiços neurastênicos do litoral. A sua organização robusta carece, contudo, daquela harmonia de linhas que caracteriza as raças plenamente desenvolvidas.”",
+            enunciado: "A prosa de Euclides da Cunha oscila entre o determinismo científico e a impressão pessoal. O trecho que manifesta uma opinião marcadamente preconceituosa e eurocêntrica sobre a estética do sertanejo é:",
+            options: [
+                "“...carece, contudo, daquela harmonia de linhas que caracteriza as raças plenamente desenvolvidas.”",
+                "“O sertanejo é, antes de tudo, um forte.”",
+                "“Não tem o raquitismo exaustivo dos mestiços...”",
+                "“...neurastênicos do litoral.”",
+                "“O autor descreve as características biológicas da população local.”"
+            ],
+            answer: 0
+        },
+        {
+            author: "AZEVEDO, Aluísio. O Cortiço. Rio de Janeiro: B. L. Garnier, 1890.",
+            text: "“E naquela terra encharcada e fumegante, naquela umidade quente e lodosa, começou a minhocar, a esfervilhar, a crescer, um mundo, uma coisa viva, uma generation, que parecia brotar espontânea, ali mesmo, daquele lameiro, e multiplicar-se como larvas no esterco.”",
+            enunciado: "Sob a ótica do Naturalismo, o cortiço é comparado a um organismo inferior. A frase que traduz a opinião depreciativa do narrador quanto à multiplicação dos habitantes desse espaço é:",
+            options: [
+                "“E naquela terra encharcada e fumegante...”",
+                "“...multiplicar-se como larvas no esterco.”",
+                "“...começou a minhocar, a esfervilhar, a crescer, um mundo...”",
+                "“...uma geração, que parecia brotar espontânea, ali mesmo, daquele lameiro...”",
+                "“O acúmulo de umidade propiciava o surgimento de vetores orgânicos.”"
+            ],
+            answer: 1
+        },
+        {
+            author: "VERISSIMO, Erico. O Tempo e o Vento: O Continente. Porto Alegre: Globo, 1949.",
+            text: "“A noite era escura e fria, com um vento minuano que cortava as carnes. Ana Terra recolheu-se mais cedo, pressentindo que o inverno daquele ano de 1781 seria o mais cruel e desolador de que os habitantes do Continente teriam memória.”",
+            enunciado: "O ponto de vista da personagem Ana Terra antecipa as adversidades climáticas e históricas. O trecho que expressa uma opinião em forma de palpite subjetivo e temeroso sobre o futuro é:",
+            options: [
+                "“A noite era escura e fria...”",
+                "“Ana Terra recolheu-se mais cedo...”",
+                "“...com um vento minuano que cortava as carnes.”",
+                "“Os eventos narrados situam-se cronologicamente no ano de 1781.”",
+                "“...pressentindo que o inverno daquele ano de 1781 seria o mais cruel e desolador...”"
+            ],
+            answer: 4
+        }
+    ];
+
+    let currentTab = 0;
+    const totalQuestions = questionsData.length;
+
+    function buildQuiz() {
+        const container = document.getElementById('questions-container');
+        
+        questionsData.forEach((q, index) => {
+            const qIndex = index + 1;
+            const tabDiv = document.createElement('div');
+            tabDiv.id = `tab-${qIndex}`;
+            tabDiv.className = 'tab';
+            
+            const progPercent = (index / totalQuestions) * 100;
+
+            tabDiv.innerHTML = `
+                <div class="question-header">
+                    <span class="question-number">Questão ${qIndex} de ${totalQuestions}</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progPercent}%"></div>
+                    </div>
+                </div>
+                
+                <div class="bibliography">
+                    <i class="fa-solid fa-bookmark"></i> <strong>Referência:</strong> ${q.author}
+                </div>
+                
+                <div class="text-base">
+                    ${q.text}
+                </div>
+                
+                <div class="enunciado">
+                    ${q.enunciado}
+                </div>
+                
+                <div class="options-container">
+                    ${q.options.map((option, optIdx) => `
+                        <label class="option-label">
+                            <input type="radio" name="q${qIndex}" value="${optIdx}" required>
+                            <span class="option-text"><strong>${String.fromCharCode(65 + optIdx)})</strong> ${option}</span>
+                        </label>
+                    `).join('')}
+                </div>
+                
+                <div id="error-q${qIndex}" class="error-message">
+                    <i class="fa-solid fa-exclamation-triangle"></i> Resposta obrigatória para avançar!
+                </div>
+
+                <div class="nav-buttons">
+                    <button type="button" class="btn-secondary" onclick="changeTab(${qIndex}, -1)">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar
+                    </button>
+                    <button type="button" class="btn-primary" onclick="validateAndNext(${qIndex})">
+                        ${qIndex === totalQuestions ? 'Finalizar Atividade <i class="fa-solid fa-check-double"></i>' : 'Próxima <i class="fa-solid fa-arrow-right"></i>'}
+                    </button>
+                </div>
+            `;
+            container.appendChild(tabDiv);
+        });
+    }
+
+    function startQuiz() {
+        const nameInput = document.getElementById('student-name').value.trim();
+        if (nameInput.length < 3) {
+            document.getElementById('name-error').style.display = 'block';
+            return;
+        }
+        document.getElementById('name-error').style.display = 'none';
+        changeTab(0, 1);
+    }
+
+    function changeTab(current, direction) {
+        document.getElementById(`tab-${current}`).classList.remove('active');
+        const nextTab = current + direction;
+        
+        if (nextTab === totalQuestions + 1) {
+            showResults();
+        } else {
+            document.getElementById(`tab-${nextTab}`).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    }
+
+    function validateAndNext(qIndex) {
+        const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+        const errorDiv = document.getElementById(`error-q${qIndex}`);
+        
+        if (!selected) {
+            errorDiv.style.display = 'block';
+            return;
+        }
+        errorDiv.style.display = 'none';
+        changeTab(qIndex, 1);
+    }
+
+    function showResults() {
+        let score = 0;
+        const name = document.getElementById('student-name').value.trim();
+        
+        document.getElementById('display-student-name').innerText = name;
+        
+        const pdfBody = document.getElementById('pdf-body');
+        pdfBody.innerHTML = '';
+
+        questionsData.forEach((q, index) => {
+            const qIndex = index + 1;
+            const selectedOpt = parseInt(document.querySelector(`input[name="q${qIndex}"]:checked`).value);
+            const isCorrect = selectedOpt === q.answer;
+            
+            if (isCorrect) score++;
+
+            // Construção dos blocos com classes customizadas para o layout do PDF
+            const qBlock = document.createElement('div');
+            qBlock.className = `pdf-card-question ${isCorrect ? 'correct-card' : 'error-card'}`;
+            
+            let responseHtml = "";
+            if (isCorrect) {
+                responseHtml = `<div class="pdf-response-box correct-bg">✔ Sua Resposta: ${String.fromCharCode(65 + selectedOpt)}) ${q.options[selectedOpt]} (Acertou)</div>`;
+            } else {
+                responseHtml = `<div class="pdf-response-box error-bg">✘ Sua Resposta: ${String.fromCharCode(65 + selectedOpt)}) ${q.options[selectedOpt]}<br>➡ Alternativa Correta: ${String.fromCharCode(65 + q.answer)}) ${q.options[q.answer]}</div>`;
+            }
+
+            qBlock.innerHTML = `
+                <div class="pdf-q-title">Questão ${qIndex}: ${q.enunciado}</div>
+                <div class="pdf-text-base"><strong>Texto Base (${q.author}):</strong> ${q.text}</div>
+                ${responseHtml}
+                <div class="pdf-descriptor-focus">
+                    <strong>Foco Pedagógico (D14):</strong> A alternativa mapeada apresenta fragmentos carregados de termos modalizadores, adjetivações valorativas ou juízos de valor subjetivos da voz narrativa/lírica, diferenciando-se de fatos brutos ou dados bibliográficos.
+                </div>
+            `;
+            pdfBody.appendChild(qBlock);
+        });
+
+        document.getElementById('score-text').innerText = `${score}/${totalQuestions}`;
+        
+        let feedback = "";
+        if (score >= 9) {
+            feedback = "Excelente! Você demonstra pleno domínio do descritor D14, diferenciando com maestria fatos de opiniões mesmo em textos literários complexos.";
+        } else if (score >= 7) {
+            feedback = "Muito bom! Você possui excelente percepção crítica, mas fique atento aos detalhes adjetivados e à ironia fina nas estruturas narrativas.";
+        } else {
+            feedback = "Recomenda-se revisão. Textos de maior complexidade exigem atenção redobrada aos termos subjetivos ocultos na narrativa ou na voz do eu lírico.";
+        }
+        
+        document.getElementById('feedback-message').innerText = feedback;
+
+        document.getElementById('pdf-student-name').innerText = name;
+        document.getElementById('pdf-score').innerText = `${score}/${totalQuestions}`;
+        document.getElementById('pdf-date').innerText = new Date().toLocaleDateString('pt-BR');
+
+        document.getElementById('tab-final').classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    function generatePDF() {
+        const element = document.getElementById('pdf-report');
+        element.style.display = 'block';
+        
+        const studentName = document.getElementById('student-name').value.trim().replace(/\s+/g, '_');
+        
+        // Configurações do html2pdf refinadas para evitar quebras de linhas feias e bordas borradas
+        const opt = {
+            margin:       [12, 12, 12, 12],
+            filename:     `Foco_Descritores_SAEGO_D14_${studentName}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true, logging: false },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save().then(() => {
+            element.style.display = 'none';
+        });
+    }
+
+    window.onload = buildQuiz;
+</script>
+
+</body>
+</html>

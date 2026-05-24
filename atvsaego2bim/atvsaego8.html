@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAEGO D14 — Fato e Opinião em Reportagens Reais</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary:#0277bd; --secondary:#ffb300; --bg:#e1f5fe; --card:#fff; --text:#2c3e50; --err:#c62828; --ok:#2e7d32; }
+        *{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif}
+        body{background:var(--bg);color:var(--text);display:flex;justify-content:center;align-items:flex-start;min-height:100vh;padding:20px}
+        .container{width:100%;max-width:870px;background:var(--card);border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,.12);overflow:hidden;border-top:10px solid var(--primary);margin:20px auto}
+        .tab{display:none;padding:40px}.tab.active{display:block}
+        .welcome-screen{text-align:center}
+        .saego-icon{width:130px;height:130px;margin:0 auto 20px;background:linear-gradient(135deg,#0288d1,#01579b);border-radius:50%;display:flex;justify-content:center;align-items:center;box-shadow:0 6px 15px rgba(2,119,189,.3)}
+        .saego-icon i{font-size:55px;color:var(--secondary)}
+        .welcome-screen h1{font-size:2rem;color:var(--primary);margin-bottom:8px;font-weight:700}
+        .welcome-screen h2{font-size:.97rem;color:#555;margin-bottom:28px;font-weight:400;line-height:1.7;max-width:620px;margin-left:auto;margin-right:auto}
+        .input-group{margin-bottom:22px;text-align:left;max-width:500px;margin-left:auto;margin-right:auto}
+        .input-group label{display:block;margin-bottom:7px;font-weight:600;color:var(--primary)}
+        .input-group input{width:100%;padding:11px 14px;border:2px solid #ccc;border-radius:8px;font-size:1rem;transition:border-color .3s}
+        .input-group input:focus{outline:none;border-color:var(--primary)}
+        .q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid #edf2f7}
+        .q-number{font-weight:700;color:var(--primary);font-size:1.05rem}
+        .progress-bar{background:#edf2f7;height:8px;border-radius:4px;width:140px;overflow:hidden}
+        .progress-fill{background:var(--secondary);height:100%;width:0%;transition:width .3s}
+        .text-base{font-size:.98rem;line-height:1.85;margin-bottom:10px;text-align:justify;background:#f7fafc;padding:18px 20px;border-radius:6px;border-left:4px solid #718096}
+        .bibliography{font-size:.8rem;color:#4a5568;background:#f8f9fa;padding:10px 13px;border-left:4px solid var(--primary);margin-bottom:20px;border-radius:0 8px 8px 0;line-height:1.5}
+        .bibliography a{color:#0277bd;text-decoration:none;font-weight:500;word-break:break-all}
+        .bibliography a:hover{text-decoration:underline}
+        .enunciado{font-weight:600;margin-bottom:16px;color:#2c3e50;font-size:.95rem;line-height:1.6}
+        .options-container{display:flex;flex-direction:column;gap:9px}
+        .option-label{display:flex;align-items:flex-start;padding:12px 17px;border:2px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:all .2s;background:#fff}
+        .option-label:hover{background:#f0f7ff;border-color:#90caf9}
+        .option-label input{margin-top:3px;margin-right:13px;transform:scale(1.2);accent-color:var(--primary);flex-shrink:0}
+        .option-text{font-size:.9rem;line-height:1.5}
+        .nav-buttons{display:flex;justify-content:space-between;margin-top:26px;padding-top:16px;border-top:2px solid #edf2f7}
+        button{padding:11px 25px;border:none;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;gap:7px}
+        .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:#01579b}
+        .btn-secondary{background:#edf2f7;color:#4a5568}.btn-secondary:hover{background:#e2e8f0}
+        .result-screen{text-align:center}
+        .score-circle{width:145px;height:145px;border-radius:50%;border:8px solid var(--secondary);display:flex;flex-direction:column;justify-content:center;align-items:center;margin:0 auto 22px}
+        .score-num{font-size:2.4rem;font-weight:700;color:var(--primary)}
+        .student-info-result{font-size:1rem;margin-bottom:18px;background:#f8f9fa;padding:13px;border-radius:8px;display:inline-block}
+        .error-message{color:var(--err);font-weight:600;margin-top:9px;display:none;font-size:.88rem}
+
+        /* PDF */
+        #pdf-report{display:none;font-family:'Poppins',sans-serif;background:#fff;color:#2c3e50;padding:10px}
+        .pdf-header{border-bottom:4px solid #0277bd;padding-bottom:14px;margin-bottom:22px}
+        .pdf-title{color:#0277bd;font-size:19px;font-weight:700;text-transform:uppercase;margin-bottom:7px;letter-spacing:.5px}
+        .pdf-meta-table{width:100%;border-collapse:collapse;margin-top:9px;background:#f8f9fa}
+        .pdf-meta-table td{padding:8px 12px;font-size:11.5px;border:1px solid #e2e8f0;color:#34495e}
+        .pdf-card{page-break-inside:avoid;break-inside:avoid;border:1px solid #cbd5e0;border-radius:8px;padding:17px;margin-bottom:20px;background:#fff}
+        .pdf-q-title{font-size:12.5px;font-weight:700;margin-bottom:10px;color:#1a202c;line-height:1.5}
+        .pdf-text{font-size:11.5px;color:#2d3748;background:#f7fafc;padding:11px;border-left:3px solid #718096;margin-bottom:7px;text-align:justify;border-radius:0 6px 6px 0;line-height:1.6}
+        .pdf-biblio{font-size:10.5px;color:#4a5568;margin-bottom:13px;line-height:1.5;background:#edf2f7;padding:8px 10px;border-left:3px solid #0277bd;border-radius:0 4px 4px 0}
+        .pdf-biblio a{color:#0277bd;text-decoration:none;word-break:break-all}
+        .pdf-resp{font-size:11.5px;padding:10px;border-radius:6px;margin-bottom:10px;font-weight:600;line-height:1.5}
+        .pdf-resp.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7}
+        .pdf-resp.err{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a}
+        .pdf-ped{font-size:10.5px;background:#fffde7;border:1px dashed #fbc02d;padding:10px;border-radius:6px;color:#5d4037;line-height:1.6}
+        @media print{body{background:#fff}.container{box-shadow:none;border:none}#pdf-report{display:block!important}}
+    </style>
+</head>
+<body>
+<div class="container" id="quiz-container">
+  <div id="tab-0" class="tab active">
+    <div class="welcome-screen">
+      <div class="saego-icon"><i class="fa-solid fa-newspaper"></i></div>
+      <h1>SAEGO — Descritor D14</h1>
+      <h2><strong>Distinguir um fato da opinião relativa a esse fato.</strong><br>
+      Os textos são trechos de <strong>reportagens jornalísticas reais</strong> — leia o link e verifique. As opiniões e julgamentos de valor já estão presentes no texto original. Identifique-os.</h2>
+      <div class="input-group">
+        <label for="student-name"><i class="fa-solid fa-user"></i> Nome Completo:</label>
+        <input type="text" id="student-name" placeholder="Digite seu nome completo..." required>
+        <div id="name-error" class="error-message"><i class="fa-solid fa-exclamation-triangle"></i> Insira seu nome completo antes de começar.</div>
+      </div>
+      <button type="button" class="btn-primary" onclick="startQuiz()">Iniciar Atividade <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+  <div id="questions-container"></div>
+  <div id="tab-final" class="tab">
+    <div class="result-screen">
+      <div class="saego-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <h1>Atividade Concluída!</h1>
+      <p class="student-info-result">Aluno(a): <strong id="display-student-name"></strong></p>
+      <div class="score-circle">
+        <span class="score-num" id="score-text">0/10</span>
+        <span style="font-size:.78rem;color:#777">Acertos</span>
+      </div>
+      <p id="feedback-message" style="margin-bottom:28px;font-weight:600;font-size:1rem;padding:0 10px"></p>
+      <button type="button" class="btn-primary" onclick="generatePDF()"><i class="fa-solid fa-file-pdf"></i> Salvar Resultado em PDF</button>
+    </div>
+  </div>
+</div>
+
+<div id="pdf-report">
+  <div class="pdf-header">
+    <h1 class="pdf-title">Diagnóstico Individual — SAEGO D14</h1>
+    <table class="pdf-meta-table">
+      <tr>
+        <td style="width:55%"><strong>Estudante:</strong> <span id="pdf-student-name"></span></td>
+        <td style="width:45%"><strong>Data:</strong> <span id="pdf-date"></span></td>
+      </tr>
+      <tr>
+        <td><strong>Matriz:</strong> Língua Portuguesa — Tópico II</td>
+        <td><strong>Descritor:</strong> D14 — Fato e Opinião</td>
+      </tr>
+      <tr>
+        <td><strong>Textos:</strong> Reportagens jornalísticas reais e verificáveis</td>
+        <td><strong>Resultado:</strong> <span id="pdf-score" style="font-weight:bold;color:#0277bd"></span> acertos.</td>
+      </tr>
+    </table>
+  </div>
+  <div id="pdf-body"></div>
+</div>
+
+<script>
+const questionsData = [
+  // ─── Q1 ── InfoAmazonia / desmatamento 30,6% ──────────────────────────────
+  {
+    author_html: `PEREIRA, Jullie. Desmatamento na Amazônia Legal cai 30,6% em 2024. <strong>InfoAmazonia</strong>, São Paulo, 6 nov. 2024. Disponível em: &lt;<a href='https://infoamazonia.org/2024/11/06/desmatamento-na-amazonia-legal-cai-306-em-2024/' target='_blank'>infoamazonia.org/2024/11/06/desmatamento-na-amazonia-legal-cai-306-em-2024/</a>&gt;. Acesso em: 23 mai. 2026.`,
+    text: `O desmatamento na Amazônia apresentou uma queda de 30,6% em 2024, a maior dos últimos 15 anos, segundo dados do Projeto de Monitoramento do Desmatamento na Amazônia Legal por Satélite (Prodes), sistema do Instituto Nacional de Pesquisas Espaciais (Inpe). Foram detectados 6.288 km² de perda de floresta entre agosto de 2023 e julho deste ano, contra 9.001 km² entre agosto de 2022 e julho do ano anterior. Segundo Mariana Napolitano, diretora de estratégia do WWF-Brasil, essa "queda significativa no desmatamento da Amazônia pelo terceiro ano consecutivo é, sem dúvida, uma boa notícia".`,
+    enunciado: `Na reportagem da InfoAmazonia sobre o desmatamento na Amazônia em 2024, assinale a alternativa que contém uma OPINIÃO e não um dado factual verificável:`,
+    options: [
+      `"O desmatamento na Amazônia apresentou uma queda de 30,6% em 2024, a maior dos últimos 15 anos..."`,
+      `"Foram detectados 6.288 km² de perda de floresta entre agosto de 2023 e julho deste ano..."`,
+      `"...contra 9.001 km² entre agosto de 2022 e julho do ano anterior."`,
+      `"...essa queda significativa no desmatamento da Amazônia pelo terceiro ano consecutivo é, sem dúvida, uma boa notícia." (Mariana Napolitano, WWF-Brasil)`,
+      `Os dados foram divulgados pelo sistema Prodes, do Instituto Nacional de Pesquisas Espaciais (Inpe).`
+    ],
+    answer: 3
+  },
+
+  // ─── Q2 ── InfoAmazonia / declaração Observatório do Clima ────────────────
+  {
+    author_html: `PEREIRA, Jullie. Desmatamento na Amazônia Legal cai 30,6% em 2024. <strong>InfoAmazonia</strong>, São Paulo, 6 nov. 2024. Disponível em: &lt;<a href='https://infoamazonia.org/2024/11/06/desmatamento-na-amazonia-legal-cai-306-em-2024/' target='_blank'>infoamazonia.org/2024/11/06/desmatamento-na-amazonia-legal-cai-306-em-2024/</a>&gt;. Acesso em: 23 mai. 2026.`,
+    text: `A redução do desmatamento em 2024, em comparação com o Prodes de 2022, último ano do governo de Jair Bolsonaro, quando a taxa foi de 11.594 km², foi de 46%. O Pará lidera o desmatamento entre os estados da Amazônia Legal, com 2.362 km² desmatados, mas apresentou redução de 28% em comparação com o ano anterior. O secretário-executivo do Observatório do Clima, Marcio Astrini, afirmou: "O mundo precisa de um líder na agenda de clima, e o governo Lula tem todas as chances de assumir esse papel. Compromissos pelo fim do desmatamento e a eliminação do uso de combustíveis fósseis são o passaporte para essa liderança."`,
+    enunciado: `No mesmo texto da InfoAmazonia, identifique o fragmento que expressa um JULGAMENTO DE VALOR sobre capacidades e oportunidades políticas, e NÃO uma constatação objetiva:`,
+    options: [
+      `"A redução do desmatamento em 2024, em comparação com o Prodes de 2022 [...], foi de 46%."`,
+      `"O Pará lidera o desmatamento entre os estados da Amazônia Legal, com 2.362 km² desmatados..."`,
+      `"...apresentou redução de 28% em comparação com o ano anterior."`,
+      `"O mundo precisa de um líder na agenda de clima, e o governo Lula tem todas as chances de assumir esse papel." (Marcio Astrini, Observatório do Clima)`,
+      `"O Observatório do Clima (OC) é uma rede da sociedade civil que reúne 119 entidades."`
+    ],
+    answer: 3
+  },
+
+  // ─── Q3 ── Agência Brasil / Kurupi itaata ────────────────────────────────
+  {
+    author_html: `AGÊNCIA BRASIL. Nova espécie de dinossauro carnívoro é descoberta em São Paulo. <strong>Agência Brasil</strong>, Rio de Janeiro, 3 out. 2021. Disponível em: &lt;<a href='https://agenciabrasil.ebc.com.br/geral/noticia/2021-10/nova-especie-de-dinossauro-carnivoro-e-descoberta-em-sao-paulo' target='_blank'>agenciabrasil.ebc.com.br/geral/noticia/2021-10/nova-especie...</a>&gt;. Acesso em: 23 mai. 2026.`,
+    text: `Há cerca de 70 milhões de anos, no período conhecido como Cretáceo Superior, o recém-descoberto Kurupi itaata buscava presas nas terras de São Paulo. Medindo por volta de 5 metros de comprimento, o predador carnívoro é parente do Tiranossauro Rex e é o quarto membro da família dos abelissaurídeos encontrado no Brasil. Este é o primeiro dinossauro carnívoro encontrado na cidade de Monte Alto, que é considerada a terra dos dinossauros brasileiros. Segundo o estudo que revelou os achados, o Kurupi itaata pode ter sido um dos últimos grandes carnívoros a andar na região antes do evento que extinguiu os dinossauros.`,
+    enunciado: `Na reportagem da Agência Brasil sobre a descoberta do Kurupi itaata, qual fragmento apresenta uma INFERÊNCIA PROVÁVEL dos pesquisadores — e não um dado comprovado — sobre o animal?`,
+    options: [
+      `"Há cerca de 70 milhões de anos, no período conhecido como Cretáceo Superior, o Kurupi itaata buscava presas nas terras de São Paulo."`,
+      `"Medindo por volta de 5 metros de comprimento, o predador carnívoro é parente do Tiranossauro Rex..."`,
+      `"...é o quarto membro da família dos abelissaurídeos encontrado no Brasil."`,
+      `"Este é o primeiro dinossauro carnívoro encontrado na cidade de Monte Alto..."`,
+      `"...o Kurupi itaata pode ter sido um dos últimos grandes carnívoros a andar na região antes do evento que extinguiu os dinossauros."`
+    ],
+    answer: 4
+  },
+
+  // ─── Q4 ── CNN Brasil / Google demite Lemoine ────────────────────────────
+  {
+    author_html: `CNN BRASIL. Google demite engenheiro por dizer que inteligência artificial tinha consciência. <strong>CNN Brasil</strong>, São Paulo, 23 jul. 2022. Disponível em: &lt;<a href='https://www.cnnbrasil.com.br/tecnologia/google-demite-engenheiro-por-dizer-que-inteligencia-artificial-tinha-consciencia/' target='_blank'>cnnbrasil.com.br/tecnologia/google-demite-engenheiro...</a>&gt;. Acesso em: 23 mai. 2026.`,
+    text: `O Google disse, nesta sexta-feira (22), que demitiu um engenheiro de software sênior que alegou que o chatbot de inteligência artificial da empresa, LaMDA, tinha consciência própria. O Google colocou o engenheiro de software Blake Lemoine de licença no mês passado e disse que ele violou as políticas da empresa e que considerou suas alegações sobre o LaMDA "totalmente infundadas". "É lamentável que, apesar do longo envolvimento neste tópico, Blake ainda tenha optado por violar persistentemente políticas claras de emprego e segurança de dados que incluem a necessidade de proteger as informações do produto", disse um porta-voz do Google em e-mail à Reuters.`,
+    enunciado: `Na reportagem da CNN Brasil sobre a demissão de Blake Lemoine, assinale a alternativa que apresenta um JULGAMENTO DE VALOR expresso por uma fonte identificada e NÃO um registro objetivo dos acontecimentos:`,
+    options: [
+      `"O Google disse, nesta sexta-feira (22), que demitiu um engenheiro de software sênior..."`,
+      `"...que alegou que o chatbot de inteligência artificial da empresa, LaMDA, tinha consciência própria."`,
+      `"O Google colocou o engenheiro de software Blake Lemoine de licença no mês passado..."`,
+      `"...disse que ele violou as políticas da empresa e que considerou suas alegações sobre o LaMDA 'totalmente infundadas'."`,
+      `"'É lamentável que, apesar do longo envolvimento neste tópico, Blake ainda tenha optado por violar persistentemente políticas claras...' — porta-voz do Google"`
+    ],
+    answer: 4
+  },
+
+  // ─── Q5 ── CNN Brasil / Lemoine — Google e cientistas descartam ──────────
+  {
+    author_html: `CNN BRASIL. Google demite engenheiro por dizer que inteligência artificial tinha consciência. <strong>CNN Brasil</strong>, São Paulo, 23 jul. 2022. Disponível em: &lt;<a href='https://www.cnnbrasil.com.br/tecnologia/google-demite-engenheiro-por-dizer-que-inteligencia-artificial-tinha-consciencia/' target='_blank'>cnnbrasil.com.br/tecnologia/google-demite-engenheiro...</a>&gt;. Acesso em: 23 mai. 2026.`,
+    text: `O Google e muitos cientistas importantes foram rápidos em descartar as opiniões de Lemoine como equivocadas, dizendo que o LaMDA é simplesmente um algoritmo complexo projetado para gerar uma linguagem humana convincente. A demissão de Lemoine foi relatada pela primeira vez pela Big Technology, uma newsletter de tecnologia e sociedade. No ano passado, o Google disse que o LaMDA — Language Model for Dialogue Applications — foi construído com base nas pesquisas da empresa, mostrando que modelos de linguagem baseados em transformadores treinados em diálogo podem aprender a falar essencialmente sobre qualquer coisa.`,
+    enunciado: `Nesse trecho da mesma reportagem da CNN Brasil, qual fragmento contém uma AVALIAÇÃO QUALITATIVA do jornalista sobre as opiniões de Lemoine, e não apenas o registro do que disseram os cientistas?`,
+    options: [
+      `"O Google e muitos cientistas importantes foram rápidos em descartar as opiniões de Lemoine como equivocadas..."`,
+      `"...dizendo que o LaMDA é simplesmente um algoritmo complexo projetado para gerar uma linguagem humana convincente."`,
+      `"A demissão de Lemoine foi relatada pela primeira vez pela Big Technology, uma newsletter de tecnologia e sociedade."`,
+      `"...o Google disse que o LaMDA [...] foi construído com base nas pesquisas da empresa..."`,
+      `"...modelos de linguagem baseados em transformadores treinados em diálogo podem aprender a falar essencialmente sobre qualquer coisa."`
+    ],
+    answer: 0
+  },
+
+  // ─── Q6 ── Agência Brasil / vacina dengue Qdenga ─────────────────────────
+  {
+    author_html: `AGÊNCIA BRASIL. Confira o que se sabe até agora sobre a vacina contra a dengue no SUS. <strong>Agência Brasil</strong>, Brasília, 23 jan. 2024. Disponível em: &lt;<a href='https://agenciabrasil.ebc.com.br/saude/noticia/2024-01/confira-o-que-se-sabe-ate-agora-sobre-vacina-contra-dengue' target='_blank'>agenciabrasil.ebc.com.br/saude/noticia/2024-01/confira-o-que-se-sabe...</a>&gt;. Acesso em: 23 mai. 2026.`,
+    text: `A vacina demonstrou ser eficaz contra o DENV-1 em 69,8% dos casos e contra o DENV-2 em 95,1%. A eficácia contra hospitalizações por dengue confirmada laboratorialmente foi de 84,1%, com estimativas semelhantes entre soropositivos (85,9%) e soronegativos (79,3%). A Anvisa aprovou o registro da Qdenga em março de 2023. Segundo o laboratório Takeda, a previsão é que sejam entregues 5.082 milhões de doses entre fevereiro e novembro de 2024, sendo que o esquema vacinal é composto por duas doses com intervalo de 90 dias entre elas. A Qdenga é exclusiva para a proteção contra a dengue e não protege contra outras arboviroses, como zika, chikungunya e febre amarela.`,
+    enunciado: `No texto da Agência Brasil sobre a vacina Qdenga, todos os fragmentos abaixo são factuais — EXCETO um, que apresenta uma estimativa ainda não confirmada no momento da publicação. Assinale-o:`,
+    options: [
+      `"A vacina demonstrou ser eficaz contra o DENV-1 em 69,8% dos casos e contra o DENV-2 em 95,1%."`,
+      `"A eficácia contra hospitalizações por dengue [...] foi de 84,1%..."`,
+      `"A Anvisa aprovou o registro da Qdenga em março de 2023."`,
+      `"...a previsão é que sejam entregues 5.082 milhões de doses entre fevereiro e novembro de 2024..." (Laboratório Takeda)`,
+      `"A Qdenga é exclusiva para a proteção contra a dengue e não protege contra outras arboviroses..."`
+    ],
+    answer: 3
+  },
+
+  // ─── Q7 ── CNN Brasil / semana 4 dias — resultado pesquisa ───────────────
+  {
+    author_html: `CNN BRASIL. Semana de 4 dias de trabalho tem aumento de produtividade e redução no estresse, mostram testes. <strong>CNN Brasil</strong>, São Paulo, mai. 2024. Disponível em: &lt;<a href='https://www.cnnbrasil.com.br/blogs/debora-oliveira/economia/semana-de-4-dias-de-trabalho-tem-aumento-de-produtividade-e-reducao-no-estresse-mostram-testes/' target='_blank'>cnnbrasil.com.br/blogs/debora-oliveira/economia/semana-de-4-dias...</a>&gt;. Acesso em: 23 mai. 2026.`,
+    text: `Vinte e uma empresas participaram do projeto-piloto da semana de 4 dias no Brasil, com sedes em São Paulo, Rio de Janeiro, Belo Horizonte, Campinas e Porto Alegre. Após três meses de testes em parceria com a Fundação Getulio Vargas (FGV) e o Boston College, foi constatado que 61,5% das companhias tiveram melhoria na execução de projetos e 58,5% obtiveram mais criatividade. Para Renata Rivetti, responsável por trazer a iniciativa ao Brasil, "há muitas empresas que ainda se sentem desorientadas sobre o modelo de trabalho. Com o resultado desta pesquisa, acredito que terão um olhar mais focado no que realmente importa dentro do cenário corporativo".`,
+    enunciado: `Na reportagem da CNN Brasil sobre os testes da semana de 4 dias, assinale o fragmento que apresenta uma OPINIÃO PESSOAL sobre o impacto futuro dos resultados, e não uma constatação objetiva da pesquisa:`,
+    options: [
+      `"Vinte e uma empresas participaram do projeto-piloto da semana de 4 dias no Brasil..."`,
+      `"...foi constatado que 61,5% das companhias tiveram melhoria na execução de projetos..."`,
+      `"...58,5% obtiveram mais criatividade."`,
+      `"Com o resultado desta pesquisa, acredito que terão um olhar mais focado no que realmente importa dentro do cenário corporativo." (Renata Rivetti)`,
+      `O projeto foi conduzido em parceria com a Fundação Getulio Vargas (FGV) e o Boston College.`
+    ],
+    answer: 3
+  },
+
+  // ─── Q8 ── InfoAmazonia / declaração ministra Marina Silva ───────────────
+  {
+    author_html: `PEREIRA, Jullie. Desmatamento na Amazônia Legal cai 30,6% em 2024. <strong>InfoAmazonia</strong>, São Paulo, 6 nov. 2024. Disponível em: &lt;<a href='https://infoamazonia.org/2024/11/06/desmatamento-na-amazonia-legal-cai-306-em-2024/' target='_blank'>infoamazonia.org/2024/11/06/desmatamento-na-amazonia-legal-cai-306-em-2024/</a>&gt;. Acesso em: 23 mai. 2026.`,
+    text: `Os dados foram divulgados no início da noite desta quarta-feira (6) no Palácio do Planalto, em Brasília. A ministra do Meio Ambiente e Mudança do Clima, Marina Silva, afirmou que, para alcançar esse resultado, os esforços foram conjuntos entre os órgãos federais e estaduais. "Não existe um setor ou até mesmo um país que consiga fazer uma redução nessa magnitude num período tão curto de tempo como esse que nós estamos conseguindo. Eu concluo dizendo que política pública bem desenhada, instituições públicas bem estruturadas e uma postura republicana de deixar os técnicos trabalharem com a ciência, faz a diferença", afirmou a ministra.`,
+    enunciado: `Na reportagem da InfoAmazonia, a declaração da ministra Marina Silva contém tanto fatos quanto opiniões. O trecho da fala da ministra que exprime uma AVALIAÇÃO DE VALOR sobre o que "faz a diferença" — e não um dado verificável — é:`,
+    options: [
+      `"Os dados foram divulgados no início da noite desta quarta-feira (6) no Palácio do Planalto, em Brasília."`,
+      `"A ministra [...] afirmou que, para alcançar esse resultado, os esforços foram conjuntos entre os órgãos federais e estaduais."`,
+      `"Não existe um setor ou até mesmo um país que consiga fazer uma redução nessa magnitude num período tão curto de tempo..."`,
+      `"...política pública bem desenhada, instituições públicas bem estruturadas e uma postura republicana de deixar os técnicos trabalharem com a ciência, faz a diferença." (Marina Silva)`,
+      `O Pará lidera o desmatamento entre os estados, com 2.362 km² desmatados no período.`
+    ],
+    answer: 3
+  },
+
+  // ─── Q9 ── Agência Brasil / Kurupi itaata — fala do paleontólogo ──────────
+  {
+    author_html: `AGÊNCIA BRASIL. Nova espécie de dinossauro carnívoro é descoberta em São Paulo. <strong>Agência Brasil</strong>, Rio de Janeiro, 3 out. 2021. Disponível em: &lt;<a href='https://agenciabrasil.ebc.com.br/geral/noticia/2021-10/nova-especie-de-dinossauro-carnivoro-e-descoberta-em-sao-paulo' target='_blank'>agenciabrasil.ebc.com.br/geral/noticia/2021-10/nova-especie...</a>&gt;. Acesso em: 23 mai. 2026.`,
+    text: `Os estudos e escavações que resultaram no achado do Kurupi itaata estavam em curso desde 2002, mas apenas em 2014 os pesquisadores compreenderam a importância dos achados. Assim como os demais membros da espécie, o dinossauro tinha braços curtos e membros inferiores potentes, o que conferia a habilidade de perseguir e capturar presas rápidas. Segundo o paleontólogo responsável pela pesquisa, "com os ossos que nós encontramos — o osso da bacia, 3 vértebras e outros fragmentos — é possível dizer que este é um animal extraordinário e um dos achados mais significativos da paleontologia brasileira recente".`,
+    enunciado: `Na reportagem sobre o Kurupi itaata, qual dos fragmentos abaixo expressa uma AVALIAÇÃO DE IMPORTÂNCIA feita pelo paleontólogo — um juízo subjetivo — e não uma descrição anatômica ou temporal do achado?`,
+    options: [
+      `"Os estudos e escavações que resultaram no achado estavam em curso desde 2002..."`,
+      `"...apenas em 2014 os pesquisadores compreenderam a importância dos achados."`,
+      `"...o dinossauro tinha braços curtos e membros inferiores potentes..."`,
+      `"...o que conferia a habilidade de perseguir e capturar presas rápidas."`,
+      `"...este é um animal extraordinário e um dos achados mais significativos da paleontologia brasileira recente." (paleontólogo responsável)`
+    ],
+    answer: 4
+  },
+
+  // ─── Q10 ── CNN Brasil / semana 4 dias — fala sobre desorientação ─────────
+  {
+    author_html: `CNN BRASIL. Semana de 4 dias de trabalho tem aumento de produtividade e redução no estresse, mostram testes. <strong>CNN Brasil</strong>, São Paulo, mai. 2024. Disponível em: &lt;<a href='https://www.cnnbrasil.com.br/blogs/debora-oliveira/economia/semana-de-4-dias-de-trabalho-tem-aumento-de-produtividade-e-reducao-no-estresse-mostram-testes/' target='_blank'>cnnbrasil.com.br/blogs/debora-oliveira/economia/semana-de-4-dias...</a>&gt;. Acesso em: 23 mai. 2026.`,
+    text: `Para os colaboradores das empresas que participaram dos testes, as melhorias ultrapassaram o ambiente corporativo: 78,1% tiveram aumento na disposição para momentos de lazer com amigos ou em família, e 57,9% afirmam que conseguem conciliar melhor a vida pessoal e a profissional. Além disso, 44% afirmaram melhora na relação com os gestores. Para Renata Rivetti, "há muitas empresas que ainda se sentem desorientadas sobre o modelo de trabalho, se retornam ao presencial, se permanecem no híbrido, se a produtividade é resultado de mais horas trabalhadas. Muitas ainda não sabem como conduzir os negócios neste novo cenário."`,
+    enunciado: `Nesse trecho da reportagem da CNN Brasil, a fala de Renata Rivetti combina fatos e opiniões. O elemento que configura uma INTERPRETAÇÃO SUBJETIVA do cenário corporativo — e não um dado mensurado pela pesquisa — é:`,
+    options: [
+      `"...78,1% tiveram aumento na disposição para momentos de lazer com amigos ou em família..."`,
+      `"...57,9% afirmam que conseguem conciliar melhor a vida pessoal e a profissional."`,
+      `"44% afirmaram melhora na relação com os gestores."`,
+      `As melhorias nos índices foram apuradas após três meses de projeto-piloto com 21 empresas.`,
+      `"...há muitas empresas que ainda se sentem desorientadas sobre o modelo de trabalho [...]. Muitas ainda não sabem como conduzir os negócios neste novo cenário." (Renata Rivetti)`
+    ],
+    answer: 4
+  }
+];
+
+function shuffleOptions() {
+  questionsData.forEach(q => {
+    const correct = q.options[q.answer];
+    for (let i = q.options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [q.options[i], q.options[j]] = [q.options[j], q.options[i]];
+    }
+    q.answer = q.options.indexOf(correct);
+  });
+}
+
+const totalQ = questionsData.length;
+
+function buildQuiz() {
+  shuffleOptions();
+  const container = document.getElementById('questions-container');
+  questionsData.forEach((q, idx) => {
+    const qn = idx + 1;
+    const div = document.createElement('div');
+    div.id = `tab-${qn}`;
+    div.className = 'tab';
+    div.innerHTML = `
+      <div class="q-header">
+        <span class="q-number"><i class="fa-solid fa-newspaper" style="margin-right:6px"></i>Questão ${qn} de ${totalQ}</span>
+        <div class="progress-bar"><div class="progress-fill" style="width:${(idx/totalQ)*100}%"></div></div>
+      </div>
+      <div class="text-base">${q.text}</div>
+      <div class="bibliography">${q.author_html}</div>
+      <div class="enunciado">${q.enunciado}</div>
+      <div class="options-container">
+        ${q.options.map((opt, oi) => `
+          <label class="option-label">
+            <input type="radio" name="q${qn}" value="${oi}" required>
+            <span class="option-text"><strong>${String.fromCharCode(65+oi)})</strong> ${opt}</span>
+          </label>`).join('')}
+      </div>
+      <div id="err-${qn}" class="error-message"><i class="fa-solid fa-exclamation-triangle"></i> Selecione uma alternativa para avançar.</div>
+      <div class="nav-buttons">
+        <button type="button" class="btn-secondary" onclick="go(${qn},-1)"><i class="fa-solid fa-arrow-left"></i> Voltar</button>
+        <button type="button" class="btn-primary" onclick="next(${qn})">
+          ${qn===totalQ?'Finalizar <i class="fa-solid fa-check-double"></i>':'Próxima <i class="fa-solid fa-arrow-right"></i>'}
+        </button>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function startQuiz() {
+  const n = document.getElementById('student-name').value.trim();
+  if (n.length < 3) { document.getElementById('name-error').style.display='block'; return; }
+  document.getElementById('name-error').style.display='none';
+  go(0, 1);
+}
+
+function go(cur, dir) {
+  document.getElementById(`tab-${cur}`).classList.remove('active');
+  const nxt = cur + dir;
+  if (nxt === totalQ + 1) showResults();
+  else { document.getElementById(`tab-${nxt}`).classList.add('active'); window.scrollTo(0,0); }
+}
+
+function next(qn) {
+  const sel = document.querySelector(`input[name="q${qn}"]:checked`);
+  const err = document.getElementById(`err-${qn}`);
+  if (!sel) { err.style.display='block'; return; }
+  err.style.display='none';
+  go(qn, 1);
+}
+
+function showResults() {
+  let score = 0;
+  const name = document.getElementById('student-name').value.trim();
+  document.getElementById('display-student-name').innerText = name;
+  const body = document.getElementById('pdf-body');
+  body.innerHTML = '';
+
+  questionsData.forEach((q, idx) => {
+    const qn = idx + 1;
+    const sel = parseInt(document.querySelector(`input[name="q${qn}"]:checked`).value);
+    const ok = sel === q.answer;
+    if (ok) score++;
+    const card = document.createElement('div');
+    card.className = 'pdf-card';
+    card.innerHTML = `
+      <div class="pdf-q-title">Questão ${qn}: ${q.enunciado}</div>
+      <div class="pdf-text"><strong>Texto-base:</strong> ${q.text}</div>
+      <div class="pdf-biblio">${q.author_html}</div>
+      ${ok
+        ? `<div class="pdf-resp ok">✔ Sua resposta: ${String.fromCharCode(65+sel)}) ${q.options[sel]} (Correta)</div>`
+        : `<div class="pdf-resp err">✘ Sua resposta: ${String.fromCharCode(65+sel)}) ${q.options[sel]}<br>➡ Correta: ${String.fromCharCode(65+q.answer)}) ${q.options[q.answer]}</div>`
+      }
+      <div class="pdf-ped"><strong>Análise pedagógica (D14):</strong> Fatos são informações verificáveis em fontes externas (dados, registros, eventos). Opiniões são julgamentos de valor, avaliações de importância, previsões ou interpretações — mesmo quando expressas por especialistas ou fontes autorizadas dentro da notícia. A chave é perguntar: isso pode ser provado? Ou depende do ponto de vista de quem fala?</div>`;
+    body.appendChild(card);
+  });
+
+  document.getElementById('score-text').innerText = `${score}/${totalQ}`;
+  const fb = score>=9 ? 'Excelente! Você domina o D14 com segurança, distinguindo opiniões de fontes identificadas dos dados objetivos das reportagens.'
+    : score>=7 ? 'Muito bom! Atenção aos casos em que a opinião vem de especialistas ou fontes autorizadas — ela continua sendo opinião, não fato.'
+    : 'Continue praticando. Lembre-se: dados numéricos e eventos verificáveis são fatos; avaliações de importância, previsões e julgamentos são opiniões, mesmo em boca de especialistas.';
+  document.getElementById('feedback-message').innerText = fb;
+  document.getElementById('pdf-student-name').innerText = name;
+  document.getElementById('pdf-score').innerText = `${score}/${totalQ}`;
+  document.getElementById('pdf-date').innerText = new Date().toLocaleDateString('pt-BR');
+  document.getElementById('tab-final').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function generatePDF() {
+  const el = document.getElementById('pdf-report');
+  el.style.display = 'block';
+  const sn = document.getElementById('student-name').value.trim().replace(/\s+/g,'_');
+  html2pdf().set({
+    margin:[14,11,14,11],
+    filename:`SAEGO_D14_${sn}.pdf`,
+    image:{type:'jpeg',quality:.98},
+    html2canvas:{scale:2,useCORS:true,logging:false},
+    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+  }).from(el).save().then(()=>{ el.style.display='none'; });
+}
+
+window.onload = buildQuiz;
+</script>
+</body>
+</html>
