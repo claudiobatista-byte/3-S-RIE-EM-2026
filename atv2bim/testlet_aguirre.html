@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Testlet – Guerra Fria 2.0 (Mariano Aguirre) – 20 questões</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root{
+  --verde:#2e7d32; --verde-esc:#1b5e20; --gold:#B8920A; --gold-lt:#eef7e8;
+  --bg:#eef6ee; --line:#d6e2d4; --sel-bg:#eaf4ec;
+  --ok:#2d6a1f; --ok-bg:#e8f5e2; --err:#8b1a1a; --err-bg:#fdeaea;
+  --box-bg:#f1faf0; --top-h:50px;
+  --chist:#1a4a6b; --cgeo:#00695c; --cfil:#4a148c; --csoc:#7b1f1f;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;font-family:'Segoe UI',sans-serif;background:var(--bg);}
+
+/* ── CAPA ── */
+#capa{position:fixed;inset:0;z-index:999;background:linear-gradient(145deg,var(--verde-esc),var(--verde));display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;}
+.capa-box{width:100%;max-width:680px;border:2px solid var(--gold);border-radius:20px;background:rgba(0,0,0,0.22);padding:32px 26px;text-align:center;color:white;}
+.capa-box h1{font-size:clamp(1.5rem,5.5vw,2.6rem);letter-spacing:2px;margin-bottom:6px;}
+.capa-box h2{font-size:clamp(0.9rem,3vw,1.35rem);color:var(--gold-lt);text-transform:uppercase;margin-bottom:6px;}
+.capa-box h3{font-size:clamp(0.75rem,2.3vw,0.95rem);opacity:.85;font-weight:normal;margin-bottom:14px;}
+.capa-desc{font-size:clamp(0.7rem,2vw,0.85rem);opacity:.82;margin-bottom:18px;line-height:1.6;}
+.capa-input{width:100%;padding:13px;margin-bottom:16px;border-radius:8px;border:none;outline:none;font-size:clamp(0.9rem,3vw,1.1rem);text-align:center;}
+.btn-iniciar{background:var(--gold);color:#3a2e00;border:none;padding:15px 40px;font-size:clamp(1rem,3.5vw,1.25rem);font-weight:900;border-radius:50px;cursor:pointer;box-shadow:0 8px 0 #8a6d08;transition:.2s;width:100%;max-width:320px;}
+.btn-iniciar:active{transform:translateY(3px);box-shadow:0 5px 0 #8a6d08;}
+.tlet-preview{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 18px;text-align:left;}
+.tp-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:9px 12px;}
+.tp-card strong{display:block;font-size:.72rem;color:var(--gold-lt);margin-bottom:3px;}
+.tp-card span{font-size:.68rem;opacity:.78;line-height:1.45;}
+
+/* ── TOPBAR ── */
+#topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--verde-esc);border-bottom:3px solid var(--gold);display:none;flex-direction:column;}
+.ttabs{display:flex;overflow-x:auto;}
+.tbtn{flex-shrink:0;background:none;border:none;padding:0 16px;height:var(--top-h);color:rgba(255,255,255,.55);font-weight:bold;cursor:pointer;text-transform:uppercase;font-size:clamp(0.58rem,1.9vw,0.74rem);border-bottom:3px solid transparent;white-space:nowrap;}
+.tbtn.on{color:white;border-bottom-color:var(--gold);}
+#user-bar{background:rgba(0,0,0,.18);padding:4px 14px;font-size:0.70rem;color:white;display:flex;gap:12px;flex-wrap:wrap;}
+
+/* ── CONTEÚDO ── */
+#conteudo{position:fixed;top:0;left:0;right:0;bottom:0;display:none;overflow:hidden;}
+.panel{display:none;position:absolute;inset:0;overflow-y:auto;padding:16px;}
+.panel.on{display:block;}
+
+/* ── SIMULADO ── */
+#pq{padding:0;display:none;flex-direction:column;}
+#pq.on{display:flex;}
+#stage-scroll{flex:1;overflow-y:auto;padding:14px 12px 10px;-webkit-overflow-scrolling:touch;}
+.stage{max-width:840px;margin:0 auto;}
+
+/* ── NAV ── */
+#qnav{flex-shrink:0;background:var(--verde-esc);border-top:3px solid var(--gold);padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{flex:1;padding:12px 8px;background:transparent;border:2px solid white;color:white;border-radius:8px;cursor:pointer;font-weight:bold;text-transform:uppercase;font-size:clamp(0.62rem,2.3vw,0.82rem);white-space:nowrap;transition:.2s;}
+.nav-btn:active{background:white;color:var(--verde-esc);}
+#q-counter{flex:1.6;text-align:center;color:white;font-weight:bold;font-size:clamp(0.65rem,2.2vw,0.85rem);line-height:1.4;}
+
+/* ── CARD QUESTÃO ── */
+.q-card{background:white;border-radius:14px;display:none;box-shadow:0 4px 18px rgba(0,0,0,.07);overflow:hidden;margin-bottom:4px;}
+.q-card.active{display:block;}
+.tlet-faixa{padding:10px 18px;color:white;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+.tf-hist{background:var(--chist);}
+.tf-geo{background:var(--cgeo);}
+.tf-fil{background:var(--cfil);}
+.tf-soc{background:var(--csoc);}
+.tlet-faixa-titulo{font-size:clamp(.72rem,2.2vw,.88rem);font-weight:700;opacity:.95;}
+.tlet-faixa-num{font-size:clamp(.62rem,1.8vw,.75rem);opacity:.8;}
+
+.texto-base-wrap{background:#fbfdf8;border-bottom:2px dashed var(--gold);padding:16px 18px;}
+.texto-base-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#8a6d08;margin-bottom:8px;}
+.trecho{font-style:italic;border-left:4px solid var(--gold);padding:12px 14px;background:var(--gold-lt);line-height:1.78;font-size:clamp(0.8rem,2.4vw,0.97rem);color:#333;border-radius:0 6px 6px 0;}
+.fonte{font-size:.68rem;color:#888;margin-top:8px;padding-left:4px;}
+
+.q-body{padding:16px 18px;}
+.q-header-line{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.q-badge{display:inline-block;background:var(--gold);color:#3a2e00;padding:4px 13px;border-radius:5px;font-weight:bold;font-size:.8rem;}
+.disc-pill{display:inline-block;padding:3px 11px;border-radius:20px;font-size:.65rem;font-weight:700;color:white;}
+.dp-hist{background:var(--chist);}
+.dp-geo{background:var(--cgeo);}
+.dp-fil{background:var(--cfil);}
+.dp-soc{background:var(--csoc);}
+.desc-tag{font-size:.62rem;color:#666;border:1px solid #cdd;border-radius:10px;padding:2px 8px;font-weight:700;}
+.enunciado{font-weight:800;font-size:clamp(0.88rem,2.6vw,1.1rem);margin-bottom:15px;color:var(--verde-esc);line-height:1.42;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:12px 11px;margin-bottom:8px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;transition:.15s;font-size:clamp(0.8rem,2.4vw,0.95rem);line-height:1.45;}
+.opt:active{background:var(--gold-lt);}
+.opt.selected{border-color:var(--verde);background:var(--sel-bg);font-weight:700;}
+.opt b{min-width:22px;flex-shrink:0;}
+
+/* ── OVERLAY / POP-UP RESULTADO ── */
+#overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.72);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
+#overlay.on{display:flex;}
+.overlay-box{max-width:640px;width:100%;margin:auto;}
+#report-card{background:var(--verde-esc);color:white;padding:22px;border-radius:16px;border-left:8px solid var(--gold);}
+#report-card h2{font-size:clamp(1rem,4vw,1.35rem);margin-bottom:10px;letter-spacing:.5px;}
+.rep-line{font-size:clamp(.78rem,2.4vw,.92rem);margin-bottom:4px;}
+.rep-line b{color:#fff;}
+.stat-box{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;}
+.stat-card{background:rgba(255,255,255,.1);padding:14px 5px;border-radius:8px;text-align:center;}
+.stat-val{display:block;font-size:clamp(1.4rem,5vw,2rem);font-weight:900;color:var(--gold);}
+.stat-label{font-size:clamp(.58rem,1.6vw,.72rem);text-transform:uppercase;opacity:.85;}
+.testlet-chips{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;}
+.tchip{background:rgba(255,255,255,.12);border-radius:8px;padding:7px 12px;font-size:.72rem;}
+.overlay-btns{display:flex;gap:10px;flex-direction:column;margin-top:16px;}
+.ob{padding:13px;border-radius:10px;font-weight:700;font-size:clamp(.85rem,3vw,1rem);cursor:pointer;border:none;width:100%;}
+.ob-gold{background:var(--gold);color:#3a2e00;}
+.ob-green{background:var(--verde);color:white;}
+.ob-out{background:white;color:var(--verde-esc);border:2px solid var(--verde);}
+
+/* ── PAINEL DESCRITORES ── */
+.hd-wrap{max-width:840px;margin:0 auto;}
+.hd-card{background:white;border-radius:12px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.05);overflow:hidden;}
+.hd-head{padding:12px 18px;color:white;font-weight:700;font-size:clamp(.82rem,2.5vw,.98rem);}
+.hd-head-hist{background:var(--chist);}
+.hd-head-geo{background:var(--cgeo);}
+.hd-head-fil{background:var(--cfil);}
+.hd-head-soc{background:var(--csoc);}
+.hd-body{padding:14px 18px;}
+.hd-desc{font-size:clamp(.78rem,2.3vw,.92rem);line-height:1.6;color:#222;margin-bottom:10px;}
+.hd-desc .cod{font-weight:800;color:var(--verde-esc);}
+.hd-sub{font-size:clamp(.74rem,2.2vw,.86rem);line-height:1.55;color:#444;margin:5px 0 5px 16px;position:relative;padding-left:14px;}
+.hd-sub::before{content:"▪";position:absolute;left:0;color:var(--gold);}
+
+/* ── GABARITO ── */
+.gab-wrap{max-width:840px;margin:0 auto;}
+.gab-header{background:var(--verde-esc);color:white;padding:18px;border-radius:10px;margin-bottom:16px;border-left:8px solid var(--gold);}
+.gab-filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.fbtn{padding:6px 14px;border:1.5px solid var(--line);border-radius:20px;background:white;cursor:pointer;font-size:.74rem;font-weight:700;}
+.fbtn.on{background:var(--verde-esc);color:white;border-color:var(--verde-esc);}
+.gab-item{background:white;margin-bottom:10px;padding:15px 16px;border-radius:10px;border:1.5px solid var(--line);}
+.badge-res{padding:4px 10px;border-radius:5px;font-weight:bold;font-size:.68rem;float:right;text-transform:uppercase;}
+.badge-res.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+.badge-res.err{background:var(--err-bg);color:var(--err);border:1px solid var(--err);}
+.resp-det{margin-top:9px;padding:8px 10px;border-radius:6px;font-size:.85rem;}
+.resp-det.ok{background:var(--ok-bg);color:var(--ok);}
+.resp-det.err{background:var(--err-bg);color:var(--err);}
+
+@media(max-width:480px){
+  .tlet-preview{grid-template-columns:1fr;}
+  .stat-box{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ CAPA ══ -->
+<div id="capa">
+  <div class="capa-box">
+    <h1>📚 CIÊNCIAS HUMANAS</h1>
+    <h2>Guerra Fria 2.0 — Mariano Aguirre</h2>
+    <h3>Colégio Est. Rodolfo de Oliveira &nbsp;·&nbsp; 3ª Série &nbsp;·&nbsp; Geopolítica Contemporânea &nbsp;·&nbsp; Prof. Claudio A.</h3>
+    <p class="capa-desc">
+      <strong style="color:var(--gold-lt)">5 Testlets · 20 questões</strong><br>
+      A partir de cinco trechos do texto <strong style="color:var(--gold-lt)">"A Tese de Mariano Aguirre e o Mundo em Chamas"</strong>,
+      cada testlet apresenta um <strong style="color:var(--gold-lt)">texto-base</strong> interrogado pelas quatro disciplinas
+      (História, Geografia, Filosofia e Sociologia).
+    </p>
+    <div class="tlet-preview">
+      <div class="tp-card"><strong>Testlet 1 — Q1 a Q4</strong><span>A Tese Central: a ordem global fraturada</span></div>
+      <div class="tp-card"><strong>Testlet 2 — Q5 a Q8</strong><span>A Guerra da Ucrânia: o epicentro da fratura</span></div>
+      <div class="tp-card"><strong>Testlet 3 — Q9 a Q12</strong><span>Gaza: os limites da ordem liberal</span></div>
+      <div class="tp-card"><strong>Testlet 4 — Q13 a Q16</strong><span>Irã e o Trumpismo: a zona cinzenta</span></div>
+      <div class="tp-card" style="grid-column:1/-1"><strong>Testlet 5 — Q17 a Q20</strong><span>China e Rússia: a aliança da conveniência</span></div>
+    </div>
+    <input class="capa-input" id="nome-input" type="text" placeholder="Digite seu nome completo" autocomplete="off">
+    <br>
+    <button class="btn-iniciar" onclick="iniciar()">INICIAR AVALIAÇÃO ▶</button>
+  </div>
+</div>
+
+<!-- ══ TOPBAR ══ -->
+<div id="topbar">
+  <div class="ttabs">
+    <button class="tbtn" id="tab-q-btn" onclick="tab('q',this)">📝 Testlets</button>
+    <button class="tbtn" id="tab-g-btn" onclick="tab('g',this)" style="display:none">📊 Gabarito</button>
+  </div>
+  <div id="user-bar">
+    <span id="display-nome">ALUNO: —</span>
+    <span>PROF. CLAUDIO A.</span>
+    <span>GEOPOLÍTICA · 3ª SÉRIE</span>
+  </div>
+</div>
+
+<!-- ══ CONTEÚDO ══ -->
+<div id="conteudo">
+
+  <!-- PAINEL QUESTÕES -->
+  <div class="panel" id="pq">
+    <div id="stage-scroll">
+      <div class="stage" id="stage"></div>
+    </div>
+    <div id="qnav">
+      <button class="nav-btn" onclick="changeQ(-1)">◀ Anterior</button>
+      <div id="q-counter">Q 1 / 20</div>
+      <button class="nav-btn" id="btn-next" onclick="changeQ(1)">Próxima ▶</button>
+    </div>
+  </div>
+
+  <!-- PAINEL GABARITO -->
+  <div class="panel" id="pg">
+    <div class="gab-wrap">
+      <div class="gab-filtros">
+        <button class="fbtn on" onclick="filtrarGab('all',this)">Todas</button>
+        <button class="fbtn" onclick="filtrarGab('ok',this)">✔ Acertos</button>
+        <button class="fbtn" onclick="filtrarGab('err',this)">✘ Erros</button>
+      </div>
+      <div id="gab-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ OVERLAY / POP-UP: RELATÓRIO DE DESEMPENHO ══ -->
+<div id="overlay">
+  <div class="overlay-box">
+    <div id="report-card"><!-- gerado dinamicamente --></div>
+    <div class="overlay-btns">
+      <button class="ob ob-gold" id="btn-save-img" onclick="salvarImagem()">💾 Salvar Relatório como Imagem</button>
+      <button class="ob ob-green" onclick="showResults()">Ver Gabarito Completo 📊</button>
+      <button class="ob ob-out" onclick="document.getElementById('overlay').classList.remove('on')">Revisar Questões</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   BANCO DE QUESTÕES — alinhado à Matriz de Habilidades (GO-EMCHS)
+   Cada questão contempla um descritor oficial, na disciplina específica.
+══════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════
+   BANCO DE QUESTÕES — baseado EXCLUSIVAMENTE no texto:
+   "Guerra Fria 2.0: A Tese de Mariano Aguirre e o Mundo em Chamas"
+   5 Testlets (um trecho por seção) × 4 disciplinas = 20 questões
+══════════════════════════════════════════════════════════════ */
+
+const FONTE = `AGUIRRE, Mariano. Guerra Fria 2.0: a tese de Mariano Aguirre e o mundo em chamas. (Texto adaptado para fins didáticos)`;
+
+/* TEXTO-BASE 1 — A Tese Central */
+const T1 = `"Mariano Aguirre argumenta que o mundo não entrou num conflito bipolar simples — uma reedição nostálgica da disputa EUA–URSS —, mas numa ordem global fraturada, marcada por múltiplos polos de poder, competição sistêmica entre democracias liberais e regimes autoritários, guerras por procuração (proxy wars) e uma perigosa erosão das instituições multilaterais construídas no pós-1945. A novidade desta 'versão 2.0' está na sua complexidade difusa: não há mais dois campos claramente delimitados, mas alianças fluidas, sobreposições de interesse e uma lógica de confronto que se manifesta tanto em campos de batalha físicos quanto em arenas econômicas, tecnológicas e informacionais. O autor alerta para o risco de que a humanidade normalize o estado permanente de conflito — tornando a guerra não uma exceção, mas o pano de fundo estrutural da política internacional."`;
+
+/* TEXTO-BASE 2 — A Guerra da Ucrânia */
+const T2 = `"A invasão russa de fevereiro de 2022 não é apenas uma disputa territorial: é o momento em que a retórica da 'nova guerra fria' se materializou em trincheiras reais. A OTAN foi revitalizada, a Europa foi forçada a rearmar-se e a Rússia consolidou seu papel como potência revisionista. Mas o conflito não produziu dois blocos sólidos: países do Sul Global — Brasil, Índia, África do Sul — recusaram-se a condenar a Rússia de forma inequívoca, demonstrando a multilateralidade ambígua que Aguirre descreve. A guerra na Ucrânia é, simultaneamente, uma guerra convencional, uma guerra de informação, uma batalha de drones e inteligência artificial e um conflito de narrativas geopolíticas — a síntese do que o autor chama de conflito híbrido da era 2.0."`;
+
+/* TEXTO-BASE 3 — Gaza: os limites da 'ordem liberal' */
+const T3 = `"A guerra na Faixa de Gaza expõe uma contradição da tese de Aguirre: o Ocidente, que proclama defender uma 'ordem baseada em regras', mostrou-se incapaz — ou pouco disposto — a aplicar essas mesmas regras de forma universal. O apoio irrestrito de Washington a Israel, enquanto condenava Moscou pelo uso indiscriminado da força, revelou ao Sul Global uma hierarquia moral implícita nas democracias liberais. Para Aguirre, Gaza mostra como a Guerra Fria 2.0 opera: as grandes potências não lutam diretamente entre si, mas financiam, armam e legitimam atores regionais. O Hamas é sustentado por redes que passam pelo Irã; Israel é apoiado pelos EUA; China e Rússia exploram diplomaticamente o conflito para desgastar a credibilidade ocidental. Gaza é um tabuleiro geopolítico no qual a Guerra Fria 2.0 se joga com vidas reais."`;
+
+/* TEXTO-BASE 4 — Irã e o Trumpismo */
+const T4 = `"O Irã não é uma superpotência, mas é um multiplicador de instabilidade que alimenta o modelo de proxy wars (guerra por procuração). Pelo Hezbollah no Líbano, pelo Hamas em Gaza, pelos Houthis no Iêmen e por milícias no Iraque, Teerã projeta poder regional sem confrontar diretamente os EUA, enquanto seu programa nuclear segue como a variável mais perigosa do Oriente Médio. Essa zona cinzenta — em que Estados não se declaram formalmente em guerra, mas vivem em conflito indireto permanente — é a norma, não a exceção. Soma-se a isso o 'trumpismo': mais que unilateralismo, ele representa uma implosão da coerência interna do bloco ocidental, ao questionar o compromisso dos EUA com a OTAN e pressionar aliados. Sem liderança ocidental coesa, os regimes autoritários ganham espaço, e a Europa passa a discutir a autonomia estratégica."`;
+
+/* TEXTO-BASE 5 — China e Rússia: a aliança da conveniência */
+const T5 = `"Aguirre descreve as grandes potências autoritárias não como um bloco monolítico — como foi o mundo soviético —, mas como parceiros de conveniência estratégica. A aliança sino-russa é real, porém limitada: a China não quer a derrota da Rússia na Ucrânia, pois isso sinalizaria a resiliência da ordem ocidental, mas também não quer ser arrastada para um conflito que prejudique seu comércio global. Pequim joga um xadrez de longo prazo: consolida influência na África, Ásia e América Latina pela Belt and Road Initiative (BRI) e lidera a corrida tecnológica em semicondutores e inteligência artificial. Moscou, cada vez mais dependente de Pequim após o isolamento econômico, perde a posição de parceiro igual e torna-se sócio menor. Para Aguirre, o maior risco não é uma terceira guerra mundial declarada, mas a erosão silenciosa da capacidade humana de construir paz: quando a guerra se torna permanente, deixa de ser uma crise a resolver e passa a ser o próprio sistema."`;
+
+const TN1 = 'Testlet 1 — A Tese Central: a ordem global fraturada';
+const TN2 = 'Testlet 2 — A Guerra da Ucrânia: o epicentro da fratura';
+const TN3 = 'Testlet 3 — Gaza: os limites da ordem liberal';
+const TN4 = 'Testlet 4 — Irã e o Trumpismo: a zona cinzenta';
+const TN5 = 'Testlet 5 — China e Rússia: a aliança da conveniência';
+
+const Questoes = [
+
+/* ═══════════ TESTLET 1 · A TESE CENTRAL ═══════════ */
+
+/* HISTÓRIA */
+{tlet:1,tnome:TN1,texto:T1,fonte:FONTE,disc:'hist',desc:'Ordem do pós-1945',
+ e:'Ao afirmar que há uma "erosão das instituições multilaterais construídas no pós-1945", o texto remete a um conjunto de organismos e acordos que:',
+ o:['Surgiram após a Segunda Guerra Mundial para organizar a cooperação e a segurança internacionais e que hoje, segundo o autor, perdem força e eficácia.',
+    'Foram criados ainda no século XIX, durante o chamado Concerto Europeu, e não têm relação com as guerras mundiais.',
+    'Nunca existiram de fato, sendo apenas uma previsão do autor para o futuro da política internacional.',
+    'Foram fundados pela Rússia e pela China para substituir a antiga ordem ocidental.',
+    'Dizem respeito exclusivamente a tratados comerciais regionais, sem qualquer dimensão política ou de segurança.'],
+ a:0,
+ f:'A "ordem do pós-1945" remete às instituições multilaterais criadas após a Segunda Guerra (como a ONU) para organizar cooperação e segurança. O texto sustenta justamente que essa arquitetura sofre erosão na "Guerra Fria 2.0".'},
+
+/* GEOGRAFIA */
+{tlet:1,tnome:TN1,texto:T1,fonte:FONTE,disc:'geo',desc:'Multipolaridade',
+ e:'A expressão "múltiplos polos de poder", presente no texto, caracteriza geograficamente uma ordem internacional:',
+ o:['Unipolar, centrada em uma única superpotência que dita as regras a todas as demais nações.',
+    'Bipolar e estável, idêntica à divisão entre Estados Unidos e União Soviética da Guerra Fria clássica.',
+    'Multipolar, em que diferentes centros de poder coexistem e disputam influência por meio de alianças fluidas.',
+    'Sem qualquer centro de poder, marcada pela total ausência de Estados influentes no mundo.',
+    'Restrita ao continente europeu, sem repercussões para as demais regiões do planeta.'],
+ a:2,
+ f:'"Múltiplos polos de poder" e "alianças fluidas" descrevem uma ordem multipolar: vários centros de poder coexistem e competem, em oposição tanto à unipolaridade quanto à bipolaridade rígida.'},
+
+/* FILOSOFIA */
+{tlet:1,tnome:TN1,texto:T1,fonte:FONTE,disc:'fil',desc:'Ética da guerra e da paz',
+ e:'O alerta do autor para o risco de que a humanidade "normalize o estado permanente de conflito" pode ser problematizado filosoficamente como:',
+ o:['Uma defesa da guerra como caminho natural e desejável para o progresso das sociedades humanas.',
+    'Uma recomendação para que os Estados abandonem a diplomacia em favor da força.',
+    'A constatação de que a paz é impossível e de que, portanto, qualquer reflexão ética é inútil.',
+    'A afirmação de que a guerra não possui qualquer dimensão moral ou política relevante.',
+    'Uma crítica à banalização da guerra, que, ao tornar-se rotina, enfraquece a paz como valor e horizonte ético a ser construído.'],
+ a:4,
+ f:'Normalizar o conflito é torná-lo "pano de fundo estrutural". Filosoficamente, isso banaliza a guerra e corrói a paz como valor ético — uma crítica, e não uma defesa, da guerra.'},
+
+/* SOCIOLOGIA */
+{tlet:1,tnome:TN1,texto:T1,fonte:FONTE,disc:'soc',desc:'Instituições e legitimidade',
+ e:'A "competição sistêmica entre democracias liberais e regimes autoritários", mencionada no texto, expressa sociologicamente:',
+ o:['A ausência total de qualquer disputa de valores e modelos de organização social no mundo atual.',
+    'A convergência completa entre democracias e autoritarismos, que passaram a adotar o mesmo modelo político.',
+    'O fim das ideologias e a despolitização definitiva das relações internacionais contemporâneas.',
+    'Uma disputa entre diferentes modelos de organização política e social, que concorrem por legitimidade no cenário internacional.',
+    'A vitória definitiva das democracias liberais sobre todas as demais formas de governo.'],
+ a:3,
+ f:'A "competição sistêmica" indica que diferentes modelos de organização política e social (democracias liberais × regimes autoritários) disputam legitimidade — leitura sociológica do conflito de valores e instituições.'},
+
+/* ═══════════ TESTLET 2 · A GUERRA DA UCRÂNIA ═══════════ */
+
+/* HISTÓRIA */
+{tlet:2,tnome:TN2,texto:T2,fonte:FONTE,disc:'hist',desc:'OTAN e ordem europeia',
+ e:'Segundo o texto, uma das consequências históricas da invasão russa de 2022 foi:',
+ o:['O fim imediato da OTAN, esvaziada por não ter mais função após o conflito.',
+    'A revitalização da OTAN e o rearmamento europeu, com a Rússia consolidando-se como potência revisionista.',
+    'A adesão da Rússia à OTAN, encerrando as tensões com o bloco ocidental.',
+    'A criação de um bloco único e sólido reunindo Ocidente, Rússia e Sul Global.',
+    'A retirada dos Estados Unidos de todos os assuntos de segurança da Europa.'],
+ a:1,
+ f:'O texto afirma que a invasão "revitalizou a OTAN", forçou o rearmamento europeu e consolidou a Rússia como potência revisionista — efeitos históricos diretos do conflito.'},
+
+/* GEOGRAFIA */
+{tlet:2,tnome:TN2,texto:T2,fonte:FONTE,disc:'geo',desc:'Sul Global',
+ e:'A recusa de Brasil, Índia e África do Sul em condenar a Rússia de forma inequívoca evidencia, geograficamente:',
+ o:['O alinhamento automático desses países ao bloco ocidental liderado pelos Estados Unidos.',
+    'A subordinação integral do Sul Global à política externa russa.',
+    'A inexistência de qualquer interesse próprio desses países no cenário internacional.',
+    'A unificação dos países do Sul Global em um bloco militar rival da OTAN.',
+    'A "multilateralidade ambígua" do Sul Global, que preserva autonomia e não se alinha automaticamente a nenhuma potência.'],
+ a:4,
+ f:'A recusa em condenar a Rússia de forma inequívoca ilustra a "multilateralidade ambígua": o Sul Global preserva autonomia diplomática e não se alinha automaticamente a nenhum polo.'},
+
+/* FILOSOFIA */
+{tlet:2,tnome:TN2,texto:T2,fonte:FONTE,disc:'fil',desc:'Guerra de narrativas e verdade',
+ e:'Ao descrever a guerra como também "uma guerra de informação" e "um conflito de narrativas", o texto convida a refletir filosoficamente sobre:',
+ o:['A disputa pela verdade e pela construção do sentido dos fatos, em que narrativas concorrentes buscam legitimar cada lado.',
+    'A irrelevância da verdade nos conflitos, já que toda informação seria igualmente válida.',
+    'A certeza de que a informação tecnológica é sempre neutra e isenta de interesses.',
+    'O fim de qualquer possibilidade de distinguir fatos de opiniões na vida pública.',
+    'A ideia de que a informação não exerce nenhum papel nas guerras contemporâneas.'],
+ a:0,
+ f:'"Guerra de informação" e "conflito de narrativas" remetem à disputa filosófica pela verdade e pela construção do sentido dos fatos: narrativas concorrentes buscam legitimar cada lado.'},
+
+/* SOCIOLOGIA */
+{tlet:2,tnome:TN2,texto:T2,fonte:FONTE,disc:'soc',desc:'Conflito híbrido e tecnologia',
+ e:'A noção de "conflito híbrido", que combina meios convencionais, drones, inteligência artificial e informação, evidencia sociologicamente que a guerra contemporânea:',
+ o:['Tornou-se exclusivamente digital, sem qualquer dimensão militar ou territorial.',
+    'Deixou de afetar a vida das populações civis e das sociedades envolvidas.',
+    'Mobiliza múltiplas dimensões — militar, tecnológica e informacional — e atravessa diferentes esferas da vida social.',
+    'Restringe-se ao confronto direto entre exércitos regulares em campo aberto.',
+    'Eliminou a importância da tecnologia e da informação nos conflitos atuais.'],
+ a:2,
+ f:'O conflito híbrido combina dimensões militar, tecnológica e informacional, atravessando diferentes esferas da vida social — uma transformação sociológica da própria natureza da guerra.'},
+
+/* ═══════════ TESTLET 3 · GAZA ═══════════ */
+
+/* HISTÓRIA */
+{tlet:3,tnome:TN3,texto:T3,fonte:FONTE,disc:'hist',desc:'Proxy wars',
+ e:'O texto afirma que, em Gaza, "as grandes potências não lutam diretamente entre si, mas financiam, armam e legitimam atores regionais". Esse padrão corresponde historicamente ao conceito de:',
+ o:['Guerra total, em que toda a população e a economia são mobilizadas para o confronto direto.',
+    'Guerra de trincheiras, característica dos confrontos da Primeira Guerra Mundial.',
+    'Guerra civil, restrita aos limites internos de um único Estado nacional.',
+    'Guerra por procuração (proxy war), em que potências apoiam atores locais em vez de se enfrentarem diretamente.',
+    'Conflito sem qualquer participação ou interesse das grandes potências.'],
+ a:3,
+ f:'Financiar, armar e legitimar atores regionais em vez de combater diretamente é a definição de guerra por procuração (proxy war), conceito central na análise de Aguirre.'},
+
+/* GEOGRAFIA */
+{tlet:3,tnome:TN3,texto:T3,fonte:FONTE,disc:'geo',desc:'Tabuleiro geopolítico',
+ e:'Ao apresentar Gaza como "um tabuleiro geopolítico" envolvendo EUA, Israel, Irã, China e Rússia, o texto evidencia que o conflito local:',
+ o:['Está completamente isolado, sem relação com interesses de potências externas à região.',
+    'Articula interesses de potências globais que projetam poder e influência sobre o Oriente Médio.',
+    'Diz respeito apenas a uma disputa religiosa, sem dimensão territorial ou estratégica.',
+    'Foi inteiramente resolvido pela atuação imparcial dos organismos internacionais.',
+    'Não possui qualquer importância para a geopolítica mundial contemporânea.'],
+ a:1,
+ f:'O texto mostra que o conflito em Gaza articula interesses de potências globais (EUA, Irã, China, Rússia) que projetam poder sobre o Oriente Médio — um "tabuleiro geopolítico".'},
+
+/* FILOSOFIA */
+{tlet:3,tnome:TN3,texto:T3,fonte:FONTE,disc:'fil',desc:'Universalidade moral',
+ e:'A "hierarquia moral implícita" denunciada no texto — condenar Moscou e, ao mesmo tempo, apoiar Israel — coloca em questão filosófica:',
+ o:['A coerência e a universalidade dos princípios morais, quando aplicados de forma seletiva conforme interesses.',
+    'A ideia de que princípios morais devem variar livremente segundo a conveniência de cada potência.',
+    'A inexistência de qualquer relação entre ética e política internacional.',
+    'A certeza de que as democracias liberais aplicam as regras de modo perfeitamente imparcial.',
+    'A irrelevância dos direitos humanos como critério de julgamento das ações dos Estados.'],
+ a:0,
+ f:'Aplicar regras de modo seletivo expõe a tensão entre a pretensão de universalidade dos princípios morais e o uso conveniente deles — problema ético clássico levantado pela "hierarquia moral implícita".'},
+
+/* SOCIOLOGIA */
+{tlet:3,tnome:TN3,texto:T3,fonte:FONTE,disc:'soc',desc:'Legitimidade e credibilidade',
+ e:'Ao revelar ao Sul Global uma aplicação seletiva da "ordem baseada em regras", o episódio descrito tende a:',
+ o:['Fortalecer de forma definitiva a autoridade moral das democracias liberais.',
+    'Não produzir qualquer efeito sobre a percepção internacional das potências ocidentais.',
+    'Aumentar a confiança dos países periféricos nas instituições lideradas pelo Ocidente.',
+    'Corroer a credibilidade e a legitimidade das democracias liberais perante os países do Sul Global.',
+    'Eliminar as desigualdades de poder entre potências centrais e periféricas.'],
+ a:3,
+ f:'A aplicação seletiva das regras é percebida como incoerência (dois pesos), corroendo sociologicamente a credibilidade e a legitimidade das democracias liberais perante o Sul Global.'},
+
+/* ═══════════ TESTLET 4 · IRÃ E TRUMPISMO ═══════════ */
+
+/* HISTÓRIA */
+{tlet:4,tnome:TN4,texto:T4,fonte:FONTE,disc:'hist',desc:'Zona cinzenta',
+ e:'A "zona cinzenta — em que Estados não se declaram formalmente em guerra, mas vivem em conflito indireto permanente" é apresentada pelo texto como:',
+ o:['Uma exceção rara e passageira na história das relações internacionais.',
+    'Uma forma de cooperação pacífica entre Estados rivais.',
+    'Uma situação restrita exclusivamente ao território do Irã.',
+    'Um período de paz duradoura entre todas as potências do Oriente Médio.',
+    'A norma da Guerra Fria 2.0, e não a exceção, marcando os conflitos contemporâneos.'],
+ a:4,
+ f:'O texto afirma explicitamente que a "zona cinzenta" de conflito indireto permanente é "a norma, não a exceção" na Guerra Fria 2.0.'},
+
+/* GEOGRAFIA */
+{tlet:4,tnome:TN4,texto:T4,fonte:FONTE,disc:'geo',desc:'Projeção de poder regional',
+ e:'A atuação do Irã por meio do Hezbollah (Líbano), do Hamas (Gaza), dos Houthis (Iêmen) e de milícias (Iraque) demonstra geograficamente:',
+ o:['Que o Irã abandonou qualquer ambição de influência sobre o Oriente Médio.',
+    'Que o país se limita a defender exclusivamente o seu próprio território nacional.',
+    'A projeção de poder regional do Irã sobre diferentes territórios, sem confronto direto com os EUA.',
+    'A inexistência de redes de aliados ou de influência iraniana fora de suas fronteiras.',
+    'O alinhamento militar direto e declarado entre o Irã e os Estados Unidos.'],
+ a:2,
+ f:'Por meio de aliados em vários territórios (Líbano, Gaza, Iêmen, Iraque), o Irã projeta poder regional sem enfrentar diretamente os EUA — leitura geopolítica da influência iraniana.'},
+
+/* FILOSOFIA */
+{tlet:4,tnome:TN4,texto:T4,fonte:FONTE,disc:'fil',desc:'Autonomia e decisão política',
+ e:'A discussão europeia sobre "autonomia estratégica", citada no texto, relaciona-se filosoficamente à ideia de:',
+ o:['Dependência absoluta, em que um povo abre mão de qualquer capacidade de autodeterminação.',
+    'Autonomia, isto é, a capacidade de um agente coletivo definir por si mesmo seus próprios rumos e decisões.',
+    'Irracionalidade política, em que decisões são tomadas sem qualquer deliberação.',
+    'Submissão voluntária e permanente a uma potência externa, sem possibilidade de escolha.',
+    'Neutralidade absoluta diante de qualquer questão internacional.'],
+ a:1,
+ f:'"Autonomia estratégica" remete ao conceito filosófico de autonomia: a capacidade de um agente (aqui, a Europa) de definir por si mesmo seus rumos, em vez de depender de decisões alheias.'},
+
+/* SOCIOLOGIA */
+{tlet:4,tnome:TN4,texto:T4,fonte:FONTE,disc:'soc',desc:'Coesão do bloco ocidental',
+ e:'Ao definir o "trumpismo" como "uma implosão da coerência interna do bloco ocidental", o texto destaca sociologicamente:',
+ o:['O fortalecimento da unidade e da coesão entre os países ocidentais.',
+    'A ausência de qualquer relação entre política interna e ordem internacional.',
+    'A criação de uma nova aliança militar entre o Ocidente e a Rússia.',
+    'O enfraquecimento da coesão interna do bloco ocidental, que abre espaço para o avanço de regimes autoritários.',
+    'A eliminação das divergências políticas dentro dos países ocidentais.'],
+ a:3,
+ f:'"Implosão da coerência interna" indica enfraquecimento da coesão do bloco ocidental; segundo o texto, sem liderança coesa, os regimes autoritários ganham espaço.'},
+
+/* ═══════════ TESTLET 5 · CHINA E RÚSSIA ═══════════ */
+
+/* HISTÓRIA */
+{tlet:5,tnome:TN5,texto:T5,fonte:FONTE,disc:'hist',desc:'Blocos e alianças',
+ e:'Ao contrastar a aliança sino-russa atual com "o mundo soviético", o texto sustenta que, diferentemente do bloco soviético monolítico, a parceria entre China e Rússia é:',
+ o:['Uma aliança de conveniência estratégica, real, porém limitada por interesses distintos.',
+    'Uma fusão política completa entre os dois países em um único Estado.',
+    'Um bloco rígido e monolítico, idêntico ao da antiga União Soviética e seus satélites.',
+    'Uma aliança inexistente, sem qualquer cooperação entre Moscou e Pequim.',
+    'Uma união voltada exclusivamente para fins culturais e esportivos.'],
+ a:0,
+ f:'O texto define a relação como "parceria de conveniência estratégica" — real, mas limitada por interesses distintos —, em contraste com o antigo bloco soviético monolítico.'},
+
+/* GEOGRAFIA */
+{tlet:5,tnome:TN5,texto:T5,fonte:FONTE,disc:'geo',desc:'Geoeconomia (BRI)',
+ e:'A consolidação da influência chinesa "na África, Ásia e América Latina pela Belt and Road Initiative (BRI)" caracteriza-se geograficamente como:',
+ o:['Uma estratégia de isolamento da China em relação ao restante do mundo.',
+    'Uma renúncia da China a qualquer projeção de poder internacional.',
+    'A redução da presença chinesa nos continentes mencionados no texto.',
+    'Um projeto restrito ao território interno da própria China.',
+    'Uma estratégia geoeconômica de projeção de influência por meio de infraestrutura e investimentos em escala global.'],
+ a:4,
+ f:'A BRI é uma estratégia geoeconômica de projeção de influência por meio de infraestrutura e investimentos em vários continentes — expansão do poder chinês em escala global.'},
+
+/* FILOSOFIA */
+{tlet:5,tnome:TN5,texto:T5,fonte:FONTE,disc:'fil',desc:'A paz como construção',
+ e:'A advertência de que "o maior risco é a erosão silenciosa da capacidade humana de construir paz" sustenta filosoficamente a ideia de que a paz:',
+ o:['É um estado natural e automático, que dispensa qualquer esforço humano para existir.',
+    'É uma construção humana que exige esforço contínuo e que pode ser perdida quando a guerra se normaliza.',
+    'É impossível e, portanto, não deve ser perseguida como objetivo ético ou político.',
+    'Equivale simplesmente à vitória militar de uma das potências sobre as demais.',
+    'Não tem qualquer relação com a ação e a responsabilidade dos seres humanos.'],
+ a:1,
+ f:'Dizer que se perde a "capacidade de construir paz" pressupõe que a paz é uma construção humana, fruto de esforço contínuo — e não um estado natural ou automático.'},
+
+/* SOCIOLOGIA */
+{tlet:5,tnome:TN5,texto:T5,fonte:FONTE,disc:'soc',desc:'Hierarquias e dependência',
+ e:'A observação de que "Moscou, cada vez mais dependente de Pequim, torna-se sócio menor" ilustra sociologicamente:',
+ o:['Uma relação de plena igualdade e simetria entre os dois países.',
+    'O desaparecimento de qualquer relação de poder entre Rússia e China.',
+    'Uma relação assimétrica e hierárquica, em constante renegociação, marcada pela crescente dependência russa.',
+    'A inexistência de hierarquias nas relações entre as grandes potências.',
+    'A independência total da Rússia em relação à China no cenário global.'],
+ a:2,
+ f:'A passagem de "parceiro igual" a "sócio menor" descreve uma relação assimétrica e hierárquica, em constante renegociação — leitura sociológica da dependência crescente da Rússia em relação à China.'}
+
+];
+
+/* ══════════════════════════════════════════════
+   LÓGICA DO QUIZ
+══════════════════════════════════════════════ */
+const TOTAL = Questoes.length;
+const TESTLETS = [...new Set(Questoes.map(q => q.tlet))].sort((a,b)=>a-b);
+let cur = 0;
+const resp = new Array(TOTAL).fill(null);
+
+const pillClass = {hist:'dp-hist', geo:'dp-geo', fil:'dp-fil', soc:'dp-soc'};
+const pillLabel = {hist:'História', geo:'Geografia', fil:'Filosofia', soc:'Sociologia'};
+const faixaClass = {hist:'tf-hist', geo:'tf-geo', fil:'tf-fil', soc:'tf-soc'};
+
+function calcTopbarH(){ return document.getElementById('topbar').offsetHeight; }
+function ajustarConteudo(){ document.getElementById('conteudo').style.top = calcTopbarH() + 'px'; }
+
+function iniciar(){
+  const nome = document.getElementById('nome-input').value.trim();
+  if(!nome){ alert('Por favor, digite seu nome.'); return; }
+  document.getElementById('display-nome').textContent = 'ALUNO: ' + nome.toUpperCase();
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('topbar').style.display = 'flex';
+  document.getElementById('conteudo').style.display = 'block';
+  ajustarConteudo();
+  window.addEventListener('resize', ajustarConteudo);
+  render();
+  tab('q', document.getElementById('tab-q-btn'));
+}
+
+function render(){
+  const stage = document.getElementById('stage');
+  stage.innerHTML = '';
+  Questoes.forEach((q, i) => {
+    const d = document.createElement('div');
+    d.className = 'q-card' + (i === cur ? ' active' : '');
+    d.id = 'q' + i;
+    d.innerHTML =
+      '<div class="tlet-faixa ' + faixaClass[q.disc] + '">' +
+        '<span class="tlet-faixa-titulo">' + q.tnome + '</span>' +
+        '<span class="tlet-faixa-num">Q ' + (i+1) + '/' + TOTAL + '</span>' +
+      '</div>' +
+      '<div class="texto-base-wrap">' +
+        '<div class="texto-base-label">📄 Texto-base compartilhado do testlet</div>' +
+        '<div class="trecho">' + q.texto + '</div>' +
+        '<div class="fonte">' + q.fonte + '</div>' +
+      '</div>' +
+      '<div class="q-body">' +
+        '<div class="q-header-line">' +
+          '<div class="q-badge">QUESTÃO ' + (i+1) + '</div>' +
+          '<span class="disc-pill ' + pillClass[q.disc] + '">' + pillLabel[q.disc] + '</span>' +
+          '<span class="desc-tag">' + q.desc + '</span>' +
+        '</div>' +
+        '<div class="enunciado">' + q.e + '</div>' +
+        '<div class="opts">' +
+          q.o.map((op, oi) =>
+            '<div class="opt' + (resp[i] === oi ? ' selected' : '') +
+            '" onclick="pick(' + i + ',' + oi + ',this)">' +
+            '<b>' + String.fromCharCode(65+oi) + ')</b><span>' + op + '</span></div>'
+          ).join('') +
+        '</div>' +
+      '</div>';
+    stage.appendChild(d);
+  });
+  atualizarNav();
+}
+
+function pick(qi, oi, el){
+  resp[qi] = oi;
+  el.parentElement.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function changeQ(step){
+  const nx = cur + step;
+  if(nx >= 0 && nx < TOTAL){
+    document.getElementById('q' + cur).classList.remove('active');
+    cur = nx;
+    document.getElementById('q' + cur).classList.add('active');
+    document.getElementById('stage-scroll').scrollTop = 0;
+    atualizarNav();
+  } else if(nx === TOTAL){
+    finalizar();
+  }
+}
+
+function atualizarNav(){
+  const q = Questoes[cur];
+  document.getElementById('q-counter').textContent =
+    'Q ' + (cur+1) + '/' + TOTAL + '  ·  ' + pillLabel[q.disc] + '  ·  Testlet ' + q.tlet;
+  document.getElementById('btn-next').textContent = cur === TOTAL-1 ? 'Finalizar ✓' : 'Próxima ▶';
+}
+
+function calcAcertos(){
+  let ac = 0;
+  Questoes.forEach((q,i) => { if(resp[i] === q.a) ac++; });
+  return ac;
+}
+
+let dataHoraEnvio = '';
+
+function finalizar(){
+  const sem = resp.filter(r => r === null).length;
+  if(sem > 0 && !confirm('Você tem ' + sem + ' questão(ões) sem resposta. Finalizar mesmo assim?')) return;
+
+  const ac = calcAcertos();
+  const pct = (ac/TOTAL*100).toFixed(1);
+  const nota = (ac/TOTAL*10).toFixed(1);
+  const nome = document.getElementById('nome-input').value.trim();
+
+  const agora = new Date();
+  dataHoraEnvio = agora.toLocaleDateString('pt-BR') + ' às ' +
+                  agora.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+
+  /* desempenho por testlet */
+  const maxTlet = Math.max(...TESTLETS);
+  const porTestlet = new Array(maxTlet).fill(0);
+  const acTestlet  = new Array(maxTlet).fill(0);
+  Questoes.forEach((q,i) => { porTestlet[q.tlet-1]++; if(resp[i]===q.a) acTestlet[q.tlet-1]++; });
+
+  document.getElementById('report-card').innerHTML =
+    '<h2>RELATÓRIO DE DESEMPENHO</h2>' +
+    '<div class="rep-line"><b>ALUNO:</b> ' + nome.toUpperCase() + '</div>' +
+    '<div class="rep-line"><b>PROFESSOR:</b> CLAUDIO A. &nbsp;|&nbsp; <b>AVALIAÇÃO:</b> Testlet Guerra Fria 2.0 · 3ª Série</div>' +
+    '<div class="rep-line"><b>DATA/HORA:</b> ' + dataHoraEnvio + '</div>' +
+    '<div class="stat-box">' +
+      '<div class="stat-card"><span class="stat-val">' + ac + '/' + TOTAL + '</span><span class="stat-label">Acertos</span></div>' +
+      '<div class="stat-card"><span class="stat-val">' + pct + '%</span><span class="stat-label">Aproveitamento</span></div>' +
+      '<div class="stat-card"><span class="stat-val">' + nota + '</span><span class="stat-label">Nota (0–10)</span></div>' +
+    '</div>' +
+    '<div class="testlet-chips">' +
+      TESTLETS.map(t =>
+        '<div class="tchip"><b>Testlet ' + t + ':</b> ' + acTestlet[t-1] + '/' + porTestlet[t-1] + '</div>'
+      ).join('') +
+    '</div>';
+
+  document.getElementById('overlay').classList.add('on');
+}
+
+function salvarImagem(){
+  const card = document.getElementById('report-card');
+  const btn = document.getElementById('btn-save-img');
+  const original = btn.textContent;
+  btn.textContent = '⏳ Gerando imagem...';
+  btn.disabled = true;
+  html2canvas(card, { scale: 2, backgroundColor: '#1b5e20', logging: false }).then(canvas => {
+    const nome = document.getElementById('nome-input').value.trim() || 'aluno';
+    const safe = nome.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_áéíóúÁÉÍÓÚãõÃÕâêîôûçÇ]/g,'');
+    const link = document.createElement('a');
+    link.download = 'Relatorio_TestletsCH_' + safe + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    btn.textContent = original;
+    btn.disabled = false;
+  }).catch(() => {
+    alert('Não foi possível gerar a imagem. Tente novamente.');
+    btn.textContent = original;
+    btn.disabled = false;
+  });
+}
+
+function showResults(){
+  document.getElementById('overlay').classList.remove('on');
+  document.getElementById('tab-g-btn').style.display = '';
+  const c = document.getElementById('gab-content');
+  const nome = document.getElementById('nome-input').value;
+  const ac = calcAcertos();
+  const pct = (ac/TOTAL*100).toFixed(1);
+  const nota = (ac/TOTAL*10).toFixed(1);
+
+  c.innerHTML =
+    '<div class="gab-header">' +
+    '<h2 style="margin-bottom:6px;font-size:clamp(.95rem,3.5vw,1.2rem)">GABARITO COMENTADO</h2>' +
+    '<p><b>ALUNO:</b> ' + nome.toUpperCase() + ' &nbsp;|&nbsp; <b>DATA/HORA:</b> ' + dataHoraEnvio + '</p>' +
+    '<p><b>RESULTADO:</b> ' + ac + '/' + TOTAL + ' &nbsp;·&nbsp; ' + pct + '% &nbsp;·&nbsp; Nota ' + nota + '</p>' +
+    '</div>';
+
+  Questoes.forEach((q,i) => {
+    const ok = resp[i] === q.a;
+    const ra = resp[i] !== null ? String.fromCharCode(65+resp[i]) : '—';
+    const rc = String.fromCharCode(65+q.a);
+    const div = document.createElement('div');
+    div.className = 'gab-item';
+    div.dataset.res = ok ? 'ok' : 'err';
+    div.innerHTML =
+      '<span class="badge-res ' + (ok?'ok':'err') + '">' + (ok?'✔ ACERTO':'✘ ERRO') + '</span>' +
+      '<strong>Q' + (i+1) + '</strong> ' +
+      '<span class="disc-pill ' + pillClass[q.disc] + '" style="font-size:.6rem">' + pillLabel[q.disc] + '</span> ' +
+      '<span style="font-size:.65rem;color:#888">Testlet ' + q.tlet + ' · ' + q.desc + '</span>' +
+      '<div class="resp-det ' + (ok?'ok':'err') + '">Sua resposta: <b>' + ra + '</b> &nbsp;|&nbsp; Gabarito: <b>' + rc + '</b></div>' +
+      '<div style="font-size:.82rem;color:#555;border-top:1px solid #eee;padding-top:8px;margin-top:8px"><b>Justificativa:</b> ' + q.f + '</div>';
+    c.appendChild(div);
+  });
+
+  tab('g', document.getElementById('tab-g-btn'));
+}
+
+function filtrarGab(tipo, btn){
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.gab-item').forEach(el => {
+    el.style.display = (tipo === 'all' || el.dataset.res === tipo) ? '' : 'none';
+  });
+}
+
+function tab(id, btn){
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tbtn').forEach(b => b.classList.remove('on'));
+  document.getElementById('p' + id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>
