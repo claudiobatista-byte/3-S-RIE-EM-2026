@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guerra Fria 2.0 — A Tese de Mariano Aguirre — Atividade Dissertativa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --verde:#1a6b3a;--amarelo:#c8960a;--azul:#1a3a6b;
+  --escuro:#1a1a2e;--medio:#4a4a6a;--claro:#f0f4f0;
+  --vermelho:#9a2b2b;
+  --sombra:0 4px 24px rgba(26,58,107,.10);--radius:12px
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Source Serif 4",Georgia,serif;background:var(--claro);color:var(--escuro);line-height:1.7;
+  -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+
+/* ── CAPA ── */
+#capa{min-height:100vh;background:linear-gradient(145deg,#1a1a2e 0%,#1a3a6b 45%,#9a2b2b 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;position:relative;overflow:hidden}
+#capa::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.cbox{background:rgba(255,255,255,.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:48px 56px;max-width:620px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.cbox-titulo{font-family:"Playfair Display",serif;font-size:2rem;font-weight:900;color:white;margin-bottom:8px;line-height:1.2}
+.cbox-sub{font-size:.9rem;color:rgba(255,255,255,.75);font-style:italic;margin-bottom:10px}
+.cbox-disc{background:var(--verde);color:white;border-radius:40px;padding:6px 24px;display:inline-block;font-size:.9rem;font-weight:600;letter-spacing:.05em;margin-bottom:22px}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.chip{background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);border-radius:20px;padding:.3rem .85rem;font-size:.77rem;font-weight:600;font-family:"JetBrains Mono",monospace}
+.campo-label{display:block;color:rgba(255,255,255,.8);font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;text-align:left}
+.campo-nome{width:100%;padding:14px 18px;border:2px solid rgba(255,255,255,.35);border-radius:10px;background:rgba(255,255,255,.15);color:white;font-size:1.05rem;font-family:"Playfair Display",serif;outline:none;transition:border .2s;margin-bottom:22px}
+.campo-nome::placeholder{color:rgba(255,255,255,.45)}
+.campo-nome:focus{border-color:var(--amarelo);background:rgba(255,255,255,.2)}
+.btn-start{padding:14px 48px;background:var(--amarelo);color:white;border:none;border-radius:50px;font-size:1rem;font-family:"Source Serif 4",serif;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(200,150,10,.4);transition:transform .2s,box-shadow .2s;letter-spacing:.04em;width:100%}
+.btn-start:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 32px rgba(200,150,10,.5)}
+.btn-start:disabled{opacity:.45;cursor:default}
+.capa-note{font-size:.72rem;color:rgba(255,255,255,.55);margin-top:.9rem}
+.seduc-bar{position:absolute;bottom:0;left:0;right:0;background:rgba(255,255,255,.07);padding:12px;text-align:center;color:rgba(255,255,255,.55);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
+
+/* ── CONTEÚDO ── */
+#conteudo{display:none}
+
+/* ── HEADER ── */
+.hdr-top{background:linear-gradient(90deg,#1a3a6b 0%,var(--escuro) 100%);color:white;padding:12px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.2)}
+.hdr-nome{font-family:"JetBrains Mono",monospace;font-size:.82rem;color:rgba(255,255,255,.75)}
+.hdr-nome span{color:#90e0b0;font-weight:600}
+.hdr-prog{font-size:.78rem;color:rgba(255,255,255,.7);font-family:"JetBrains Mono",monospace}
+.hdr-prog span{color:#ffd700;font-weight:700}
+.bprog-wrap{height:4px;background:rgba(255,255,255,.15);position:sticky;top:48px;z-index:99}
+.bprog{height:4px;background:var(--amarelo);transition:width .4s;width:0%}
+
+/* ── CONTAINER ── */
+.container{max-width:900px;margin:0 auto;padding:32px 20px 80px}
+
+/* ── BLOCO TEXTOS ── */
+.textos-card{background:white;border-radius:var(--radius);padding:32px 40px;margin-bottom:28px;box-shadow:var(--sombra);border-top:4px solid var(--azul)}
+.textos-title{font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:900;color:var(--escuro);margin-bottom:6px}
+.textos-sub{font-size:.83rem;color:var(--medio);font-style:italic;margin-bottom:22px;line-height:1.5}
+.intro-p{font-size:.95rem;color:var(--escuro);line-height:1.75;margin-bottom:20px;text-align:justify}
+
+.secao-titulo{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:var(--azul);margin:22px 0 10px;padding-bottom:6px;border-bottom:2px solid #e0e8f0}
+.texto-bloco{background:#f5f8ff;border-left:4px solid var(--azul);border-radius:0 10px 10px 0;padding:18px 22px;margin-bottom:14px}
+.texto-bloco.verde{background:#f4faf6;border-left-color:var(--verde)}
+.texto-bloco.amarelo{background:#fdfaf2;border-left-color:var(--amarelo)}
+.texto-bloco.vermelho{background:#fdf3f3;border-left-color:var(--vermelho)}
+.texto-hdr{font-family:"JetBrains Mono",monospace;font-size:.72rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+.texto-hdr.verde{color:var(--verde)}
+.texto-hdr.amarelo{color:#9a7000}
+.texto-hdr.vermelho{color:var(--vermelho)}
+.texto-corpo{font-size:.93rem;color:var(--escuro);line-height:1.8;margin-bottom:8px;text-align:justify}
+.texto-corpo em{font-style:italic;color:var(--medio)}
+.texto-destaque{background:#eef4ff;border:1px solid #c8d8f0;border-radius:8px;padding:12px 18px;margin:10px 0;font-size:.88rem;color:var(--azul);line-height:1.7}
+.texto-destaque.verde{background:#eefaf2;border-color:#b8dfc8;color:#1a4a2a}
+.vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.vocab-item{background:#f5f5fa;border-radius:8px;padding:10px 14px;font-size:.84rem}
+.vocab-termo{font-weight:700;color:var(--azul);font-family:"JetBrains Mono",monospace;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+.divider{height:1px;background:linear-gradient(90deg,var(--azul),transparent);margin:22px 0}
+
+/* ── QUESTÕES ── */
+.q-card{background:white;border-radius:var(--radius);padding:28px 36px;margin:16px 0;box-shadow:var(--sombra);border-top:4px solid var(--claro);transition:border-color .3s}
+.q-card.preenchida{border-top-color:var(--verde)}
+.q-num{font-family:"JetBrains Mono",monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:var(--medio);margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.q-eixo{font-size:.62rem;border-radius:20px;padding:2px 10px;font-weight:700;color:white;letter-spacing:.06em}
+.q-badge{font-size:.65rem;background:var(--verde);color:white;border-radius:20px;padding:2px 10px;font-weight:700;display:none}
+.q-enunc{font-size:.97rem;color:var(--escuro);line-height:1.75;font-weight:600;margin-bottom:16px}
+.textarea-wrap{position:relative}
+.q-textarea{
+  width:100%;min-height:140px;padding:14px 16px;
+  border:2px solid #dde8dd;border-radius:8px;
+  font-family:"Source Serif 4",Georgia,serif;font-size:.92rem;
+  line-height:1.7;color:var(--escuro);resize:vertical;
+  background:#fdfffe;outline:none;transition:border .2s;
+  -webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text
+}
+.q-textarea:focus{border-color:var(--azul);background:white}
+.q-textarea.preenchida{border-color:var(--verde);background:#f8fdf9}
+.q-textarea:disabled{background:#f5f5f5;color:#aaa;cursor:not-allowed}
+.char-count{font-family:"JetBrains Mono",monospace;font-size:.68rem;color:#bbb;text-align:right;margin-top:4px;transition:color .2s}
+.char-count.ok{color:var(--verde)}
+.char-count.warn{color:#b07820}
+
+/* ── AVISO ── */
+#alerta-incompleto{display:none;background:#fff3cd;border:2px solid #ffc107;border-radius:10px;padding:16px 22px;margin:20px 0;color:#7d5a00;font-weight:600;font-size:.9rem}
+
+/* ── BOTÃO ENVIAR ── */
+.btn-enviar-wrap{margin:32px 0 20px;display:flex;gap:14px;flex-wrap:wrap}
+.btn-enviar{padding:14px 44px;background:var(--azul);color:white;border:none;border-radius:50px;font-size:1rem;font-family:"Source Serif 4",serif;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(26,58,107,.35);transition:all .2s;letter-spacing:.03em}
+.btn-enviar:hover{transform:translateY(-2px);background:#122d58}
+
+/* ── POPUP ── */
+#popup-resultado{display:none;position:fixed;inset:0;background:rgba(26,26,46,.85);z-index:8000;align-items:center;justify-content:center;padding:1rem}
+#popup-resultado.aberto{display:flex}
+.popup-box{background:white;border-radius:20px;padding:2.8rem 2.4rem 2.2rem;max-width:500px;width:100%;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.4);animation:popIn .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{opacity:0;transform:scale(.88) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.pop-ico{font-size:3rem;margin-bottom:.6rem}
+.popup-box h2{font-family:"Playfair Display",serif;font-size:1.4rem;color:var(--escuro);margin-bottom:.5rem}
+.popup-aluno{font-size:.85rem;color:var(--medio);margin-bottom:.4rem}
+.popup-resp{font-size:4rem;font-weight:900;line-height:1;font-family:"Playfair Display",serif;color:var(--verde)}
+.popup-resp span{font-size:1.4rem;color:var(--medio);font-weight:400}
+.popup-sub{font-size:.82rem;color:var(--medio);margin:.3rem 0 .3rem}
+.popup-data{font-size:.78rem;color:var(--medio);font-family:"JetBrains Mono",monospace;margin-bottom:.9rem}
+.popup-msg{font-size:.95rem;font-weight:600;color:var(--azul);margin:.3rem 0 1.4rem}
+.popup-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.pbtn-pdf{padding:.72rem 1.6rem;border-radius:50px;font-size:.88rem;font-family:"Source Serif 4",serif;font-weight:600;cursor:pointer;border:none;background:var(--azul);color:white;box-shadow:0 6px 20px rgba(26,58,107,.35);transition:all .2s}
+.pbtn-pdf:hover{transform:translateY(-2px);background:#122d58}
+.pbtn-restart{background:white;color:var(--verde);border:2px solid var(--verde);padding:.72rem 1.6rem;border-radius:50px;font-size:.88rem;font-family:"Source Serif 4",serif;font-weight:600;cursor:pointer;transition:all .2s}
+.pbtn-restart:hover{background:var(--verde);color:white}
+
+/* ── PDF OVERLAY ── */
+#pdf-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;display:flex;align-items:center;justify-content:center}
+.pdf-box{background:white;border-radius:16px;padding:44px 52px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);max-width:380px;width:90%}
+.pdf-box .ico{font-size:2.8rem;margin-bottom:12px}
+.pdf-box h4{font-family:"Playfair Display",serif;font-size:1.25rem;font-weight:700;margin-bottom:8px;color:var(--escuro)}
+.pdf-box p{color:#666;font-size:.87rem;margin-bottom:4px}
+#pdf-prog-wrap{height:6px;background:#e8e8e8;border-radius:4px;margin-top:18px;overflow:hidden}
+#pdf-prog{height:6px;background:var(--azul);border-radius:4px;width:0%;transition:width .3s}
+#pdf-prog-txt{font-size:.76rem;color:#888;margin-top:6px;font-family:"JetBrains Mono",monospace}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pdf-spin{width:40px;height:40px;border:4px solid #e8e8e8;border-top-color:var(--azul);border-radius:50%;animation:spin .8s linear infinite;margin:14px auto 0}
+
+@media(max-width:640px){
+  .cbox{padding:30px 22px}
+  .cbox-titulo{font-size:1.6rem}
+  .container{padding:1rem 1rem 60px}
+  .textos-card,.q-card{padding:20px 16px}
+  .vocab-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ CAPA ══ -->
+<div id="capa">
+  <div class="cbox">
+    <div class="cbox-titulo">Guerra Fria 2.0<br>e o Mundo em Chamas</div>
+    <div class="cbox-sub">A Tese de Mariano Aguirre sobre a Ordem Global Fraturada</div>
+    <div class="cbox-disc">Ciências Humanas e Sociais Aplicadas · História · Ensino Médio</div>
+    <div class="chips">
+      <span class="chip">1 texto-base</span>
+      <span class="chip">5 questões</span>
+      <span class="chip">Alta proficiência</span>
+      <span class="chip">PDF ao finalizar</span>
+    </div>
+    <label class="campo-label" for="cnome">Nome completo do aluno(a)</label>
+    <input type="text" id="cnome" class="campo-nome" placeholder="Digite seu nome completo aqui…"
+      autocomplete="off" oninput="chkNome()" onkeydown="if(event.key==='Enter')iniciar()">
+    <button class="btn-start" id="bstart" onclick="iniciar()" disabled>Iniciar Atividade →</button>
+    <p class="capa-note">Leia a síntese com atenção e responda dissertativamente às 5 questões (mínimo de 80 caracteres cada).</p>
+  </div>
+  <div class="seduc-bar">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>
+</div>
+
+<!-- ══ CONTEÚDO ══ -->
+<div id="conteudo">
+  <div class="hdr-top">
+    <div class="hdr-nome">Aluno(a): <span id="hdr-nome">—</span></div>
+    <div class="hdr-prog">Respondidas: <span id="hdr-resp">0</span> / 5</div>
+  </div>
+  <div class="bprog-wrap"><div class="bprog" id="bprog"></div></div>
+
+  <div class="container">
+
+    <!-- ══ BLOCO DE TEXTO ══ -->
+    <div class="textos-card">
+      <div class="textos-title">Guerra Fria 2.0: A Tese de Mariano Aguirre e o Mundo em Chamas</div>
+      <div class="textos-sub">A partir da análise do cientista político espanhol Mariano Aguirre · Geopolítica Contemporânea (2024–2025)</div>
+
+      <p class="intro-p">Para o analista político espanhol Mariano Aguirre, o mundo atual não vive uma simples reedição nostálgica da disputa bipolar EUA–URSS, mas uma <strong>ordem global fraturada</strong>. Leia a síntese a seguir e responda às questões, articulando os conceitos do texto.</p>
+
+      <div class="divider"></div>
+
+      <!-- SEÇÃO 1 -->
+      <div class="secao-titulo">1. A Tese Central: uma ordem fraturada</div>
+      <div class="texto-corpo">Aguirre argumenta que não há mais dois campos claramente delimitados, mas múltiplos polos de poder, competição sistêmica entre democracias liberais e regimes autoritários, guerras por procuração (proxy wars) e uma perigosa erosão das instituições multilaterais construídas no pós-1945. A novidade da "versão 2.0" está na sua complexidade difusa: alianças fluidas, interesses sobrepostos e um confronto que se manifesta em campos de batalha físicos, econômicos, tecnológicos e informacionais.</div>
+      <div class="texto-destaque">
+        <strong>Conceito-chave — Ordem global fraturada:</strong> sistema internacional sem blocos sólidos, marcado por polos múltiplos e alianças circunstanciais. O maior risco, alerta Aguirre, é a humanidade <em>normalizar o estado permanente de conflito</em>, tornando a guerra o pano de fundo estrutural da política internacional.
+      </div>
+
+      <!-- SEÇÃO 2 -->
+      <div class="secao-titulo">2. Os Teatros do Conflito</div>
+
+      <div class="texto-bloco">
+        <div class="texto-hdr">Ucrânia — o epicentro da fratura</div>
+        <div class="texto-corpo">A invasão russa de 2022 materializou a "nova guerra fria" em trincheiras reais: a OTAN foi revitalizada, a Europa rearmou-se e a Rússia consolidou-se como potência revisionista. Mas o conflito não produziu dois blocos sólidos: países do Sul Global — Brasil, Índia, África do Sul — recusaram-se a condenar a Rússia de forma inequívoca, demonstrando a <strong>multilateralidade ambígua</strong> descrita por Aguirre. A guerra é, ao mesmo tempo, convencional, informacional, de drones e de narrativas — a síntese do conflito híbrido da era 2.0.</div>
+      </div>
+
+      <div class="texto-bloco amarelo">
+        <div class="texto-hdr amarelo">Gaza — os limites da "ordem liberal"</div>
+        <div class="texto-corpo">A guerra em Gaza expõe uma contradição dolorosa: o Ocidente, que proclama defender uma "ordem baseada em regras", mostrou-se incapaz — ou pouco disposto — a aplicá-las universalmente. O apoio irrestrito de Washington a Israel, enquanto condenava Moscou pelo uso da força, revelou ao Sul Global uma <strong>hierarquia moral implícita</strong>. As grandes potências não lutam diretamente: financiam, armam e legitimam atores regionais, transformando a tragédia humanitária em tabuleiro geopolítico.</div>
+      </div>
+
+      <div class="texto-bloco vermelho">
+        <div class="texto-hdr vermelho">Irã — o ator disruptivo</div>
+        <div class="texto-corpo">Sem ser uma superpotência, o Irã é um <strong>multiplicador de instabilidade</strong> que alimenta o modelo de proxy wars — via Hezbollah, Hamas, Houthis e milícias no Iraque, projeta poder sem confrontar diretamente os EUA. Seu programa nuclear é a variável mais perigosa do Oriente Médio. A zona cinzenta — em que Estados não se declaram em guerra, mas vivem em conflito indireto permanente — é a norma, não a exceção.</div>
+      </div>
+
+      <div class="texto-bloco amarelo">
+        <div class="texto-hdr amarelo">Trumpismo — a variável desestabilizadora interna</div>
+        <div class="texto-corpo">O retorno de Trump representa não apenas unilateralismo, mas uma <strong>implosão da coerência interna</strong> do bloco ocidental: questionar a OTAN, flertar com Putin, pressionar a Ucrânia e tarifar aliados transformam os próprios EUA em fator de imprevisibilidade sistêmica. Sem liderança ocidental coesa, os regimes autoritários ganham espaço — e a busca europeia por <em>autonomia estratégica</em> pode ser tanto solução quanto nova fonte de fragmentação.</div>
+      </div>
+
+      <div class="texto-bloco verde">
+        <div class="texto-hdr verde">China e Rússia — a aliança da conveniência</div>
+        <div class="texto-corpo">Aguirre descreve as potências autoritárias não como bloco monolítico, mas como <strong>parceiros de conveniência estratégica</strong>. A China não quer a derrota russa na Ucrânia (que sinalizaria a resiliência ocidental), mas tampouco deseja ser arrastada para um conflito que prejudique seu comércio. Pequim joga xadrez de longo prazo — Belt and Road Initiative, semicondutores e IA — e aguarda o desgaste ocidental; Moscou, isolada, torna-se sócia menor. Essa assimetria confirma a tese: a Guerra Fria 2.0 não produz blocos sólidos, mas <strong>hierarquias em constante renegociação</strong>.</div>
+      </div>
+
+      <!-- SÍNTESE -->
+      <div class="secao-titulo">3. Síntese: o tabuleiro fraturado</div>
+      <div class="texto-corpo" style="margin-bottom:14px">Os diferentes teatros do conflito compõem um mesmo tabuleiro disfuncional, em que as regras do jogo são reescritas em tempo real, sem consenso e sem árbitro. O quadro abaixo resume os atores e suas lógicas:</div>
+      <div style="overflow-x:auto;margin-bottom:14px">
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem">
+          <thead>
+            <tr style="background:var(--azul);color:white">
+              <th style="padding:10px 14px;text-align:left;border-radius:8px 0 0 0">Ator / Teatro</th>
+              <th style="padding:10px 14px;text-align:left">Papel na ordem 2.0</th>
+              <th style="padding:10px 14px;text-align:left;border-radius:0 8px 0 0">Lógica predominante</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#f5f8ff">
+              <td style="padding:9px 14px;border-bottom:1px solid #e0e8f0"><strong>Ucrânia</strong></td>
+              <td style="padding:9px 14px;border-bottom:1px solid #e0e8f0">Epicentro da fratura</td>
+              <td style="padding:9px 14px;border-bottom:1px solid #e0e8f0">Conflito híbrido; Sul Global ambíguo</td>
+            </tr>
+            <tr style="background:#fdfaf2">
+              <td style="padding:9px 14px;border-bottom:1px solid #e0e8f0"><strong>Gaza / Irã</strong></td>
+              <td style="padding:9px 14px;border-bottom:1px solid #e0e8f0">Proxy wars</td>
+              <td style="padding:9px 14px;border-bottom:1px solid #e0e8f0">Atores regionais armados por potências; dois pesos</td>
+            </tr>
+            <tr style="background:#fdf3f3">
+              <td style="padding:9px 14px;border-bottom:1px solid #e0e8f0"><strong>EUA / Trumpismo</strong></td>
+              <td style="padding:9px 14px;border-bottom:1px solid #e0e8f0">Imprevisibilidade interna</td>
+              <td style="padding:9px 14px;border-bottom:1px solid #e0e8f0">Implosão da coesão ocidental</td>
+            </tr>
+            <tr style="background:#f4faf6">
+              <td style="padding:9px 14px"><strong>China / Rússia</strong></td>
+              <td style="padding:9px 14px">Eixo autoritário assimétrico</td>
+              <td style="padding:9px 14px">Parceria de conveniência; hierarquia renegociada</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="texto-corpo">Aguirre nos convida a perceber que o maior risco não está numa terceira guerra mundial declarada, mas na erosão silenciosa da capacidade humana de construir paz. Quando a guerra se torna o estado permanente das coisas, deixa de ser uma crise a resolver e passa a ser o próprio sistema.</div>
+
+      <!-- VOCABULÁRIO -->
+      <div class="secao-titulo">4. Vocabulário Essencial</div>
+      <div class="vocab-grid">
+        <div class="vocab-item"><div class="vocab-termo">Ordem fraturada</div>Sistema internacional sem blocos sólidos, com polos múltiplos e alianças circunstanciais.</div>
+        <div class="vocab-item"><div class="vocab-termo">Proxy war</div>Guerra por procuração: potências combatem indiretamente, armando e financiando atores regionais.</div>
+        <div class="vocab-item"><div class="vocab-termo">Multilateralidade ambígua</div>Posição do Sul Global que não se alinha automaticamente a nenhuma potência.</div>
+        <div class="vocab-item"><div class="vocab-termo">Conflito híbrido</div>Guerra que combina dimensões militar, econômica, tecnológica e informacional.</div>
+        <div class="vocab-item"><div class="vocab-termo">Autonomia estratégica</div>Busca europeia por capacidade própria de defesa e decisão, reduzindo dependência dos EUA.</div>
+        <div class="vocab-item"><div class="vocab-termo">BRI</div>Belt and Road Initiative: projeto chinês de infraestrutura e expansão geopolítica global.</div>
+      </div>
+    </div>
+
+    <!-- ══ QUESTÕES ══ -->
+    <div id="alerta-incompleto">
+      ⚠️ Atividade incompleta. Faltam <strong id="qtd-faltando"></strong> resposta(s).
+      Responda todas as questões (mínimo de 80 caracteres) antes de finalizar.
+    </div>
+
+    <div id="questoes"></div>
+
+    <div class="btn-enviar-wrap">
+      <button class="btn-enviar" onclick="tentarFinalizar()">✓ Finalizar e ver resultado</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ POPUP RESULTADO ══ -->
+<div id="popup-resultado">
+  <div class="popup-box">
+    <div class="pop-ico" id="pop-ico">✍️</div>
+    <h2>Atividade Enviada!</h2>
+    <p class="popup-aluno" id="pop-aluno"></p>
+    <div class="popup-resp" id="pop-resp"></div>
+    <p class="popup-sub" id="pop-sub"></p>
+    <p class="popup-data" id="pop-data"></p>
+    <p class="popup-msg" id="pop-msg"></p>
+    <div class="popup-btns">
+      <button class="pbtn-pdf" onclick="fecharPopupEBaixar()">📥 Baixar PDF das respostas</button>
+      <button class="pbtn-restart" onclick="location.reload()">↺ Reiniciar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const TOTAL_Q = 5;
+const MIN_CHARS = 80;
+let nome = '';
+let respondidas = 0;
+let dataHoraEnvio = '';
+
+const EIXOS = {
+  azul:    '#1a3a6b',
+  verde:   '#1a6b3a',
+  amarelo: '#9a7000',
+  vermelho:'#9a2b2b',
+  roxo:    '#6a3a8a'
+};
+
+const QUESTOES = [
+  {
+    num: 1,
+    eixo: 'Tese central', cor: 'azul',
+    enunc: 'Aguirre rejeita a ideia de que vivemos uma simples reedição bipolar da Guerra Fria. Explique o que ele entende por "ordem global fraturada" e justifique por que, segundo o autor, essa complexidade difusa torna a "versão 2.0" potencialmente mais perigosa do que o confronto EUA–URSS do século XX.'
+  },
+  {
+    num: 2,
+    eixo: 'Multipolaridade / Sul Global', cor: 'verde',
+    enunc: 'A recusa de Brasil, Índia e África do Sul em condenar a Rússia de forma inequívoca é apresentada como prova da tese de Aguirre. Analise de que modo esse posicionamento do Sul Global confirma a ideia de "alianças fluidas" e o que ele revela sobre o declínio da capacidade ocidental de polarizar o sistema internacional.'
+  },
+  {
+    num: 3,
+    eixo: 'Ordem liberal e seus limites', cor: 'vermelho',
+    enunc: 'Segundo o texto, a guerra em Gaza expõe os limites da "ordem baseada em regras". Discuta como a aplicação seletiva dessas regras pelo Ocidente — apoio a Israel versus condenação à Rússia — afeta a legitimidade das democracias liberais perante o Sul Global, relacionando esse processo ao conceito de guerra por procuração (proxy war).'
+  },
+  {
+    num: 4,
+    eixo: 'Fator interno (trumpismo)', cor: 'amarelo',
+    enunc: 'Diferentemente das ameaças externas, o texto aponta o "trumpismo" como uma implosão da coerência interna do bloco ocidental. Explique por que a imprevisibilidade dos próprios Estados Unidos pode favorecer os regimes autoritários e avalie criticamente em que medida a busca europeia por "autonomia estratégica" representa uma solução ou uma nova fonte de fragmentação da ordem liberal.'
+  },
+  {
+    num: 5,
+    eixo: 'Eixo autoritário (China–Rússia)', cor: 'roxo',
+    enunc: 'A relação China–Rússia é descrita não como bloco monolítico, mas como "parceria de conveniência" assimétrica. Analise por que a crescente dependência russa em relação à China confirma — e não contradiz — a tese de que a Guerra Fria 2.0 não produz blocos sólidos, articulando os interesses de longo prazo de Pequim (BRI, semicondutores e inteligência artificial) à ideia de "hierarquias em constante renegociação".'
+  }
+];
+
+const COMENTARIOS = [
+  `Por "ordem global fraturada", Aguirre designa um sistema internacional sem dois campos nitidamente delimitados, marcado por múltiplos polos de poder, alianças fluidas, interesses sobrepostos e competição sistêmica entre democracias liberais e regimes autoritários. Diferentemente da bipolaridade EUA–URSS — relativamente previsível e regulada por instituições e regras tácitas —, a Guerra Fria 2.0 é mais perigosa justamente por sua complexidade difusa: o confronto se espalha por arenas físicas, econômicas, tecnológicas e informacionais, e a erosão das instituições multilaterais do pós-1945 remove os mecanismos de contenção. O risco maior é a normalização do conflito permanente, em que a guerra deixa de ser exceção e se torna o próprio funcionamento do sistema.`,
+  `A recusa de Brasil, Índia e África do Sul em condenar a Rússia de forma inequívoca evidencia a "multilateralidade ambígua": eles não se alinham automaticamente ao Ocidente nem à Rússia, preservando autonomia e perseguindo interesses próprios (comerciais, energéticos e de prestígio). Isso confirma a tese das alianças fluidas, pois mostra que não há blocos rígidos, e sim posicionamentos circunstanciais e renegociáveis. Revela ainda o declínio da capacidade ocidental de organizar o sistema em torno de uma divisão moral binária: o Sul Global tem peso suficiente para impor uma terceira via e questionar a pretensão do Ocidente de definir, sozinho, quem são os vilões e os mocinhos da ordem internacional.`,
+  `A condenação de Moscou pelo uso da força, combinada ao apoio irrestrito de Washington a Israel, expõe uma aplicação seletiva da "ordem baseada em regras", revelando ao Sul Global uma hierarquia moral implícita — dois pesos e duas medidas. Isso corrói a legitimidade das democracias liberais, que perdem autoridade para invocar princípios universais quando os aplicam conforme conveniências geopolíticas. A relação com a proxy war está no fato de que as grandes potências não combatem diretamente: financiam, armam e legitimam atores regionais (EUA–Israel; Irã–Hamas/Hezbollah; China e Rússia explorando o desgaste ocidental). Gaza torna-se, assim, um tabuleiro onde a Guerra Fria 2.0 é disputada por procuração, com custo humano real.`,
+  `O trumpismo age como implosão interna do Ocidente: ao questionar o compromisso com a OTAN, flertar com Putin, pressionar a Ucrânia a negociar em desvantagem e tarifar aliados, transforma os próprios EUA em fonte de imprevisibilidade sistêmica. Sem liderança ocidental coesa e confiável, abre-se espaço para que regimes autoritários avancem, pois deixam de enfrentar uma frente unificada. Quanto à autonomia estratégica europeia, ela é ambivalente: pode ser solução, ao dotar a Europa de capacidade própria de defesa e decisão, reduzindo a dependência de um aliado errático; mas pode também aprofundar a fragmentação, ao multiplicar centros de poder dentro do próprio campo ocidental e enfraquecer a coordenação transatlântica — paradoxo que o aluno deve avaliar criticamente, sem resposta única.`,
+  `A parceria sino-russa é de conveniência, não de bloco monolítico: a China não deseja a derrota russa (que sinalizaria a resiliência ocidental), mas tampouco quer ser arrastada a um conflito que prejudique seu comércio global. Com o isolamento econômico, Moscou torna-se cada vez mais dependente de Pequim, deslizando de parceiro igual para sócio menor. Essa assimetria confirma a tese das "hierarquias em constante renegociação": a relação não é uma aliança estável e simétrica, mas um arranjo desigual e mutável conforme os interesses de Pequim. A China joga um xadrez de longo prazo — consolidando influência pela Belt and Road Initiative, liderando a corrida de semicondutores e IA e aguardando o desgaste ocidental —, o que reforça a ideia de polos que se reposicionam continuamente, em vez de campos fixos e coesos.`
+];
+
+function chkNome() {
+  const v = document.getElementById('cnome').value.trim();
+  document.getElementById('bstart').disabled = v.length < 3;
+}
+
+function iniciar() {
+  nome = document.getElementById('cnome').value.trim();
+  if (nome.length < 3) return;
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('conteudo').style.display = 'block';
+  document.getElementById('hdr-nome').textContent = nome;
+  buildQ();
+  window.scrollTo({ top: 0 });
+}
+
+function buildQ() {
+  const ct = document.getElementById('questoes');
+  QUESTOES.forEach(q => {
+    ct.innerHTML += `
+      <div class="q-card" id="qcard-${q.num}">
+        <div class="q-num">
+          Questão ${q.num} de ${TOTAL_Q}
+          <span class="q-eixo" style="background:${EIXOS[q.cor]}">${q.eixo}</span>
+          <span class="q-badge" id="badge-${q.num}">✓ respondida</span>
+        </div>
+        <div class="q-enunc">${q.enunc}</div>
+        <div class="textarea-wrap">
+          <textarea
+            class="q-textarea"
+            id="resp-${q.num}"
+            placeholder="Desenvolva sua resposta argumentando com base no texto…"
+            oninput="onType(${q.num})"
+            onpaste="return false"
+            oncopy="return false"
+            oncut="return false"
+            oncontextmenu="return false"
+            ondrop="return false"
+          ></textarea>
+          <div class="char-count" id="cc-${q.num}">0 / ${MIN_CHARS} caracteres mínimos</div>
+        </div>
+      </div>`;
+  });
+}
+
+function onType(num) {
+  const ta = document.getElementById('resp-' + num);
+  const cc = document.getElementById('cc-' + num);
+  const card = document.getElementById('qcard-' + num);
+  const badge = document.getElementById('badge-' + num);
+  const len = ta.value.trim().length;
+
+  cc.textContent = len + ' caracteres' + (len < MIN_CHARS ? ' (mínimo: ' + MIN_CHARS + ')' : ' ✓');
+  if (len >= MIN_CHARS) {
+    cc.className = 'char-count ok';
+    ta.classList.add('preenchida');
+    card.classList.add('preenchida');
+    badge.style.display = 'inline-block';
+  } else {
+    cc.className = len > 40 ? 'char-count warn' : 'char-count';
+    ta.classList.remove('preenchida');
+    card.classList.remove('preenchida');
+    badge.style.display = 'none';
+  }
+
+  let count = 0;
+  QUESTOES.forEach(q => {
+    const v = document.getElementById('resp-' + q.num).value.trim();
+    if (v.length >= MIN_CHARS) count++;
+  });
+  respondidas = count;
+  document.getElementById('hdr-resp').textContent = count;
+  document.getElementById('bprog').style.width = Math.round(count / TOTAL_Q * 100) + '%';
+}
+
+function tentarFinalizar() {
+  const faltam = [];
+  QUESTOES.forEach(q => {
+    const v = document.getElementById('resp-' + q.num).value.trim();
+    if (v.length < MIN_CHARS) faltam.push(q.num);
+  });
+
+  if (faltam.length > 0) {
+    document.getElementById('qtd-faltando').textContent = faltam.length;
+    const al = document.getElementById('alerta-incompleto');
+    al.style.display = 'block';
+    al.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+      const el = document.getElementById('qcard-' + faltam[0]);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 600);
+    return;
+  }
+
+  document.getElementById('alerta-incompleto').style.display = 'none';
+  QUESTOES.forEach(q => {
+    document.getElementById('resp-' + q.num).disabled = true;
+  });
+
+  const now = new Date();
+  dataHoraEnvio = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+  document.getElementById('pop-aluno').innerHTML = 'Aluno(a): <strong>' + nome + '</strong>';
+  document.getElementById('pop-resp').innerHTML = TOTAL_Q + '<span>/' + TOTAL_Q + '</span>';
+  document.getElementById('pop-sub').textContent = 'Todas as questões respondidas';
+  document.getElementById('pop-data').textContent = '🕓 Enviado em ' + dataHoraEnvio;
+  document.getElementById('pop-msg').textContent = 'Baixe o PDF para guardar suas respostas e a correção.';
+  setTimeout(() => {
+    document.getElementById('popup-resultado').classList.add('aberto');
+  }, 300);
+}
+
+function fecharPopupEBaixar() {
+  document.getElementById('popup-resultado').classList.remove('aberto');
+  setTimeout(() => gerarPDF(), 350);
+}
+
+document.getElementById('popup-resultado').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('aberto');
+});
+
+/* ── Bloqueio global de cópia / colagem / atalhos ── */
+['copy', 'cut', 'paste', 'contextmenu', 'dragstart', 'drop'].forEach(ev => {
+  document.addEventListener(ev, (e) => {
+    e.preventDefault();
+    if (ev === 'paste') alert('A colagem de texto está desativada. Digite sua resposta.');
+    return false;
+  });
+});
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && ['c', 'v', 'x', 'a'].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+    return false;
+  }
+});
+
+// ── GERAR PDF com html2canvas + jsPDF ──
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function gerarPDF() {
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.innerHTML = `<div class="pdf-box">
+    <div class="ico">📄</div>
+    <h4>Gerando PDF…</h4>
+    <p>Renderizando texto e respostas.</p>
+    <p>Aguarde alguns instantes.</p>
+    <div class="pdf-spin"></div>
+    <div id="pdf-prog-wrap"><div id="pdf-prog"></div></div>
+    <div id="pdf-prog-txt">0%</div>
+  </div>`;
+  document.body.appendChild(overlay);
+  await sleep(80);
+
+  const setP = (pct, msg) => {
+    const pp = document.getElementById('pdf-prog');
+    const pt = document.getElementById('pdf-prog-txt');
+    if (pp) pp.style.width = pct + '%';
+    if (pt) pt.textContent = msg || pct + '%';
+  };
+
+  try {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: 'a4', hotfixes: ['px_scaling'] });
+    const PW = pdf.internal.pageSize.getWidth();
+    const PH = pdf.internal.pageSize.getHeight();
+    const ML = 28;
+    const CW = PW - ML * 2;
+    let y = ML;
+
+    const addImg = async (el) => {
+      const canvas = await html2canvas(el, { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff', scrollX: 0, scrollY: 0, windowWidth: 900 });
+      const imgW = CW;
+      const imgH = (canvas.height / canvas.width) * imgW;
+      const dataUrl = canvas.toDataURL('image/jpeg', .93);
+      const avail = PH - ML * 2;
+
+      if (imgH <= avail) {
+        if (y + imgH > PH - ML) { pdf.addPage(); y = ML; }
+        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
+        y += imgH + 8;
+      } else {
+        const pxPerPdfPt = canvas.width / imgW;
+        let srcY = 0;
+        while (srcY < canvas.height) {
+          const availPt = PH - y - ML;
+          const sliceH_pt = Math.min(availPt, avail);
+          const sliceH_px = Math.round(sliceH_pt * pxPerPdfPt);
+          const actualH_px = Math.min(sliceH_px, canvas.height - srcY);
+          const tmp = document.createElement('canvas');
+          tmp.width = canvas.width;
+          tmp.height = actualH_px;
+          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
+          const sliceUrl = tmp.toDataURL('image/jpeg', .93);
+          const slicePt = (actualH_px / canvas.width) * imgW;
+          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
+          srcY += actualH_px;
+          y += slicePt;
+          if (srcY < canvas.height) { pdf.addPage(); y = ML; }
+        }
+        y += 8;
+      }
+    };
+
+    // ── CAPA ──
+    setP(5, 'Preparando capa…'); await sleep(50);
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0;border-radius:0';
+    coverEl.innerHTML = `
+      <div style="background:linear-gradient(135deg,#1a1a2e 0%,#1a3a6b 55%,#9a2b2b 100%);padding:32px 48px 28px;color:white">
+        <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">Ciências Humanas · História · Ensino Médio</div>
+        <div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">Guerra Fria 2.0 — A Tese de Mariano Aguirre</div>
+        <div style="font-size:13px;opacity:.8;font-style:italic">Geopolítica Contemporânea &nbsp;·&nbsp; Atividade Dissertativa · 5 questões de alta proficiência</div>
+      </div>
+      <div style="background:#f4f5f4;padding:22px 48px 26px;border-bottom:3px solid #d0dcd0">
+        <div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#1a3a6b;font-weight:700;margin-bottom:5px">Aluno(a)</div>
+        <div style="font-size:20px;font-weight:700;color:#1a1a2e;border-bottom:2.5px solid #1a3a6b;padding-bottom:6px;display:inline-block;margin-bottom:16px">${nome}</div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <div style="background:white;border-radius:8px;padding:12px 20px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:100px">
+            <div style="font-size:22px;font-weight:900;color:#1a6b3a">${TOTAL_Q}/${TOTAL_Q}</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Questões</div>
+          </div>
+          <div style="background:white;border-radius:8px;padding:12px 20px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:120px">
+            <div style="font-size:16px;font-weight:900;color:#1a3a6b">Alta proficiência</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Nível</div>
+          </div>
+          <div style="background:white;border-radius:8px;padding:12px 20px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:160px">
+            <div style="font-size:13px;font-weight:700;color:#333">${dataHoraEnvio}</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Enviado em</div>
+          </div>
+        </div>
+        <div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>
+      </div>`;
+    document.body.appendChild(coverEl);
+    await sleep(60);
+    await addImg(coverEl);
+    document.body.removeChild(coverEl);
+
+    // ── TEXTO ──
+    setP(12, 'Renderizando texto…'); await sleep(30);
+    const textsEl = document.createElement('div');
+    textsEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;padding:22px 32px 26px;position:absolute;left:-9999px;top:0';
+    const bloco = (cor, borda, hdrCor, hdr, corpo) =>
+      `<div style="background:${cor};border-left:4px solid ${borda};border-radius:0 6px 6px 0;padding:12px 16px;margin-bottom:10px">
+         <div style="font-size:10px;font-weight:700;color:${hdrCor};text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px">${hdr}</div>
+         <div style="font-size:11px;color:#1a1a2e;line-height:1.7;text-align:justify">${corpo}</div>
+       </div>`;
+    textsEl.innerHTML = `
+      <div style="border-bottom:3px solid #1a3a6b;padding-bottom:10px;margin-bottom:16px">
+        <div style="font-size:11px;color:#1a3a6b;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">Texto de Base</div>
+        <div style="font-size:18px;font-weight:900;color:#1a1a2e">Guerra Fria 2.0: A Tese de Mariano Aguirre e o Mundo em Chamas</div>
+        <div style="font-size:12px;color:#777;font-style:italic">Geopolítica Contemporânea (2024–2025)</div>
+      </div>
+      <p style="font-size:11px;color:#333;line-height:1.7;margin-bottom:12px;text-align:justify">Aguirre argumenta que o mundo não vive uma reedição bipolar simples, mas uma <b>ordem global fraturada</b>: múltiplos polos de poder, alianças fluidas, proxy wars e erosão das instituições multilaterais. O risco central é a normalização do estado permanente de conflito.</p>
+      ${bloco('#f5f8ff','#1a3a6b','#1a3a6b','Ucrânia — epicentro da fratura','A invasão russa de 2022 revitalizou a OTAN e rearmou a Europa, mas não criou dois blocos sólidos: o Sul Global (Brasil, Índia, África do Sul) não condenou Moscou de forma inequívoca — a multilateralidade ambígua. É um conflito híbrido (convencional, informacional, de drones e de narrativas).')}
+      ${bloco('#fdfaf2','#c8960a','#9a7000','Gaza — limites da ordem liberal','O apoio dos EUA a Israel contrastado com a condenação à Rússia revela uma hierarquia moral implícita e a aplicação seletiva das "regras". As potências não lutam diretamente: financiam, armam e legitimam atores regionais (proxy war).')}
+      ${bloco('#fdf3f3','#9a2b2b','#9a2b2b','Irã — ator disruptivo','Sem ser superpotência, o Irã multiplica a instabilidade via Hezbollah, Hamas, Houthis e milícias no Iraque, projetando poder sem confronto direto com os EUA. A zona cinzenta de conflito indireto permanente é a norma.')}
+      ${bloco('#fdfaf2','#c8960a','#9a7000','Trumpismo — imprevisibilidade interna','Mais do que unilateralismo, o trumpismo é uma implosão da coerência interna ocidental (questionar a OTAN, flertar com Putin, tarifar aliados). Sem liderança coesa, os autoritarismos avançam; a autonomia estratégica europeia pode ser solução ou nova fragmentação.')}
+      ${bloco('#f4faf6','#1a6b3a','#1a6b3a','China e Rússia — aliança de conveniência','Parceria assimétrica, não bloco monolítico: a China joga a longo prazo (BRI, semicondutores, IA) e Moscou, isolada, torna-se sócia menor. Confirma a tese das hierarquias em constante renegociação.')}
+      <div style="background:#f0f4ff;border:1px solid #c8d8f0;border-radius:6px;padding:10px 14px;margin-top:6px">
+        <div style="font-size:10px;font-weight:700;color:#1a3a6b;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px">Síntese</div>
+        <div style="font-size:11px;color:#1a1a2e;line-height:1.7;text-align:justify">O maior risco não é uma terceira guerra mundial declarada, mas a erosão silenciosa da capacidade de construir paz. Quando a guerra se torna permanente, deixa de ser crise a resolver e passa a ser o próprio sistema.</div>
+      </div>`;
+    document.body.appendChild(textsEl);
+    await sleep(60);
+    await addImg(textsEl);
+    document.body.removeChild(textsEl);
+
+    // ── QUESTÕES + RESPOSTAS + COMENTÁRIO ──
+    for (let i = 0; i < QUESTOES.length; i++) {
+      const q = QUESTOES[i];
+      const resp = document.getElementById('resp-' + q.num).value;
+      const coment = COMENTARIOS[i];
+      setP(20 + Math.round(i / QUESTOES.length * 70), 'Questão ' + q.num + ' de ' + TOTAL_Q + '…');
+      await sleep(25);
+
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d8e4d8;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML = `
+        <div style="background:linear-gradient(90deg,#1a3a6b,#122d58);padding:12px 22px;display:flex;justify-content:space-between;align-items:center">
+          <span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ${q.num} DE ${TOTAL_Q}</span>
+          <span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:10px;padding:3px 12px;border-radius:20px;font-weight:600">${q.eixo}</span>
+        </div>
+        <div style="padding:20px 24px 16px;background:#fdfdfd">
+          <div style="font-size:13.5px;font-weight:700;color:#1a1a2e;line-height:1.75;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid #eee">${q.enunc}</div>
+          <div style="margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <div style="width:4px;height:16px;background:#1a3a6b;border-radius:2px"></div>
+              <div style="font-size:10px;font-weight:700;color:#1a3a6b;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div>
+            </div>
+            <div style="background:#f5f8ff;border:1.5px solid #c8d8f0;border-radius:8px;padding:14px 18px;min-height:70px">
+              <div style="font-size:12.5px;color:#1a1a2e;line-height:1.85;white-space:pre-wrap">${resp}</div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <div style="width:4px;height:16px;background:#1a6b3a;border-radius:2px"></div>
+              <div style="font-size:10px;font-weight:700;color:#1a4a2a;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor / Gabarito</div>
+            </div>
+            <div style="background:#f4faf6;border:1.5px solid #b8d8c0;border-radius:8px;padding:14px 18px">
+              <div style="font-size:12.5px;color:#1a2e1a;line-height:1.85">${coment}</div>
+            </div>
+          </div>
+        </div>`;
+      document.body.appendChild(qEl);
+      await sleep(25);
+      await addImg(qEl);
+      document.body.removeChild(qEl);
+    }
+
+    // ── RODAPÉ ──
+    setP(95, 'Finalizando…'); await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for (let p = 1; p <= totalPages; p++) {
+      pdf.setPage(p);
+      const fEl = document.createElement('div');
+      fEl.style.cssText = `width:${Math.round(PW)}px;height:22px;background:#f0f4f0;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0`;
+      fEl.innerHTML = `<span>Guerra Fria 2.0 · Mariano Aguirre · ${nome}</span><span>Página ${p} de ${totalPages}</span>`;
+      document.body.appendChild(fEl);
+      const fc = await html2canvas(fEl, { scale: 2, logging: false, backgroundColor: '#f0f4f0' });
+      document.body.removeChild(fEl);
+      const fUrl = fc.toDataURL('image/jpeg', .9);
+      const fH = (fc.height / fc.width) * PW;
+      pdf.setFillColor(240, 244, 240);
+      pdf.rect(0, PH - fH, PW, fH, 'F');
+      pdf.addImage(fUrl, 'JPEG', 0, PH - fH, PW, fH);
+    }
+
+    setP(100, 'Salvando…'); await sleep(200);
+    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    pdf.save('GuerraFria2.0_Aguirre_' + safeName + '.pdf');
+
+  } catch (err) {
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message);
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if (ov) document.body.removeChild(ov);
+  }
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
