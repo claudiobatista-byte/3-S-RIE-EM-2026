@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Avaliação por Testlets – Ciências Humanas – 2º Bimestre – 3ª Série</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root{
+  --verde:#2e7d32; --verde-esc:#1b5e20; --gold:#B8920A; --gold-lt:#eef7e8;
+  --bg:#eef6ee; --line:#d6e2d4; --sel-bg:#eaf4ec;
+  --ok:#2d6a1f; --ok-bg:#e8f5e2; --err:#8b1a1a; --err-bg:#fdeaea;
+  --box-bg:#f1faf0; --top-h:50px;
+  --chist:#1a4a6b; --cgeo:#00695c; --cfil:#4a148c; --csoc:#7b1f1f;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;font-family:'Segoe UI',sans-serif;background:var(--bg);}
+
+/* ── CAPA ── */
+#capa{position:fixed;inset:0;z-index:999;background:linear-gradient(145deg,var(--verde-esc),var(--verde));display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;}
+.capa-box{width:100%;max-width:680px;border:2px solid var(--gold);border-radius:20px;background:rgba(0,0,0,0.22);padding:32px 26px;text-align:center;color:white;}
+.capa-box h1{font-size:clamp(1.5rem,5.5vw,2.6rem);letter-spacing:2px;margin-bottom:6px;}
+.capa-box h2{font-size:clamp(0.9rem,3vw,1.35rem);color:var(--gold-lt);text-transform:uppercase;margin-bottom:6px;}
+.capa-box h3{font-size:clamp(0.75rem,2.3vw,0.95rem);opacity:.85;font-weight:normal;margin-bottom:14px;}
+.capa-desc{font-size:clamp(0.7rem,2vw,0.85rem);opacity:.82;margin-bottom:18px;line-height:1.6;}
+.capa-input{width:100%;padding:13px;margin-bottom:16px;border-radius:8px;border:none;outline:none;font-size:clamp(0.9rem,3vw,1.1rem);text-align:center;}
+.btn-iniciar{background:var(--gold);color:#3a2e00;border:none;padding:15px 40px;font-size:clamp(1rem,3.5vw,1.25rem);font-weight:900;border-radius:50px;cursor:pointer;box-shadow:0 8px 0 #8a6d08;transition:.2s;width:100%;max-width:320px;}
+.btn-iniciar:active{transform:translateY(3px);box-shadow:0 5px 0 #8a6d08;}
+.tlet-preview{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 18px;text-align:left;}
+.tp-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:9px 12px;}
+.tp-card strong{display:block;font-size:.72rem;color:var(--gold-lt);margin-bottom:3px;}
+.tp-card span{font-size:.68rem;opacity:.78;line-height:1.45;}
+
+/* ── TOPBAR ── */
+#topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--verde-esc);border-bottom:3px solid var(--gold);display:none;flex-direction:column;}
+.ttabs{display:flex;overflow-x:auto;}
+.tbtn{flex-shrink:0;background:none;border:none;padding:0 16px;height:var(--top-h);color:rgba(255,255,255,.55);font-weight:bold;cursor:pointer;text-transform:uppercase;font-size:clamp(0.58rem,1.9vw,0.74rem);border-bottom:3px solid transparent;white-space:nowrap;}
+.tbtn.on{color:white;border-bottom-color:var(--gold);}
+#user-bar{background:rgba(0,0,0,.18);padding:4px 14px;font-size:0.70rem;color:white;display:flex;gap:12px;flex-wrap:wrap;}
+
+/* ── CONTEÚDO ── */
+#conteudo{position:fixed;top:0;left:0;right:0;bottom:0;display:none;overflow:hidden;}
+.panel{display:none;position:absolute;inset:0;overflow-y:auto;padding:16px;}
+.panel.on{display:block;}
+
+/* ── SIMULADO ── */
+#pq{padding:0;display:none;flex-direction:column;}
+#pq.on{display:flex;}
+#stage-scroll{flex:1;overflow-y:auto;padding:14px 12px 10px;-webkit-overflow-scrolling:touch;}
+.stage{max-width:840px;margin:0 auto;}
+
+/* ── NAV ── */
+#qnav{flex-shrink:0;background:var(--verde-esc);border-top:3px solid var(--gold);padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{flex:1;padding:12px 8px;background:transparent;border:2px solid white;color:white;border-radius:8px;cursor:pointer;font-weight:bold;text-transform:uppercase;font-size:clamp(0.62rem,2.3vw,0.82rem);white-space:nowrap;transition:.2s;}
+.nav-btn:active{background:white;color:var(--verde-esc);}
+#q-counter{flex:1.6;text-align:center;color:white;font-weight:bold;font-size:clamp(0.65rem,2.2vw,0.85rem);line-height:1.4;}
+
+/* ── CARD QUESTÃO ── */
+.q-card{background:white;border-radius:14px;display:none;box-shadow:0 4px 18px rgba(0,0,0,.07);overflow:hidden;margin-bottom:4px;}
+.q-card.active{display:block;}
+.tlet-faixa{padding:10px 18px;color:white;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+.tf-hist{background:var(--chist);}
+.tf-geo{background:var(--cgeo);}
+.tf-fil{background:var(--cfil);}
+.tf-soc{background:var(--csoc);}
+.tlet-faixa-titulo{font-size:clamp(.72rem,2.2vw,.88rem);font-weight:700;opacity:.95;}
+.tlet-faixa-num{font-size:clamp(.62rem,1.8vw,.75rem);opacity:.8;}
+
+.texto-base-wrap{background:#fbfdf8;border-bottom:2px dashed var(--gold);padding:16px 18px;}
+.texto-base-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#8a6d08;margin-bottom:8px;}
+.trecho{font-style:italic;border-left:4px solid var(--gold);padding:12px 14px;background:var(--gold-lt);line-height:1.78;font-size:clamp(0.8rem,2.4vw,0.97rem);color:#333;border-radius:0 6px 6px 0;}
+.fonte{font-size:.68rem;color:#888;margin-top:8px;padding-left:4px;}
+
+.q-body{padding:16px 18px;}
+.q-header-line{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.q-badge{display:inline-block;background:var(--gold);color:#3a2e00;padding:4px 13px;border-radius:5px;font-weight:bold;font-size:.8rem;}
+.disc-pill{display:inline-block;padding:3px 11px;border-radius:20px;font-size:.65rem;font-weight:700;color:white;}
+.dp-hist{background:var(--chist);}
+.dp-geo{background:var(--cgeo);}
+.dp-fil{background:var(--cfil);}
+.dp-soc{background:var(--csoc);}
+.desc-tag{font-size:.62rem;color:#666;border:1px solid #cdd;border-radius:10px;padding:2px 8px;font-weight:700;}
+.enunciado{font-weight:800;font-size:clamp(0.88rem,2.6vw,1.1rem);margin-bottom:15px;color:var(--verde-esc);line-height:1.42;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:12px 11px;margin-bottom:8px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;transition:.15s;font-size:clamp(0.8rem,2.4vw,0.95rem);line-height:1.45;}
+.opt:active{background:var(--gold-lt);}
+.opt.selected{border-color:var(--verde);background:var(--sel-bg);font-weight:700;}
+.opt b{min-width:22px;flex-shrink:0;}
+
+/* ── OVERLAY / POP-UP RESULTADO ── */
+#overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.72);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
+#overlay.on{display:flex;}
+.overlay-box{max-width:640px;width:100%;margin:auto;}
+#report-card{background:var(--verde-esc);color:white;padding:22px;border-radius:16px;border-left:8px solid var(--gold);}
+#report-card h2{font-size:clamp(1rem,4vw,1.35rem);margin-bottom:10px;letter-spacing:.5px;}
+.rep-line{font-size:clamp(.78rem,2.4vw,.92rem);margin-bottom:4px;}
+.rep-line b{color:#fff;}
+.stat-box{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;}
+.stat-card{background:rgba(255,255,255,.1);padding:14px 5px;border-radius:8px;text-align:center;}
+.stat-val{display:block;font-size:clamp(1.4rem,5vw,2rem);font-weight:900;color:var(--gold);}
+.stat-label{font-size:clamp(.58rem,1.6vw,.72rem);text-transform:uppercase;opacity:.85;}
+.testlet-chips{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;}
+.tchip{background:rgba(255,255,255,.12);border-radius:8px;padding:7px 12px;font-size:.72rem;}
+.overlay-btns{display:flex;gap:10px;flex-direction:column;margin-top:16px;}
+.ob{padding:13px;border-radius:10px;font-weight:700;font-size:clamp(.85rem,3vw,1rem);cursor:pointer;border:none;width:100%;}
+.ob-gold{background:var(--gold);color:#3a2e00;}
+.ob-green{background:var(--verde);color:white;}
+.ob-out{background:white;color:var(--verde-esc);border:2px solid var(--verde);}
+
+/* ── PAINEL DESCRITORES ── */
+.hd-wrap{max-width:840px;margin:0 auto;}
+.hd-card{background:white;border-radius:12px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.05);overflow:hidden;}
+.hd-head{padding:12px 18px;color:white;font-weight:700;font-size:clamp(.82rem,2.5vw,.98rem);}
+.hd-head-hist{background:var(--chist);}
+.hd-head-geo{background:var(--cgeo);}
+.hd-head-fil{background:var(--cfil);}
+.hd-head-soc{background:var(--csoc);}
+.hd-body{padding:14px 18px;}
+.hd-desc{font-size:clamp(.78rem,2.3vw,.92rem);line-height:1.6;color:#222;margin-bottom:10px;}
+.hd-desc .cod{font-weight:800;color:var(--verde-esc);}
+.hd-sub{font-size:clamp(.74rem,2.2vw,.86rem);line-height:1.55;color:#444;margin:5px 0 5px 16px;position:relative;padding-left:14px;}
+.hd-sub::before{content:"▪";position:absolute;left:0;color:var(--gold);}
+
+/* ── GABARITO ── */
+.gab-wrap{max-width:840px;margin:0 auto;}
+.gab-header{background:var(--verde-esc);color:white;padding:18px;border-radius:10px;margin-bottom:16px;border-left:8px solid var(--gold);}
+.gab-filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.fbtn{padding:6px 14px;border:1.5px solid var(--line);border-radius:20px;background:white;cursor:pointer;font-size:.74rem;font-weight:700;}
+.fbtn.on{background:var(--verde-esc);color:white;border-color:var(--verde-esc);}
+.gab-item{background:white;margin-bottom:10px;padding:15px 16px;border-radius:10px;border:1.5px solid var(--line);}
+.badge-res{padding:4px 10px;border-radius:5px;font-weight:bold;font-size:.68rem;float:right;text-transform:uppercase;}
+.badge-res.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+.badge-res.err{background:var(--err-bg);color:var(--err);border:1px solid var(--err);}
+.resp-det{margin-top:9px;padding:8px 10px;border-radius:6px;font-size:.85rem;}
+.resp-det.ok{background:var(--ok-bg);color:var(--ok);}
+.resp-det.err{background:var(--err-bg);color:var(--err);}
+
+@media(max-width:480px){
+  .tlet-preview{grid-template-columns:1fr;}
+  .stat-box{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ CAPA ══ -->
+<div id="capa">
+  <div class="capa-box">
+    <h1>📚 CIÊNCIAS HUMANAS</h1>
+    <h2>Avaliação por Testlets — Novo ENEM</h2>
+    <h3>Colégio Est. Rodolfo de Oliveira &nbsp;·&nbsp; 3ª Série &nbsp;·&nbsp; 2º Bimestre &nbsp;·&nbsp; Prof. Claudio A.</h3>
+    <p class="capa-desc">
+      <strong style="color:var(--gold-lt)">2 Testlets · 10 questões</strong><br>
+      Cada testlet apresenta <strong style="color:var(--gold-lt)">um único texto-base</strong>, interrogado pelas
+      quatro disciplinas (História, Geografia, Filosofia e Sociologia), em diálogo com os
+      <strong style="color:var(--gold-lt)">descritores oficiais (GO-EMCHS)</strong> do 2º Bimestre.
+    </p>
+    <div class="tlet-preview">
+      <div class="tp-card" style="grid-column:1/-1"><strong>Testlet 1 — Q1 a Q4 · A Nova Ordem Internacional do Pós-1945</strong><span>História (604A) · Geografia (604C) · Filosofia (604D) · Sociologia (604C)</span></div>
+      <div class="tp-card" style="grid-column:1/-1"><strong>Testlet 2 — Q5 a Q10 · Cerrado, Energia e Desenvolvimento</strong><span>Geografia (304A · 304C · 304D) + leituras de História, Filosofia e Sociologia</span></div>
+    </div>
+    <input class="capa-input" id="nome-input" type="text" placeholder="Digite seu nome completo" autocomplete="off">
+    <br>
+    <button class="btn-iniciar" onclick="iniciar()">INICIAR AVALIAÇÃO ▶</button>
+  </div>
+</div>
+
+<!-- ══ TOPBAR ══ -->
+<div id="topbar">
+  <div class="ttabs">
+    <button class="tbtn" id="tab-d-btn" onclick="tab('d',this)">📋 Descritores</button>
+    <button class="tbtn" id="tab-q-btn" onclick="tab('q',this)">📝 Testlets</button>
+    <button class="tbtn" id="tab-g-btn" onclick="tab('g',this)" style="display:none">📊 Gabarito</button>
+  </div>
+  <div id="user-bar">
+    <span id="display-nome">ALUNO: —</span>
+    <span>PROF. CLAUDIO A.</span>
+    <span>2º BIM · 3ª SÉRIE</span>
+  </div>
+</div>
+
+<!-- ══ CONTEÚDO ══ -->
+<div id="conteudo">
+
+  <!-- PAINEL DESCRITORES (transcrição fiel da Matriz de Habilidades) -->
+  <div class="panel" id="pd">
+    <div class="hd-wrap">
+      <p style="font-size:.8rem;color:#555;margin-bottom:14px;text-align:center;">Matriz de Habilidades Essenciais — 2º Bimestre · 3ª Série </p>
+
+      <div class="hd-card">
+        <div class="hd-head hd-head-hist">📜 HISTÓRIA</div>
+        <div class="hd-body">
+          <div class="hd-desc"><span class="cod">(GO-EMCHS604A)</span> Identificar os processos que levaram à Guerra Fria, refletindo sobre a formação da Organização das Nações Unidas (ONU) e a Organização do Tratado do Atlântico Norte (OTAN) para compreender seus limites e suas possibilidades de atuação.</div>
+          <div class="hd-sub">Entender as dinâmicas e os eventos cruciais da Segunda Guerra Mundial, analisando suas causas e consequências.</div>
+          <div class="hd-sub">Compreender a formação e importância dos organismos internacionais, no cenário pós-guerra (ONU e OTAN).</div>
+          <div class="hd-sub">Analisar a Guerra Fria e seus conflitos.</div>
+        </div>
+      </div>
+
+      <div class="hd-card">
+        <div class="hd-head hd-head-geo">🌍 GEOGRAFIA</div>
+        <div class="hd-body">
+          <div class="hd-desc"><span class="cod">(GO-EMCHS304A)</span> Assimilar a política energética brasileira, estudando textos geográficos, científicos, jornalísticos, mapas, gráficos, dados estatísticos e outros para fazer considerações sobre os impactos ambientais e socioeconômicos nestas políticas.</div>
+          <div class="hd-desc"><span class="cod">(GO-EMCHS304C)</span> Problematizar as questões ambientais do cerrado e demais biomas brasileiros para percebê-los como parte importante da biodiversidade e da manutenção do equilíbrio ambiental e ecológico local e global.</div>
+          <div class="hd-desc"><span class="cod">(GO-EMCHS304D)</span> Relacionar os problemas ambientais com os modelos de desenvolvimento econômico e tecnológico, categorizando indicadores socioambientais para debater as questões ambientais.</div>
+          <div class="hd-sub">Compreender as principais fontes de energias (renováveis e não renováveis), sua importância econômica e social para o país e suas implicações socioambientais.</div>
+          <div class="hd-sub">Caracterizar os diferentes biomas brasileiros e suas relevâncias para o planeta e a sociedade.</div>
+          <div class="hd-sub">Avaliar os impactos socioambientais decorrentes das atividades econômicas, em especial no cerrado.</div>
+          <div class="hd-desc" style="margin-top:10px"><span class="cod">(GO-EMCHS604C)</span> Discutir o papel dos organismos internacionais no mundo contemporâneo, analisando textos e dados que tragam os aspectos positivos e negativos dessa atuação para o Brasil para pensar de forma crítica os limites da cidadania nos países de capitalismo dependente.</div>
+          <div class="hd-sub">Analisar o papel dos principais organismos internacionais (ONU, OTAN, OMS, OMC, OIT...) no mundo e, especificamente no Brasil.</div>
+        </div>
+      </div>
+
+      <div class="hd-card">
+        <div class="hd-head hd-head-fil">🔍 FILOSOFIA</div>
+        <div class="hd-body">
+          <div class="hd-desc"><span class="cod">(GO-EMCHS604D)</span> Analisar a atuação da ONU no Brasil Contemporâneo, pesquisando a influência da Filosofia Humanista como base ética da reflexão e atuação em prol dos direitos fundamentais para construir uma visão crítica sobre o papel dos organismos internacionais no contexto dos Direitos Humanos.</div>
+          <div class="hd-sub">Compreender o pensamento político de Tomás de Aquino (o papel do governante no cuidado dos súditos).</div>
+          <div class="hd-sub">Analisar, por meio da filosofia de Erasmo de Roterdã, a relação entre a filosofia humanista e os princípios fundamentais dos direitos humanos.</div>
+        </div>
+      </div>
+
+      <div class="hd-card">
+        <div class="hd-head hd-head-soc">⚡ SOCIOLOGIA</div>
+        <div class="hd-body">
+          <div class="hd-desc"><span class="cod">(GO-EMCHS604C)</span> Discutir o papel dos organismos internacionais no mundo contemporâneo, analisando textos e dados que tragam os aspectos positivos e negativos dessa atuação para o Brasil para pensar de forma crítica os limites da cidadania nos países de capitalismo dependente.</div>
+          <div class="hd-sub">Analisar a definição e histórico da criação de organismos como a ONU, FMI, Banco Mundial, OMC e OMS.</div>
+          <div class="hd-sub">Compreender o papel dessas organizações no contexto brasileiro.</div>
+          <div class="hd-sub">Entender os impactos sociais e econômicos das políticas implementadas por esses organismos em países de capitalismo dependente.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAINEL QUESTÕES -->
+  <div class="panel" id="pq">
+    <div id="stage-scroll">
+      <div class="stage" id="stage"></div>
+    </div>
+    <div id="qnav">
+      <button class="nav-btn" onclick="changeQ(-1)">◀ Anterior</button>
+      <div id="q-counter">Q 1 / 10</div>
+      <button class="nav-btn" id="btn-next" onclick="changeQ(1)">Próxima ▶</button>
+    </div>
+  </div>
+
+  <!-- PAINEL GABARITO -->
+  <div class="panel" id="pg">
+    <div class="gab-wrap">
+      <div class="gab-filtros">
+        <button class="fbtn on" onclick="filtrarGab('all',this)">Todas</button>
+        <button class="fbtn" onclick="filtrarGab('ok',this)">✔ Acertos</button>
+        <button class="fbtn" onclick="filtrarGab('err',this)">✘ Erros</button>
+      </div>
+      <div id="gab-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ OVERLAY / POP-UP: RELATÓRIO DE DESEMPENHO ══ -->
+<div id="overlay">
+  <div class="overlay-box">
+    <div id="report-card"><!-- gerado dinamicamente --></div>
+    <div class="overlay-btns">
+      <button class="ob ob-gold" id="btn-save-img" onclick="salvarImagem()">💾 Salvar Relatório como Imagem</button>
+      <button class="ob ob-green" onclick="showResults()">Ver Gabarito Completo 📊</button>
+      <button class="ob ob-out" onclick="document.getElementById('overlay').classList.remove('on')">Revisar Questões</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   BANCO DE QUESTÕES — alinhado à Matriz de Habilidades (GO-EMCHS)
+   Cada questão contempla um descritor oficial, na disciplina específica.
+══════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════
+   CAMINHO B — Testlets ÍNTEGROS: 1 texto-base → 4 disciplinas
+   2 Testlets · 10 questões · cobertura dos descritores oficiais
+══════════════════════════════════════════════════════════════ */
+
+/* TEXTO-BASE TESTLET 1 — A nova ordem internacional do pós-1945 */
+const T1 = `"Entre 1944 e 1949, as potências vencedoras da Segunda Guerra Mundial estruturaram uma nova ordem internacional. Em 1945, foi criada a Organização das Nações Unidas (ONU), voltada à segurança coletiva, ao diálogo entre as nações e à defesa dos direitos humanos; em 1948, a ONU proclamou a Declaração Universal dos Direitos Humanos, cujo Artigo 1º afirma que 'todos os seres humanos nascem livres e iguais em dignidade e direitos'. No campo econômico, a Conferência de Bretton Woods (1944) criou o Fundo Monetário Internacional (FMI) e o Banco Mundial. No campo militar, a Guerra Fria levou à fundação da OTAN (1949), aliança do bloco ocidental. Apesar do discurso de igualdade entre as nações, esses organismos refletem assimetrias de poder: o Conselho de Segurança da ONU concentra o poder de veto em cinco países, e as condicionalidades do FMI, sobretudo a partir dos anos 1990, marcaram a inserção de países endividados, como o Brasil, na economia global."`;
+const F1 = `Síntese didática a partir da Carta da ONU (1945); Declaração Universal dos Direitos Humanos (1948); Acordos de Bretton Woods (1944); HOBSBAWM, E. Era dos extremos. (Adaptado)`;
+
+/* TEXTO-BASE TESTLET 2 — Cerrado, energia e desenvolvimento no Brasil */
+const T2 = `"O Cerrado, segundo maior bioma do Brasil, ocupa cerca de 24% do território nacional e abriga a savana mais biodiversa do planeta. É o berço de importantes bacias hidrográficas — São Francisco, Araguaia-Tocantins e Paraná —, que sustentam grande parte da geração hidrelétrica do país. A matriz elétrica brasileira é predominantemente renovável, com forte peso das hidrelétricas, mas a matriz energética total ainda depende de combustíveis fósseis, sobretudo o petróleo, cujas reservas do pré-sal reacendem o debate entre crescimento econômico e sustentabilidade. A partir da década de 1970, durante os governos militares, políticas de 'integração nacional' e a chamada Revolução Verde impulsionaram a expansão da fronteira agrícola sobre o Cerrado, com forte incentivo à soja e à pecuária. Como resultado, mais da metade da vegetação original já foi suprimida, ameaçando a biodiversidade, os povos tradicionais e a recarga das bacias que sustentam a própria geração de energia."`;
+const F2 = `Síntese didática a partir de MMA. Biodiversidade Brasileira; IBGE/EPE. Dados de energia elétrica do Brasil; e bibliografia sobre a ocupação do Cerrado. (Adaptado)`;
+
+const TN1 = 'Testlet 1 — A Nova Ordem Internacional do Pós-1945';
+const TN2 = 'Testlet 2 — Cerrado, Energia e Desenvolvimento';
+
+const Questoes = [
+
+/* ───────── TESTLET 1 · 1 texto → 4 disciplinas ───────── */
+
+/* HISTÓRIA · GO-EMCHS604A */
+{tlet:1,tnome:TN1,texto:T1,fonte:F1,disc:'hist',desc:'GO-EMCHS604A',
+ e:'Os processos que levaram à criação da ONU (1945) e da OTAN (1949), descritos no texto, relacionam-se diretamente:',
+ o:['Ao fim do sistema colonial europeu, que tornou desnecessária qualquer aliança militar entre as nações ocidentais.',
+    'À experiência das duas guerras mundiais e ao início da Guerra Fria, que motivaram, respectivamente, a busca por segurança coletiva (ONU) e a formação de uma aliança militar ocidental (OTAN).',
+    'À Primeira Guerra Mundial e à criação da Liga das Nações, que deram origem imediata à OTAN ainda na década de 1920.',
+    'À vitória do bloco socialista, que impôs a criação da ONU como instrumento de expansão do comunismo pelo mundo.',
+    'À unificação política definitiva entre os Estados Unidos e a União Soviética logo após o ano de 1945.'],
+ a:1,
+ f:'A ONU (1945) nasce do trauma das duas guerras mundiais, com a meta de segurança coletiva e defesa dos direitos humanos; a OTAN (1949) surge já no contexto da Guerra Fria, como aliança militar do bloco ocidental. Compreender esses processos e os limites de atuação desses organismos é o núcleo do descritor GO-EMCHS604A.'},
+
+/* GEOGRAFIA · GO-EMCHS604C */
+{tlet:1,tnome:TN1,texto:T1,fonte:F1,disc:'geo',desc:'GO-EMCHS604C',
+ e:'Do ponto de vista geográfico, a constatação de que "o Conselho de Segurança da ONU concentra o poder de veto em cinco países" evidencia que os organismos internacionais:',
+ o:['Asseguram igualdade plena de poder decisório entre todos os Estados-membros, sem qualquer hierarquia.',
+    'Eliminaram, ao longo do século XX, as diferenças econômicas e políticas entre países centrais e periféricos.',
+    'Atuam de forma exclusiva e prioritária em favor das demandas dos países em desenvolvimento.',
+    'Reproduzem, em sua própria estrutura, as assimetrias de poder entre o centro e a periferia do sistema mundial, limitando a influência de países como o Brasil.',
+    'Perderam toda a função no mundo contemporâneo, sendo hoje instituições meramente simbólicas.'],
+ a:3,
+ f:'A concentração do poder de veto em cinco países revela que os organismos internacionais reproduzem a assimetria entre centro e periferia do sistema mundial. Países como o Brasil (periferia) têm influência limitada nessas decisões — o que o descritor GO-EMCHS604C pede discutir quanto ao papel desses organismos e aos limites da cidadania.'},
+
+/* FILOSOFIA · GO-EMCHS604D */
+{tlet:1,tnome:TN1,texto:T1,fonte:F1,disc:'fil',desc:'GO-EMCHS604D',
+ e:'O Artigo 1º da Declaração Universal dos Direitos Humanos — "todos os seres humanos nascem livres e iguais em dignidade e direitos" — expressa uma base ética associada à tradição da Filosofia Humanista. Essa associação se justifica porque:',
+ o:['A tradição humanista, de Tomás de Aquino a Erasmo de Roterdã, colocou a dignidade da pessoa e o bem comum no centro da reflexão ética, fundamentando a ideia moderna de direitos universais.',
+    'A Declaração de 1948 nega qualquer fundamento racional ou filosófico aos direitos humanos, baseando-se apenas na força.',
+    'Para os filósofos humanistas, os direitos deveriam pertencer apenas aos governantes, e não ao conjunto dos cidadãos.',
+    'A noção de dignidade humana é uma invenção exclusiva do século XX, sem qualquer relação com a filosofia anterior.',
+    'Erasmo de Roterdã defendia a guerra como o meio mais legítimo para impor a dignidade humana entre os povos.'],
+ a:0,
+ f:'O descritor GO-EMCHS604D pede relacionar a Filosofia Humanista à base ética dos direitos fundamentais. Tomás de Aquino (bem comum) e Erasmo de Roterdã (humanismo, paz e dignidade) inauguram a tradição que fundamenta os direitos universais expressos na DUDH de 1948.'},
+
+/* SOCIOLOGIA · GO-EMCHS604C */
+{tlet:1,tnome:TN1,texto:T1,fonte:F1,disc:'soc',desc:'GO-EMCHS604C',
+ e:'O texto afirma que "as condicionalidades do FMI marcaram a inserção de países endividados, como o Brasil, na economia global". Sociologicamente, essas condicionalidades tendem a:',
+ o:['Ampliar de imediato os direitos sociais e o bem-estar das populações dos países periféricos endividados.',
+    'Eliminar por completo a dependência econômica desses países em relação às potências centrais.',
+    'Garantir, de forma automática, maior investimento estatal em saúde, educação e assistência social.',
+    'Ser irrelevantes para a vida social, pois dizem respeito apenas a indicadores macroeconômicos abstratos.',
+    'Exigir ajustes fiscais e cortes de gastos que reduzem políticas sociais, aprofundando a inserção subordinada e limitando a cidadania em países de capitalismo dependente.'],
+ a:4,
+ f:'As condicionalidades (ajuste fiscal, corte de gastos) reduzem políticas públicas e aprofundam a dependência, comprometendo a dimensão social da cidadania em países de capitalismo dependente — exatamente os impactos sociais e econômicos que o descritor GO-EMCHS604C pede analisar.'},
+
+/* ───────── TESTLET 2 · 1 texto → 4 disciplinas ───────── */
+
+/* GEOGRAFIA · GO-EMCHS304A */
+{tlet:2,tnome:TN2,texto:T2,fonte:F2,disc:'geo',desc:'GO-EMCHS304A',
+ e:'Sobre a matriz energética brasileira apresentada no texto, é correto afirmar que:',
+ o:['A matriz elétrica do país é majoritariamente fóssil, com participação reduzida e secundária das hidrelétricas.',
+    'O Brasil abandonou as fontes renováveis e passou a depender integralmente do petróleo do pré-sal.',
+    'A matriz elétrica é predominantemente renovável, com forte peso das hidrelétricas, enquanto a matriz energética total ainda depende de fontes fósseis, como o petróleo do pré-sal.',
+    'A geração de energia no país não produz qualquer tipo de impacto ambiental ou socioeconômico.',
+    'As reservas do pré-sal encerraram, na prática, o debate entre crescimento econômico e sustentabilidade.'],
+ a:2,
+ f:'O texto distingue a matriz elétrica (predominantemente renovável, com forte peso hidrelétrico) da matriz energética total (que ainda depende de fósseis, como o pré-sal). Reconhecer fontes renováveis e não renováveis e seus impactos é o foco do descritor GO-EMCHS304A.'},
+
+/* GEOGRAFIA · GO-EMCHS304C */
+{tlet:2,tnome:TN2,texto:T2,fonte:F2,disc:'geo',desc:'GO-EMCHS304C',
+ e:'A respeito do Cerrado como bioma, o texto permite afirmar que ele:',
+ o:['É um bioma de baixa biodiversidade e sem relevância para os recursos hídricos do território nacional.',
+    'Já teve sua vegetação integralmente preservada desde a década de 1970, sem perdas significativas.',
+    'Tem importância apenas econômica, sem qualquer valor ecológico, hídrico ou ambiental relevante.',
+    'É a savana mais biodiversa do planeta e berço de bacias hidrográficas estratégicas, de modo que sua degradação ameaça a biodiversidade e o equilíbrio ecológico local e global.',
+    'Não possui relação com as bacias hidrográficas nem com a manutenção do equilíbrio ambiental do país.'],
+ a:3,
+ f:'O texto caracteriza o Cerrado como a savana mais biodiversa do planeta e berço de bacias hidrográficas estratégicas. Problematizar sua degradação como ameaça à biodiversidade e ao equilíbrio ecológico local e global é precisamente o que pede o descritor GO-EMCHS304C.'},
+
+/* GEOGRAFIA · GO-EMCHS304D */
+{tlet:2,tnome:TN2,texto:T2,fonte:F2,disc:'geo',desc:'GO-EMCHS304D',
+ e:'A relação entre a expansão da fronteira agrícola e a geração de energia, descrita no texto, evidencia que:',
+ o:['O modelo de desenvolvimento do agronegócio e a preservação ambiental são plenamente compatíveis, sem qualquer tensão.',
+    'O desmatamento do Cerrado para a soja e a pecuária compromete a recarga das bacias que sustentam a matriz elétrica renovável, revelando a contradição entre o modelo de desenvolvimento e a sustentabilidade.',
+    'A expansão agrícola não guarda nenhuma relação com os problemas ambientais do território brasileiro.',
+    'Os indicadores socioambientais do país tendem a melhorar à medida que a vegetação do Cerrado é suprimida.',
+    'A geração hidrelétrica independe por completo da preservação das nascentes e das bacias hidrográficas.'],
+ a:1,
+ f:'O texto articula o problema ambiental (desmatamento do Cerrado) ao modelo de desenvolvimento econômico (agronegócio): a supressão da vegetação compromete a recarga das bacias que abastecem as hidrelétricas. Relacionar problemas ambientais a modelos de desenvolvimento é o cerne do descritor GO-EMCHS304D.'},
+
+/* HISTÓRIA · leitura interdisciplinar do mesmo texto */
+{tlet:2,tnome:TN2,texto:T2,fonte:F2,disc:'hist',desc:'História (interdisc.)',
+ e:'A ocupação sistemática do Cerrado a partir da década de 1970, mencionada no texto, está historicamente associada:',
+ o:['À reforma agrária radical do período, que distribuiu as terras do Cerrado entre pequenos agricultores familiares.',
+    'Ao abandono completo da agricultura na região Centro-Oeste durante o regime militar brasileiro.',
+    'À criação da OTAN e à lógica da Guerra Fria, que determinaram diretamente o uso agrícola do bioma.',
+    'A um processo espontâneo e natural, sem qualquer relação com políticas públicas ou modelos econômicos.',
+    'À política de "integração nacional" dos governos militares e à Revolução Verde, que incentivaram a expansão da fronteira agrícola com soja e pecuária.'],
+ a:4,
+ f:'A ocupação do Cerrado ganhou escala a partir dos anos 1970, impulsionada pela política de "integração nacional" dos governos militares e pela Revolução Verde (novas tecnologias agrícolas), com forte incentivo à soja e à pecuária — leitura histórica do mesmo texto-base.'},
+
+/* FILOSOFIA · leitura interdisciplinar do mesmo texto */
+{tlet:2,tnome:TN2,texto:T2,fonte:F2,disc:'fil',desc:'Filosofia (interdisc.)',
+ e:'A constatação de que o atual modelo de desenvolvimento ameaça "a biodiversidade, os povos tradicionais e a recarga das bacias" pode ser problematizada filosoficamente a partir da ideia de que:',
+ o:['O bem comum e a responsabilidade com as gerações futuras exigem que o desenvolvimento concilie crescimento econômico e sustentabilidade ambiental.',
+    'A natureza deve ser explorada sem limites, pois não há qualquer dever ético em relação às gerações futuras.',
+    'As decisões econômicas não envolvem nenhuma dimensão ética ou de responsabilidade coletiva.',
+    'Apenas o lucro imediato deve orientar as escolhas sobre o uso dos recursos naturais de um país.',
+    'As questões ambientais são estranhas à reflexão filosófica e ética, restringindo-se à técnica.'],
+ a:0,
+ f:'A ética do bem comum e da responsabilidade com as gerações futuras (ideia de desenvolvimento sustentável) permite avaliar criticamente o dilema socioambiental do texto — leitura filosófica do mesmo texto-base, em diálogo com a tradição humanista.'},
+
+/* SOCIOLOGIA · leitura interdisciplinar do mesmo texto */
+{tlet:2,tnome:TN2,texto:T2,fonte:F2,disc:'soc',desc:'Sociologia (interdisc.)',
+ e:'Ao mencionar a ameaça aos "povos tradicionais" decorrente da expansão da fronteira agrícola, o texto permite uma análise sociológica que destaca:',
+ o:['A inexistência de conflitos sociais relacionados ao uso e à posse da terra no Cerrado.',
+    'A plena harmonia de interesses entre grandes proprietários do agronegócio e povos tradicionais.',
+    'Os conflitos socioambientais entre o avanço do agronegócio e as comunidades tradicionais, que evidenciam desigualdades no acesso à terra e aos recursos.',
+    'A ausência de qualquer impacto social decorrente do modelo de desenvolvimento agrícola adotado.',
+    'Que os povos tradicionais são os principais beneficiários econômicos da expansão da soja e da pecuária.'],
+ a:2,
+ f:'A expansão do agronegócio sobre o Cerrado gera conflitos socioambientais com comunidades tradicionais e expõe desigualdades no acesso à terra e aos recursos — leitura sociológica do mesmo texto-base.'}
+
+];
+
+/* ══════════════════════════════════════════════
+   LÓGICA DO QUIZ
+══════════════════════════════════════════════ */
+const TOTAL = Questoes.length;
+const TESTLETS = [...new Set(Questoes.map(q => q.tlet))].sort((a,b)=>a-b);
+let cur = 0;
+const resp = new Array(TOTAL).fill(null);
+
+const pillClass = {hist:'dp-hist', geo:'dp-geo', fil:'dp-fil', soc:'dp-soc'};
+const pillLabel = {hist:'História', geo:'Geografia', fil:'Filosofia', soc:'Sociologia'};
+const faixaClass = {hist:'tf-hist', geo:'tf-geo', fil:'tf-fil', soc:'tf-soc'};
+
+function calcTopbarH(){ return document.getElementById('topbar').offsetHeight; }
+function ajustarConteudo(){ document.getElementById('conteudo').style.top = calcTopbarH() + 'px'; }
+
+function iniciar(){
+  const nome = document.getElementById('nome-input').value.trim();
+  if(!nome){ alert('Por favor, digite seu nome.'); return; }
+  document.getElementById('display-nome').textContent = 'ALUNO: ' + nome.toUpperCase();
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('topbar').style.display = 'flex';
+  document.getElementById('conteudo').style.display = 'block';
+  ajustarConteudo();
+  window.addEventListener('resize', ajustarConteudo);
+  render();
+  tab('d', document.getElementById('tab-d-btn'));
+}
+
+function render(){
+  const stage = document.getElementById('stage');
+  stage.innerHTML = '';
+  Questoes.forEach((q, i) => {
+    const d = document.createElement('div');
+    d.className = 'q-card' + (i === cur ? ' active' : '');
+    d.id = 'q' + i;
+    d.innerHTML =
+      '<div class="tlet-faixa ' + faixaClass[q.disc] + '">' +
+        '<span class="tlet-faixa-titulo">' + q.tnome + '</span>' +
+        '<span class="tlet-faixa-num">Q ' + (i+1) + '/' + TOTAL + '</span>' +
+      '</div>' +
+      '<div class="texto-base-wrap">' +
+        '<div class="texto-base-label">📄 Texto-base compartilhado do testlet</div>' +
+        '<div class="trecho">' + q.texto + '</div>' +
+        '<div class="fonte">' + q.fonte + '</div>' +
+      '</div>' +
+      '<div class="q-body">' +
+        '<div class="q-header-line">' +
+          '<div class="q-badge">QUESTÃO ' + (i+1) + '</div>' +
+          '<span class="disc-pill ' + pillClass[q.disc] + '">' + pillLabel[q.disc] + '</span>' +
+          '<span class="desc-tag">' + q.desc + '</span>' +
+        '</div>' +
+        '<div class="enunciado">' + q.e + '</div>' +
+        '<div class="opts">' +
+          q.o.map((op, oi) =>
+            '<div class="opt' + (resp[i] === oi ? ' selected' : '') +
+            '" onclick="pick(' + i + ',' + oi + ',this)">' +
+            '<b>' + String.fromCharCode(65+oi) + ')</b><span>' + op + '</span></div>'
+          ).join('') +
+        '</div>' +
+      '</div>';
+    stage.appendChild(d);
+  });
+  atualizarNav();
+}
+
+function pick(qi, oi, el){
+  resp[qi] = oi;
+  el.parentElement.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function changeQ(step){
+  const nx = cur + step;
+  if(nx >= 0 && nx < TOTAL){
+    document.getElementById('q' + cur).classList.remove('active');
+    cur = nx;
+    document.getElementById('q' + cur).classList.add('active');
+    document.getElementById('stage-scroll').scrollTop = 0;
+    atualizarNav();
+  } else if(nx === TOTAL){
+    finalizar();
+  }
+}
+
+function atualizarNav(){
+  const q = Questoes[cur];
+  document.getElementById('q-counter').textContent =
+    'Q ' + (cur+1) + '/' + TOTAL + '  ·  ' + pillLabel[q.disc] + '  ·  Testlet ' + q.tlet;
+  document.getElementById('btn-next').textContent = cur === TOTAL-1 ? 'Finalizar ✓' : 'Próxima ▶';
+}
+
+function calcAcertos(){
+  let ac = 0;
+  Questoes.forEach((q,i) => { if(resp[i] === q.a) ac++; });
+  return ac;
+}
+
+let dataHoraEnvio = '';
+
+function finalizar(){
+  const sem = resp.filter(r => r === null).length;
+  if(sem > 0 && !confirm('Você tem ' + sem + ' questão(ões) sem resposta. Finalizar mesmo assim?')) return;
+
+  const ac = calcAcertos();
+  const pct = (ac/TOTAL*100).toFixed(1);
+  const nota = (ac/TOTAL*10).toFixed(1);
+  const nome = document.getElementById('nome-input').value.trim();
+
+  const agora = new Date();
+  dataHoraEnvio = agora.toLocaleDateString('pt-BR') + ' às ' +
+                  agora.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+
+  /* desempenho por testlet */
+  const maxTlet = Math.max(...TESTLETS);
+  const porTestlet = new Array(maxTlet).fill(0);
+  const acTestlet  = new Array(maxTlet).fill(0);
+  Questoes.forEach((q,i) => { porTestlet[q.tlet-1]++; if(resp[i]===q.a) acTestlet[q.tlet-1]++; });
+
+  document.getElementById('report-card').innerHTML =
+    '<h2>RELATÓRIO DE DESEMPENHO</h2>' +
+    '<div class="rep-line"><b>ALUNO:</b> ' + nome.toUpperCase() + '</div>' +
+    '<div class="rep-line"><b>PROFESSOR:</b> CLAUDIO A. &nbsp;|&nbsp; <b>AVALIAÇÃO:</b> Testlets CH · 2º Bim · 3ª Série</div>' +
+    '<div class="rep-line"><b>DATA/HORA:</b> ' + dataHoraEnvio + '</div>' +
+    '<div class="stat-box">' +
+      '<div class="stat-card"><span class="stat-val">' + ac + '/' + TOTAL + '</span><span class="stat-label">Acertos</span></div>' +
+      '<div class="stat-card"><span class="stat-val">' + pct + '%</span><span class="stat-label">Aproveitamento</span></div>' +
+      '<div class="stat-card"><span class="stat-val">' + nota + '</span><span class="stat-label">Nota (0–10)</span></div>' +
+    '</div>' +
+    '<div class="testlet-chips">' +
+      TESTLETS.map(t =>
+        '<div class="tchip"><b>Testlet ' + t + ':</b> ' + acTestlet[t-1] + '/' + porTestlet[t-1] + '</div>'
+      ).join('') +
+    '</div>';
+
+  document.getElementById('overlay').classList.add('on');
+}
+
+function salvarImagem(){
+  const card = document.getElementById('report-card');
+  const btn = document.getElementById('btn-save-img');
+  const original = btn.textContent;
+  btn.textContent = '⏳ Gerando imagem...';
+  btn.disabled = true;
+  html2canvas(card, { scale: 2, backgroundColor: '#1b5e20', logging: false }).then(canvas => {
+    const nome = document.getElementById('nome-input').value.trim() || 'aluno';
+    const safe = nome.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_áéíóúÁÉÍÓÚãõÃÕâêîôûçÇ]/g,'');
+    const link = document.createElement('a');
+    link.download = 'Relatorio_TestletsCH_' + safe + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    btn.textContent = original;
+    btn.disabled = false;
+  }).catch(() => {
+    alert('Não foi possível gerar a imagem. Tente novamente.');
+    btn.textContent = original;
+    btn.disabled = false;
+  });
+}
+
+function showResults(){
+  document.getElementById('overlay').classList.remove('on');
+  document.getElementById('tab-g-btn').style.display = '';
+  const c = document.getElementById('gab-content');
+  const nome = document.getElementById('nome-input').value;
+  const ac = calcAcertos();
+  const pct = (ac/TOTAL*100).toFixed(1);
+  const nota = (ac/TOTAL*10).toFixed(1);
+
+  c.innerHTML =
+    '<div class="gab-header">' +
+    '<h2 style="margin-bottom:6px;font-size:clamp(.95rem,3.5vw,1.2rem)">GABARITO COMENTADO</h2>' +
+    '<p><b>ALUNO:</b> ' + nome.toUpperCase() + ' &nbsp;|&nbsp; <b>DATA/HORA:</b> ' + dataHoraEnvio + '</p>' +
+    '<p><b>RESULTADO:</b> ' + ac + '/' + TOTAL + ' &nbsp;·&nbsp; ' + pct + '% &nbsp;·&nbsp; Nota ' + nota + '</p>' +
+    '</div>';
+
+  Questoes.forEach((q,i) => {
+    const ok = resp[i] === q.a;
+    const ra = resp[i] !== null ? String.fromCharCode(65+resp[i]) : '—';
+    const rc = String.fromCharCode(65+q.a);
+    const div = document.createElement('div');
+    div.className = 'gab-item';
+    div.dataset.res = ok ? 'ok' : 'err';
+    div.innerHTML =
+      '<span class="badge-res ' + (ok?'ok':'err') + '">' + (ok?'✔ ACERTO':'✘ ERRO') + '</span>' +
+      '<strong>Q' + (i+1) + '</strong> ' +
+      '<span class="disc-pill ' + pillClass[q.disc] + '" style="font-size:.6rem">' + pillLabel[q.disc] + '</span> ' +
+      '<span style="font-size:.65rem;color:#888">Testlet ' + q.tlet + ' · ' + q.desc + '</span>' +
+      '<div class="resp-det ' + (ok?'ok':'err') + '">Sua resposta: <b>' + ra + '</b> &nbsp;|&nbsp; Gabarito: <b>' + rc + '</b></div>' +
+      '<div style="font-size:.82rem;color:#555;border-top:1px solid #eee;padding-top:8px;margin-top:8px"><b>Justificativa:</b> ' + q.f + '</div>';
+    c.appendChild(div);
+  });
+
+  tab('g', document.getElementById('tab-g-btn'));
+}
+
+function filtrarGab(tipo, btn){
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.gab-item').forEach(el => {
+    el.style.display = (tipo === 'all' || el.dataset.res === tipo) ? '' : 'none';
+  });
+}
+
+function tab(id, btn){
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tbtn').forEach(b => b.classList.remove('on'));
+  document.getElementById('p' + id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>
