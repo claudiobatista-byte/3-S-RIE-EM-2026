@@ -537,6 +537,8 @@
       <button onclick="saveImage()" id="btn-salvar" style="display:none">📸 Salvar resultado</button>
       <button class="primary" id="btn-next-round" onclick="nextRoundOrFinal()">Próxima Rodada →</button>
     </div>
+    <!-- Preview da imagem gerada -->
+    <img id="img-preview" src="" alt="Resultado" style="display:none;margin-top:1rem;max-width:100%;border-radius:10px;box-shadow:0 2px 12px rgba(34,114,195,0.18);" />
   </div>
 
 </div>
@@ -550,6 +552,9 @@
     <div class="ec-result" id="ec-result"></div>
     <div class="ec-detail" id="ec-detail"></div>
   </div>
+  <!-- Progresso das rodadas no card de exportação -->
+  <div id="ec-round-dots" style="display:flex;gap:10px;justify-content:center;margin-bottom:18px;flex-wrap:wrap"></div>
+  <!-- Grupos da última rodada (legado) -->
   <div id="ec-groups"></div>
   <div class="ec-footer">Jogo gerado para fins educacionais · Conexo Geopolítica</div>
 </div>
@@ -615,6 +620,30 @@ const ROUNDS = [
       { category: "Fenômenos geopolíticos do século XXI", color: "green", words: ["Desglobalização", "Guerra Híbrida", "Lawfare", "Populismo"] },
       { category: "Países com maior reserva de água doce", color: "blue", words: ["Brasil", "Rússia", "Canadá", "China"] },
       { category: "Conceitos de direito internacional", color: "purple", words: ["Jus Cogens", "Refugiado", "Intervenção Humanitária", "Veto"] }
+    ]
+  },
+  {
+    hints: [
+      { text: "<strong>Dica 1:</strong> Um dos grupos reúne países ligados a <em>potências nucleares declaradas</em> — membros permanentes do Conselho de Segurança da ONU que possuem arsenais atômicos reconhecidos.", warn: null },
+      { text: "<strong>Dica 2:</strong> Há um grupo formado por termos associados à <em>crise climática e geopolítica ambiental</em> — tratados, conceitos e disputas que moldam a diplomacia ecológica global.", warn: "⚠️ Esta dica custa 1 tentativa." }
+    ],
+    groups: [
+      { category: "Potências nucleares no Conselho de Segurança", color: "yellow", words: ["EUA", "China", "França", "Reino Unido"] },
+      { category: "Geopolítica ambiental / clima", color: "green", words: ["Acordo de Paris", "Carbono", "COP", "Desertificação"] },
+      { category: "Organizações regionais africanas", color: "blue", words: ["União Africana", "CEDEAO", "SADC", "IGAD"] },
+      { category: "Termos de inteligência e espionagem", color: "purple", words: ["SIGINT", "Agente duplo", "Desinformação", "Operação Coberta"] }
+    ]
+  },
+  {
+    hints: [
+      { text: "<strong>Dica 1:</strong> Um dos grupos reúne conceitos ligados à <em>ordem internacional liberal</em> — pilares institucionais que sustentaram a hegemonia ocidental após a Segunda Guerra Mundial.", warn: null },
+      { text: "<strong>Dica 2:</strong> Há um grupo com países envolvidos em <em>disputas territoriais marítimas ativas</em> — conflitos sobre ilhas, plataformas e rotas estratégicas nos oceanos.", warn: "⚠️ Esta dica custa 1 tentativa." }
+    ],
+    groups: [
+      { category: "Pilares da ordem liberal pós-1945", color: "yellow", words: ["FMI", "OTAN", "ONU", "Bretton Woods"] },
+      { category: "Disputas territoriais marítimas", color: "green", words: ["Mar do Sul da China", "Ilhas Malvinas", "Ártico", "Estreito de Taiwan"] },
+      { category: "Líderes de revoluções do século XX", color: "blue", words: ["Mao Tsé-tung", "Fidel Castro", "Ho Chi Minh", "Gamal Nasser"] },
+      { category: "Conceitos de teoria das relações internacionais", color: "purple", words: ["Realismo", "Construtivismo", "Interdependência", "Hegemonia"] }
     ]
   }
 ];
@@ -912,6 +941,8 @@ function nextRoundOrFinal() {
 function restartAll() {
   roundHistory = [];
   document.getElementById("btn-next-round").onclick = nextRoundOrFinal;
+  const preview = document.getElementById("img-preview");
+  if (preview) { preview.src = ""; preview.style.display = "none"; }
   initGame(0);
 }
 
@@ -921,25 +952,59 @@ function saveImage() {
   btn.textContent = "⏳ Gerando imagem...";
   btn.disabled = true;
 
-  // Preenche o card oculto
+  // Preenche cabeçalho
   document.getElementById("ec-player").textContent = `👤 ${playerName}`;
 
-  const won = finalWon;
-  const erros = finalErros;
+  const totalWon   = roundHistory.filter(r => r.won).length;
+  const totalErros = roundHistory.reduce((s, r) => s + r.erros, 0);
+
   document.getElementById("ec-result").textContent =
-    won ? (erros === 0 ? "✅ Perfeito — sem erros!" : `✅ Concluído com ${erros} erro${erros > 1 ? "s" : ""}`)
-        : `❌ ${solvedGroups.length} de 4 grupos acertados`;
+    totalWon === TOTAL_ROUNDS
+      ? (totalErros === 0 ? "🏆 Perfeito — sem erros!" : `🏆 ${totalWon}/${TOTAL_ROUNDS} rodadas vencidas`)
+      : `🎯 ${totalWon}/${TOTAL_ROUNDS} rodadas vencidas · ${totalErros} erros`;
 
-  const rodada = (currentRoundIndex % ROUNDS.length) + 1;
-  document.getElementById("ec-detail").textContent = `Rodada ${rodada} · ${new Date().toLocaleDateString("pt-BR")}`;
+  document.getElementById("ec-detail").textContent =
+    `${totalErros} erro${totalErros !== 1 ? "s" : ""} no total · ${new Date().toLocaleDateString("pt-BR")}`;
 
+  // Bolinhas de progresso das rodadas
+  const dotsContainer = document.getElementById("ec-round-dots");
+  dotsContainer.innerHTML = "";
+  for (let i = 0; i < TOTAL_ROUNDS; i++) {
+    const wrap = document.createElement("div");
+    wrap.style.cssText = "display:flex;flex-direction:column;align-items:center;gap:4px";
+    const dot = document.createElement("div");
+    dot.style.cssText = "width:34px;height:34px;border-radius:50%;font-size:0.85rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;";
+    const lbl = document.createElement("div");
+    lbl.style.cssText = "font-size:0.62rem;color:#5a7a95;font-weight:600";
+    lbl.textContent = `R${i+1}`;
+    if (i < roundHistory.length) {
+      const r = roundHistory[i];
+      dot.style.background = r.won ? "#2e9e60" : "#e05050";
+      dot.textContent = r.won ? "✓" : "✗";
+    } else {
+      dot.style.background = "#b0cfe8";
+      dot.textContent = i + 1;
+    }
+    wrap.appendChild(dot);
+    wrap.appendChild(lbl);
+    dotsContainer.appendChild(wrap);
+  }
+
+  // Grupos de cada rodada jogada
   const container = document.getElementById("ec-groups");
   container.innerHTML = "";
-  groups.forEach(g => {
-    const div = document.createElement("div");
-    div.className = `ec-group color-${g.color}`;
-    div.innerHTML = `<div class="ec-group-cat">${g.category}</div><div class="ec-group-words">${g.words.join(" · ")}</div>`;
-    container.appendChild(div);
+  roundHistory.forEach((r, idx) => {
+    const round = ROUNDS[idx];
+    const rLabel = document.createElement("div");
+    rLabel.style.cssText = "font-size:0.7rem;font-weight:700;color:#1a4f80;text-transform:uppercase;letter-spacing:0.08em;margin:10px 0 6px;";
+    rLabel.textContent = `Rodada ${idx + 1}${r.won ? " ✓" : " ✗"}`;
+    container.appendChild(rLabel);
+    round.groups.forEach(g => {
+      const div = document.createElement("div");
+      div.className = `ec-group color-${g.color}`;
+      div.innerHTML = `<div class="ec-group-cat">${g.category}</div><div class="ec-group-words">${g.words.join(" · ")}</div>`;
+      container.appendChild(div);
+    });
   });
 
   const card = document.getElementById("export-card");
@@ -949,10 +1014,20 @@ function saveImage() {
   setTimeout(() => {
     html2canvas(card, { backgroundColor: "#d6e8f5", scale: 2, useCORS: true, logging: false })
       .then(canvas => {
+        // Mostra a imagem gerada numa nova aba em vez de só fazer download
+        const dataUrl = canvas.toDataURL("image/png");
         const link = document.createElement("a");
         link.download = `conexo-${playerName.replace(/\s+/g, "_")}.png`;
-        link.href = canvas.toDataURL("image/png");
+        link.href = dataUrl;
         link.click();
+
+        // Também exibe uma preview no chat
+        const preview = document.getElementById("img-preview");
+        if (preview) {
+          preview.src = dataUrl;
+          preview.style.display = "block";
+        }
+
         btn.textContent = "📸 Salvar resultado";
         btn.disabled = false;
       })
@@ -961,7 +1036,7 @@ function saveImage() {
         btn.textContent = "📸 Salvar resultado";
         btn.disabled = false;
       });
-  }, 100);
+  }, 150);
 }
 </script>
 </body>
