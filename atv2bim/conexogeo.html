@@ -483,10 +483,12 @@
 
   <div class="lives">
     <span>Tentativas:</span>
-    <div class="life-dot" id="l1"></div>
-    <div class="life-dot" id="l2"></div>
-    <div class="life-dot" id="l3"></div>
-    <div class="life-dot" id="l4"></div>
+    <div id="lives-dots" style="display:flex;gap:6px">
+      <div class="life-dot" id="l1"></div>
+      <div class="life-dot" id="l2"></div>
+      <div class="life-dot" id="l3"></div>
+      <div class="life-dot" id="l4"></div>
+    </div>
   </div>
 
   <div class="legend">
@@ -509,15 +511,20 @@
 
   <div class="hints-area" id="hints-area"></div>
 
-  <!-- Tela de fim de jogo -->
+  <!-- Tela de fim de rodada / fim de jogo -->
   <div class="endscreen" id="endscreen">
     <h2 id="end-title"></h2>
     <div class="end-player" id="end-player"></div>
     <div class="score-badge" id="end-score"></div>
     <p id="end-text"></p>
+    <!-- Barra de progresso das rodadas -->
+    <div id="round-progress" style="margin:1rem 0 0.5rem;display:none">
+      <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem">Progresso das rodadas</div>
+      <div id="round-dots" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"></div>
+    </div>
     <div class="end-actions">
-      <button onclick="saveImage()" id="btn-salvar">📸 Salvar resultado</button>
-      <button class="primary" onclick="resetGame()">Jogar novamente</button>
+      <button onclick="saveImage()" id="btn-salvar" style="display:none">📸 Salvar resultado</button>
+      <button class="primary" id="btn-next-round" onclick="nextRoundOrFinal()">Próxima Rodada →</button>
     </div>
   </div>
 
@@ -538,6 +545,8 @@
 
 <script>
 let playerName = "";
+let roundHistory = [];
+const TOTAL_ROUNDS = 5;
 
 function startGame() {
   const input = document.getElementById("input-nome").value.trim();
@@ -548,6 +557,7 @@ function startGame() {
     return;
   }
   playerName = input;
+  roundHistory = [];
   document.getElementById("login-screen").style.display = "none";
   document.getElementById("game-screen").style.display = "flex";
   document.getElementById("player-name-tag").textContent = playerName;
@@ -598,7 +608,23 @@ const ROUNDS = [
   }
 ];
 
-/* ═══ ESTADO ═══ */
+/* ═══ DIFICULDADE POR RODADA ═══
+   Rodada 1: 4 vidas, 2 dicas disponíveis
+   Rodada 2: 4 vidas, 2 dicas (1 custa vida)
+   Rodada 3: 3 vidas, 1 dica (custa vida)
+   Rodada 4: 3 vidas, 0 dicas
+   Rodada 5: 2 vidas, 0 dicas
+*/
+function livesForRound(idx) {
+  if (idx <= 1) return 4;
+  if (idx <= 3) return 3;
+  return 2;
+}
+function hintsAllowedForRound(idx) {
+  if (idx <= 1) return 2; // ambas disponíveis
+  if (idx === 2) return 1; // só 1 (a gratuita)
+  return 0; // sem dicas
+}
 let groups, hints, words, selected, lives, solvedGroups, gameOver, hintsShown, currentRoundIndex, finalWon, finalErros;
 
 function initGame(roundIndex) {
@@ -610,7 +636,9 @@ function initGame(roundIndex) {
   words = [];
   groups.forEach(g => g.words.forEach(w => words.push({ word: w, group: g })));
 
-  selected = []; lives = 4; solvedGroups = []; gameOver = false; hintsShown = 0;
+  selected = []; solvedGroups = []; gameOver = false; hintsShown = 0;
+  lives = livesForRound(roundIndex);
+  const maxHints = hintsAllowedForRound(roundIndex);
 
   updateLives();
   document.getElementById("solved-area").innerHTML = "";
@@ -620,15 +648,31 @@ function initGame(roundIndex) {
   document.getElementById("message").textContent = "";
   document.getElementById("message").className   = "message";
   document.getElementById("btn-confirmar").disabled = true;
-  document.getElementById("btn-dica").disabled = false;
-  document.getElementById("btn-dica").textContent = "💡 Dica (2 disponíveis)";
+
+  // Atualiza header com número da rodada e dificuldade
+  const diffLabels = ["Fácil","Fácil","Médio","Difícil","Expert"];
+  const diffColors  = ["#4caf7d","#4caf7d","#f0c040","#e05050","#9b6dff"];
+  document.querySelector(".subtitle-tag").innerHTML =
+    `🌍 Geopolítica Mundial &nbsp;·&nbsp; Rodada ${roundIndex+1}/${TOTAL_ROUNDS} <span style="color:${diffColors[roundIndex]}">● ${diffLabels[roundIndex]}</span>`;
+
+  // Configura botão de dica
+  const btnDica = document.getElementById("btn-dica");
+  btnDica.dataset.maxHints = maxHints;
+  if (maxHints === 0) {
+    btnDica.disabled = true;
+    btnDica.textContent = "💡 Sem dicas nesta rodada";
+  } else {
+    btnDica.disabled = false;
+    btnDica.textContent = `💡 Dica (${maxHints} disponíve${maxHints > 1 ? "is" : "l"})`;
+  }
 
   shuffleWords();
   renderGrid();
 }
 
 function showNextHint() {
-  if (gameOver || hintsShown >= hints.length) return;
+  const maxHints = parseInt(document.getElementById("btn-dica").dataset.maxHints || "2");
+  if (gameOver || hintsShown >= hints.length || hintsShown >= maxHints) return;
   const hint = hints[hintsShown];
   if (hint.warn && lives <= 1) { setMessage("Sem tentativas suficientes para esta dica!", "bad"); return; }
   if (hint.warn) { lives--; updateLives(); }
@@ -638,10 +682,10 @@ function showNextHint() {
   box.className = "hint-box";
   box.innerHTML = `<div class="hint-number">${hintsShown}</div><div><div class="hint-text">${hint.text}</div>${hint.warn ? `<div class="hint-warn">${hint.warn} (já descontada)</div>` : ""}</div>`;
   area.appendChild(box);
-  const remaining = hints.length - hintsShown;
+  const remaining = Math.min(maxHints, hints.length) - hintsShown;
   const btn = document.getElementById("btn-dica");
   if (remaining === 0) { btn.disabled = true; btn.textContent = "💡 Sem mais dicas"; }
-  else { btn.textContent = `💡 Próxima dica (${remaining} restante${remaining > 1 ? "s" : ""})${hints[hintsShown].warn ? " — custa 1 vida" : ""}`; }
+  else { btn.textContent = `💡 Próxima dica (${remaining} restante${remaining > 1 ? "s" : ""})${hints[hintsShown]?.warn ? " — custa 1 vida" : ""}`; }
 }
 
 function shuffleWords() {
@@ -724,8 +768,15 @@ function addSolvedRow(group) {
 }
 
 function updateLives() {
-  for (let i = 1; i <= 4; i++)
-    document.getElementById("l" + i).classList.toggle("lost", i > lives);
+  const max = livesForRound(currentRoundIndex);
+  const container = document.getElementById("lives-dots");
+  container.innerHTML = "";
+  for (let i = 1; i <= max; i++) {
+    const dot = document.createElement("div");
+    dot.className = "life-dot" + (i > lives ? " lost" : "");
+    dot.id = "l" + i;
+    container.appendChild(dot);
+  }
 }
 
 function setMessage(text, type) {
@@ -737,7 +788,10 @@ function setMessage(text, type) {
 function showEnd(won) {
   gameOver = true;
   finalWon  = won;
-  finalErros = 4 - lives;
+  finalErros = livesForRound(currentRoundIndex) - lives;
+
+  // Salva resultado da rodada
+  roundHistory.push({ won, erros: finalErros, round: currentRoundIndex });
 
   document.getElementById("grid").style.display = "none";
   const end = document.getElementById("endscreen");
@@ -745,23 +799,95 @@ function showEnd(won) {
 
   document.getElementById("end-player").textContent = `Jogador: ${playerName}`;
 
-  if (won) {
-    document.getElementById("end-title").textContent = "Parabéns! 🌍";
-    document.getElementById("end-score").textContent = finalErros === 0 ? "Perfeito!" : `${finalErros} erro${finalErros > 1 ? "s" : ""}`;
-    document.getElementById("end-text").textContent  =
-      finalErros === 0 ? "Você acertou tudo sem errar nenhuma vez! Domínio total da geopolítica!"
-                       : `Você completou o desafio com ${finalErros} erro${finalErros > 1 ? "s" : ""}. Continue estudando!`;
+  const isLastRound = currentRoundIndex >= TOTAL_ROUNDS - 1;
+
+  if (!isLastRound) {
+    // Tela intermediária — só mostra resultado da rodada
+    if (won) {
+      document.getElementById("end-title").textContent = "Rodada concluída! 🌍";
+      document.getElementById("end-score").textContent = finalErros === 0 ? "Perfeito!" : `${finalErros} erro${finalErros > 1 ? "s" : ""}`;
+      document.getElementById("end-text").textContent =
+        finalErros === 0 ? "Sem erros! Prepare-se, a próxima rodada é mais difícil."
+                         : `Você acertou com ${finalErros} erro${finalErros > 1 ? "s" : ""}. Continue!`;
+    } else {
+      document.getElementById("end-title").textContent = "Rodada encerrada 😔";
+      document.getElementById("end-score").textContent = `${solvedGroups.length} de 4 grupos`;
+      document.getElementById("end-text").textContent = "Tentativas esgotadas. Veja os grupos e avance para a próxima rodada.";
+      groups.filter(g => !solvedGroups.includes(g)).forEach(g => addSolvedRow(g));
+    }
+    document.getElementById("btn-salvar").style.display = "none";
+    document.getElementById("btn-next-round").textContent = `Próxima Rodada (${currentRoundIndex + 2}/${TOTAL_ROUNDS}) →`;
+    document.getElementById("btn-next-round").style.display = "";
+    document.getElementById("round-progress").style.display = "block";
+    renderRoundDots(false);
   } else {
-    document.getElementById("end-title").textContent = "Fim de jogo 😔";
-    document.getElementById("end-score").textContent = `${solvedGroups.length} de 4 grupos`;
-    document.getElementById("end-text").textContent  = "Você usou todas as tentativas. Veja os grupos corretos abaixo e tente novamente!";
-    groups.filter(g => !solvedGroups.includes(g)).forEach(g => addSolvedRow(g));
+    // Tela FINAL — soma tudo
+    const totalWon   = roundHistory.filter(r => r.won).length;
+    const totalErros = roundHistory.reduce((s, r) => s + r.erros, 0);
+
+    if (totalWon === TOTAL_ROUNDS) {
+      document.getElementById("end-title").textContent = "Campeão! 🏆🌍";
+    } else if (totalWon >= 3) {
+      document.getElementById("end-title").textContent = "Muito bem! 🌟";
+    } else {
+      document.getElementById("end-title").textContent = "Desafio completo 🎯";
+    }
+    document.getElementById("end-score").textContent =
+      `${totalWon}/${TOTAL_ROUNDS} rodadas · ${totalErros} erros`;
+    document.getElementById("end-text").textContent =
+      totalWon === TOTAL_ROUNDS
+        ? "Perfeito! Você dominou todas as 5 rodadas de geopolítica!"
+        : `Você venceu ${totalWon} de ${TOTAL_ROUNDS} rodadas com ${totalErros} erro${totalErros !== 1 ? "s" : ""} no total.`;
+
+    document.getElementById("btn-salvar").style.display = "";
+    document.getElementById("btn-next-round").textContent = "Jogar novamente";
+    document.getElementById("btn-next-round").onclick = restartAll;
+    document.getElementById("round-progress").style.display = "block";
+    renderRoundDots(true);
   }
 }
 
-function resetGame() {
-  currentRoundIndex = (currentRoundIndex + 1) % ROUNDS.length;
-  initGame(currentRoundIndex);
+function renderRoundDots(isFinal) {
+  const container = document.getElementById("round-dots");
+  container.innerHTML = "";
+  for (let i = 0; i < TOTAL_ROUNDS; i++) {
+    const div = document.createElement("div");
+    div.style.cssText = "display:flex;flex-direction:column;align-items:center;gap:4px";
+    const dot = document.createElement("div");
+    dot.style.cssText = `width:28px;height:28px;border-radius:50%;font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;`;
+    const lbl = document.createElement("div");
+    lbl.style.cssText = "font-size:0.65rem;color:var(--muted)";
+    lbl.textContent = `R${i+1}`;
+    if (i < roundHistory.length) {
+      const r = roundHistory[i];
+      dot.style.background = r.won ? "#4caf7d" : "#e05050";
+      dot.style.color = "#fff";
+      dot.textContent = r.won ? "✓" : "✗";
+    } else if (i === currentRoundIndex && !isFinal) {
+      dot.style.background = "#f0c040";
+      dot.style.color = "#3d2e00";
+      dot.textContent = "●";
+    } else {
+      dot.style.background = "var(--surface2)";
+      dot.style.border = "1.5px solid var(--border)";
+      dot.style.color = "var(--muted)";
+      dot.textContent = i + 1;
+    }
+    div.appendChild(dot);
+    div.appendChild(lbl);
+    container.appendChild(div);
+  }
+}
+
+function nextRoundOrFinal() {
+  if (currentRoundIndex >= TOTAL_ROUNDS - 1) { restartAll(); return; }
+  initGame(currentRoundIndex + 1);
+}
+
+function restartAll() {
+  roundHistory = [];
+  document.getElementById("btn-next-round").onclick = nextRoundOrFinal;
+  initGame(0);
 }
 
 /* ═══ SALVAR COMO IMAGEM ═══ */
