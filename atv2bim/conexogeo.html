@@ -28,10 +28,8 @@
   body {
     background-color: #c8dff0;
     background-image:
-      /* Oceano com gradiente */
       radial-gradient(ellipse at 20% 50%, #a8ccec 0%, transparent 50%),
       radial-gradient(ellipse at 80% 30%, #b5d5ee 0%, transparent 45%),
-      /* Continentes SVG inline via data URI */
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Crect width='1200' height='600' fill='%23c8dff0'/%3E%3C!-- América do Norte --%3E%3Cellipse cx='220' cy='170' rx='110' ry='120' fill='%23a3c47a' opacity='0.55'/%3E%3Cellipse cx='200' cy='260' rx='60' ry='50' fill='%23a3c47a' opacity='0.5'/%3E%3C!-- América do Sul --%3E%3Cellipse cx='280' cy='400' rx='70' ry='100' fill='%23a3c47a' opacity='0.5'/%3E%3C!-- Europa --%3E%3Cellipse cx='550' cy='150' rx='60' ry='60' fill='%23a3c47a' opacity='0.52'/%3E%3C!-- África --%3E%3Cellipse cx='560' cy='340' rx='80' ry='120' fill='%23a3c47a' opacity='0.5'/%3E%3C!-- Ásia --%3E%3Cellipse cx='800' cy='200' rx='180' ry='140' fill='%23a3c47a' opacity='0.5'/%3E%3C!-- Oceania --%3E%3Cellipse cx='920' cy='420' rx='70' ry='50' fill='%23a3c47a' opacity='0.45'/%3E%3C!-- Antártida --%3E%3Cellipse cx='600' cy='575' rx='220' ry='35' fill='%23e8f4ff' opacity='0.6'/%3E%3C!-- Linhas de latitude --%3E%3Cline x1='0' y1='300' x2='1200' y2='300' stroke='%2390b8d8' stroke-width='0.8' stroke-dasharray='6,8' opacity='0.4'/%3E%3Cline x1='0' y1='150' x2='1200' y2='150' stroke='%2390b8d8' stroke-width='0.6' stroke-dasharray='4,8' opacity='0.3'/%3E%3Cline x1='0' y1='450' x2='1200' y2='450' stroke='%2390b8d8' stroke-width='0.6' stroke-dasharray='4,8' opacity='0.3'/%3E%3C!-- Meridianos --%3E%3Cline x1='300' y1='0' x2='300' y2='600' stroke='%2390b8d8' stroke-width='0.6' stroke-dasharray='4,8' opacity='0.3'/%3E%3Cline x1='600' y1='0' x2='600' y2='600' stroke='%2390b8d8' stroke-width='0.8' stroke-dasharray='6,8' opacity='0.4'/%3E%3Cline x1='900' y1='0' x2='900' y2='600' stroke='%2390b8d8' stroke-width='0.6' stroke-dasharray='4,8' opacity='0.3'/%3E%3C/svg%3E");
     background-size: cover;
     background-attachment: fixed;
@@ -468,7 +466,6 @@
 </head>
 <body>
 
-<!-- ═══ TELA DE ENTRADA ═══ -->
 <div id="login-screen">
   <div class="login-globe">🌍</div>
   <div class="login-title">Conexo</div>
@@ -482,7 +479,6 @@
   </div>
 </div>
 
-<!-- ═══ TELA DO JOGO ═══ -->
 <div id="game-screen">
 
   <header>
@@ -522,13 +518,11 @@
 
   <div class="hints-area" id="hints-area"></div>
 
-  <!-- Tela de fim de rodada / fim de jogo -->
   <div class="endscreen" id="endscreen">
     <h2 id="end-title"></h2>
     <div class="end-player" id="end-player"></div>
     <div class="score-badge" id="end-score"></div>
     <p id="end-text"></p>
-    <!-- Barra de progresso das rodadas -->
     <div id="round-progress" style="margin:1rem 0 0.5rem;display:none">
       <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem">Progresso das rodadas</div>
       <div id="round-dots" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"></div>
@@ -537,13 +531,11 @@
       <button onclick="saveImage()" id="btn-salvar" style="display:none">📸 Salvar resultado</button>
       <button class="primary" id="btn-next-round" onclick="nextRoundOrFinal()">Próxima Rodada →</button>
     </div>
-    <!-- Preview da imagem gerada -->
     <img id="img-preview" src="" alt="Resultado" style="display:none;margin-top:1rem;max-width:100%;border-radius:10px;box-shadow:0 2px 12px rgba(34,114,195,0.18);" />
   </div>
 
 </div>
 
-<!-- ═══ CARD OCULTO PARA EXPORTAR ═══ -->
 <div id="export-card">
   <div class="ec-header">
     <div class="ec-title">🌍 Conexo</div>
@@ -552,9 +544,7 @@
     <div class="ec-result" id="ec-result"></div>
     <div class="ec-detail" id="ec-detail"></div>
   </div>
-  <!-- Progresso das rodadas no card de exportação -->
   <div id="ec-round-dots" style="display:flex;gap:10px;justify-content:center;margin-bottom:18px;flex-wrap:wrap"></div>
-  <!-- Grupos da última rodada (legado) -->
   <div id="ec-groups"></div>
   <div class="ec-footer">Jogo gerado para fins educacionais · Conexo Geopolítica</div>
 </div>
@@ -637,7 +627,7 @@ const ROUNDS = [
   {
     hints: [
       { text: "<strong>Dica 1:</strong> Um dos grupos reúne conceitos ligados à <em>ordem internacional liberal</em> — pilares institucionais que sustentaram a hegemonia ocidental após a Segunda Guerra Mundial.", warn: null },
-      { text: "<strong>Dica 2:</strong> Há um grupo com países envolvidos em <em>disputas territoriais marítimas ativas</em> — conflitos sobre ilhas, plataformas e rotas estratégicas nos oceanos.", warn: "⚠️ Esta dica custa 1 tentativa." }
+      { text: "<strong>Dica 2:</strong> Há um grupo com países envolvidos em <em>disputas territoriais marítimas activas</em> — conflitos sobre ilhas, plataformas e rotas estratégicas nos oceanos.", warn: "⚠️ Esta dica custa 1 tentativa." }
     ],
     groups: [
       { category: "Pilares da ordem liberal pós-1945", color: "yellow", words: ["FMI", "OTAN", "ONU", "Bretton Woods"] },
@@ -648,22 +638,15 @@ const ROUNDS = [
   }
 ];
 
-/* ═══ DIFICULDADE POR RODADA ═══
-   Rodada 1: 4 vidas, 2 dicas disponíveis
-   Rodada 2: 4 vidas, 2 dicas (1 custa vida)
-   Rodada 3: 3 vidas, 1 dica (custa vida)
-   Rodada 4: 3 vidas, 0 dicas
-   Rodada 5: 2 vidas, 0 dicas
-*/
 function livesForRound(idx) {
   if (idx <= 1) return 4;
   if (idx <= 3) return 3;
   return 2;
 }
 function hintsAllowedForRound(idx) {
-  if (idx <= 1) return 2; // ambas disponíveis
-  if (idx === 2) return 1; // só 1 (a gratuita)
-  return 0; // sem dicas
+  if (idx <= 1) return 2;
+  if (idx === 2) return 1;
+  return 0;
 }
 let groups, hints, words, selected, lives, solvedGroups, gameOver, hintsShown, currentRoundIndex, finalWon, finalErros;
 
@@ -689,13 +672,11 @@ function initGame(roundIndex) {
   document.getElementById("message").className   = "message";
   document.getElementById("btn-confirmar").disabled = true;
 
-  // Atualiza header com número da rodada e dificuldade
   const diffLabels = ["Fácil","Fácil","Médio","Difícil","Expert"];
   const diffColors  = ["#4caf7d","#4caf7d","#f0c040","#e05050","#9b6dff"];
   document.querySelector(".subtitle-tag").innerHTML =
     `🌍 Geopolítica Mundial &nbsp;·&nbsp; Rodada ${roundIndex+1}/${TOTAL_ROUNDS} <span style="color:${diffColors[roundIndex]}">● ${diffLabels[roundIndex]}</span>`;
 
-  // Configura botão de dica
   const btnDica = document.getElementById("btn-dica");
   btnDica.dataset.maxHints = maxHints;
   if (maxHints === 0) {
@@ -825,12 +806,12 @@ function setMessage(text, type) {
   el.className = "message" + (type ? ` ${type}` : "");
 }
 
+/* ── MODIFICAÇÃO EXECUTADA AQUI: SÓ EXIBE A RESPOSTA SE O ALUNO ACERTAR ── */
 function showEnd(won) {
   gameOver = true;
   finalWon  = won;
   finalErros = livesForRound(currentRoundIndex) - lives;
 
-  // Salva resultado da rodada
   roundHistory.push({ won, erros: finalErros, round: currentRoundIndex });
 
   document.getElementById("grid").style.display = "none";
@@ -842,7 +823,6 @@ function showEnd(won) {
   const isLastRound = currentRoundIndex >= TOTAL_ROUNDS - 1;
 
   if (!isLastRound) {
-    // Tela intermediária — só mostra resultado da rodada
     if (won) {
       document.getElementById("end-title").textContent = "Rodada concluída! 🌍";
       document.getElementById("end-score").textContent = finalErros === 0 ? "Perfeito!" : `${finalErros} erro${finalErros > 1 ? "s" : ""}`;
@@ -852,8 +832,9 @@ function showEnd(won) {
     } else {
       document.getElementById("end-title").textContent = "Rodada encerrada 😔";
       document.getElementById("end-score").textContent = `${solvedGroups.length} de 4 grupos`;
-      document.getElementById("end-text").textContent = "Tentativas esgotadas. Veja os grupos e avance para a próxima rodada.";
-      groups.filter(g => !solvedGroups.includes(g)).forEach(g => addSolvedRow(g));
+      document.getElementById("end-text").textContent = "Tentativas esgotadas. Você precisa refazer esta rodada para prosseguir.";
+      
+      // O trecho antigo que preenchia as respostas com addSolvedRow(g) foi deletado daqui!
     }
     document.getElementById("btn-salvar").style.display = "none";
     if (won) {
@@ -861,12 +842,10 @@ function showEnd(won) {
       document.getElementById("btn-next-round").style.display = "";
       document.getElementById("btn-next-round").disabled = false;
     } else {
-      // Deve vencer para avançar — mostra botão de tentar novamente
       document.getElementById("btn-next-round").textContent = "🔄 Tentar esta rodada novamente";
       document.getElementById("btn-next-round").style.display = "";
       document.getElementById("btn-next-round").disabled = false;
       document.getElementById("btn-next-round").onclick = () => {
-        // Remove a entrada desta rodada do histórico (não contabiliza tentativa falha)
         roundHistory.pop();
         document.getElementById("btn-next-round").onclick = nextRoundOrFinal;
         initGame(currentRoundIndex);
@@ -875,7 +854,6 @@ function showEnd(won) {
     document.getElementById("round-progress").style.display = "block";
     renderRoundDots(false);
   } else {
-    // Tela FINAL — soma tudo
     const totalWon   = roundHistory.filter(r => r.won).length;
     const totalErros = roundHistory.reduce((s, r) => s + r.erros, 0);
 
@@ -952,7 +930,6 @@ function saveImage() {
   btn.textContent = "⏳ Gerando imagem...";
   btn.disabled = true;
 
-  // Preenche cabeçalho
   document.getElementById("ec-player").textContent = `👤 ${playerName}`;
 
   const totalWon   = roundHistory.filter(r => r.won).length;
@@ -966,7 +943,6 @@ function saveImage() {
   document.getElementById("ec-detail").textContent =
     `${totalErros} erro${totalErros !== 1 ? "s" : ""} no total · ${new Date().toLocaleDateString("pt-BR")}`;
 
-  // Bolinhas de progresso das rodadas
   const dotsContainer = document.getElementById("ec-round-dots");
   dotsContainer.innerHTML = "";
   for (let i = 0; i < TOTAL_ROUNDS; i++) {
@@ -990,7 +966,6 @@ function saveImage() {
     dotsContainer.appendChild(wrap);
   }
 
-  // Grupos de cada rodada jogada
   const container = document.getElementById("ec-groups");
   container.innerHTML = "";
   roundHistory.forEach((r, idx) => {
@@ -1014,14 +989,12 @@ function saveImage() {
   setTimeout(() => {
     html2canvas(card, { backgroundColor: "#d6e8f5", scale: 2, useCORS: true, logging: false })
       .then(canvas => {
-        // Mostra a imagem gerada numa nova aba em vez de só fazer download
         const dataUrl = canvas.toDataURL("image/png");
         const link = document.createElement("a");
         link.download = `conexo-${playerName.replace(/\s+/g, "_")}.png`;
         link.href = dataUrl;
         link.click();
 
-        // Também exibe uma preview no chat
         const preview = document.getElementById("img-preview");
         if (preview) {
           preview.src = dataUrl;
