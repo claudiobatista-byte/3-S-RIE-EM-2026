@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Texto de Apoio — Ler a paisagem | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#f2eae6;
+    --bg-alt:#e5d5cd;
+    --paper:#fffcfa;
+    --ink:#2b2224;
+    --ink-soft:#6b5a58;
+    --vinho:#6b2237;
+    --vinho-dark:#43101f;
+    --vinho-2:#94405a;
+    --dourado:#a8781f;
+    --dourado-light:#e8d3a5;
+    --line:#e6d8d2;
+    --shadow:0 10px 30px rgba(67,16,31,.18);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-touch-callout:none;
+    user-select:none;
+  }
+  .selecionavel, main{user-select:text;}
+  .campo-resposta{user-select:text;}
+
+  /* ===== CAPA / GATE ===== */
+  #capa{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(to bottom, #330c17, #6b2237, #9c5670);
+    padding:24px;
+  }
+  #capa .grade-centralizada{
+    position:absolute;
+    top:0; bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:896px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.08;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px);
+    background-size:40px 40px;
+  }
+  .capa-card{
+    position:relative;
+    z-index:1;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:480px;
+    width:100%;
+    padding:36px 32px;
+    text-align:center;
+  }
+  .capa-card .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--vinho-dark);
+    background:rgba(107,34,55,.1); padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .capa-card h1{font-family:var(--font-title); font-size:1.6rem; margin:0 0 10px; color:var(--vinho-dark);}
+  .capa-card p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 22px;}
+  .capa-card input{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:1rem; margin-bottom:14px;
+  }
+  .capa-card button{
+    width:100%; padding:13px; border:none; border-radius:8px;
+    background:var(--vinho); color:#fff; font-weight:600; font-size:1rem; cursor:pointer;
+    font-family:var(--font-body); transition:filter .15s ease;
+  }
+  .capa-card button:hover{filter:brightness(1.15);}
+  .capa-aviso{font-size:.78rem; color:#a33; margin-top:8px; display:none;}
+
+  /* ===== APP ===== */
+  #app{display:none;}
+  .sticky-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--vinho-dark); color:#f5e9ec;
+    padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:8px;
+    font-family:var(--font-mono); font-size:.82rem;
+  }
+  .sticky-header .aluno{font-family:var(--font-body); font-weight:600; font-size:.92rem;}
+  .barra-progresso-trilho{
+    flex:1; min-width:120px; height:8px; background:rgba(255,255,255,.2); border-radius:6px; overflow:hidden; margin:0 14px;
+  }
+  .barra-progresso-fill{height:100%; background:var(--dourado); width:0%; transition:width .3s ease;}
+
+  .wrap{max-width:800px; margin:0 auto; padding:32px 24px 60px;}
+
+  header.topo{margin-bottom:28px;}
+  header.topo .hero-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--vinho-dark);
+    background:rgba(107,34,55,.1); padding:5px 12px; border-radius:999px; margin-bottom:12px;
+  }
+  header.topo h1{font-family:var(--font-title); font-size:clamp(1.5rem,4vw,2rem); margin:0 0 8px; color:var(--ink);}
+  header.topo p.sub{color:var(--ink-soft); margin:0; font-size:.98rem;}
+  .descritor-bar{
+    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:8px 14px; margin-bottom:14px; display:inline-block;
+  }
+  .ficha-id{
+    display:flex; flex-wrap:wrap; gap:10px 26px;
+    background:var(--paper); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin-top:12px; font-family:var(--font-mono); font-size:.84rem; color:var(--ink);
+  }
+  .ficha-id span b{color:var(--vinho-dark);}
+
+  /* ===== TEXTO DE APOIO ===== */
+  .texto-apoio{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px 30px; margin-bottom:30px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.25rem; color:var(--vinho-dark); margin:0 0 4px;}
+  .texto-apoio h3{font-family:var(--font-title); font-size:1.05rem; color:var(--vinho-2); margin:22px 0 8px;}
+  .texto-apoio .fonte-tag{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-bottom:16px; display:block;}
+  .texto-apoio p{margin:0 0 14px; color:var(--ink);}
+  .texto-apoio p:last-of-type{margin-bottom:0;}
+  .texto-apoio .destaque{
+    background:var(--bg-alt); border-left:4px solid var(--dourado); border-radius:0 8px 8px 0;
+    padding:12px 16px; margin:0 0 14px; font-size:.95rem;
+  }
+  .texto-apoio .mito{
+    background:#fbf5ee; border:1px solid var(--line); border-top:4px solid var(--vinho-2);
+    border-radius:10px; padding:16px 18px; margin:0 0 14px;
+  }
+  .texto-apoio .mito .rot{
+    font-family:var(--font-mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.1em;
+    color:var(--dourado); display:block; margin-bottom:6px;
+  }
+  .texto-apoio .mito p{font-size:.93rem;}
+
+  .texto-apoio blockquote.citacao{
+    margin:0 0 14px; padding:12px 18px;
+    border-left:3px solid var(--vinho-2); background:#f7eff1;
+    font-size:.93rem; color:var(--ink); font-style:italic;
+  }
+  .texto-apoio blockquote.citacao span.autor{
+    display:block; font-style:normal; font-family:var(--font-mono);
+    font-size:.72rem; color:var(--ink-soft); margin-top:6px;
+  }
+
+  .tabela-lentes{width:100%; border-collapse:collapse; margin:6px 0 14px; font-size:.9rem;}
+  .tabela-lentes caption{
+    caption-side:top; text-align:left; font-family:var(--font-mono); font-size:.68rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--dourado); padding-bottom:6px;
+  }
+  .tabela-lentes th, .tabela-lentes td{border:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:top;}
+  .tabela-lentes th{background:var(--vinho); color:#fff; font-family:var(--font-title); font-weight:600; font-size:.9rem;}
+  .tabela-lentes tbody tr:nth-child(even){background:var(--bg-alt);}
+  .tabela-lentes td:first-child{font-weight:700; color:var(--vinho-dark);}
+  .tabela-wrap{overflow-x:auto;}
+
+  .referencia-box{
+    margin-top:20px; padding:14px 16px;
+    background:var(--bg-alt); border-left:3px solid var(--dourado); border-radius:0 8px 8px 0;
+  }
+  .referencia-box .rot{
+    font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--vinho-dark); display:block; margin-bottom:6px;
+  }
+  .referencia-box p{margin:0 0 6px; font-size:.86rem; color:var(--ink-soft); font-family:var(--font-mono); line-height:1.6;}
+  .referencia-box p:last-child{margin-bottom:0;}
+
+  /* ===== QUESTOES ===== */
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.2rem; color:var(--vinho-dark);
+    margin:0 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .questao{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; margin-bottom:18px;
+  }
+  .questao .num-q{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--vinho);
+    color:#fff; font-family:var(--font-mono); font-size:.78rem; margin-right:8px; flex-shrink:0;
+  }
+  .questao .enunciado{font-weight:600; color:var(--ink); margin-bottom:12px; display:flex; align-items:flex-start;}
+  .questao textarea{
+    width:100%; min-height:100px; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:.96rem; resize:vertical; color:var(--ink);
+  }
+  .questao textarea:focus{outline:2px solid var(--vinho-2); outline-offset:1px;}
+  .contador-chars{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-top:6px; text-align:right;}
+
+  .comentario-prof{
+    display:none; margin-top:14px; padding:14px 16px;
+    background:#f7edf0; border:1px solid #dfc3cb; border-radius:8px; font-size:.9rem; color:var(--vinho-dark);
+  }
+  .comentario-prof.show{display:block;}
+  .comentario-prof b{display:block; margin-bottom:4px; font-family:var(--font-title); font-size:.92rem;}
+
+  /* ===== ALERTA / FINALIZAR ===== */
+  .alerta-incompleto{
+    display:none; background:#fdf6e8; border:1px solid #e8d3a5; color:#8a6410;
+    padding:12px 16px; border-radius:8px; font-size:.9rem; margin-bottom:16px;
+  }
+  .alerta-incompleto.show{display:block;}
+
+  .acoes-finais{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
+  .btn{
+    font-family:var(--font-body); font-weight:600; font-size:.94rem; padding:12px 22px;
+    border-radius:8px; border:none; cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.1);}
+  .btn-primario{background:var(--vinho); color:#fff;}
+  .btn-secundario{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-pdf{background:var(--dourado); color:#fff;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  /* ===== POPUP ===== */
+  .popup-overlay{
+    display:none; position:fixed; inset:0; background:rgba(51,12,23,.6);
+    align-items:center; justify-content:center; z-index:200; padding:20px;
+  }
+  .popup-overlay.show{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:420px; width:100%; padding:32px 28px; text-align:center;
+  }
+  .popup-card .emoji{font-size:2.4rem; margin-bottom:10px;}
+  .popup-card h3{font-family:var(--font-title); margin:0 0 8px; color:var(--vinho-dark);}
+  .popup-card p{color:var(--ink-soft); font-size:.94rem; margin:0 0 20px;}
+
+  footer.rodape{text-align:center; padding:24px; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;}
+
+  @media (max-width:600px){
+    .wrap{padding:24px 16px 50px;}
+    .texto-apoio, .questao{padding:18px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== CAPA ===== -->
+<div id="capa">
+  <div class="grade-centralizada"></div>
+  <div class="capa-card">
+    <span class="tag">3ª série · Ciências Humanas e Sociais Aplicadas · CERO</span>
+    <h1>Ler a paisagem</h1>
+    <p class="desc">Texto de apoio e seis questões dissertativas sobre o ofício do historiador ambiental e o conceito de paisagem. Preencha os dados para começar.</p>
+    <input type="text" id="nome-aluno" placeholder="Seu nome completo">
+    <input type="text" id="turma-aluno" placeholder="Turma (ex.: 3º A)">
+    <button onclick="iniciarAtividade()">Iniciar atividade</button>
+    <div class="capa-aviso" id="capa-aviso">Por favor, digite seu nome para continuar.</div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <div class="sticky-header">
+    <span class="aluno" id="header-nome"></span>
+    <div class="barra-progresso-trilho"><div class="barra-progresso-fill" id="barra-fill"></div></div>
+    <span id="contador-geral">Respondidas: 0/6</span>
+  </div>
+
+  <div class="wrap">
+    <header class="topo selecionavel">
+      <span class="descritor-bar">Ciências Humanas e Sociais Aplicadas / 3ª série do Ensino Médio &nbsp;|&nbsp; (EM13CHS101) – Fontes e narrativas &nbsp;·&nbsp; (EM13CHS204) – Ocupação do espaço e territórios</span>
+      <span class="hero-tag" style="display:block; margin-top:10px;">Texto de Apoio</span>
+      <h1>Ler a paisagem</h1>
+      <p class="sub">Leia o texto com atenção e responda às seis questões que vêm depois dele.</p>
+      <div class="ficha-id" id="ficha-id">
+        <span><b>NOME:</b> <span id="ficha-nome"></span></span>
+        <span><b>DATA:</b> <span id="ficha-data"></span></span>
+        <span><b>TURMA:</b> <span id="ficha-turma"></span></span>
+      </div>
+    </header>
+
+    <main>
+      <section class="texto-apoio selecionavel">
+        <h2>A História Ambiental como ofício: método, paisagem e compromisso</h2>
+        <span class="fonte-tag">Texto adaptado do artigo de Gil Karlos Ferri, publicado no portal Café História</span>
+
+        <div class="destaque">
+          <strong>Ponto de partida.</strong> Se a natureza tem história, o historiador precisa de instrumentos para escrevê-la. Este texto trata do lado prático da questão: com que métodos se pesquisa, que conceito organiza o olhar e que responsabilidade o pesquisador assume ao escolher esse caminho. O conceito que costura tudo isso é a <b>paisagem</b>.
+        </div>
+
+        <h3>Um campo nascido de um tempo</h3>
+        <p>Estudos sobre a natureza existem desde os primórdios da escrita, mas foi apenas no século XX que a historiografia passou a dar atenção sistemática aos fatores ambientais e às suas conexões com a história humana. Segundo Donald Worster, a ideia de uma História Ambiental surgiu na década de 1970, no contexto das conferências sobre a crise global e do crescimento dos movimentos ambientalistas, sobretudo nos Estados Unidos e na Europa. Como toda narrativa histórica, o campo é resultado do seu tempo: nasce com objetivos morais e compromissos políticos declarados, num momento em que o meio ambiente se torna tema de interesse mundial. As chamadas vozes das ruas tiveram, portanto, papel efetivo na formalização de uma história ligada às inquietações socioambientais.</p>
+
+        <p>O objetivo do campo, na formulação de Worster, é duplo e recíproco: compreender como os seres humanos foram afetados, ao longo do tempo, pelo ambiente natural e, inversamente, como afetaram esse ambiente — e com que resultados. É por isso que a História Ambiental apresenta o ambiente como <b>agente ativo</b> da história: as pessoas organizam e reorganizam suas vidas relacionando-se com o meio natural, e não diante de um pano de fundo inerte.</p>
+
+        <div class="mito">
+          <span class="rot">Mudanças, e não danos</span>
+          <p>Apesar da exaustão dos recursos naturais provocada pela ação humana, o historiador ambiental costuma preferir dizer que o ser humano produz <b>mudanças</b> na natureza, e não <b>danos</b>. A razão é metodológica: a relação entre sistemas sociais e sistemas naturais não é necessariamente desastrosa ou problemática, e partir do vocabulário do dano é decidir o resultado da pesquisa antes de fazê-la. A escolha da palavra, aqui, não é detalhe de estilo — é a diferença entre investigar e denunciar.</p>
+        </div>
+
+        <h3>Cinco características do método</h3>
+        <p>A partir da leitura de José Augusto Drummond sobre as propostas da <i>American Society for Environmental History</i>, é possível reconhecer cinco traços recorrentes nas pesquisas do campo.</p>
+
+        <div class="tabela-wrap">
+          <table class="tabela-lentes">
+            <caption>Traços metodológicos recorrentes</caption>
+            <thead>
+              <tr><th>Característica</th><th>O que significa na prática</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Recorte regional</td><td>A pesquisa focaliza uma região dotada de homogeneidade ou identidade natural — uma bacia, um bioma, um vale —, e não uma fronteira política.</td></tr>
+              <tr><td>Diálogo com as ciências naturais</td><td>Biologia, geologia, climatologia e ecologia entram como interlocutoras sistemáticas, não como ilustração.</td></tr>
+              <tr><td>Estilos civilizatórios</td><td>Investiga-se como diferentes formas de organizar a vida coletiva usam os recursos naturais de modos distintos.</td></tr>
+              <tr><td>Ampliação das fontes</td><td>Valoriza-se uma grande variedade de fontes: documentos escritos, imagens, relatos orais, vestígios materiais e registros dos próprios sistemas naturais.</td></tr>
+              <tr><td>Trabalho de campo</td><td>O pesquisador vai ao lugar. A observação direta integra o método, aproximando a História da prática geográfica.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Esses traços explicam por que a História Ambiental é descrita como um <b>campo híbrido</b>, que sintetiza contribuições de várias áreas e cuja prática é inerentemente interdisciplinar. Some-se a isso o que José Augusto Pádua identifica como as três mudanças que reconfiguraram o entendimento do mundo natural: a noção de que a ação humana produz impactos sérios e pode degradar o mundo; a ampliação dos marcos cronológicos da Terra para bilhões de anos; e a percepção da natureza como agente histórico, em sucessivos processos de construção e reconstrução. O planeta aparece então como uma realidade antiga e diversificada, por onde passaram inúmeras formas de vida — sendo a espécie humana apenas mais uma delas, e das mais recentes.</p>
+
+        <p>Vale registrar uma crítica interna ao campo. Em 1949, Fernand Braudel propôs a ideia de uma história quase imóvel, em que o ambiente ao redor dos homens se transformaria lentamente, em contraste com a velocidade dos movimentos humanos. A proposta teve o mérito de incluir o ambiente na análise, mas é criticada por atribuir ao mundo biofísico um caráter estático: as pesquisas contemporâneas revelam rupturas, catástrofes e mudanças intensas tanto na curta quanto na longa duração.</p>
+
+        <h3>Paisagem: o conceito-chave</h3>
+        <p>Se a Terra é um documento carregado de informações, a paisagem é a forma pela qual esse documento se deixa ler. Marc Bloch já sustentava que observar e analisar a paisagem de hoje é condição para enxergar melhor o passado. Simon Schama acrescenta uma inversão decisiva: <i>“a paisagem é cultura antes de ser natureza”</i> — um constructo da imaginação projetado sobre mata, água e rocha, carregado de significados identitários e simbólicos que alimentam o imaginário social. E Milton Santos oferece a fórmula que dá espessura temporal ao conceito: <i>“a paisagem é o resultado de uma acumulação de tempos”</i>, já que o espaço se altera continuamente para acompanhar as transformações da sociedade.</p>
+
+        <blockquote class="citacao">
+          Viver na natureza é usá-la e transformá-la com a nossa presença; a escolha real não é entre deixar ou não deixar marcas, mas decidir que marcas queremos deixar.
+          <span class="autor">William Cronon, 1995 — paráfrase do argumento sobre a ideia de natureza intocada</span>
+        </blockquote>
+
+        <p>A observação das paisagens — no sentido empírico do trabalho de campo e no sentido teórico da pesquisa — é, por isso, característica central do campo, e aproxima a História da geografia histórica, que desde seus primórdios privilegiou os estudos <i>in loco</i>. Note-se ainda uma tensão produtiva: no ambiente, a natureza é impossível de ordenar, porque funciona segundo dinâmicas alheias aos desejos humanos; na narrativa histórica, o pesquisador constrói uma inteligibilidade para processos que, em si, são misturados e sem sentido dado de antemão. Escrever História Ambiental é, nesse sentido, uma fusão consciente entre a História natural e a História humana.</p>
+
+        <h3>Um ofício comprometido com a vida</h3>
+        <p>Como a questão ambiental só aparece em momento muito recente da trajetória humana, é preciso evitar o discurso de ajuizamento sobre o passado — sem abrir mão da crítica histórica, que é própria do ofício. As relações ambientais estavam presentes em qualquer época, percebidas ou não segundo os padrões culturais de cada período. Daí a formulação de Alfred Siemens: cabe <b>“extrair ecologia”</b> de documentos que não foram produzidos com essa intenção.</p>
+
+        <p>O campo tem ainda dois méritos que o artigo destaca. O primeiro é ser uma história das histórias não ditas: ao trazer para o debate temas como colonização e desmatamento, a História acaba dando voz à natureza, aos povos dominados e às populações tradicionais de um território, o que permite relativizar os imperativos do progresso e do poder. O segundo é o enfoque prospectivo: além do olhar retrospectivo sobre formas de destruição ou de coevolução, a pesquisa abre caminho para pensar relações mais sustentáveis, o que dá ao historiador um papel social — desmistificar os usos, as representações e as apropriações da natureza.</p>
+
+        <p>Regina Horta Duarte sintetiza esse compromisso ao afirmar que a História, voltando-se de forma sistemática ao tema ambiental, pode servir prioritariamente à vida e à afirmação de sua abundância, honrando novamente sua disposição de se ligar à vida presente. O artigo fecha com uma observação inquietante sobre a valorização da natureza: quanto mais próxima ela está do sujeito, mais temida e desprezada tende a ser; quanto mais escassa e distante, mais amada e admirada se torna. O desafio do historiador ambiental é extrair sentido do funcionamento indissociável entre o mundo natural e a cultura humana — entre o palpável e o intangível.</p>
+      </section>
+
+      <h2 class="questoes-titulo">&#9997;&#65039; Questões dissertativas</h2>
+
+      <div class="questao" data-questao="1">
+        <div class="enunciado"><span class="num-q">1</span> Explique o objetivo duplo que Worster atribui à História Ambiental e discuta por que reconhecer que o campo é “resultado de seu tempo” não enfraquece sua legitimidade científica.</div>
+        <textarea id="resp-1" class="campo-resposta dissertativa" data-min="70" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 70)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          O objetivo é recíproco: compreender como os seres humanos foram afetados pelo ambiente natural ao longo do tempo e, inversamente, como afetaram esse ambiente e com que resultados. Os dois movimentos são igualmente necessários; privilegiar apenas o primeiro leva ao determinismo, e apenas o segundo, ao inventário de destruição. Quanto à segunda parte, o campo se formaliza nos anos 1970, junto às conferências sobre a crise global e ao crescimento dos movimentos ambientalistas, e assume objetivos morais e compromissos políticos. Isso não o invalida porque toda narrativa histórica é produto de seu tempo: o historiador vai ao passado a partir das demandas do presente. A pergunta nasce do contexto; o que garante legitimidade é o método com que ela é investigada — recorte, fontes, diálogo interdisciplinar, verificabilidade.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="2">
+        <div class="enunciado"><span class="num-q">2</span> Por que o historiador ambiental prefere falar em “mudanças” em vez de “danos”? Explique o ganho metodológico dessa escolha e aponte um risco que ela pode gerar se for aplicada sem critério.</div>
+        <textarea id="resp-2" class="campo-resposta dissertativa" data-min="70" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 70)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          O ganho é evitar que a conclusão anteceda a pesquisa: a relação entre sistemas sociais e sistemas naturais não é necessariamente desastrosa ou problemática, e falar em dano já classifica moralmente aquilo que ainda deveria ser investigado. O vocabulário da mudança mantém o resultado em aberto e permite reconhecer também relações construtivas e de coevolução. O risco, quando a escolha vira automatismo, é a neutralização descritiva — chamar de mudança processos cujo caráter destrutivo está documentado, como o desmatamento da Mata Atlântica ou a contaminação de bacias, produzindo um relativismo que ameniza responsabilidades. Boa resposta reconhece que a distinção é ponto de partida metodológico, não veredicto permanente: a pesquisa pode e deve concluir pelo dano quando as evidências o sustentam.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="3">
+        <div class="enunciado"><span class="num-q">3</span> Escolha três das cinco características metodológicas do campo e explique como cada uma contribui para que a História Ambiental seja descrita como um campo híbrido e interdisciplinar.</div>
+        <textarea id="resp-3" class="campo-resposta dissertativa" data-min="70" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 70)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          As cinco são: recorte por região de homogeneidade ou identidade natural; diálogo sistemático com as ciências naturais; investigação das interações entre estilos civilizatórios e uso dos recursos; ampliação e valorização das fontes; e trabalho de campo. Qualquer três, desde que explicadas. Exemplos de boa articulação: o recorte natural rompe com a fronteira política e exige critérios vindos da geografia e da ecologia; o diálogo com as ciências naturais introduz na pesquisa histórica dados de clima, solo e vegetação que o historiador não produz sozinho; o trabalho de campo aproxima a História da prática geográfica de estudo in loco, algo pouco usual na formação tradicional do historiador; a ampliação das fontes admite vestígios não escritos, incluindo registros dos próprios sistemas naturais. O hibridismo aparece quando o estudante mostra que o campo não apenas cita outras áreas, mas incorpora seus métodos.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="4">
+        <div class="enunciado"><span class="num-q">4</span> Articule as contribuições de Bloch, Schama e Milton Santos para o conceito de paisagem e explique em que sentido a paisagem pode ser tratada como documento histórico.</div>
+        <textarea id="resp-4" class="campo-resposta dissertativa" data-min="70" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 70)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Bloch sustenta que observar e analisar a paisagem de hoje é condição para enxergar melhor o passado: o presente visível conserva marcas do que veio antes. Schama inverte a hierarquia esperada ao afirmar que a paisagem é cultura antes de ser natureza — um constructo da imaginação projetado sobre mata, água e rocha, carregado de significados identitários e simbólicos. Milton Santos acrescenta a dimensão temporal: a paisagem resulta de uma acumulação de tempos, porque o espaço se altera continuamente para acompanhar as transformações da sociedade. Juntas, as três formulações sustentam que a paisagem é documento em dois sentidos: materialmente, porque registra usos, técnicas e transformações sobrepostas que podem ser lidas como camadas; e simbolicamente, porque registra o modo como determinada sociedade viu e nomeou aquele lugar. Como todo documento, exige crítica: não se lê a paisagem como reflexo transparente do passado.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="5">
+        <div class="enunciado"><span class="num-q">5</span> Cronon sustenta que a natureza intocada não é uma opção disponível. Explique o que muda quando a pergunta deixa de ser “deixar ou não deixar marcas” e passa a ser “que marcas deixar”, aplicando o raciocínio a uma paisagem que você conheça — o Cerrado goiano, um córrego urbano, um bairro de Aparecida.</div>
+        <textarea id="resp-5" class="campo-resposta dissertativa" data-min="90" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 90)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Cronon argumenta que viver na natureza é usá-la e transformá-la com a própria presença, de modo que a ideia de uma natureza intocada funciona como ideal inalcançável — e, pior, como álibi: se a única alternativa aceitável é a ausência total de marca, qualquer intervenção se equivale e a discussão morre. Deslocar a pergunta para o tipo de marca torna o problema político e técnico, e não moral e abstrato: passa-se a discutir quais usos, com que intensidade, com que reversibilidade e decididos por quem. Na aplicação, valorizar respostas concretas: no Cerrado goiano, comparar a conversão total para monocultura com sistemas que preservam nascentes e corredores de vegetação; em um córrego urbano, comparar a canalização e o soterramento com a manutenção da mata ciliar e de áreas de infiltração. Aceitar qualquer paisagem, desde que o estudante distinga tipos de marca em vez de opor presença humana e natureza.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="6">
+        <div class="enunciado"><span class="num-q">6</span> O artigo defende uma historiografia “comprometida com a vida” e, ao mesmo tempo, adverte contra o ajuizamento do passado. Explique como essas duas exigências convivem e relacione sua resposta à observação de que a natureza é mais admirada quanto mais distante e escassa.</div>
+        <textarea id="resp-6" class="campo-resposta dissertativa" data-min="90" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 90)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          O compromisso com a vida define para que serve a pesquisa: nas palavras de Regina Horta Duarte, a História pode servir prioritariamente à vida e à afirmação de sua abundância, ligando-se ao presente. Isso opera no plano da escolha do objeto e da destinação social do conhecimento — inclusive no enfoque prospectivo, que pensa relações mais sustentáveis, e na função de dar voz à natureza, aos povos dominados e às populações tradicionais. Já a advertência contra o ajuizamento opera no plano do procedimento: como a questão ambiental é recente, não se pode cobrar de sujeitos do passado categorias que não existiam para eles; cabe antes extrair ecologia, na formulação de Siemens, de documentos que não tinham essa intenção. As duas exigências convivem porque atuam em planos distintos: escolher um tema por razões do presente não autoriza julgar o passado com os critérios do presente. A observação sobre proximidade e distância mostra por que isso importa: se a valorização da natureza varia conforme ela seja cotidiana ou escassa, então nossos próprios critérios de admiração são históricos e situados — e um historiador que os ignorasse projetaria sobre outras épocas uma sensibilidade que é a nossa. Reconhecer isso é o que separa o compromisso com a vida da militância anacrônica.
+        </div>
+      </div>
+
+      <div class="referencia-box">
+        <span class="rot">Referência (ABNT NBR 6023)</span>
+        <p>FERRI, Gil Karlos. História Ambiental: historiografia comprometida com a vida. Café História, 5 abr. 2017. ISSN 2674-5917. Disponível em: https://www.cafehistoria.com.br. Acesso em: 2 ago. 2026.</p>
+        <p>BLOCH, Marc. Apologia da História. Rio de Janeiro: Jorge Zahar, 2011. · CRONON, William. The Trouble with Wilderness. Environmental History, p. 7-28, 1995. · DRUMMOND, José Augusto. A História Ambiental: temas, fontes e linhas de pesquisa. Estudos Históricos, v. 4, n. 8, p. 177-197, 1991. · DUARTE, Regina Horta. História &amp; Natureza. Belo Horizonte: Autêntica, 2005. · PÁDUA, José Augusto. Um Sopro de Destruição. Rio de Janeiro: Jorge Zahar, 2002. · SANTOS, Milton. Pensando o espaço do homem. 5. ed. São Paulo: Edusp, 2004. · SCHAMA, Simon. Paisagem e Memória. São Paulo: Companhia das Letras, 1996. · WORSTER, Donald. Para fazer História Ambiental. Estudos Históricos, v. 4, n. 8, p. 198-215, 1991.</p>
+      </div>
+
+      <div class="alerta-incompleto" id="alerta-incompleto">
+        ⚠️ Ainda há questões incompletas (resposta mínima de 70 caracteres). Revise antes de finalizar.
+      </div>
+
+      <div class="acoes-finais">
+        <button class="btn btn-primario" onclick="finalizarAtividade()">Finalizar e ver comentários</button>
+        <button class="btn btn-secundario" onclick="refazerAtividade()">Refazer</button>
+        <button class="btn btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
+      </div>
+    </main>
+  </div>
+
+  <footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+</div>
+
+<!-- ===== POPUP ===== -->
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <div class="emoji">🌄</div>
+    <h3>Atividade concluída!</h3>
+    <p>Suas seis respostas foram registradas. Os comentários do professor já estão disponíveis abaixo de cada questão para você comparar com o que escreveu.</p>
+    <button class="btn btn-primario" onclick="fecharPopup()">Continuar</button>
+  </div>
+</div>
+
+<script>
+/* ===== GATE DE NOME ===== */
+function iniciarAtividade(){
+  const nome = document.getElementById('nome-aluno').value.trim();
+  const turma = document.getElementById('turma-aluno').value.trim();
+  const aviso = document.getElementById('capa-aviso');
+  if(!nome){
+    aviso.style.display = 'block';
+    return;
+  }
+  aviso.style.display = 'none';
+  const hoje = new Date();
+  const dataFormatada = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+  document.getElementById('header-nome').textContent = nome;
+  document.getElementById('ficha-nome').textContent = nome;
+  document.getElementById('ficha-data').textContent = dataFormatada;
+  document.getElementById('ficha-turma').textContent = turma || '—';
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+/* ===== CONTADOR DE CARACTERES E PROGRESSO ===== */
+const textareas = document.querySelectorAll('textarea.dissertativa');
+
+function atualizarProgresso(){
+  let respondidas = 0;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length >= min) respondidas++;
+  });
+  document.getElementById('contador-geral').textContent = 'Respondidas: ' + respondidas + '/' + textareas.length;
+  document.getElementById('barra-fill').style.width = (respondidas / textareas.length * 100) + '%';
+}
+
+textareas.forEach(function(t){
+  const contadorEl = t.parentElement.querySelector('.contador-chars');
+  const min = parseInt(t.dataset.min, 10);
+  t.addEventListener('input', function(){
+    contadorEl.textContent = t.value.length + ' caracteres (mínimo ' + min + ')';
+    atualizarProgresso();
+  });
+});
+
+/* ===== FINALIZAR ===== */
+function finalizarAtividade(){
+  let completo = true;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length < min) completo = false;
+  });
+
+  const alerta = document.getElementById('alerta-incompleto');
+  if(!completo){
+    alerta.classList.add('show');
+    alerta.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  alerta.classList.remove('show');
+
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.add('show');
+  });
+
+  document.getElementById('popup-overlay').classList.add('show');
+}
+
+function fecharPopup(){
+  document.getElementById('popup-overlay').classList.remove('show');
+}
+
+function refazerAtividade(){
+  textareas.forEach(function(t){
+    t.value = '';
+    t.parentElement.querySelector('.contador-chars').textContent = '0 caracteres (mínimo ' + t.dataset.min + ')';
+  });
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.remove('show');
+  });
+  document.getElementById('alerta-incompleto').classList.remove('show');
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+/* ===== EXPORTAR PDF ===== */
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+function esc(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML.replace(/\n/g, '<br>');
+}
+
+async function exportarPDF(){
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(51,12,23,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:300px;box-shadow:0 10px 30px rgba(67,16,31,.3);font-family:\'Source Serif 4\',serif;">' +
+      '<div style="font-size:2rem;margin-bottom:8px;">📄</div>' +
+      '<h4 style="margin:0 0 4px;color:#43101f;font-family:\'Playfair Display\',serif;">Gerando PDF…</h4>' +
+      '<p style="margin:0 0 14px;color:#6b5a58;font-size:.86rem;">Aguarde alguns instantes.</p>' +
+      '<div style="background:#e5d5cd;border-radius:6px;overflow:hidden;height:8px;">' +
+        '<div id="pdf-prog" style="height:100%;width:0%;background:#6b2237;transition:width .2s ease;"></div>' +
+      '</div>' +
+      '<div id="pdf-prog-txt" style="margin-top:8px;font-family:\'JetBrains Mono\',monospace;font-size:.74rem;color:#6b5a58;">0%</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  await sleep(80);
+  function setP(pct, msg){
+    const pp = document.getElementById('pdf-prog'), pt = document.getElementById('pdf-prog-txt');
+    if(pp) pp.style.width = pct + '%';
+    if(pt) pt.textContent = msg || (pct + '%');
+  }
+
+  try{
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait', unit:'px', format:'a4', hotfixes:['px_scaling']});
+    const PW = pdf.internal.pageSize.getWidth(), PH = pdf.internal.pageSize.getHeight();
+    const ML = 28, CW = PW - ML*2;
+    let y = ML;
+
+    async function addImg(el){
+      const canvas = await html2canvas(el, {scale:2, useCORS:true, logging:false, backgroundColor:'#ffffff', scrollX:0, scrollY:0, windowWidth:860});
+      const imgW = CW, imgH = (canvas.height / canvas.width) * imgW;
+      const dataUrl = canvas.toDataURL('image/jpeg', .92), avail = PH - ML*2;
+      if(imgH <= avail){
+        if(y + imgH > PH - ML){ pdf.addPage(); y = ML; }
+        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
+        y += imgH + 8;
+      } else {
+        const pxPerPdfPt = canvas.width / imgW;
+        let srcY = 0;
+        while(srcY < canvas.height){
+          const availPt = PH - y - ML, sliceH_pt = Math.min(availPt, avail);
+          const sliceH_px = Math.round(sliceH_pt * pxPerPdfPt), actualH_px = Math.min(sliceH_px, canvas.height - srcY);
+          const tmp = document.createElement('canvas');
+          tmp.width = canvas.width; tmp.height = actualH_px;
+          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
+          const sliceUrl = tmp.toDataURL('image/jpeg', .92), slicePt = (actualH_px / canvas.width) * imgW;
+          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
+          srcY += actualH_px; y += slicePt;
+          if(srcY < canvas.height){ pdf.addPage(); y = ML; }
+        }
+        y += 8;
+      }
+    }
+
+    async function band(tag, txt){
+      const b = document.createElement('div');
+      b.style.cssText = 'width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      b.innerHTML = '<div style="background:linear-gradient(90deg,#6b2237,#43101f);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px">' +
+        '<span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">' + tag + '</span>' +
+        '<span style="color:#fff;font-size:15px;font-weight:700">' + txt + '</span></div>';
+      document.body.appendChild(b);
+      await sleep(20);
+      await addImg(b);
+      document.body.removeChild(b);
+    }
+
+    const nome = document.getElementById('header-nome').textContent || 'Aluno(a)';
+    const turma = document.getElementById('ficha-turma').textContent || '—';
+    const now = new Date();
+    const dtStr = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+
+    setP(5, 'Preparando capa…'); await sleep(40);
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
+    coverEl.innerHTML =
+      '<div style="background:linear-gradient(135deg,#330c17 0%,#6b2237 60%,#9c5670 100%);padding:32px 48px 28px;color:white">' +
+        '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">Ciências Humanas e Sociais Aplicadas · 3ª Série do Ensino Médio · EM13CHS101 · EM13CHS204</div>' +
+        '<div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">Ler a paisagem</div>' +
+        '<div style="font-size:13px;opacity:.8;font-style:italic">Texto de apoio · A História Ambiental como ofício: método, paisagem e compromisso · 6 questões dissertativas</div>' +
+      '</div>' +
+      '<div style="background:#f2eae6;padding:22px 48px 26px;border-bottom:3px solid #e8d3a5">' +
+        '<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#6b2237;font-weight:700;margin-bottom:5px">Aluno(a)</div>' +
+        '<div style="font-size:20px;font-weight:700;color:#2b2224;border-bottom:2.5px solid #6b2237;padding-bottom:6px;display:inline-block;margin-bottom:16px">' + esc(nome) + '</div>' +
+        '<div style="display:flex;gap:12px;flex-wrap:wrap">' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#6b2237">' + esc(turma) + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Turma</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#a8781f">6</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Dissertativas</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">' +
+            '<div style="font-size:13px;font-weight:700;color:#333">' + dtStr + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>' +
+      '</div>';
+    document.body.appendChild(coverEl); await sleep(60); await addImg(coverEl); document.body.removeChild(coverEl);
+
+    // TEXTO DE APOIO
+    setP(15, 'Preparando texto de apoio…'); await sleep(20);
+    await band('TEXTO DE APOIO', 'A História Ambiental como ofício: método, paisagem e compromisso');
+    const textoEl = document.createElement('div');
+    textoEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #e6d8d2;border-radius:10px;position:absolute;left:-9999px;top:0';
+    textoEl.innerHTML =
+      '<div style="padding:18px 24px;background:#fffcfa">' +
+        '<p style="font-size:12.5px;color:#2b2224;line-height:1.8;margin:0 0 12px"><b>Um campo nascido de um tempo.</b> Só no século XX a historiografia deu atenção sistemática aos fatores ambientais. Segundo Worster, a ideia de uma História Ambiental surgiu nos anos 1970, no contexto das conferências sobre a crise global e do crescimento dos movimentos ambientalistas. O campo é resultado do seu tempo, com objetivos morais e compromissos políticos declarados. Seu objetivo é duplo: entender como os seres humanos foram afetados pelo ambiente natural e, inversamente, como o afetaram — e com que resultados. O ambiente aparece como agente ativo da história.</p>' +
+        '<p style="font-size:12.5px;color:#2b2224;line-height:1.8;margin:0 0 12px"><b>Mudanças, e não danos.</b> O historiador ambiental costuma preferir dizer que o ser humano produz mudanças na natureza, e não danos, porque a relação entre sistemas sociais e naturais não é necessariamente desastrosa. Partir do vocabulário do dano é decidir o resultado da pesquisa antes de fazê-la.</p>' +
+        '<p style="font-size:12.5px;color:#2b2224;line-height:1.8;margin:0 0 12px"><b>Cinco características do método (a partir de Drummond).</b> (1) Recorte de uma região com homogeneidade ou identidade natural; (2) diálogo sistemático com as ciências naturais; (3) estudo das interações entre estilos civilizatórios e uso dos recursos; (4) valorização de grande variedade de fontes; (5) trabalho de campo. Daí o caráter híbrido e interdisciplinar. Somam-se as três mudanças apontadas por Pádua: o impacto humano capaz de degradar, a ampliação dos marcos cronológicos para bilhões de anos e a natureza como agente histórico. Registre-se a crítica à “história quase imóvel” de Braudel (1949), que atribui ao biofísico um caráter estático.</p>' +
+        '<p style="font-size:12.5px;color:#2b2224;line-height:1.8;margin:0 0 12px"><b>Paisagem: o conceito-chave.</b> Bloch sustenta que analisar a paisagem de hoje é condição para ver melhor o passado. Schama afirma que a paisagem é cultura antes de ser natureza, constructo da imaginação projetado sobre mata, água e rocha. Milton Santos define a paisagem como resultado de uma acumulação de tempos. Cronon lembra que a natureza intocada não é opção: viver nela é transformá-la, e a escolha real está no tipo de marca que se deixa. Por isso o trabalho de campo é central e a História se aproxima da geografia histórica.</p>' +
+        '<p style="font-size:12.5px;color:#2b2224;line-height:1.8;margin:0 0 12px"><b>Um ofício comprometido com a vida.</b> É preciso evitar o ajuizamento do passado, sem abrir mão da crítica histórica: cabe “extrair ecologia” (Siemens) de documentos que não tinham essa intenção. O campo é ainda uma história das histórias não ditas — dá voz à natureza, aos povos dominados e às populações tradicionais — e tem enfoque prospectivo, pensando relações mais sustentáveis. Duarte afirma que a História pode servir prioritariamente à vida. Fica a observação inquietante: quanto mais próxima do sujeito, mais a natureza é temida e desprezada; quanto mais escassa e distante, mais amada.</p>' +
+        '<div style="font-size:10px;color:#6b5a58;font-family:monospace;border-top:1px solid #eee;padding-top:10px">FERRI, Gil Karlos. História Ambiental: historiografia comprometida com a vida. Café História, 5 abr. 2017. &middot; WORSTER (1991) &middot; DRUMMOND (1991) &middot; PÁDUA (2002) &middot; BLOCH (2011) &middot; SCHAMA (1996) &middot; SANTOS (2004) &middot; CRONON (1995) &middot; DUARTE (2005).</div>' +
+      '</div>';
+    document.body.appendChild(textoEl); await sleep(20); await addImg(textoEl); document.body.removeChild(textoEl);
+
+    // QUESTÕES DISSERTATIVAS
+    await band('QUESTÕES', 'Questões Dissertativas — Respostas e Orientações');
+
+    const QUESTOES = [
+      { num:'1', enunc:'Explique o objetivo duplo que Worster atribui à História Ambiental e discuta por que reconhecer que o campo é “resultado de seu tempo” não enfraquece sua legitimidade científica.', id:'resp-1',
+        coment:'O objetivo é recíproco: compreender como os seres humanos foram afetados pelo ambiente natural ao longo do tempo e, inversamente, como afetaram esse ambiente e com que resultados. Os dois movimentos são igualmente necessários; privilegiar apenas o primeiro leva ao determinismo, e apenas o segundo, ao inventário de destruição. Quanto à segunda parte, o campo se formaliza nos anos 1970, junto às conferências sobre a crise global e ao crescimento dos movimentos ambientalistas, e assume objetivos morais e compromissos políticos. Isso não o invalida porque toda narrativa histórica é produto de seu tempo: o historiador vai ao passado a partir das demandas do presente. A pergunta nasce do contexto; o que garante legitimidade é o método com que ela é investigada — recorte, fontes, diálogo interdisciplinar, verificabilidade.' },
+      { num:'2', enunc:'Por que o historiador ambiental prefere falar em “mudanças” em vez de “danos”? Explique o ganho metodológico dessa escolha e aponte um risco que ela pode gerar se for aplicada sem critério.', id:'resp-2',
+        coment:'O ganho é evitar que a conclusão anteceda a pesquisa: a relação entre sistemas sociais e sistemas naturais não é necessariamente desastrosa ou problemática, e falar em dano já classifica moralmente aquilo que ainda deveria ser investigado. O vocabulário da mudança mantém o resultado em aberto e permite reconhecer também relações construtivas e de coevolução. O risco, quando a escolha vira automatismo, é a neutralização descritiva — chamar de mudança processos cujo caráter destrutivo está documentado, como o desmatamento da Mata Atlântica ou a contaminação de bacias, produzindo um relativismo que ameniza responsabilidades. Boa resposta reconhece que a distinção é ponto de partida metodológico, não veredicto permanente: a pesquisa pode e deve concluir pelo dano quando as evidências o sustentam.' },
+      { num:'3', enunc:'Escolha três das cinco características metodológicas do campo e explique como cada uma contribui para que a História Ambiental seja descrita como um campo híbrido e interdisciplinar.', id:'resp-3',
+        coment:'As cinco são: recorte por região de homogeneidade ou identidade natural; diálogo sistemático com as ciências naturais; investigação das interações entre estilos civilizatórios e uso dos recursos; ampliação e valorização das fontes; e trabalho de campo. Qualquer três, desde que explicadas. Exemplos de boa articulação: o recorte natural rompe com a fronteira política e exige critérios vindos da geografia e da ecologia; o diálogo com as ciências naturais introduz dados de clima, solo e vegetação que o historiador não produz sozinho; o trabalho de campo aproxima a História da prática geográfica de estudo in loco; a ampliação das fontes admite vestígios não escritos, incluindo registros dos próprios sistemas naturais. O hibridismo aparece quando o estudante mostra que o campo não apenas cita outras áreas, mas incorpora seus métodos.' },
+      { num:'4', enunc:'Articule as contribuições de Bloch, Schama e Milton Santos para o conceito de paisagem e explique em que sentido a paisagem pode ser tratada como documento histórico.', id:'resp-4',
+        coment:'Bloch sustenta que observar e analisar a paisagem de hoje é condição para enxergar melhor o passado: o presente visível conserva marcas do que veio antes. Schama inverte a hierarquia esperada ao afirmar que a paisagem é cultura antes de ser natureza — um constructo da imaginação projetado sobre mata, água e rocha, carregado de significados identitários e simbólicos. Milton Santos acrescenta a dimensão temporal: a paisagem resulta de uma acumulação de tempos, porque o espaço se altera continuamente para acompanhar as transformações da sociedade. Juntas, as três formulações sustentam que a paisagem é documento em dois sentidos: materialmente, porque registra usos, técnicas e transformações sobrepostas que podem ser lidas como camadas; e simbolicamente, porque registra o modo como determinada sociedade viu e nomeou aquele lugar. Como todo documento, exige crítica: não se lê a paisagem como reflexo transparente do passado.' },
+      { num:'5', enunc:'Cronon sustenta que a natureza intocada não é uma opção disponível. Explique o que muda quando a pergunta deixa de ser “deixar ou não deixar marcas” e passa a ser “que marcas deixar”, aplicando o raciocínio a uma paisagem que você conheça.', id:'resp-5',
+        coment:'Cronon argumenta que viver na natureza é usá-la e transformá-la com a própria presença, de modo que a ideia de uma natureza intocada funciona como ideal inalcançável — e, pior, como álibi: se a única alternativa aceitável é a ausência total de marca, qualquer intervenção se equivale e a discussão morre. Deslocar a pergunta para o tipo de marca torna o problema político e técnico, e não moral e abstrato: passa-se a discutir quais usos, com que intensidade, com que reversibilidade e decididos por quem. Na aplicação, valorizar respostas concretas: no Cerrado goiano, comparar a conversão total para monocultura com sistemas que preservam nascentes e corredores de vegetação; em um córrego urbano, comparar a canalização e o soterramento com a manutenção da mata ciliar e de áreas de infiltração. Aceitar qualquer paisagem, desde que o estudante distinga tipos de marca em vez de opor presença humana e natureza.' },
+      { num:'6', enunc:'O artigo defende uma historiografia “comprometida com a vida” e, ao mesmo tempo, adverte contra o ajuizamento do passado. Explique como essas duas exigências convivem e relacione sua resposta à observação de que a natureza é mais admirada quanto mais distante e escassa.', id:'resp-6',
+        coment:'O compromisso com a vida define para que serve a pesquisa: nas palavras de Regina Horta Duarte, a História pode servir prioritariamente à vida e à afirmação de sua abundância, ligando-se ao presente. Isso opera no plano da escolha do objeto e da destinação social do conhecimento — inclusive no enfoque prospectivo, que pensa relações mais sustentáveis, e na função de dar voz à natureza, aos povos dominados e às populações tradicionais. Já a advertência contra o ajuizamento opera no plano do procedimento: como a questão ambiental é recente, não se pode cobrar de sujeitos do passado categorias que não existiam para eles; cabe antes extrair ecologia, na formulação de Siemens, de documentos que não tinham essa intenção. As duas exigências convivem porque atuam em planos distintos: escolher um tema por razões do presente não autoriza julgar o passado com os critérios do presente. A observação sobre proximidade e distância mostra por que isso importa: se a valorização da natureza varia conforme ela seja cotidiana ou escassa, então nossos próprios critérios de admiração são históricos e situados — e um historiador que os ignorasse projetaria sobre outras épocas uma sensibilidade que é a nossa. Reconhecer isso é o que separa o compromisso com a vida da militância anacrônica.' }
+    ];
+
+    for(let i=0; i<QUESTOES.length; i++){
+      const q = QUESTOES[i];
+      setP(20 + Math.round(i/QUESTOES.length*65), 'Questão ' + q.num + '/6…'); await sleep(12);
+
+      const valor = document.getElementById(q.id) ? document.getElementById(q.id).value : '';
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #e6d8d2;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML =
+        '<div style="background:linear-gradient(90deg,#6b2237,#43101f);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + q.num + '</span>' +
+          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>' +
+        '<div style="padding:18px 24px 16px;background:#fffcfa">' +
+          '<div style="font-size:13px;font-weight:700;color:#2b2224;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">' + esc(q.enunc) + '</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+            '<div style="width:4px;height:15px;background:#6b2237;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#6b2237;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>' +
+          '<div style="background:#f7edf0;border:1.5px solid #d7b3bf;border-radius:8px;padding:13px 16px;min-height:50px;margin-bottom:12px">' +
+            '<div style="font-size:12.5px;color:#2b2224;line-height:1.8;white-space:pre-wrap">' + (esc(valor) || '<span style=\"color:#aaa\">(sem resposta)</span>') + '</div></div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">' +
+            '<div style="width:4px;height:15px;background:#a8781f;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#87601a;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
+          '<div style="background:#fbf4e6;border:1.5px solid #e8d3a5;border-radius:8px;padding:13px 16px">' +
+            '<div style="font-size:12px;color:#4a3a10;line-height:1.8">' + esc(q.coment) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(12); await addImg(qEl); document.body.removeChild(qEl);
+    }
+
+    // RODAPÉ EM TODAS AS PÁGINAS
+    setP(92, 'Finalizando…'); await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for(let p=1; p<=totalPages; p++){
+      pdf.setPage(p);
+      const fEl = document.createElement('div');
+      fEl.style.cssText = 'width:' + Math.round(CW) + 'px;height:22px;background:#f2eae6;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      fEl.innerHTML = '<span>Ler a paisagem · ' + esc(nome) + '</span><span>Página ' + p + ' de ' + totalPages + '</span>';
+      document.body.appendChild(fEl);
+      const fc = await html2canvas(fEl, {scale:2, logging:false, backgroundColor:'#f2eae6'});
+      document.body.removeChild(fEl);
+      const fUrl = fc.toDataURL('image/jpeg', .9), fH = (fc.height / fc.width) * CW;
+      pdf.setFillColor(242,234,230); pdf.rect(ML, PH-fH, CW, fH, 'F');
+      pdf.addImage(fUrl, 'JPEG', ML, PH-fH, CW, fH);
+    }
+
+    setP(100, 'Salvando…'); await sleep(200);
+    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    pdf.save('Ler_a_Paisagem_' + safeName + '.pdf');
+
+  } catch(err){
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message);
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if(ov) document.body.removeChild(ov);
+  }
+}
+
+/* ===== PROTEÇÃO ANTI-COLA ===== */
+(function () {
+  const CAMPOS_PROTEGIDOS = document.querySelectorAll('textarea.dissertativa, .campo-resposta');
+  const LIMITE_BLOCO = 25;
+
+  function bloquear(e) {
+    e.preventDefault();
+    mostrarToast('Colar não permitido nesta atividade.');
+  }
+
+  CAMPOS_PROTEGIDOS.forEach(function (campo) {
+    ['paste', 'copy', 'cut', 'drop', 'dragover', 'contextmenu'].forEach(function (evt) {
+      campo.addEventListener(evt, bloquear);
+    });
+
+    campo.addEventListener('beforeinput', function (e) {
+      if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+        e.preventDefault();
+        mostrarToast('Colar não permitido nesta atividade.');
+      }
+    });
+
+    let valorAnterior = campo.value;
+    campo.addEventListener('input', function (e) {
+      const diferenca = campo.value.length - valorAnterior.length;
+      if (diferenca >= LIMITE_BLOCO && e.inputType !== 'insertReplacementText') {
+        campo.value = valorAnterior;
+        mostrarToast('Colar não permitido nesta atividade.');
+      } else {
+        valorAnterior = campo.value;
+      }
+    });
+  });
+
+  function mostrarToast(mensagem) {
+    let toast = document.getElementById('anti-cola-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'anti-cola-toast';
+      toast.style.cssText =
+        'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);' +
+        'background:#43101f;color:#fff;padding:10px 20px;border-radius:8px;' +
+        'font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = mensagem;
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(function () {
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+})();
+</script>
+
+</body>
+</html>

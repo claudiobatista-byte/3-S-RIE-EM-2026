@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Texto de Apoio — Licenciamento ambiental em disputa | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#e9edf3;
+    --bg-alt:#d5dee9;
+    --paper:#fcfdff;
+    --ink:#1f262e;
+    --ink-soft:#566171;
+    --azul:#1c3f6e;
+    --azul-dark:#102542;
+    --azul-2:#2f6299;
+    --terra:#c1522d;
+    --terra-light:#f0cbb9;
+    --line:#d7e0ea;
+    --shadow:0 10px 30px rgba(16,37,66,.18);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-touch-callout:none;
+    user-select:none;
+  }
+  .selecionavel, main{user-select:text;}
+  .campo-resposta{user-select:text;}
+
+  /* ===== CAPA / GATE ===== */
+  #capa{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(to bottom, #0b1a2e, #1c3f6e, #4176ac);
+    padding:24px;
+  }
+  #capa .grade-centralizada{
+    position:absolute;
+    top:0; bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:896px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.08;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px);
+    background-size:40px 40px;
+  }
+  .capa-card{
+    position:relative;
+    z-index:1;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:480px;
+    width:100%;
+    padding:36px 32px;
+    text-align:center;
+  }
+  .capa-card .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--azul-dark);
+    background:rgba(28,63,110,.1); padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .capa-card h1{font-family:var(--font-title); font-size:1.6rem; margin:0 0 10px; color:var(--azul-dark);}
+  .capa-card p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 22px;}
+  .capa-card input{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:1rem; margin-bottom:14px;
+  }
+  .capa-card button{
+    width:100%; padding:13px; border:none; border-radius:8px;
+    background:var(--azul); color:#fff; font-weight:600; font-size:1rem; cursor:pointer;
+    font-family:var(--font-body); transition:filter .15s ease;
+  }
+  .capa-card button:hover{filter:brightness(1.15);}
+  .capa-aviso{font-size:.78rem; color:#a33; margin-top:8px; display:none;}
+
+  /* ===== APP ===== */
+  #app{display:none;}
+  .sticky-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--azul-dark); color:#e8eef6;
+    padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:8px;
+    font-family:var(--font-mono); font-size:.82rem;
+  }
+  .sticky-header .aluno{font-family:var(--font-body); font-weight:600; font-size:.92rem;}
+  .barra-progresso-trilho{
+    flex:1; min-width:120px; height:8px; background:rgba(255,255,255,.2); border-radius:6px; overflow:hidden; margin:0 14px;
+  }
+  .barra-progresso-fill{height:100%; background:var(--terra); width:0%; transition:width .3s ease;}
+
+  .wrap{max-width:800px; margin:0 auto; padding:32px 24px 60px;}
+
+  header.topo{margin-bottom:28px;}
+  header.topo .hero-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--azul-dark);
+    background:rgba(28,63,110,.1); padding:5px 12px; border-radius:999px; margin-bottom:12px;
+  }
+  header.topo h1{font-family:var(--font-title); font-size:clamp(1.5rem,4vw,2rem); margin:0 0 8px; color:var(--ink);}
+  header.topo p.sub{color:var(--ink-soft); margin:0; font-size:.98rem;}
+  .descritor-bar{
+    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:8px 14px; margin-bottom:14px; display:inline-block;
+  }
+  .ficha-id{
+    display:flex; flex-wrap:wrap; gap:10px 26px;
+    background:var(--paper); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin-top:12px; font-family:var(--font-mono); font-size:.84rem; color:var(--ink);
+  }
+  .ficha-id span b{color:var(--azul-dark);}
+
+  /* ===== TEXTO DE APOIO ===== */
+  .texto-apoio{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px 30px; margin-bottom:30px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.25rem; color:var(--azul-dark); margin:0 0 4px;}
+  .texto-apoio h3{font-family:var(--font-title); font-size:1.05rem; color:var(--azul-2); margin:22px 0 8px;}
+  .texto-apoio .fonte-tag{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-bottom:16px; display:block;}
+  .texto-apoio p{margin:0 0 14px; color:var(--ink);}
+  .texto-apoio p:last-of-type{margin-bottom:0;}
+  .texto-apoio .destaque{
+    background:var(--bg-alt); border-left:4px solid var(--terra); border-radius:0 8px 8px 0;
+    padding:12px 16px; margin:0 0 14px; font-size:.95rem;
+  }
+  .texto-apoio .mito{
+    background:#fbf4f0; border:1px solid var(--line); border-top:4px solid var(--terra);
+    border-radius:10px; padding:16px 18px; margin:0 0 14px;
+  }
+  .texto-apoio .mito .rot{
+    font-family:var(--font-mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.1em;
+    color:var(--terra); display:block; margin-bottom:6px;
+  }
+  .texto-apoio .mito p{font-size:.93rem;}
+
+  .texto-apoio blockquote.citacao{
+    margin:0 0 14px; padding:12px 18px;
+    border-left:3px solid var(--azul-2); background:#eef3f9;
+    font-size:.93rem; color:var(--ink); font-style:italic;
+  }
+  .texto-apoio blockquote.citacao span.autor{
+    display:block; font-style:normal; font-family:var(--font-mono);
+    font-size:.72rem; color:var(--ink-soft); margin-top:6px;
+  }
+
+  /* ===== LINHA DO TEMPO ===== */
+  .linha-tempo{
+    list-style:none; margin:6px 0 16px; padding:0 0 0 18px;
+    border-left:2px solid var(--bg-alt);
+  }
+  .linha-tempo li{position:relative; padding:0 0 14px 16px; font-size:.93rem;}
+  .linha-tempo li::before{
+    content:''; position:absolute; left:-25px; top:8px;
+    width:10px; height:10px; border-radius:50%;
+    background:var(--azul-2); border:2px solid var(--paper);
+  }
+  .linha-tempo li b{color:var(--azul-dark); font-family:var(--font-mono); font-size:.8rem; display:block;}
+
+  .tabela-lentes{width:100%; border-collapse:collapse; margin:6px 0 14px; font-size:.9rem;}
+  .tabela-lentes caption{
+    caption-side:top; text-align:left; font-family:var(--font-mono); font-size:.68rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--terra); padding-bottom:6px;
+  }
+  .tabela-lentes th, .tabela-lentes td{border:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:top;}
+  .tabela-lentes th{background:var(--azul); color:#fff; font-family:var(--font-title); font-weight:600; font-size:.9rem;}
+  .tabela-lentes tbody tr:nth-child(even){background:var(--bg-alt);}
+  .tabela-lentes td:first-child{font-weight:700; color:var(--azul-dark);}
+  .tabela-wrap{overflow-x:auto;}
+
+  .referencia-box{
+    margin-top:20px; padding:14px 16px;
+    background:var(--bg-alt); border-left:3px solid var(--terra); border-radius:0 8px 8px 0;
+  }
+  .referencia-box .rot{
+    font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--azul-dark); display:block; margin-bottom:6px;
+  }
+  .referencia-box p{margin:0 0 6px; font-size:.86rem; color:var(--ink-soft); font-family:var(--font-mono); line-height:1.6;}
+  .referencia-box p:last-child{margin-bottom:0;}
+
+  /* ===== QUESTOES ===== */
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.2rem; color:var(--azul-dark);
+    margin:0 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .questao{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; margin-bottom:18px;
+  }
+  .questao .num-q{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--azul);
+    color:#fff; font-family:var(--font-mono); font-size:.78rem; margin-right:8px; flex-shrink:0;
+  }
+  .questao .enunciado{font-weight:600; color:var(--ink); margin-bottom:12px; display:flex; align-items:flex-start;}
+  .questao textarea{
+    width:100%; min-height:100px; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:.96rem; resize:vertical; color:var(--ink);
+  }
+  .questao textarea:focus{outline:2px solid var(--azul-2); outline-offset:1px;}
+  .contador-chars{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-top:6px; text-align:right;}
+
+  .comentario-prof{
+    display:none; margin-top:14px; padding:14px 16px;
+    background:#edf2f8; border:1px solid #c2d3e6; border-radius:8px; font-size:.9rem; color:var(--azul-dark);
+  }
+  .comentario-prof.show{display:block;}
+  .comentario-prof b{display:block; margin-bottom:4px; font-family:var(--font-title); font-size:.92rem;}
+
+  /* ===== ALERTA / FINALIZAR ===== */
+  .alerta-incompleto{
+    display:none; background:#fdf1ea; border:1px solid #f0cbb9; color:#8a3a10;
+    padding:12px 16px; border-radius:8px; font-size:.9rem; margin-bottom:16px;
+  }
+  .alerta-incompleto.show{display:block;}
+
+  .acoes-finais{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
+  .btn{
+    font-family:var(--font-body); font-weight:600; font-size:.94rem; padding:12px 22px;
+    border-radius:8px; border:none; cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.1);}
+  .btn-primario{background:var(--azul); color:#fff;}
+  .btn-secundario{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-pdf{background:var(--terra); color:#fff;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  /* ===== POPUP ===== */
+  .popup-overlay{
+    display:none; position:fixed; inset:0; background:rgba(11,26,46,.6);
+    align-items:center; justify-content:center; z-index:200; padding:20px;
+  }
+  .popup-overlay.show{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:420px; width:100%; padding:32px 28px; text-align:center;
+  }
+  .popup-card .emoji{font-size:2.4rem; margin-bottom:10px;}
+  .popup-card h3{font-family:var(--font-title); margin:0 0 8px; color:var(--azul-dark);}
+  .popup-card p{color:var(--ink-soft); font-size:.94rem; margin:0 0 20px;}
+
+  footer.rodape{text-align:center; padding:24px; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;}
+
+  @media (max-width:600px){
+    .wrap{padding:24px 16px 50px;}
+    .texto-apoio, .questao{padding:18px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== CAPA ===== -->
+<div id="capa">
+  <div class="grade-centralizada"></div>
+  <div class="capa-card">
+    <span class="tag">3ª série · Ciências Humanas e Sociais Aplicadas · CERO</span>
+    <h1>Licenciamento ambiental em disputa</h1>
+    <p class="desc">Texto de apoio e seis questões dissertativas sobre a Lei Geral do Licenciamento Ambiental e a leitura crítica de fontes de posicionamento. Preencha os dados para começar.</p>
+    <input type="text" id="nome-aluno" placeholder="Seu nome completo">
+    <input type="text" id="turma-aluno" placeholder="Turma (ex.: 3º A)">
+    <button onclick="iniciarAtividade()">Iniciar atividade</button>
+    <div class="capa-aviso" id="capa-aviso">Por favor, digite seu nome para continuar.</div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <div class="sticky-header">
+    <span class="aluno" id="header-nome"></span>
+    <div class="barra-progresso-trilho"><div class="barra-progresso-fill" id="barra-fill"></div></div>
+    <span id="contador-geral">Respondidas: 0/6</span>
+  </div>
+
+  <div class="wrap">
+    <header class="topo selecionavel">
+      <span class="descritor-bar">Ciências Humanas e Sociais Aplicadas / 3ª série do Ensino Médio &nbsp;|&nbsp; (EM13CHS304) – Impactos socioambientais &nbsp;·&nbsp; (EM13CHS103) – Evidências e argumentação</span>
+      <span class="hero-tag" style="display:block; margin-top:10px;">Texto de Apoio</span>
+      <h1>Licenciamento ambiental em disputa</h1>
+      <p class="sub">Leia o texto com atenção e responda às seis questões que vêm depois dele.</p>
+      <div class="ficha-id" id="ficha-id">
+        <span><b>NOME:</b> <span id="ficha-nome"></span></span>
+        <span><b>DATA:</b> <span id="ficha-data"></span></span>
+        <span><b>TURMA:</b> <span id="ficha-turma"></span></span>
+      </div>
+    </header>
+
+    <main>
+      <section class="texto-apoio selecionavel">
+        <h2>Como ler uma nota de posicionamento: o caso da Lei Geral do Licenciamento Ambiental</h2>
+        <span class="fonte-tag">Texto elaborado a partir da nota do WWF-Brasil sobre a aprovação do PL 2.159/2021 e de fontes complementares</span>
+
+        <div class="destaque">
+          <strong>Ponto de partida.</strong> Nem toda fonte escrita é neutra — e isso não a torna inútil. Uma nota de posicionamento de uma organização ambientalista é um documento válido para a pesquisa histórica, desde que se leia o que ela afirma, quem a assina, o que ela pretende obter e quais argumentos ela deixa de fora. Este texto oferece o caso e os instrumentos; o julgamento é seu.
+        </div>
+
+        <h3>O que está em jogo: o licenciamento ambiental</h3>
+        <p>O licenciamento ambiental é o procedimento pelo qual o poder público autoriza — e condiciona — atividades que usam recursos naturais ou podem causar impacto ao meio ambiente. Ele existe no Brasil desde a Política Nacional do Meio Ambiente, de 1981, e se apoia no artigo 225 da Constituição de 1988, que assegura a todos o direito ao meio ambiente ecologicamente equilibrado e exige estudo prévio de impacto ambiental para obras potencialmente causadoras de degradação significativa. Na prática, o licenciamento alcança desde a instalação de um posto de combustível até a abertura de uma estrada na Amazônia, passando por projetos agropecuários, mineração e geração de energia.</p>
+
+        <p>Durante mais de três décadas, esse procedimento foi regulado por normas dispersas — resoluções do Conama, leis estaduais, regras municipais. A ausência de uma lei geral era apontada por vários setores como fonte de insegurança jurídica. Foi para preencher essa lacuna que tramitou, desde 2021, o Projeto de Lei 2.159.</p>
+
+        <h3>A linha do tempo do caso</h3>
+        <ul class="linha-tempo">
+          <li><b>Julho de 2025</b> A Câmara dos Deputados aprova o PL 2.159/2021, com 267 votos a favor e 116 contra, em sessão que se estendeu pela madrugada, mantendo as emendas do Senado. O texto segue para sanção presidencial.</li>
+          <li><b>Agosto de 2025</b> O projeto é sancionado como Lei nº 15.190/2025, mas com dezenas de vetos presidenciais sobre os dispositivos mais contestados.</li>
+          <li><b>Novembro de 2025</b> O Congresso Nacional derruba a grande maioria desses vetos, restabelecendo o texto aprovado pelos parlamentares.</li>
+          <li><b>Dezembro de 2025</b> Partidos políticos e entidades — entre eles PV, Rede, PSOL, a Anamma e a Apib — ajuízam três Ações Diretas de Inconstitucionalidade (ADIs 7913, 7916 e 7919) no STF, também alcançando a Lei nº 15.300/2025, que disciplinou a Licença Ambiental Especial. Relator: ministro Alexandre de Moraes.</li>
+          <li><b>Fevereiro de 2026</b> A Lei nº 15.190/2025 entra em vigor, 180 dias após a sanção, com as ações ainda pendentes de julgamento.</li>
+          <li><b>Agosto de 2026</b> O julgamento conjunto das ações é pautado no Plenário do STF.</li>
+        </ul>
+
+        <h3>O que afirma a nota do WWF-Brasil</h3>
+        <p>Na madrugada seguinte à votação na Câmara, o WWF-Brasil publicou uma nota de posicionamento com título e conteúdo fortemente críticos. A organização qualifica a decisão como a maior autorização para destruir o meio ambiente em quatro décadas e sustenta que o texto é inconstitucional — lembrando que dispositivos semelhantes já haviam sido julgados inconstitucionais pelo STF. Segundo a nota, ao permitir que estados e municípios definam quais atividades precisam de licença, a lei fragmenta as normas e reduz a transparência, contrariando o próprio objetivo declarado de simplificação. A nota argumenta ainda que a mudança tende a aumentar a judicialização, os atrasos e os conflitos socioambientais, e que a aprovação, às vésperas da COP30 em Belém, ameaça a posição do Brasil nas negociações climáticas e o acesso a parcerias comerciais e financiamentos que exigem salvaguardas socioambientais. O texto encerra pedindo ao presidente da República o veto integral do projeto.</p>
+
+        <div class="mito">
+          <span class="rot">Nomear é argumentar</span>
+          <p>O mesmo projeto recebeu nomes diferentes conforme quem falava. Para os órgãos oficiais e para o Congresso, era o PL 2.159/2021, depois Lei Geral do Licenciamento Ambiental — um nome técnico, que enfatiza organização e norma. Para as organizações ambientalistas e para parte da oposição, era o <b>“PL da Devastação”</b> ou a “mãe de todas as boiadas” — nomes que antecipam o efeito atribuído à lei e mobilizam a memória de episódios anteriores de flexibilização ambiental. Nenhum dos dois nomes é neutro: ambos são atos de linguagem que disputam como o fato será lembrado. Ao usar uma fonte, o historiador registra qual nome ela adota e por quê.</p>
+        </div>
+
+        <h3>Os pontos concretos da controvérsia</h3>
+        <p>Sob as palavras fortes há dispositivos específicos. Os principais alvos das críticas são: a ampliação da Licença por Adesão e Compromisso (LAC), na qual o empreendedor declara o cumprimento de condições previamente definidas e obtém a licença sem análise prévia caso a caso — o que os críticos chamam de autolicenciamento; a dispensa de licenciamento para determinadas atividades agropecuárias; a criação da Licença Ambiental Especial (LAE), procedimento acelerado para empreendimentos considerados estratégicos por um conselho ligado à Presidência; a redução da participação obrigatória de órgãos como Ibama, ICMBio e Funai em etapas do processo; e a transferência a estados e municípios da definição sobre o que precisa ser licenciado.</p>
+
+        <p>Os defensores da lei sustentam que o licenciamento brasileiro se tornara lento, imprevisível e caro, com prazos indefinidos que travam obras de infraestrutura, saneamento e energia — inclusive obras de interesse social. Argumentam que a nova lei consolida em um único diploma regras que estavam dispersas em resoluções e normas estaduais, o que reduziria a insegurança jurídica; que procedimentos simplificados para atividades de baixo impacto liberam o corpo técnico para analisar os casos realmente graves; e que a definição local de competências respeita o pacto federativo e a diversidade de ecossistemas do país. Para essa leitura, simplificar não é sinônimo de desproteger.</p>
+
+        <p>Há também um argumento intermediário, presente na literatura jurídica: o licenciamento não deveria ser tratado nem como uma bandeira ideológica intocável nem como um freio indiscriminado ao desenvolvimento, e a questão prática é onde exatamente termina a simplificação legítima e começa o esvaziamento da função preventiva. É essa pergunta que o STF terá de responder.</p>
+
+        <h3>Instrumentos de leitura crítica</h3>
+        <p>Para analisar uma fonte como essa, três operações são úteis.</p>
+
+        <div class="tabela-wrap">
+          <table class="tabela-lentes">
+            <caption>Como interrogar uma fonte de posicionamento</caption>
+            <thead>
+              <tr><th>Operação</th><th>Pergunta que se faz à fonte</th><th>O que se procura no texto</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Identificar o enunciador</td>
+                <td>Quem assina, com que autoridade e com que objetivo prático?</td>
+                <td>Organização ambientalista internacional; nota publicada logo após a votação; pedido explícito de veto. É uma peça de intervenção pública, não um relatório técnico.</td>
+              </tr>
+              <tr>
+                <td>Separar fato de avaliação e de previsão</td>
+                <td>O que é verificável, o que é juízo de valor e o que é prognóstico?</td>
+                <td>Fato: a data, o placar, o conteúdo dos dispositivos. Avaliação: “maior retrocesso em 40 anos”. Previsão: aumento da judicialização, perda de financiamentos.</td>
+              </tr>
+              <tr>
+                <td>Reconstituir o contraditório</td>
+                <td>Quais argumentos do outro lado a fonte não apresenta?</td>
+                <td>Demora e custo do licenciamento, unificação normativa, alívio para obras de infraestrutura e saneamento. A ausência não invalida a nota — mas obriga o leitor a buscar outras fontes.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Vale notar que a própria nota mistura registros: ao lado das qualificações morais, ela usa um argumento estritamente jurídico (a inconstitucionalidade de dispositivos) e um argumento pragmático que não é ambiental (o aumento da insegurança jurídica e da judicialização). Distinguir esses registros é o que permite discutir a lei sem reduzir o debate a torcida.</p>
+
+        <blockquote class="citacao">
+          A história ambiental deve ser vista não como uma redução, e sim como uma ampliação da análise histórica.
+          <span class="autor">Donald Worster, 1991 — paráfrase da formulação citada por José Augusto Pádua</span>
+        </blockquote>
+
+        <p>Por fim, um lembrete do que se estudou sobre história ambiental: episódios como este só se compreendem quando se articulam as três dimensões propostas por Worster — a base biofísica (quais ecossistemas, quais impactos), a estrutura socioeconômica (quais setores produtivos e quais interesses) e a dimensão cognitiva e cultural (quais visões de natureza estão em disputa, inclusive nos nomes que se dão às leis). E vale a advertência contra o catastrofismo: o desfecho não estava escrito, tanto que o processo passou pelo veto, pela derrubada do veto e agora pelo Judiciário.</p>
+      </section>
+
+      <h2 class="questoes-titulo">&#9997;&#65039; Questões dissertativas</h2>
+
+      <div class="questao" data-questao="1">
+        <div class="enunciado"><span class="num-q">1</span> Explique o que é o licenciamento ambiental e reconstitua a trajetória do caso de julho de 2025 até 2026, indicando em cada etapa qual poder ou instituição atuou.</div>
+        <textarea id="resp-1" class="campo-resposta dissertativa" data-min="70" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 70)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          O licenciamento ambiental é o procedimento pelo qual o poder público autoriza e impõe condições a atividades que usam recursos naturais ou podem degradar o meio ambiente; existe desde a Política Nacional do Meio Ambiente de 1981 e se ancora no artigo 225 da Constituição, que prevê o estudo prévio de impacto ambiental. A trajetória mostra os três poderes em ação: o Legislativo aprovou o PL 2.159/2021 na Câmara em julho de 2025, por 267 a 116; o Executivo sancionou a Lei nº 15.190/2025 em agosto, mas com dezenas de vetos; o Legislativo derrubou a maior parte deles em novembro; entidades e partidos acionaram o Judiciário em dezembro, com três ADIs relatadas pelo ministro Alexandre de Moraes; a lei entrou em vigor em fevereiro de 2026 e o julgamento foi pautado para agosto de 2026. Valorizar respostas que percebam que a decisão não se concentrou em um único poder.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="2">
+        <div class="enunciado"><span class="num-q">2</span> Compare as expressões “Lei Geral do Licenciamento Ambiental” e “PL da Devastação”. Explique o que cada nome procura produzir no leitor e por que o historiador não pode tratar nenhum dos dois como descrição neutra.</div>
+        <textarea id="resp-2" class="campo-resposta dissertativa" data-min="70" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 70)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          O nome oficial é técnico e enfatiza organização, generalidade e norma: sugere que a lei ordena um campo antes disperso, deslocando a atenção para o procedimento. O apelido crítico antecipa o efeito atribuído à lei — devastação — e, ao ser associado à imagem da “boiada”, mobiliza a memória de episódios anteriores de flexibilização ambiental, produzindo indignação antes de qualquer análise dos dispositivos. Nenhum dos dois é neutro porque ambos são atos de linguagem que disputam como o fato será compreendido e lembrado. O trabalho do historiador não é escolher o nome “certo”, mas registrar quem usa cada um, em que contexto e com que finalidade, e voltar ao conteúdo concreto da norma para avaliá-la.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="3">
+        <div class="enunciado"><span class="num-q">3</span> Retire da nota do WWF-Brasil um exemplo de fato verificável, um de juízo de valor e um de previsão. Explique por que essa distinção é necessária mesmo quando o leitor concorda com a fonte.</div>
+        <textarea id="resp-3" class="campo-resposta dissertativa" data-min="70" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 70)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Fato verificável: a aprovação ocorreu na madrugada de 17 de julho de 2025, com placar e dispositivos que podem ser conferidos no texto da lei — ou a informação de que dispositivos semelhantes já foram julgados inconstitucionais pelo STF. Juízo de valor: qualificar a decisão como a maior licença para destruir o meio ambiente em quarenta anos, ou chamar o episódio de profundamente lamentável. Previsão: o aumento da judicialização e dos conflitos, a ameaça à liderança do Brasil nas negociações climáticas e o risco de perda de financiamentos. A distinção é necessária porque cada tipo de enunciado se verifica de um modo diferente: o fato se confere em documento, o juízo se debate, a previsão só se avalia com o tempo. Concordar com a fonte não dispensa a checagem — ao contrário, é quando concordamos que mais tendemos a aceitar previsões como se já fossem fatos.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="4">
+        <div class="enunciado"><span class="num-q">4</span> Explique dois dos dispositivos criticados — por exemplo a Licença por Adesão e Compromisso e a Licença Ambiental Especial — e mostre por que a nota também apresenta um argumento de insegurança jurídica, que não é propriamente ambiental.</div>
+        <textarea id="resp-4" class="campo-resposta dissertativa" data-min="70" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 70)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          A LAC permite que o empreendedor obtenha a licença declarando o cumprimento de condições previamente definidas, sem análise prévia caso a caso — daí a acusação de autolicenciamento, sobretudo quando aplicada a atividades de impacto relevante. A LAE cria procedimento acelerado para empreendimentos considerados estratégicos por um conselho ligado à Presidência, com prazos que os críticos consideram curtos demais para uma avaliação consistente. Outros exemplos aceitáveis: a dispensa de atividades agropecuárias, a redução da participação de Ibama, ICMBio e Funai, ou a transferência da definição de competências a estados e municípios. O argumento de insegurança jurídica é diferente em natureza: sustenta que dispositivos já declarados inconstitucionais e regras fragmentadas entre entes federativos aumentarão a judicialização, os atrasos e os custos — ou seja, que a lei falharia inclusive naquilo que prometia entregar aos empreendedores. É um argumento dirigido a quem não se comove com a pauta ambiental, o que revela uma estratégia de persuasão voltada a públicos distintos.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="5">
+        <div class="enunciado"><span class="num-q">5</span> Apresente os principais argumentos dos defensores da nova lei e posicione-se: existe conflito necessário entre simplificar o licenciamento e preservar sua função preventiva? Sustente sua resposta com argumentos, e não apenas com opiniões.</div>
+        <textarea id="resp-5" class="campo-resposta dissertativa" data-min="90" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 90)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Os defensores sustentam que o licenciamento se tornara lento, imprevisível e caro, travando obras de infraestrutura, saneamento e energia; que a nova lei consolida em um único diploma regras antes dispersas em resoluções e normas estaduais, reduzindo a insegurança jurídica; que procedimentos simplificados para atividades de baixo impacto liberam o corpo técnico para os casos graves; e que a definição local de competências respeita o pacto federativo e a diversidade de ecossistemas. Não há gabarito único para a segunda parte: a questão avalia a qualidade da argumentação. Uma boa resposta contrária ao conflito necessário distingue tipos de empreendimento e mostra que a simplificação se justifica onde o impacto é baixo e verificável. Uma boa resposta favorável à tese do conflito mostra que o problema está em quem classifica o impacto e com que controle, e que a dispensa de análise prévia atinge justamente a função preventiva do instrumento. Rejeitar apenas respostas que se limitem a declarar simpatia por um dos lados sem enfrentar os argumentos do outro.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="6">
+        <div class="enunciado"><span class="num-q">6</span> Aplique ao caso as três dimensões de Worster — biofísica, socioeconômica e cognitivo-cultural — e explique por que a advertência contra o catastrofismo continua válida mesmo diante de uma mudança legal considerada grave.</div>
+        <textarea id="resp-6" class="campo-resposta dissertativa" data-min="90" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 90)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Na dimensão biofísica entram os ecossistemas atingidos e os impactos possíveis: florestas amazônicas, Cerrado, bacias hidrográficas, áreas de exploração de petróleo, além dos efeitos cumulativos que a análise prévia deveria antecipar. Na dimensão socioeconômica entram os setores interessados — agropecuária, mineração, energia, infraestrutura —, os custos e prazos do procedimento e a distribuição de competências entre União, estados e municípios. Na dimensão cognitivo-cultural entram as visões de natureza em disputa: a que a trata como obstáculo ao desenvolvimento e a que a trata como patrimônio e condição de vida, disputa visível já nos nomes atribuídos à lei. A advertência contra o catastrofismo não pede indiferença: pede que o desfecho não seja tratado como já dado. O próprio caso mostra isso — houve vetos, derrubada de vetos, ações no STF e um julgamento pendente, e a lei ainda depende de regulamentação e de aplicação por órgãos concretos. Ler o processo como aberto é o que permite investigar quem decide o quê, em vez de apenas lamentar um destino.
+        </div>
+      </div>
+
+      <div class="referencia-box">
+        <span class="rot">Fontes (ABNT NBR 6023)</span>
+        <p>WWF-BRASIL. Congresso aprova “PL da Devastação” e abre caminho para destruição ambiental sem precedentes. WWF-Brasil, 17 jul. 2025. Disponível em: https://www.wwf.org.br. Acesso em: 2 ago. 2026.</p>
+        <p>BRASIL. Lei nº 15.190, de 8 de agosto de 2025. Institui a Lei Geral do Licenciamento Ambiental. · BRASIL. Lei nº 15.300, de 22 de dezembro de 2025. Dispõe sobre a Licença Ambiental Especial. · BRASIL. Constituição da República Federativa do Brasil de 1988, art. 225. · SUPREMO TRIBUNAL FEDERAL. Partidos e associações questionam pontos da Lei Geral de Licenciamento Ambiental. Notícias STF, 29 dez. 2025. · AGÊNCIA BRASIL. Câmara aprova PL que reduz exigências para licenciamento ambiental, 17 jul. 2025.</p>
+      </div>
+
+      <div class="alerta-incompleto" id="alerta-incompleto">
+        ⚠️ Ainda há questões incompletas (resposta mínima de 70 caracteres). Revise antes de finalizar.
+      </div>
+
+      <div class="acoes-finais">
+        <button class="btn btn-primario" onclick="finalizarAtividade()">Finalizar e ver comentários</button>
+        <button class="btn btn-secundario" onclick="refazerAtividade()">Refazer</button>
+        <button class="btn btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
+      </div>
+    </main>
+  </div>
+
+  <footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+</div>
+
+<!-- ===== POPUP ===== -->
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <div class="emoji">⚖️</div>
+    <h3>Atividade concluída!</h3>
+    <p>Suas seis respostas foram registradas. Os comentários do professor já estão disponíveis abaixo de cada questão para você comparar com o que escreveu.</p>
+    <button class="btn btn-primario" onclick="fecharPopup()">Continuar</button>
+  </div>
+</div>
+
+<script>
+/* ===== GATE DE NOME ===== */
+function iniciarAtividade(){
+  const nome = document.getElementById('nome-aluno').value.trim();
+  const turma = document.getElementById('turma-aluno').value.trim();
+  const aviso = document.getElementById('capa-aviso');
+  if(!nome){
+    aviso.style.display = 'block';
+    return;
+  }
+  aviso.style.display = 'none';
+  const hoje = new Date();
+  const dataFormatada = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+  document.getElementById('header-nome').textContent = nome;
+  document.getElementById('ficha-nome').textContent = nome;
+  document.getElementById('ficha-data').textContent = dataFormatada;
+  document.getElementById('ficha-turma').textContent = turma || '—';
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+/* ===== CONTADOR DE CARACTERES E PROGRESSO ===== */
+const textareas = document.querySelectorAll('textarea.dissertativa');
+
+function atualizarProgresso(){
+  let respondidas = 0;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length >= min) respondidas++;
+  });
+  document.getElementById('contador-geral').textContent = 'Respondidas: ' + respondidas + '/' + textareas.length;
+  document.getElementById('barra-fill').style.width = (respondidas / textareas.length * 100) + '%';
+}
+
+textareas.forEach(function(t){
+  const contadorEl = t.parentElement.querySelector('.contador-chars');
+  const min = parseInt(t.dataset.min, 10);
+  t.addEventListener('input', function(){
+    contadorEl.textContent = t.value.length + ' caracteres (mínimo ' + min + ')';
+    atualizarProgresso();
+  });
+});
+
+/* ===== FINALIZAR ===== */
+function finalizarAtividade(){
+  let completo = true;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length < min) completo = false;
+  });
+
+  const alerta = document.getElementById('alerta-incompleto');
+  if(!completo){
+    alerta.classList.add('show');
+    alerta.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  alerta.classList.remove('show');
+
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.add('show');
+  });
+
+  document.getElementById('popup-overlay').classList.add('show');
+}
+
+function fecharPopup(){
+  document.getElementById('popup-overlay').classList.remove('show');
+}
+
+function refazerAtividade(){
+  textareas.forEach(function(t){
+    t.value = '';
+    t.parentElement.querySelector('.contador-chars').textContent = '0 caracteres (mínimo ' + t.dataset.min + ')';
+  });
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.remove('show');
+  });
+  document.getElementById('alerta-incompleto').classList.remove('show');
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+/* ===== EXPORTAR PDF ===== */
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+function esc(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML.replace(/\n/g, '<br>');
+}
+
+async function exportarPDF(){
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(11,26,46,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:300px;box-shadow:0 10px 30px rgba(16,37,66,.3);font-family:\'Source Serif 4\',serif;">' +
+      '<div style="font-size:2rem;margin-bottom:8px;">📄</div>' +
+      '<h4 style="margin:0 0 4px;color:#102542;font-family:\'Playfair Display\',serif;">Gerando PDF…</h4>' +
+      '<p style="margin:0 0 14px;color:#566171;font-size:.86rem;">Aguarde alguns instantes.</p>' +
+      '<div style="background:#d5dee9;border-radius:6px;overflow:hidden;height:8px;">' +
+        '<div id="pdf-prog" style="height:100%;width:0%;background:#1c3f6e;transition:width .2s ease;"></div>' +
+      '</div>' +
+      '<div id="pdf-prog-txt" style="margin-top:8px;font-family:\'JetBrains Mono\',monospace;font-size:.74rem;color:#566171;">0%</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  await sleep(80);
+  function setP(pct, msg){
+    const pp = document.getElementById('pdf-prog'), pt = document.getElementById('pdf-prog-txt');
+    if(pp) pp.style.width = pct + '%';
+    if(pt) pt.textContent = msg || (pct + '%');
+  }
+
+  try{
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait', unit:'px', format:'a4', hotfixes:['px_scaling']});
+    const PW = pdf.internal.pageSize.getWidth(), PH = pdf.internal.pageSize.getHeight();
+    const ML = 28, CW = PW - ML*2;
+    let y = ML;
+
+    async function addImg(el){
+      const canvas = await html2canvas(el, {scale:2, useCORS:true, logging:false, backgroundColor:'#ffffff', scrollX:0, scrollY:0, windowWidth:860});
+      const imgW = CW, imgH = (canvas.height / canvas.width) * imgW;
+      const dataUrl = canvas.toDataURL('image/jpeg', .92), avail = PH - ML*2;
+      if(imgH <= avail){
+        if(y + imgH > PH - ML){ pdf.addPage(); y = ML; }
+        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
+        y += imgH + 8;
+      } else {
+        const pxPerPdfPt = canvas.width / imgW;
+        let srcY = 0;
+        while(srcY < canvas.height){
+          const availPt = PH - y - ML, sliceH_pt = Math.min(availPt, avail);
+          const sliceH_px = Math.round(sliceH_pt * pxPerPdfPt), actualH_px = Math.min(sliceH_px, canvas.height - srcY);
+          const tmp = document.createElement('canvas');
+          tmp.width = canvas.width; tmp.height = actualH_px;
+          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
+          const sliceUrl = tmp.toDataURL('image/jpeg', .92), slicePt = (actualH_px / canvas.width) * imgW;
+          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
+          srcY += actualH_px; y += slicePt;
+          if(srcY < canvas.height){ pdf.addPage(); y = ML; }
+        }
+        y += 8;
+      }
+    }
+
+    async function band(tag, txt){
+      const b = document.createElement('div');
+      b.style.cssText = 'width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      b.innerHTML = '<div style="background:linear-gradient(90deg,#1c3f6e,#102542);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px">' +
+        '<span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">' + tag + '</span>' +
+        '<span style="color:#fff;font-size:15px;font-weight:700">' + txt + '</span></div>';
+      document.body.appendChild(b);
+      await sleep(20);
+      await addImg(b);
+      document.body.removeChild(b);
+    }
+
+    const nome = document.getElementById('header-nome').textContent || 'Aluno(a)';
+    const turma = document.getElementById('ficha-turma').textContent || '—';
+    const now = new Date();
+    const dtStr = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+
+    setP(5, 'Preparando capa…'); await sleep(40);
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
+    coverEl.innerHTML =
+      '<div style="background:linear-gradient(135deg,#0b1a2e 0%,#1c3f6e 60%,#4176ac 100%);padding:32px 48px 28px;color:white">' +
+        '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">Ciências Humanas e Sociais Aplicadas · 3ª Série do Ensino Médio · EM13CHS304 · EM13CHS103</div>' +
+        '<div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">Licenciamento ambiental em disputa</div>' +
+        '<div style="font-size:13px;opacity:.8;font-style:italic">Texto de apoio · Lei Geral do Licenciamento Ambiental e leitura crítica de fontes · 6 questões dissertativas</div>' +
+      '</div>' +
+      '<div style="background:#e9edf3;padding:22px 48px 26px;border-bottom:3px solid #f0cbb9">' +
+        '<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#1c3f6e;font-weight:700;margin-bottom:5px">Aluno(a)</div>' +
+        '<div style="font-size:20px;font-weight:700;color:#1f262e;border-bottom:2.5px solid #1c3f6e;padding-bottom:6px;display:inline-block;margin-bottom:16px">' + esc(nome) + '</div>' +
+        '<div style="display:flex;gap:12px;flex-wrap:wrap">' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#1c3f6e">' + esc(turma) + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Turma</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#c1522d">6</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Dissertativas</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">' +
+            '<div style="font-size:13px;font-weight:700;color:#333">' + dtStr + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>' +
+      '</div>';
+    document.body.appendChild(coverEl); await sleep(60); await addImg(coverEl); document.body.removeChild(coverEl);
+
+    // TEXTO DE APOIO
+    setP(15, 'Preparando texto de apoio…'); await sleep(20);
+    await band('TEXTO DE APOIO', 'Como ler uma nota de posicionamento: o caso do licenciamento ambiental');
+    const textoEl = document.createElement('div');
+    textoEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d7e0ea;border-radius:10px;position:absolute;left:-9999px;top:0';
+    textoEl.innerHTML =
+      '<div style="padding:18px 24px;background:#fbfcfe">' +
+        '<p style="font-size:12.5px;color:#1f262e;line-height:1.8;margin:0 0 12px"><b>O que está em jogo.</b> O licenciamento ambiental é o procedimento pelo qual o poder público autoriza e condiciona atividades que usam recursos naturais ou podem degradar o meio ambiente. Existe desde a Política Nacional do Meio Ambiente (1981) e se apoia no artigo 225 da Constituição de 1988, que exige estudo prévio de impacto para obras de degradação significativa. Por mais de três décadas foi regulado por normas dispersas — resoluções do Conama, leis estaduais e municipais.</p>' +
+        '<p style="font-size:12.5px;color:#1f262e;line-height:1.8;margin:0 0 12px"><b>Linha do tempo.</b> Jul/2025: a Câmara aprova o PL 2.159/2021 por 267 a 116, na madrugada. Ago/2025: sanção como Lei nº 15.190/2025, com dezenas de vetos. Nov/2025: o Congresso derruba a maioria dos vetos. Dez/2025: PV, Rede, PSOL, Anamma e Apib ajuízam as ADIs 7913, 7916 e 7919 no STF, também sobre a Lei nº 15.300/2025 (Licença Ambiental Especial); relator, ministro Alexandre de Moraes. Fev/2026: a lei entra em vigor. Ago/2026: julgamento pautado no Plenário do STF.</p>' +
+        '<p style="font-size:12.5px;color:#1f262e;line-height:1.8;margin:0 0 12px"><b>A nota do WWF-Brasil.</b> Publicada logo após a votação, qualifica a decisão como a maior autorização para destruir o meio ambiente em quatro décadas, sustenta que o texto é inconstitucional, afirma que a definição local de competências fragmenta as normas e reduz a transparência, prevê aumento da judicialização e dos conflitos socioambientais e alerta para riscos à posição do Brasil nas negociações climáticas às vésperas da COP30. Encerra pedindo o veto integral.</p>' +
+        '<p style="font-size:12.5px;color:#1f262e;line-height:1.8;margin:0 0 12px"><b>Os pontos concretos.</b> Críticas: ampliação da Licença por Adesão e Compromisso (LAC), acusada de permitir autolicenciamento; dispensa de licenciamento para certas atividades agropecuárias; criação da Licença Ambiental Especial (LAE) para empreendimentos “estratégicos”; redução da participação de Ibama, ICMBio e Funai; transferência a estados e municípios da definição do que deve ser licenciado. Defesa: o licenciamento se tornara lento, imprevisível e caro; a lei unifica normas dispersas e reduz a insegurança jurídica; ritos simplificados para baixo impacto liberam o corpo técnico para os casos graves; a definição local respeita o pacto federativo e a diversidade de ecossistemas.</p>' +
+        '<p style="font-size:12.5px;color:#1f262e;line-height:1.8;margin:0 0 12px"><b>Instrumentos de leitura crítica.</b> (1) Identificar o enunciador: quem assina, com que autoridade e com que objetivo prático — aqui, uma peça de intervenção pública com pedido explícito de veto. (2) Separar fato (data, placar, dispositivos), avaliação (“maior retrocesso em 40 anos”) e previsão (judicialização, perda de financiamentos). (3) Reconstituir o contraditório: quais argumentos do outro lado a fonte não apresenta. Ler o caso pelas três dimensões de Worster — biofísica, socioeconômica e cognitivo-cultural — e evitar tratar o desfecho como já escrito.</p>' +
+        '<div style="font-size:10px;color:#566171;font-family:monospace;border-top:1px solid #eee;padding-top:10px">WWF-BRASIL. Congresso aprova “PL da Devastação”… 17 jul. 2025. &middot; BRASIL. Lei nº 15.190/2025 &middot; Lei nº 15.300/2025 &middot; CF/1988, art. 225 &middot; STF, Notícias, 29 dez. 2025 &middot; AGÊNCIA BRASIL, 17 jul. 2025.</div>' +
+      '</div>';
+    document.body.appendChild(textoEl); await sleep(20); await addImg(textoEl); document.body.removeChild(textoEl);
+
+    // QUESTÕES DISSERTATIVAS
+    await band('QUESTÕES', 'Questões Dissertativas — Respostas e Orientações');
+
+    const QUESTOES = [
+      { num:'1', enunc:'Explique o que é o licenciamento ambiental e reconstitua a trajetória do caso de julho de 2025 até 2026, indicando em cada etapa qual poder ou instituição atuou.', id:'resp-1',
+        coment:'O licenciamento ambiental é o procedimento pelo qual o poder público autoriza e impõe condições a atividades que usam recursos naturais ou podem degradar o meio ambiente; existe desde a Política Nacional do Meio Ambiente de 1981 e se ancora no artigo 225 da Constituição, que prevê o estudo prévio de impacto ambiental. A trajetória mostra os três poderes em ação: o Legislativo aprovou o PL 2.159/2021 na Câmara em julho de 2025, por 267 a 116; o Executivo sancionou a Lei nº 15.190/2025 em agosto, mas com dezenas de vetos; o Legislativo derrubou a maior parte deles em novembro; entidades e partidos acionaram o Judiciário em dezembro, com três ADIs relatadas pelo ministro Alexandre de Moraes; a lei entrou em vigor em fevereiro de 2026 e o julgamento foi pautado para agosto de 2026. Valorizar respostas que percebam que a decisão não se concentrou em um único poder.' },
+      { num:'2', enunc:'Compare as expressões “Lei Geral do Licenciamento Ambiental” e “PL da Devastação”. Explique o que cada nome procura produzir no leitor e por que o historiador não pode tratar nenhum dos dois como descrição neutra.', id:'resp-2',
+        coment:'O nome oficial é técnico e enfatiza organização, generalidade e norma: sugere que a lei ordena um campo antes disperso, deslocando a atenção para o procedimento. O apelido crítico antecipa o efeito atribuído à lei — devastação — e, ao ser associado à imagem da “boiada”, mobiliza a memória de episódios anteriores de flexibilização ambiental, produzindo indignação antes de qualquer análise dos dispositivos. Nenhum dos dois é neutro porque ambos são atos de linguagem que disputam como o fato será compreendido e lembrado. O trabalho do historiador não é escolher o nome “certo”, mas registrar quem usa cada um, em que contexto e com que finalidade, e voltar ao conteúdo concreto da norma para avaliá-la.' },
+      { num:'3', enunc:'Retire da nota do WWF-Brasil um exemplo de fato verificável, um de juízo de valor e um de previsão. Explique por que essa distinção é necessária mesmo quando o leitor concorda com a fonte.', id:'resp-3',
+        coment:'Fato verificável: a aprovação ocorreu na madrugada de 17 de julho de 2025, com placar e dispositivos que podem ser conferidos no texto da lei — ou a informação de que dispositivos semelhantes já foram julgados inconstitucionais pelo STF. Juízo de valor: qualificar a decisão como a maior licença para destruir o meio ambiente em quarenta anos, ou chamar o episódio de profundamente lamentável. Previsão: o aumento da judicialização e dos conflitos, a ameaça à liderança do Brasil nas negociações climáticas e o risco de perda de financiamentos. A distinção é necessária porque cada tipo de enunciado se verifica de um modo diferente: o fato se confere em documento, o juízo se debate, a previsão só se avalia com o tempo. Concordar com a fonte não dispensa a checagem — ao contrário, é quando concordamos que mais tendemos a aceitar previsões como se já fossem fatos.' },
+      { num:'4', enunc:'Explique dois dos dispositivos criticados — por exemplo a Licença por Adesão e Compromisso e a Licença Ambiental Especial — e mostre por que a nota também apresenta um argumento de insegurança jurídica, que não é propriamente ambiental.', id:'resp-4',
+        coment:'A LAC permite que o empreendedor obtenha a licença declarando o cumprimento de condições previamente definidas, sem análise prévia caso a caso — daí a acusação de autolicenciamento, sobretudo quando aplicada a atividades de impacto relevante. A LAE cria procedimento acelerado para empreendimentos considerados estratégicos por um conselho ligado à Presidência, com prazos que os críticos consideram curtos demais para uma avaliação consistente. Outros exemplos aceitáveis: a dispensa de atividades agropecuárias, a redução da participação de Ibama, ICMBio e Funai, ou a transferência da definição de competências a estados e municípios. O argumento de insegurança jurídica é diferente em natureza: sustenta que dispositivos já declarados inconstitucionais e regras fragmentadas entre entes federativos aumentarão a judicialização, os atrasos e os custos — ou seja, que a lei falharia inclusive naquilo que prometia entregar aos empreendedores. É um argumento dirigido a quem não se comove com a pauta ambiental, o que revela uma estratégia de persuasão voltada a públicos distintos.' },
+      { num:'5', enunc:'Apresente os principais argumentos dos defensores da nova lei e posicione-se: existe conflito necessário entre simplificar o licenciamento e preservar sua função preventiva? Sustente sua resposta com argumentos, e não apenas com opiniões.', id:'resp-5',
+        coment:'Os defensores sustentam que o licenciamento se tornara lento, imprevisível e caro, travando obras de infraestrutura, saneamento e energia; que a nova lei consolida em um único diploma regras antes dispersas em resoluções e normas estaduais, reduzindo a insegurança jurídica; que procedimentos simplificados para atividades de baixo impacto liberam o corpo técnico para os casos graves; e que a definição local de competências respeita o pacto federativo e a diversidade de ecossistemas. Não há gabarito único para a segunda parte: a questão avalia a qualidade da argumentação. Uma boa resposta contrária ao conflito necessário distingue tipos de empreendimento e mostra que a simplificação se justifica onde o impacto é baixo e verificável. Uma boa resposta favorável à tese do conflito mostra que o problema está em quem classifica o impacto e com que controle, e que a dispensa de análise prévia atinge justamente a função preventiva do instrumento. Rejeitar apenas respostas que se limitem a declarar simpatia por um dos lados sem enfrentar os argumentos do outro.' },
+      { num:'6', enunc:'Aplique ao caso as três dimensões de Worster — biofísica, socioeconômica e cognitivo-cultural — e explique por que a advertência contra o catastrofismo continua válida mesmo diante de uma mudança legal considerada grave.', id:'resp-6',
+        coment:'Na dimensão biofísica entram os ecossistemas atingidos e os impactos possíveis: florestas amazônicas, Cerrado, bacias hidrográficas, áreas de exploração de petróleo, além dos efeitos cumulativos que a análise prévia deveria antecipar. Na dimensão socioeconômica entram os setores interessados — agropecuária, mineração, energia, infraestrutura —, os custos e prazos do procedimento e a distribuição de competências entre União, estados e municípios. Na dimensão cognitivo-cultural entram as visões de natureza em disputa: a que a trata como obstáculo ao desenvolvimento e a que a trata como patrimônio e condição de vida, disputa visível já nos nomes atribuídos à lei. A advertência contra o catastrofismo não pede indiferença: pede que o desfecho não seja tratado como já dado. O próprio caso mostra isso — houve vetos, derrubada de vetos, ações no STF e um julgamento pendente, e a lei ainda depende de regulamentação e de aplicação por órgãos concretos. Ler o processo como aberto é o que permite investigar quem decide o quê, em vez de apenas lamentar um destino.' }
+    ];
+
+    for(let i=0; i<QUESTOES.length; i++){
+      const q = QUESTOES[i];
+      setP(20 + Math.round(i/QUESTOES.length*65), 'Questão ' + q.num + '/6…'); await sleep(12);
+
+      const valor = document.getElementById(q.id) ? document.getElementById(q.id).value : '';
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d7e0ea;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML =
+        '<div style="background:linear-gradient(90deg,#1c3f6e,#102542);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + q.num + '</span>' +
+          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>' +
+        '<div style="padding:18px 24px 16px;background:#fbfcfe">' +
+          '<div style="font-size:13px;font-weight:700;color:#1f262e;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">' + esc(q.enunc) + '</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+            '<div style="width:4px;height:15px;background:#1c3f6e;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#1c3f6e;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>' +
+          '<div style="background:#edf2f8;border:1.5px solid #a9c0da;border-radius:8px;padding:13px 16px;min-height:50px;margin-bottom:12px">' +
+            '<div style="font-size:12.5px;color:#1f262e;line-height:1.8;white-space:pre-wrap">' + (esc(valor) || '<span style=\"color:#aaa\">(sem resposta)</span>') + '</div></div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">' +
+            '<div style="width:4px;height:15px;background:#c1522d;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#8f3c1d;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
+          '<div style="background:#fbf1ec;border:1.5px solid #f0cbb9;border-radius:8px;padding:13px 16px">' +
+            '<div style="font-size:12px;color:#4a2410;line-height:1.8">' + esc(q.coment) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(12); await addImg(qEl); document.body.removeChild(qEl);
+    }
+
+    // RODAPÉ EM TODAS AS PÁGINAS
+    setP(92, 'Finalizando…'); await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for(let p=1; p<=totalPages; p++){
+      pdf.setPage(p);
+      const fEl = document.createElement('div');
+      fEl.style.cssText = 'width:' + Math.round(CW) + 'px;height:22px;background:#e9edf3;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      fEl.innerHTML = '<span>Licenciamento ambiental em disputa · ' + esc(nome) + '</span><span>Página ' + p + ' de ' + totalPages + '</span>';
+      document.body.appendChild(fEl);
+      const fc = await html2canvas(fEl, {scale:2, logging:false, backgroundColor:'#e9edf3'});
+      document.body.removeChild(fEl);
+      const fUrl = fc.toDataURL('image/jpeg', .9), fH = (fc.height / fc.width) * CW;
+      pdf.setFillColor(233,237,243); pdf.rect(ML, PH-fH, CW, fH, 'F');
+      pdf.addImage(fUrl, 'JPEG', ML, PH-fH, CW, fH);
+    }
+
+    setP(100, 'Salvando…'); await sleep(200);
+    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    pdf.save('Licenciamento_Ambiental_' + safeName + '.pdf');
+
+  } catch(err){
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message);
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if(ov) document.body.removeChild(ov);
+  }
+}
+
+/* ===== PROTEÇÃO ANTI-COLA ===== */
+(function () {
+  const CAMPOS_PROTEGIDOS = document.querySelectorAll('textarea.dissertativa, .campo-resposta');
+  const LIMITE_BLOCO = 25;
+
+  function bloquear(e) {
+    e.preventDefault();
+    mostrarToast('Colar não permitido nesta atividade.');
+  }
+
+  CAMPOS_PROTEGIDOS.forEach(function (campo) {
+    ['paste', 'copy', 'cut', 'drop', 'dragover', 'contextmenu'].forEach(function (evt) {
+      campo.addEventListener(evt, bloquear);
+    });
+
+    campo.addEventListener('beforeinput', function (e) {
+      if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+        e.preventDefault();
+        mostrarToast('Colar não permitido nesta atividade.');
+      }
+    });
+
+    let valorAnterior = campo.value;
+    campo.addEventListener('input', function (e) {
+      const diferenca = campo.value.length - valorAnterior.length;
+      if (diferenca >= LIMITE_BLOCO && e.inputType !== 'insertReplacementText') {
+        campo.value = valorAnterior;
+        mostrarToast('Colar não permitido nesta atividade.');
+      } else {
+        valorAnterior = campo.value;
+      }
+    });
+  });
+
+  function mostrarToast(mensagem) {
+    let toast = document.getElementById('anti-cola-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'anti-cola-toast';
+      toast.style.cssText =
+        'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);' +
+        'background:#102542;color:#fff;padding:10px 20px;border-radius:8px;' +
+        'font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = mensagem;
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(function () {
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Texto de Apoio — A natureza tem história? | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#e8f0ea;
+    --bg-alt:#d3e3d8;
+    --paper:#fcfefc;
+    --ink:#222b26;
+    --ink-soft:#586159;
+    --verde:#1f5741;
+    --verde-dark:#123528;
+    --verde-2:#2f7d5c;
+    --ocre:#b8791f;
+    --ocre-light:#e8d3ab;
+    --line:#d5e3d8;
+    --shadow:0 10px 30px rgba(18,53,40,.18);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-touch-callout:none;
+    user-select:none;
+  }
+  .selecionavel, main{user-select:text;}
+  .campo-resposta{user-select:text;}
+
+  /* ===== CAPA / GATE ===== */
+  #capa{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(to bottom, #0e2a20, #1f5741, #4a9272);
+    padding:24px;
+  }
+  #capa .grade-centralizada{
+    position:absolute;
+    top:0; bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:896px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.08;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px);
+    background-size:40px 40px;
+  }
+  .capa-card{
+    position:relative;
+    z-index:1;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:480px;
+    width:100%;
+    padding:36px 32px;
+    text-align:center;
+  }
+  .capa-card .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(31,87,65,.1); padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .capa-card h1{font-family:var(--font-title); font-size:1.6rem; margin:0 0 10px; color:var(--verde-dark);}
+  .capa-card p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 22px;}
+  .capa-card input{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:1rem; margin-bottom:14px;
+  }
+  .capa-card button{
+    width:100%; padding:13px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:1rem; cursor:pointer;
+    font-family:var(--font-body); transition:filter .15s ease;
+  }
+  .capa-card button:hover{filter:brightness(1.15);}
+  .capa-aviso{font-size:.78rem; color:#a33; margin-top:8px; display:none;}
+
+  /* ===== APP ===== */
+  #app{display:none;}
+  .sticky-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--verde-dark); color:#e7f2ec;
+    padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:8px;
+    font-family:var(--font-mono); font-size:.82rem;
+  }
+  .sticky-header .aluno{font-family:var(--font-body); font-weight:600; font-size:.92rem;}
+  .barra-progresso-trilho{
+    flex:1; min-width:120px; height:8px; background:rgba(255,255,255,.2); border-radius:6px; overflow:hidden; margin:0 14px;
+  }
+  .barra-progresso-fill{height:100%; background:var(--ocre); width:0%; transition:width .3s ease;}
+
+  .wrap{max-width:800px; margin:0 auto; padding:32px 24px 60px;}
+
+  header.topo{margin-bottom:28px;}
+  header.topo .hero-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(31,87,65,.1); padding:5px 12px; border-radius:999px; margin-bottom:12px;
+  }
+  header.topo h1{font-family:var(--font-title); font-size:clamp(1.5rem,4vw,2rem); margin:0 0 8px; color:var(--ink);}
+  header.topo p.sub{color:var(--ink-soft); margin:0; font-size:.98rem;}
+  .descritor-bar{
+    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:8px 14px; margin-bottom:14px; display:inline-block;
+  }
+  .ficha-id{
+    display:flex; flex-wrap:wrap; gap:10px 26px;
+    background:var(--paper); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin-top:12px; font-family:var(--font-mono); font-size:.84rem; color:var(--ink);
+  }
+  .ficha-id span b{color:var(--verde-dark);}
+
+  /* ===== TEXTO DE APOIO ===== */
+  .texto-apoio{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px 30px; margin-bottom:30px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.25rem; color:var(--verde-dark); margin:0 0 4px;}
+  .texto-apoio h3{font-family:var(--font-title); font-size:1.05rem; color:var(--verde-2); margin:22px 0 8px;}
+  .texto-apoio .fonte-tag{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-bottom:16px; display:block;}
+  .texto-apoio p{margin:0 0 14px; color:var(--ink);}
+  .texto-apoio p:last-of-type{margin-bottom:0;}
+  .texto-apoio .destaque{
+    background:var(--bg-alt); border-left:4px solid var(--ocre); border-radius:0 8px 8px 0;
+    padding:12px 16px; margin:0 0 14px; font-size:.95rem;
+  }
+  .texto-apoio .mito{
+    background:#f7f4ec; border:1px solid var(--line); border-top:4px solid var(--verde-2);
+    border-radius:10px; padding:16px 18px; margin:0 0 14px;
+  }
+  .texto-apoio .mito .rot{
+    font-family:var(--font-mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.1em;
+    color:var(--ocre); display:block; margin-bottom:6px;
+  }
+  .texto-apoio .mito p{font-size:.93rem;}
+
+  .texto-apoio blockquote.citacao{
+    margin:0 0 14px; padding:12px 18px;
+    border-left:3px solid var(--verde-2); background:#f2f8f4;
+    font-size:.93rem; color:var(--ink); font-style:italic;
+  }
+  .texto-apoio blockquote.citacao span.autor{
+    display:block; font-style:normal; font-family:var(--font-mono);
+    font-size:.72rem; color:var(--ink-soft); margin-top:6px;
+  }
+
+  .tabela-lentes{width:100%; border-collapse:collapse; margin:6px 0 14px; font-size:.9rem;}
+  .tabela-lentes caption{
+    caption-side:top; text-align:left; font-family:var(--font-mono); font-size:.68rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--ocre); padding-bottom:6px;
+  }
+  .tabela-lentes th, .tabela-lentes td{border:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:top;}
+  .tabela-lentes th{background:var(--verde); color:#fff; font-family:var(--font-title); font-weight:600; font-size:.9rem;}
+  .tabela-lentes tbody tr:nth-child(even){background:var(--bg-alt);}
+  .tabela-lentes td:first-child{font-weight:700; color:var(--verde-dark);}
+  .tabela-wrap{overflow-x:auto;}
+
+  .referencia-box{
+    margin-top:20px; padding:14px 16px;
+    background:var(--bg-alt); border-left:3px solid var(--ocre); border-radius:0 8px 8px 0;
+  }
+  .referencia-box .rot{
+    font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--verde-dark); display:block; margin-bottom:6px;
+  }
+  .referencia-box p{margin:0 0 6px; font-size:.86rem; color:var(--ink-soft); font-family:var(--font-mono); line-height:1.6;}
+  .referencia-box p:last-child{margin-bottom:0;}
+
+  /* ===== QUESTOES ===== */
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.2rem; color:var(--verde-dark);
+    margin:0 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .questao{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; margin-bottom:18px;
+  }
+  .questao .num-q{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--verde);
+    color:#fff; font-family:var(--font-mono); font-size:.78rem; margin-right:8px; flex-shrink:0;
+  }
+  .questao .enunciado{font-weight:600; color:var(--ink); margin-bottom:12px; display:flex; align-items:flex-start;}
+  .questao textarea{
+    width:100%; min-height:100px; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:.96rem; resize:vertical; color:var(--ink);
+  }
+  .questao textarea:focus{outline:2px solid var(--verde-2); outline-offset:1px;}
+  .contador-chars{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-top:6px; text-align:right;}
+
+  .comentario-prof{
+    display:none; margin-top:14px; padding:14px 16px;
+    background:#eef5f0; border:1px solid #c3ddcc; border-radius:8px; font-size:.9rem; color:var(--verde-dark);
+  }
+  .comentario-prof.show{display:block;}
+  .comentario-prof b{display:block; margin-bottom:4px; font-family:var(--font-title); font-size:.92rem;}
+
+  /* ===== ALERTA / FINALIZAR ===== */
+  .alerta-incompleto{
+    display:none; background:#fdf5e6; border:1px solid #ecd6ad; color:#8a5a10;
+    padding:12px 16px; border-radius:8px; font-size:.9rem; margin-bottom:16px;
+  }
+  .alerta-incompleto.show{display:block;}
+
+  .acoes-finais{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
+  .btn{
+    font-family:var(--font-body); font-weight:600; font-size:.94rem; padding:12px 22px;
+    border-radius:8px; border:none; cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.1);}
+  .btn-primario{background:var(--verde); color:#fff;}
+  .btn-secundario{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-pdf{background:var(--ocre); color:#fff;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  /* ===== POPUP ===== */
+  .popup-overlay{
+    display:none; position:fixed; inset:0; background:rgba(14,42,32,.6);
+    align-items:center; justify-content:center; z-index:200; padding:20px;
+  }
+  .popup-overlay.show{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:420px; width:100%; padding:32px 28px; text-align:center;
+  }
+  .popup-card .emoji{font-size:2.4rem; margin-bottom:10px;}
+  .popup-card h3{font-family:var(--font-title); margin:0 0 8px; color:var(--verde-dark);}
+  .popup-card p{color:var(--ink-soft); font-size:.94rem; margin:0 0 20px;}
+
+  footer.rodape{text-align:center; padding:24px; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;}
+
+  @media (max-width:600px){
+    .wrap{padding:24px 16px 50px;}
+    .texto-apoio, .questao{padding:18px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== CAPA ===== -->
+<div id="capa">
+  <div class="grade-centralizada"></div>
+  <div class="capa-card">
+    <span class="tag">3ª série · Ciências Humanas e Sociais Aplicadas · CERO</span>
+    <h1>A natureza tem história?</h1>
+    <p class="desc">Texto de apoio e seis questões dissertativas sobre as bases teóricas da história ambiental. Preencha os dados para começar.</p>
+    <input type="text" id="nome-aluno" placeholder="Seu nome completo">
+    <input type="text" id="turma-aluno" placeholder="Turma (ex.: 3º A)">
+    <button onclick="iniciarAtividade()">Iniciar atividade</button>
+    <div class="capa-aviso" id="capa-aviso">Por favor, digite seu nome para continuar.</div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <div class="sticky-header">
+    <span class="aluno" id="header-nome"></span>
+    <div class="barra-progresso-trilho"><div class="barra-progresso-fill" id="barra-fill"></div></div>
+    <span id="contador-geral">Respondidas: 0/6</span>
+  </div>
+
+  <div class="wrap">
+    <header class="topo selecionavel">
+      <span class="descritor-bar">Ciências Humanas e Sociais Aplicadas / 3ª série do Ensino Médio &nbsp;|&nbsp; (EM13CHS306) – Recursos naturais e sustentabilidade &nbsp;·&nbsp; (EM13CHS101) – Escalas temporais e espaciais</span>
+      <span class="hero-tag" style="display:block; margin-top:10px;">Texto de Apoio</span>
+      <h1>A natureza tem história?</h1>
+      <p class="sub">Leia o texto com atenção e responda às seis questões que vêm depois dele.</p>
+      <div class="ficha-id" id="ficha-id">
+        <span><b>NOME:</b> <span id="ficha-nome"></span></span>
+        <span><b>DATA:</b> <span id="ficha-data"></span></span>
+        <span><b>TURMA:</b> <span id="ficha-turma"></span></span>
+      </div>
+    </header>
+
+    <main>
+      <section class="texto-apoio selecionavel">
+        <h2>As bases teóricas da história ambiental</h2>
+        <span class="fonte-tag">Texto adaptado de José Augusto Pádua para a 3ª série do Ensino Médio</span>
+
+        <div class="destaque">
+          <strong>Ponto de partida.</strong> Durante muito tempo, a natureza foi tratada pelos historiadores como um cenário parado diante do qual a humanidade agia. A história ambiental nasce quando esse pressuposto cai: o cenário também se move, também tem tempo, também tem história. Estudar essa mudança é estudar como um campo do conhecimento se transforma quando o mundo à sua volta se transforma.
+        </div>
+
+        <h3>A voz das ruas e o nascimento de um campo</h3>
+        <p>A história ambiental, como campo consciente de si mesmo e institucionalizado nas universidades, começou a se estruturar no início da década de 1970. O curso de maior repercussão com esse título foi ministrado em 1972, na Universidade da Califórnia em Santa Bárbara, por Roderick Nash, que assumiu explicitamente estar respondendo aos apelos por responsabilidade ambiental que se multiplicavam naquele momento — o mesmo ano da primeira Conferência das Nações Unidas sobre o Ambiente Humano, em Estocolmo. Ou seja: a chamada <b>voz das ruas</b> pesou na formalização do campo.</p>
+
+        <p>Muitos historiadores se sentem desconfortáveis com essa influência externa, pois ela sugeriria uma politização da pesquisa e uma confusão entre <b>história ambiental</b> (campo de investigação) e <b>ambientalismo</b> (movimento político). Ocorre que essa objeção choca-se com uma tese repetida por Lucien Febvre e por tantos outros: o historiador não está isolado do seu tempo e sempre mira o passado com as perguntas do presente. Peter Burke lembra, no mesmo sentido, que a história monetária foi estimulada pela crise inflacionária dos anos 1920 e a história demográfica pelo <i>baby boom</i> do pós-guerra. A pergunta do presente não invalida a pesquisa; ela a provoca — desde que o pesquisador mantenha o cuidado metodológico de não confundir ciência e militância.</p>
+
+        <h3>Três mudanças epistemológicas</h3>
+        <p>A cena política, porém, não explica sozinha o surgimento do enfoque ambiental na pesquisa histórica. Houve também mudanças internas ao mundo do conhecimento. Três merecem destaque.</p>
+
+        <p><b>1) A ideia de que a ação humana degrada o mundo natural.</b> Clarence Glacken mostrou que, até o século XVIII, o pensamento ocidental perguntava sobretudo se a natureza tinha propósito e como ela influenciava a vida humana. A pergunta inversa — se a ação humana havia modificado a Terra — é essencialmente moderna. Ela ganha corpo com a expansão colonial europeia, que incorporou vastos territórios a uma economia-mundo, e com a institucionalização da ciência. Em 1864, George Perkins Marsh publicou <i>Man and Nature</i>, denunciando as transformações provocadas pelo ser humano na flora, na fauna, nas florestas e nas águas. No Brasil, José Bonifácio já escrevera, em 1815, que os países que perderam suas matas ficaram quase estéreis e despovoados; em 1860, o cearense Tomás Pompeu de Sousa Brasil retomava o argumento para discutir as secas do Nordeste.</p>
+
+        <div class="mito">
+          <span class="rot">2) A revolução dos marcos cronológicos</span>
+          <p>No século XVIII, a cronologia bíblica começou a ruir: Buffon já imaginava a Terra dezenas de milhares de anos anterior ao ser humano e, nas primeiras décadas do XIX, os geólogos falavam em milhões de anos. Hoje se trabalha com 4,5 bilhões de anos de história geológica, 3,5 bilhões de história biológica e cerca de 13,7 bilhões de anos de história cósmica. O <i>Homo sapiens</i> tem algo em torno de 200 mil anos; o fenômeno humano, mais de dois milhões. O ensino de História, ironicamente, insiste em permanecer no horizonte de seis mil anos do chamado <b>“tempo bíblico”</b>, justificado pela tradição de centralidade dos documentos escritos. Não se trata de trabalhar sempre na longuíssima duração, mas de manter as grandes escalas como pano de fundo.</p>
+        </div>
+
+        <p><b>3) A natureza como história.</b> A mudança mais instigante é a percepção de que a natureza não é uma realidade pronta e acabada, e sim algo em permanente construção e reconstrução. Pádua propõe a imagem de uma peça de teatro: o cenário parecia um contexto passivo para o dinamismo dos atores, até começar a se mover de maneira intensa e surpreendente. A diferença é que o cenário sempre esteve em movimento — o que mudou foi a percepção dos atores. A difusão da tese darwiniana no século XIX foi passo decisivo nesse caminho, ao apresentar uma leitura radicalmente histórica e aberta da formação dos seres vivos.</p>
+
+        <p>Essa terceira mudança tem uma consequência teórica importante: ela enfraquece o <b>determinismo geográfico ou ecológico</b>. Desde Hipócrates, a tese de que o clima determina os modos de vida apoiava-se na presunção de que as condições naturais são fixas. A meteorologia contemporânea mostra que o clima de cada região varia no curto e no longo prazo — e o mesmo vale para a vegetação. Sistemas naturais que se auto-organizam por interação constante, com espaço para o acaso e a contingência, não sustentam explicações deterministas.</p>
+
+        <h3>Contra o enfoque “flutuante” e contra o dualismo</h3>
+        <p>A história ambiental nasce também de uma ausência: a da dimensão biofísica em boa parte da historiografia. Pádua chama de <b>enfoque flutuante</b> aquele em que a humanidade parece flutuar acima do planeta, como se os seres humanos não fossem mamíferos que respiram, comem e dependem dos fluxos de matéria e energia da atmosfera, da hidrosfera e da biosfera. Reconhecer isso, porém, seria vulgar se não se reconhecesse igualmente que o ser humano está inescapavelmente imerso na cultura e na linguagem.</p>
+
+        <p>Daí a recusa do dualismo. A apropriação dos recursos naturais e a valoração das paisagens têm historicidade: o ouro não possui valor universal — era irrelevante para os grupos indígenas que cruzavam o território da atual Serra do Espinhaço antes da chegada dos europeus, e central para estes; as praias, desprezadas pelas elites urbanas no Brasil monárquico, não são universalmente espaços de beleza e saúde. Mas seria igualmente falacioso esquecer que o ouro e as praias não são criações humanas: sem sua existência material, não existiriam suas dimensões perceptiva e cultural.</p>
+
+        <blockquote class="citacao">
+          A história ambiental deve ser vista não como uma redução, e sim como uma ampliação da análise histórica.
+          <span class="autor">Donald Worster, 1991 — paráfrase da formulação citada por Pádua</span>
+        </blockquote>
+
+        <h3>Os três níveis de Worster</h3>
+        <p>Para realizar esse programa, as propostas mais fecundas definem a história ambiental como o esforço de articular, de forma aberta, dinâmica e interativa, três dimensões que se mesclam na experiência concreta das sociedades. Arthur McEvoy as sintetizou como ecologia, relações econômicas e cognição humana; Donald Worster as desenvolveu em um artigo clássico.</p>
+
+        <div class="tabela-wrap">
+          <table class="tabela-lentes">
+            <caption>As três dimensões da análise histórico-ambiental</caption>
+            <thead>
+              <tr><th>Nível</th><th>O que ele investiga</th><th>Exigência metodológica</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Natureza propriamente dita</td>
+                <td>A natureza orgânica e inorgânica, incluindo o organismo humano em relação com os ecossistemas; a reconstituição dos ambientes do passado.</td>
+                <td>Diálogo interdisciplinar com as ciências físicas e naturais, feito de modo crítico e contextual.</td>
+              </tr>
+              <tr>
+                <td>Constituição socioeconômica</td>
+                <td>Modos de produção, cultura material, meios tecnológicos e a “segunda natureza” produzida pela ação humana, em sua inter-relação com espaços geográficos.</td>
+                <td>Perspectiva histórica e antropológica ampla, sem separar economia e ecologia.</td>
+              </tr>
+              <tr>
+                <td>Dimensão cognitiva e cultural</td>
+                <td>Cosmologias, ideologias e valores; as visões de natureza que orientam o comportamento social e a própria organização econômica.</td>
+                <td>Atenção à historicidade das percepções, evitando tratar o mundo biofísico como dado imediato.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Os três níveis precisam ser percebidos em conjunto, em suas interações mútuas e em múltiplas linhas de causalidade. Há sempre a tendência de focalizar um nível em detrimento dos outros — e é justamente isso que a boa pesquisa procura evitar. Note-se ainda que a pesquisa em história ambiental raramente se faz na abstração: ela costuma partir de recortes concretos, como uma região florestal, uma bacia hidrográfica, uma cidade ou uma zona agrícola.</p>
+
+        <h3>Dois cuidados finais: anacronismo e catastrofismo</h3>
+        <p>O primeiro cuidado é evitar o <b>anacronismo</b>. Não se pode cobrar dos indivíduos do passado categorias tão modernas quanto ecologia, sustentabilidade ou impacto ambiental. As relações ambientais já existiam, percebidas ou não segundo os padrões culturais de cada período. Não se trata de projetar categorias do presente no passado, mas de usá-las com o devido cuidado para pensar sociedades pretéritas — ou, na formulação de Alfred Siemens, de <b>“extrair ecologia”</b> de documentos que não tinham essa intenção. É o exercício de “qualificação retrospectiva”, dilema geral de toda análise histórica.</p>
+
+        <p>O segundo cuidado é abandonar a <b>visão catastrófica</b> do “homem devastador” que a voz das ruas costuma exigir. Simon Schama já criticara o fato de a história ambiental prender-se excessivamente à análise da destruição, quando as relações entre sociedade e natureza também podem ser construtivas e criadoras, sobretudo nos vínculos culturais. As relações destrutivas e/ou construtivas devem aparecer no próprio andamento da análise, sem leituras preconcebidas. Em certas situações, os fatores biofísicos são decisivos; em outras, a tecnologia ou as visões de mundo. Em todas, o biofísico, o social e o cultural estão presentes. O desafio é superar as divisões rígidas entre natureza e sociedade em favor de uma leitura dinâmica e integrativa do mundo que se constrói no rio do tempo.</p>
+      </section>
+
+      <h2 class="questoes-titulo">&#9997;&#65039; Questões dissertativas</h2>
+
+      <div class="questao" data-questao="1">
+        <div class="enunciado"><span class="num-q">1</span> Explique de que modo o debate público dos anos 1970 participou da formação da história ambiental e apresente o argumento com que Febvre e Burke respondem à acusação de que isso politizaria a pesquisa.</div>
+        <textarea id="resp-1" class="campo-resposta dissertativa" data-min="70" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 70)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          O campo se institucionaliza no início dos anos 1970, em plena ascensão do ambientalismo: o curso de Roderick Nash, em 1972, foi apresentado pelo próprio autor como resposta aos apelos por responsabilidade ambiental daquele momento — o mesmo ano da Conferência de Estocolmo. A objeção é que essa origem confundiria história ambiental com ambientalismo. A resposta, formulada por Febvre e retomada por Burke, é que o historiador nunca está isolado do seu tempo e sempre mira o passado com as perguntas do presente: a história monetária foi estimulada pela inflação dos anos 1920 e a história demográfica pelo baby boom. A pergunta nasce do presente; o que precisa ser preservado é o rigor metodológico, não a ilusão de neutralidade.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="2">
+        <div class="enunciado"><span class="num-q">2</span> Em que consiste a chamada revolução dos marcos cronológicos e por que o horizonte de seis mil anos do “tempo bíblico” se tornou insuficiente para o ensino e a pesquisa em História?</div>
+        <textarea id="resp-2" class="campo-resposta dissertativa" data-min="70" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 70)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          A revolução consiste na ampliação radical das escalas temporais: da cronologia bíblica abalada no século XVIII passou-se, com Buffon e depois com a geologia do século XIX, aos milhões de anos, e hoje se trabalha com 4,5 bilhões de anos de história geológica, 3,5 bilhões de história biológica e cerca de 13,7 bilhões de história cósmica; o Homo sapiens teria por volta de 200 mil anos e o fenômeno humano mais de dois milhões. O horizonte de seis mil anos corresponde apenas ao período das sociedades com escrita e se sustentava na centralidade dos documentos escritos. Ele é insuficiente porque exclui transformações decisivas — como a adoção da agricultura e a sedentarização, há cerca de onze mil anos — e impede situar a sociedade estudada dentro da história do planeta. Não se trata de trabalhar sempre na longuíssima duração, mas de mantê-la como pano de fundo.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="3">
+        <div class="enunciado"><span class="num-q">3</span> Interprete a imagem do cenário teatral que se põe em movimento e explique por que essa concepção de natureza enfraquece as teorias deterministas.</div>
+        <textarea id="resp-3" class="campo-resposta dissertativa" data-min="70" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 70)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Na imagem, o cenário representa a natureza e os atores representam as sociedades humanas: a historiografia tradicional tratava o cenário como pano de fundo passivo diante do dinamismo dos atores. Quando o cenário passa a se mover, a peça se torna a interação entre os dois movimentos — e o texto observa que o cenário sempre esteve em movimento; o que mudou foi a percepção dos atores. O determinismo, de Hipócrates em diante, dependia exatamente da premissa oposta: condições naturais fixas e estáveis capazes de determinar modos de vida. Como a meteorologia e a ecologia contemporâneas mostram que clima e vegetação variam no curto e no longo prazo, e que os sistemas naturais se auto-organizam por interação, com espaço para o acaso e a contingência, a base da explicação determinista se dissolve.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="4">
+        <div class="enunciado"><span class="num-q">4</span> Explique o que é o enfoque “flutuante” e mostre por que criticá-lo não significa reduzir a história humana a fatores biológicos. Utilize os exemplos do ouro e das praias.</div>
+        <textarea id="resp-4" class="campo-resposta dissertativa" data-min="70" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 70)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          O enfoque flutuante é aquele em que a humanidade aparece pairando acima do planeta, como se os seres humanos não fossem animais que respiram, se alimentam e dependem dos fluxos de matéria e energia da atmosfera, da hidrosfera e da biosfera. Criticá-lo não autoriza o reducionismo inverso, porque o ser humano está tão imerso na cultura e na linguagem quanto na ecosfera. Os exemplos mostram os dois lados: o ouro não tem valor universal — era irrelevante para os grupos indígenas que cruzavam o território da atual Serra do Espinhaço e central para os europeus —, e as praias eram desprezadas pelas elites urbanas do Brasil monárquico; logo, a valoração é histórica e cultural. Ao mesmo tempo, ouro e praias não são criações humanas: sem sua existência material não haveria o que perceber ou valorar. O ponto é a recusa do dualismo, não a troca de um reducionismo por outro.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="5">
+        <div class="enunciado"><span class="num-q">5</span> Apresente os três níveis de análise propostos por Worster e aplique-os a um recorte concreto de sua escolha — uma bacia hidrográfica, uma zona agrícola, uma cidade ou uma região de Goiás —, mostrando como eles se articulam.</div>
+        <textarea id="resp-5" class="campo-resposta dissertativa" data-min="90" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 90)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Os três níveis são: a natureza propriamente dita, orgânica e inorgânica, incluindo o organismo humano e a reconstituição dos ambientes do passado, o que exige diálogo interdisciplinar com as ciências naturais; a constituição socioeconômica, isto é, modos de produção, cultura material, tecnologia e a “segunda natureza” produzida pela ação humana em sua relação com espaços geográficos; e a dimensão cognitiva e cultural, feita de cosmologias, ideologias e valores, que orienta tanto o comportamento social quanto a organização econômica. A aplicação deve articular os três e não apenas listá-los: numa zona agrícola do Cerrado goiano, por exemplo, o nível biofísico compreende solos, regime de chuvas e vegetação nativa; o socioeconômico, a mecanização, os insumos e a produção voltada à exportação; e o cultural, a leitura do Cerrado ora como espaço improdutivo a ser corrigido, ora como patrimônio a ser conservado. Aceitar qualquer recorte concreto, desde que as três dimensões apareçam interagindo.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="6">
+        <div class="enunciado"><span class="num-q">6</span> O texto recomenda evitar tanto o anacronismo quanto a visão catastrófica do “homem devastador”. Explique cada um desses riscos e argumente por que a história ambiental não deve se resumir a um inventário da destruição.</div>
+        <textarea id="resp-6" class="campo-resposta dissertativa" data-min="90" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 90)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          O anacronismo consiste em cobrar de sujeitos do passado categorias recentes como ecologia, sustentabilidade ou impacto ambiental. As relações ambientais existiam, mas eram percebidas segundo os padrões culturais de cada época; por isso a tarefa é usar tais categorias com cuidado para pensar sociedades pretéritas — “extrair ecologia”, na expressão de Siemens, de documentos que não tinham essa intenção, num exercício de qualificação retrospectiva. Já a visão catastrófica transforma a análise em denúncia antecipada: Schama observou que a história ambiental se prendia demais à destruição, ignorando que as relações entre sociedade e natureza também são construtivas e criadoras, sobretudo nos vínculos culturais. Reduzir o campo a um inventário de danos reinstala o dualismo que ele pretende superar e substitui a pesquisa por uma conclusão já sabida. O bom trabalho deixa que o caráter destrutivo ou construtivo apareça no andamento da análise, reconhecendo que em certos casos pesam mais os fatores biofísicos e em outros a tecnologia ou as visões de mundo — mas que os três planos estão sempre presentes.
+        </div>
+      </div>
+
+      <div class="referencia-box">
+        <span class="rot">Referência (ABNT NBR 6023)</span>
+        <p>PÁDUA, José Augusto. As bases teóricas da história ambiental. Estudos Avançados, São Paulo, v. 24, n. 68, p. 81-101, 2010.</p>
+        <p>GLACKEN, Clarence. Traces on the Rhodian Shore. Berkeley: Berkeley University Press, 1967. · MARSH, George Perkins. Man and Nature. Cambridge: Harvard University Press, 1965. · SCHAMA, Simon. Landscape and Memory. Londres: Harper-Collins, 1995. · WORSTER, Donald. Para fazer história ambiental. Estudos Históricos, v. 4, n. 8, p. 198-215, 1991.</p>
+      </div>
+
+      <div class="alerta-incompleto" id="alerta-incompleto">
+        ⚠️ Ainda há questões incompletas (resposta mínima de 70 caracteres). Revise antes de finalizar.
+      </div>
+
+      <div class="acoes-finais">
+        <button class="btn btn-primario" onclick="finalizarAtividade()">Finalizar e ver comentários</button>
+        <button class="btn btn-secundario" onclick="refazerAtividade()">Refazer</button>
+        <button class="btn btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
+      </div>
+    </main>
+  </div>
+
+  <footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+</div>
+
+<!-- ===== POPUP ===== -->
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <div class="emoji">🌿</div>
+    <h3>Atividade concluída!</h3>
+    <p>Suas seis respostas foram registradas. Os comentários do professor já estão disponíveis abaixo de cada questão para você comparar com o que escreveu.</p>
+    <button class="btn btn-primario" onclick="fecharPopup()">Continuar</button>
+  </div>
+</div>
+
+<script>
+/* ===== GATE DE NOME ===== */
+function iniciarAtividade(){
+  const nome = document.getElementById('nome-aluno').value.trim();
+  const turma = document.getElementById('turma-aluno').value.trim();
+  const aviso = document.getElementById('capa-aviso');
+  if(!nome){
+    aviso.style.display = 'block';
+    return;
+  }
+  aviso.style.display = 'none';
+  const hoje = new Date();
+  const dataFormatada = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+  document.getElementById('header-nome').textContent = nome;
+  document.getElementById('ficha-nome').textContent = nome;
+  document.getElementById('ficha-data').textContent = dataFormatada;
+  document.getElementById('ficha-turma').textContent = turma || '—';
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+/* ===== CONTADOR DE CARACTERES E PROGRESSO ===== */
+const textareas = document.querySelectorAll('textarea.dissertativa');
+
+function atualizarProgresso(){
+  let respondidas = 0;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length >= min) respondidas++;
+  });
+  document.getElementById('contador-geral').textContent = 'Respondidas: ' + respondidas + '/' + textareas.length;
+  document.getElementById('barra-fill').style.width = (respondidas / textareas.length * 100) + '%';
+}
+
+textareas.forEach(function(t){
+  const contadorEl = t.parentElement.querySelector('.contador-chars');
+  const min = parseInt(t.dataset.min, 10);
+  t.addEventListener('input', function(){
+    contadorEl.textContent = t.value.length + ' caracteres (mínimo ' + min + ')';
+    atualizarProgresso();
+  });
+});
+
+/* ===== FINALIZAR ===== */
+function finalizarAtividade(){
+  let completo = true;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length < min) completo = false;
+  });
+
+  const alerta = document.getElementById('alerta-incompleto');
+  if(!completo){
+    alerta.classList.add('show');
+    alerta.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  alerta.classList.remove('show');
+
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.add('show');
+  });
+
+  document.getElementById('popup-overlay').classList.add('show');
+}
+
+function fecharPopup(){
+  document.getElementById('popup-overlay').classList.remove('show');
+}
+
+function refazerAtividade(){
+  textareas.forEach(function(t){
+    t.value = '';
+    t.parentElement.querySelector('.contador-chars').textContent = '0 caracteres (mínimo ' + t.dataset.min + ')';
+  });
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.remove('show');
+  });
+  document.getElementById('alerta-incompleto').classList.remove('show');
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+/* ===== EXPORTAR PDF ===== */
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+function esc(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML.replace(/\n/g, '<br>');
+}
+
+async function exportarPDF(){
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(14,42,32,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:300px;box-shadow:0 10px 30px rgba(18,53,40,.3);font-family:\'Source Serif 4\',serif;">' +
+      '<div style="font-size:2rem;margin-bottom:8px;">📄</div>' +
+      '<h4 style="margin:0 0 4px;color:#123528;font-family:\'Playfair Display\',serif;">Gerando PDF…</h4>' +
+      '<p style="margin:0 0 14px;color:#586159;font-size:.86rem;">Aguarde alguns instantes.</p>' +
+      '<div style="background:#d3e3d8;border-radius:6px;overflow:hidden;height:8px;">' +
+        '<div id="pdf-prog" style="height:100%;width:0%;background:#1f5741;transition:width .2s ease;"></div>' +
+      '</div>' +
+      '<div id="pdf-prog-txt" style="margin-top:8px;font-family:\'JetBrains Mono\',monospace;font-size:.74rem;color:#586159;">0%</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  await sleep(80);
+  function setP(pct, msg){
+    const pp = document.getElementById('pdf-prog'), pt = document.getElementById('pdf-prog-txt');
+    if(pp) pp.style.width = pct + '%';
+    if(pt) pt.textContent = msg || (pct + '%');
+  }
+
+  try{
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait', unit:'px', format:'a4', hotfixes:['px_scaling']});
+    const PW = pdf.internal.pageSize.getWidth(), PH = pdf.internal.pageSize.getHeight();
+    const ML = 28, CW = PW - ML*2;
+    let y = ML;
+
+    async function addImg(el){
+      const canvas = await html2canvas(el, {scale:2, useCORS:true, logging:false, backgroundColor:'#ffffff', scrollX:0, scrollY:0, windowWidth:860});
+      const imgW = CW, imgH = (canvas.height / canvas.width) * imgW;
+      const dataUrl = canvas.toDataURL('image/jpeg', .92), avail = PH - ML*2;
+      if(imgH <= avail){
+        if(y + imgH > PH - ML){ pdf.addPage(); y = ML; }
+        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
+        y += imgH + 8;
+      } else {
+        const pxPerPdfPt = canvas.width / imgW;
+        let srcY = 0;
+        while(srcY < canvas.height){
+          const availPt = PH - y - ML, sliceH_pt = Math.min(availPt, avail);
+          const sliceH_px = Math.round(sliceH_pt * pxPerPdfPt), actualH_px = Math.min(sliceH_px, canvas.height - srcY);
+          const tmp = document.createElement('canvas');
+          tmp.width = canvas.width; tmp.height = actualH_px;
+          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
+          const sliceUrl = tmp.toDataURL('image/jpeg', .92), slicePt = (actualH_px / canvas.width) * imgW;
+          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
+          srcY += actualH_px; y += slicePt;
+          if(srcY < canvas.height){ pdf.addPage(); y = ML; }
+        }
+        y += 8;
+      }
+    }
+
+    async function band(tag, txt){
+      const b = document.createElement('div');
+      b.style.cssText = 'width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      b.innerHTML = '<div style="background:linear-gradient(90deg,#1f5741,#123528);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px">' +
+        '<span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">' + tag + '</span>' +
+        '<span style="color:#fff;font-size:15px;font-weight:700">' + txt + '</span></div>';
+      document.body.appendChild(b);
+      await sleep(20);
+      await addImg(b);
+      document.body.removeChild(b);
+    }
+
+    const nome = document.getElementById('header-nome').textContent || 'Aluno(a)';
+    const turma = document.getElementById('ficha-turma').textContent || '—';
+    const now = new Date();
+    const dtStr = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+
+    setP(5, 'Preparando capa…'); await sleep(40);
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
+    coverEl.innerHTML =
+      '<div style="background:linear-gradient(135deg,#0e2a20 0%,#1f5741 60%,#4a9272 100%);padding:32px 48px 28px;color:white">' +
+        '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">Ciências Humanas e Sociais Aplicadas · 3ª Série do Ensino Médio · EM13CHS306 · EM13CHS101</div>' +
+        '<div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">A natureza tem história?</div>' +
+        '<div style="font-size:13px;opacity:.8;font-style:italic">Texto de apoio · As bases teóricas da história ambiental · 6 questões dissertativas</div>' +
+      '</div>' +
+      '<div style="background:#e8f0ea;padding:22px 48px 26px;border-bottom:3px solid #e8d3ab">' +
+        '<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#1f5741;font-weight:700;margin-bottom:5px">Aluno(a)</div>' +
+        '<div style="font-size:20px;font-weight:700;color:#222b26;border-bottom:2.5px solid #1f5741;padding-bottom:6px;display:inline-block;margin-bottom:16px">' + esc(nome) + '</div>' +
+        '<div style="display:flex;gap:12px;flex-wrap:wrap">' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#1f5741">' + esc(turma) + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Turma</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#b8791f">6</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Dissertativas</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">' +
+            '<div style="font-size:13px;font-weight:700;color:#333">' + dtStr + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>' +
+      '</div>';
+    document.body.appendChild(coverEl); await sleep(60); await addImg(coverEl); document.body.removeChild(coverEl);
+
+    // TEXTO DE APOIO
+    setP(15, 'Preparando texto de apoio…'); await sleep(20);
+    await band('TEXTO DE APOIO', 'As bases teóricas da história ambiental');
+    const textoEl = document.createElement('div');
+    textoEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d5e3d8;border-radius:10px;position:absolute;left:-9999px;top:0';
+    textoEl.innerHTML =
+      '<div style="padding:18px 24px;background:#fbfdfb">' +
+        '<p style="font-size:12.5px;color:#222b26;line-height:1.8;margin:0 0 12px"><b>A voz das ruas.</b> A história ambiental se institucionaliza no início dos anos 1970: o curso de maior repercussão foi ministrado por Roderick Nash em 1972, ano da Conferência de Estocolmo, e o próprio autor assumiu estar respondendo aos apelos por responsabilidade ambiental. A objeção de que isso politizaria a pesquisa esbarra na tese de Febvre — o historiador não está isolado do seu tempo e mira o passado com as perguntas do presente —, lembrada por Burke com os casos da história monetária e da história demográfica.</p>' +
+        '<p style="font-size:12.5px;color:#222b26;line-height:1.8;margin:0 0 12px"><b>Três mudanças epistemológicas.</b> (1) A ideia de que a ação humana degrada o mundo natural: Glacken mostra que a pergunta é moderna; Marsh a formula em 1864, e no Brasil José Bonifácio (1815) e Tomás Pompeu (1860) já ligavam desmatamento, esterilidade e secas. (2) A revolução dos marcos cronológicos: de seis mil anos passou-se a 4,5 bilhões de história geológica, 3,5 bilhões de história biológica e cerca de 13,7 bilhões de história cósmica; o <i>Homo sapiens</i> tem por volta de 200 mil anos. (3) A natureza como história: o cenário do teatro também se move — o que mudou foi a percepção dos atores. Essa terceira mudança enfraquece o determinismo, que dependia de condições naturais fixas.</p>' +
+        '<p style="font-size:12.5px;color:#222b26;line-height:1.8;margin:0 0 12px"><b>Contra o enfoque flutuante e contra o dualismo.</b> O enfoque flutuante faz a humanidade pairar acima do planeta, como se não fosse feita de seres que respiram e se alimentam. Criticá-lo não autoriza o reducionismo inverso: o ser humano está imerso na cultura e na linguagem. O ouro não tinha valor para os grupos indígenas do território da atual Serra do Espinhaço; as praias eram desprezadas pelas elites do Brasil monárquico. Mas ouro e praias não são criações humanas — sem sua materialidade não haveria dimensão perceptiva e cultural.</p>' +
+        '<p style="font-size:12.5px;color:#222b26;line-height:1.8;margin:0 0 12px"><b>Os três níveis de Worster.</b> A natureza propriamente dita (ecossistemas e reconstituição dos ambientes do passado, com diálogo interdisciplinar); a constituição socioeconômica (modos de produção, tecnologia, cultura material, a “segunda natureza”); e a dimensão cognitiva e cultural (cosmologias, ideologias e valores). Devem ser lidos em conjunto, em múltiplas linhas de causalidade, geralmente a partir de recortes concretos: uma bacia, uma cidade, uma zona agrícola.</p>' +
+        '<p style="font-size:12.5px;color:#222b26;line-height:1.8;margin:0 0 12px"><b>Dois cuidados.</b> Evitar o anacronismo — não cobrar do passado categorias como ecologia e sustentabilidade, mas “extrair ecologia” (Siemens) de documentos que não tinham essa intenção — e abandonar a visão catastrófica do “homem devastador”, criticada por Schama, já que as relações entre sociedade e natureza também podem ser construtivas.</p>' +
+        '<div style="font-size:10px;color:#586159;font-family:monospace;border-top:1px solid #eee;padding-top:10px">PÁDUA, José Augusto. As bases teóricas da história ambiental. Estudos Avançados, São Paulo, v. 24, n. 68, p. 81-101, 2010. &middot; GLACKEN (1967) &middot; MARSH (1965) &middot; SCHAMA (1995) &middot; WORSTER (1991).</div>' +
+      '</div>';
+    document.body.appendChild(textoEl); await sleep(20); await addImg(textoEl); document.body.removeChild(textoEl);
+
+    // QUESTÕES DISSERTATIVAS
+    await band('QUESTÕES', 'Questões Dissertativas — Respostas e Orientações');
+
+    const QUESTOES = [
+      { num:'1', enunc:'Explique de que modo o debate público dos anos 1970 participou da formação da história ambiental e apresente o argumento com que Febvre e Burke respondem à acusação de que isso politizaria a pesquisa.', id:'resp-1',
+        coment:'O campo se institucionaliza no início dos anos 1970, em plena ascensão do ambientalismo: o curso de Roderick Nash, em 1972, foi apresentado pelo próprio autor como resposta aos apelos por responsabilidade ambiental daquele momento — o mesmo ano da Conferência de Estocolmo. A objeção é que essa origem confundiria história ambiental com ambientalismo. A resposta, formulada por Febvre e retomada por Burke, é que o historiador nunca está isolado do seu tempo e sempre mira o passado com as perguntas do presente: a história monetária foi estimulada pela inflação dos anos 1920 e a história demográfica pelo baby boom. A pergunta nasce do presente; o que precisa ser preservado é o rigor metodológico, não a ilusão de neutralidade.' },
+      { num:'2', enunc:'Em que consiste a chamada revolução dos marcos cronológicos e por que o horizonte de seis mil anos do “tempo bíblico” se tornou insuficiente para o ensino e a pesquisa em História?', id:'resp-2',
+        coment:'A revolução consiste na ampliação radical das escalas temporais: da cronologia bíblica abalada no século XVIII passou-se, com Buffon e depois com a geologia do século XIX, aos milhões de anos, e hoje se trabalha com 4,5 bilhões de anos de história geológica, 3,5 bilhões de história biológica e cerca de 13,7 bilhões de história cósmica; o Homo sapiens teria por volta de 200 mil anos e o fenômeno humano mais de dois milhões. O horizonte de seis mil anos corresponde apenas ao período das sociedades com escrita e se sustentava na centralidade dos documentos escritos. Ele é insuficiente porque exclui transformações decisivas — como a adoção da agricultura e a sedentarização, há cerca de onze mil anos — e impede situar a sociedade estudada dentro da história do planeta. Não se trata de trabalhar sempre na longuíssima duração, mas de mantê-la como pano de fundo.' },
+      { num:'3', enunc:'Interprete a imagem do cenário teatral que se põe em movimento e explique por que essa concepção de natureza enfraquece as teorias deterministas.', id:'resp-3',
+        coment:'Na imagem, o cenário representa a natureza e os atores representam as sociedades humanas: a historiografia tradicional tratava o cenário como pano de fundo passivo diante do dinamismo dos atores. Quando o cenário passa a se mover, a peça se torna a interação entre os dois movimentos — e o texto observa que o cenário sempre esteve em movimento; o que mudou foi a percepção dos atores. O determinismo, de Hipócrates em diante, dependia exatamente da premissa oposta: condições naturais fixas e estáveis capazes de determinar modos de vida. Como a meteorologia e a ecologia contemporâneas mostram que clima e vegetação variam no curto e no longo prazo, e que os sistemas naturais se auto-organizam por interação, com espaço para o acaso e a contingência, a base da explicação determinista se dissolve.' },
+      { num:'4', enunc:'Explique o que é o enfoque “flutuante” e mostre por que criticá-lo não significa reduzir a história humana a fatores biológicos. Utilize os exemplos do ouro e das praias.', id:'resp-4',
+        coment:'O enfoque flutuante é aquele em que a humanidade aparece pairando acima do planeta, como se os seres humanos não fossem animais que respiram, se alimentam e dependem dos fluxos de matéria e energia da atmosfera, da hidrosfera e da biosfera. Criticá-lo não autoriza o reducionismo inverso, porque o ser humano está tão imerso na cultura e na linguagem quanto na ecosfera. Os exemplos mostram os dois lados: o ouro não tem valor universal — era irrelevante para os grupos indígenas que cruzavam o território da atual Serra do Espinhaço e central para os europeus —, e as praias eram desprezadas pelas elites urbanas do Brasil monárquico; logo, a valoração é histórica e cultural. Ao mesmo tempo, ouro e praias não são criações humanas: sem sua existência material não haveria o que perceber ou valorar. O ponto é a recusa do dualismo, não a troca de um reducionismo por outro.' },
+      { num:'5', enunc:'Apresente os três níveis de análise propostos por Worster e aplique-os a um recorte concreto de sua escolha — uma bacia hidrográfica, uma zona agrícola, uma cidade ou uma região de Goiás —, mostrando como eles se articulam.', id:'resp-5',
+        coment:'Os três níveis são: a natureza propriamente dita, orgânica e inorgânica, incluindo o organismo humano e a reconstituição dos ambientes do passado, o que exige diálogo interdisciplinar com as ciências naturais; a constituição socioeconômica, isto é, modos de produção, cultura material, tecnologia e a “segunda natureza” produzida pela ação humana em sua relação com espaços geográficos; e a dimensão cognitiva e cultural, feita de cosmologias, ideologias e valores, que orienta tanto o comportamento social quanto a organização econômica. A aplicação deve articular os três e não apenas listá-los: numa zona agrícola do Cerrado goiano, por exemplo, o nível biofísico compreende solos, regime de chuvas e vegetação nativa; o socioeconômico, a mecanização, os insumos e a produção voltada à exportação; e o cultural, a leitura do Cerrado ora como espaço improdutivo a ser corrigido, ora como patrimônio a ser conservado. Aceitar qualquer recorte concreto, desde que as três dimensões apareçam interagindo.' },
+      { num:'6', enunc:'O texto recomenda evitar tanto o anacronismo quanto a visão catastrófica do “homem devastador”. Explique cada um desses riscos e argumente por que a história ambiental não deve se resumir a um inventário da destruição.', id:'resp-6',
+        coment:'O anacronismo consiste em cobrar de sujeitos do passado categorias recentes como ecologia, sustentabilidade ou impacto ambiental. As relações ambientais existiam, mas eram percebidas segundo os padrões culturais de cada época; por isso a tarefa é usar tais categorias com cuidado para pensar sociedades pretéritas — “extrair ecologia”, na expressão de Siemens, de documentos que não tinham essa intenção, num exercício de qualificação retrospectiva. Já a visão catastrófica transforma a análise em denúncia antecipada: Schama observou que a história ambiental se prendia demais à destruição, ignorando que as relações entre sociedade e natureza também são construtivas e criadoras, sobretudo nos vínculos culturais. Reduzir o campo a um inventário de danos reinstala o dualismo que ele pretende superar e substitui a pesquisa por uma conclusão já sabida. O bom trabalho deixa que o caráter destrutivo ou construtivo apareça no andamento da análise, reconhecendo que em certos casos pesam mais os fatores biofísicos e em outros a tecnologia ou as visões de mundo — mas que os três planos estão sempre presentes.' }
+    ];
+
+    for(let i=0; i<QUESTOES.length; i++){
+      const q = QUESTOES[i];
+      setP(20 + Math.round(i/QUESTOES.length*65), 'Questão ' + q.num + '/6…'); await sleep(12);
+
+      const valor = document.getElementById(q.id) ? document.getElementById(q.id).value : '';
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d5e3d8;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML =
+        '<div style="background:linear-gradient(90deg,#1f5741,#123528);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + q.num + '</span>' +
+          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>' +
+        '<div style="padding:18px 24px 16px;background:#fbfdfb">' +
+          '<div style="font-size:13px;font-weight:700;color:#222b26;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">' + esc(q.enunc) + '</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+            '<div style="width:4px;height:15px;background:#1f5741;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#1f5741;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>' +
+          '<div style="background:#eef5f0;border:1.5px solid #a9cbb8;border-radius:8px;padding:13px 16px;min-height:50px;margin-bottom:12px">' +
+            '<div style="font-size:12.5px;color:#222b26;line-height:1.8;white-space:pre-wrap">' + (esc(valor) || '<span style=\"color:#aaa\">(sem resposta)</span>') + '</div></div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">' +
+            '<div style="width:4px;height:15px;background:#b8791f;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#8f5c18;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
+          '<div style="background:#faf3e6;border:1.5px solid #e8d3ab;border-radius:8px;padding:13px 16px">' +
+            '<div style="font-size:12px;color:#4a3510;line-height:1.8">' + esc(q.coment) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(12); await addImg(qEl); document.body.removeChild(qEl);
+    }
+
+    // RODAPÉ EM TODAS AS PÁGINAS
+    setP(92, 'Finalizando…'); await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for(let p=1; p<=totalPages; p++){
+      pdf.setPage(p);
+      const fEl = document.createElement('div');
+      fEl.style.cssText = 'width:' + Math.round(CW) + 'px;height:22px;background:#e8f0ea;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      fEl.innerHTML = '<span>A natureza tem história? · ' + esc(nome) + '</span><span>Página ' + p + ' de ' + totalPages + '</span>';
+      document.body.appendChild(fEl);
+      const fc = await html2canvas(fEl, {scale:2, logging:false, backgroundColor:'#e8f0ea'});
+      document.body.removeChild(fEl);
+      const fUrl = fc.toDataURL('image/jpeg', .9), fH = (fc.height / fc.width) * CW;
+      pdf.setFillColor(232,240,234); pdf.rect(ML, PH-fH, CW, fH, 'F');
+      pdf.addImage(fUrl, 'JPEG', ML, PH-fH, CW, fH);
+    }
+
+    setP(100, 'Salvando…'); await sleep(200);
+    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    pdf.save('Historia_Ambiental_' + safeName + '.pdf');
+
+  } catch(err){
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message);
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if(ov) document.body.removeChild(ov);
+  }
+}
+
+/* ===== PROTEÇÃO ANTI-COLA ===== */
+(function () {
+  const CAMPOS_PROTEGIDOS = document.querySelectorAll('textarea.dissertativa, .campo-resposta');
+  const LIMITE_BLOCO = 25;
+
+  function bloquear(e) {
+    e.preventDefault();
+    mostrarToast('Colar não permitido nesta atividade.');
+  }
+
+  CAMPOS_PROTEGIDOS.forEach(function (campo) {
+    ['paste', 'copy', 'cut', 'drop', 'dragover', 'contextmenu'].forEach(function (evt) {
+      campo.addEventListener(evt, bloquear);
+    });
+
+    campo.addEventListener('beforeinput', function (e) {
+      if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+        e.preventDefault();
+        mostrarToast('Colar não permitido nesta atividade.');
+      }
+    });
+
+    let valorAnterior = campo.value;
+    campo.addEventListener('input', function (e) {
+      const diferenca = campo.value.length - valorAnterior.length;
+      if (diferenca >= LIMITE_BLOCO && e.inputType !== 'insertReplacementText') {
+        campo.value = valorAnterior;
+        mostrarToast('Colar não permitido nesta atividade.');
+      } else {
+        valorAnterior = campo.value;
+      }
+    });
+  });
+
+  function mostrarToast(mensagem) {
+    let toast = document.getElementById('anti-cola-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'anti-cola-toast';
+      toast.style.cssText =
+        'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);' +
+        'background:#123528;color:#fff;padding:10px 20px;border-radius:8px;' +
+        'font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = mensagem;
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(function () {
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+})();
+</script>
+
+</body>
+</html>
