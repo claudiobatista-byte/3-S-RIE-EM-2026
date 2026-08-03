@@ -187,6 +187,20 @@ footer a{color:var(--azul-claro)}
 .link-btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
 .link-btn.abrir{background:var(--azul);color:#fff}
 .link-btn.video{background:var(--bronze);color:#fff}
+.link-btn.pdf{background:var(--bronze);color:#fff}
+.link-btn.slides{background:var(--azul-claro);color:#fff}
+
+.materiais-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.material-box{background:var(--branco);border:1px solid var(--linha);border-top:4px solid var(--azul-claro);
+  border-radius:var(--raio);padding:18px 20px;box-shadow:var(--sombra);
+  display:flex;flex-direction:column;gap:10px}
+.material-box.artigo{border-top-color:var(--bronze)}
+.material-box .rotulo{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--bronze);display:block}
+.material-box h4{font-size:1.02rem;margin:0}
+.material-box p{font-size:.9rem;color:var(--tinta-suave);margin:0;text-align:left;flex:1}
+.material-box .fonte-mat{font-family:'JetBrains Mono',monospace;font-size:.67rem;line-height:1.6;color:#8b7f74;margin:0}
+.material-box a.link-btn{align-self:flex-start}
 
 /* caixa retratil do texto de apoio */
 .apoio-box{border:1px solid var(--linha);border-radius:10px;background:var(--sepia);margin-bottom:14px}
@@ -236,6 +250,7 @@ footer a{color:var(--azul-claro)}
   .atividade-card{padding:16px 16px}
   .apoio-conteudo{padding:6px 14px 16px}
   .video-box{align-items:flex-start}
+  .materiais-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -275,7 +290,24 @@ footer a{color:var(--azul-claro)}
 
 <section id="atividades">
   <h2 class="sec-titulo">Atividades do tópico</h2>
-  <p class="sec-intro">Assista ao vídeo, leia os textos de apoio e responda às questões dissertativas de cada atividade.</p>
+  <p class="sec-intro">Leia o artigo de referência, acompanhe os slides, assista ao vídeo e responda às questões dissertativas de cada atividade.</p>
+
+  <div class="materiais-grid">
+    <div class="material-box artigo">
+      <span class="rotulo">Artigo completo</span>
+      <h4>&#128196; Texto de referência em PDF</h4>
+      <p>Artigo integral que serve de base ao tópico e à primeira atividade. Abre em uma nova aba.</p>
+      <p class="fonte-mat">P&Aacute;DUA, Jos&eacute; Augusto. As bases te&oacute;ricas da hist&oacute;ria ambiental. Estudos Avan&ccedil;ados, S&atilde;o Paulo, v. 24, n. 68, p. 81-101, 2010.</p>
+      <a class="link-btn pdf" href="https://www.scielo.br/j/ea/a/Q4JBvrMMzw6gBvWhsshnKXN/?format=pdf&amp;lang=pt" target="_blank" rel="noopener noreferrer">Abrir o PDF &#8599;</a>
+    </div>
+    <div class="material-box">
+      <span class="rotulo">Apresenta&ccedil;&atilde;o</span>
+      <h4>&#128200; Slides do texto</h4>
+      <p>Roteiro visual com as ideias principais do texto, para acompanhar a aula ou revisar depois. Abre em uma nova aba.</p>
+      <p class="fonte-mat">Material de aula &middot; Col&eacute;gio Estadual Rodolfo de Oliveira &middot; 2026</p>
+      <a class="link-btn slides" href="https://drive.google.com/file/d/1cvEFP7oU4O0kg36lvaFRs-kGT6PwnjxX/view?usp=sharing" target="_blank" rel="noopener noreferrer">Abrir os slides &#8599;</a>
+    </div>
+  </div>
 
   <div class="video-box">
     <div class="video-info">
