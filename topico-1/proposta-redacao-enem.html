@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Proposta de redação no modelo ENEM sobre a efetivação do direito ao meio ambiente equilibrado como direito social (art. 225 e art. 6º da CF/1988). História, 3ª série EM, CERO.">
+<meta name="theme-color" content="#0f3d3e">
+<meta name="color-scheme" content="light only">
+<title>Proposta de Redação — Meio ambiente é direito social? · CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+
+:root{
+  --petroleo:#0f3d3e;
+  --petroleo-claro:#1b5c5d;
+  --terracota:#b4532a;
+  --terracota-claro:#d97a4d;
+  --areia:#f6f2e9;
+  --areia-escura:#e8e0d0;
+  --grafite:#2b2b2b;
+  --cinza:#5d5d5d;
+  --musgo:#5b6e3a;
+  --borda:#d8d0be;
+  --branco:#fffdf9;
+  --serif-titulo:'Playfair Display',Georgia,'Times New Roman',serif;
+  --serif-corpo:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --raio:10px;
+  --sombra:0 2px 10px rgba(15,61,62,.10);
+  --medida:900px;          /* largura util do conteudo */
+  --gutter:clamp(16px,4vw,28px);
+  --topbar-h:44px;         /* atualizado por JS */
+}
+html{
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;
+  scroll-behavior:smooth;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;background:var(--areia);color:var(--grafite);
+  font-family:var(--serif-corpo);font-size:17px;line-height:1.7;
+  -webkit-user-select:none;user-select:none;
+  -webkit-tap-highlight-color:rgba(180,83,42,.18);
+}
+main,.conteudo,.glossario,.modal-corpo{-webkit-user-select:text;user-select:text;}
+h1,h2,h3,h4{font-family:var(--serif-titulo);line-height:1.25;overflow-wrap:break-word;}
+img,svg,video{max-width:100%;height:auto;}
+
+/* foco visivel e consistente para teclado */
+a:focus-visible,button:focus-visible,summary:focus-visible{
+  outline:3px solid var(--terracota);outline-offset:2px;border-radius:4px;
+}
+.topbar a:focus-visible,.topbar button:focus-visible,.hero a:focus-visible{
+  outline-color:#f0c9a8;
+}
+
+/* ---------- HERO ---------- */
+
+/* ---------- LAYOUT ---------- */
+main{max-width:var(--medida);margin:0 auto;padding:0 var(--gutter) 60px;}
+section{margin-top:44px;}
+h2.secao{
+  font-size:1.6rem;color:var(--petroleo);margin:0 0 6px;
+  border-bottom:2px solid var(--areia-escura);padding-bottom:10px;
+}
+h2.secao .num{
+  display:inline-block;background:var(--terracota);color:#fff;font-family:var(--serif-corpo);
+  font-size:.85rem;font-weight:600;width:30px;height:30px;line-height:30px;text-align:center;
+  border-radius:50%;margin-right:12px;vertical-align:2px;
+}
+h3{font-size:1.15rem;color:var(--petroleo-claro);margin:26px 0 8px;}
+p{margin:0 0 14px;text-align:justify;}
+.lead{font-size:1.06rem;color:var(--cinza);}
+
+/* ---------- OBJETIVOS ---------- */
+.objetivos{
+  background:var(--branco);border-left:6px solid var(--petroleo);border-radius:var(--raio);
+  padding:22px 26px;box-shadow:var(--sombra);margin-top:34px;
+}
+.objetivos .acc{margin:0;}
+.objetivos .acc-head{font-size:1.15rem;}
+.objetivos ul{margin:0;padding-left:20px;}
+.objetivos li{margin-bottom:8px;}
+.hab{
+  display:inline-block;background:var(--areia-escura);color:var(--petroleo);
+  font-size:.75rem;letter-spacing:.08em;padding:3px 10px;border-radius:100px;
+  font-weight:600;margin-bottom:10px;
+}
+
+
+/* ---------- BOTÃO DE RECURSO EXTERNO ---------- */
+.btn-recurso{
+  display:flex;align-items:center;gap:13px;
+  background:var(--branco);border:1px solid var(--borda);border-left:5px solid var(--musgo);
+  border-radius:var(--raio);padding:14px 18px;margin-top:14px;
+  text-decoration:none;color:var(--petroleo);
+  transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease;
+}
+.btn-recurso:hover{
+  transform:translateY(-2px);border-left-color:var(--terracota);
+  box-shadow:var(--sombra);
+}
+.br-ico{
+  flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:9px;background:var(--musgo);color:#fff;
+  font-family:var(--serif-titulo);font-size:.8rem;letter-spacing:.06em;
+}
+.btn-recurso:hover .br-ico{background:var(--terracota);}
+.br-txt{flex:1;display:block;line-height:1.35;}
+.br-txt strong{display:block;font-family:var(--serif-titulo);font-size:1.05rem;}
+.br-txt em{display:block;font-style:normal;font-size:.82rem;color:var(--cinza);margin-top:2px;}
+.br-seta{flex:0 0 auto;font-size:1.2rem;color:var(--terracota);}
+@media (max-width:820px){
+  .btn-recurso{padding:14px;min-height:64px;}
+  .br-ico{width:40px;height:40px;}
+}
+.btn-recurso.atividade{border-left-color:var(--terracota);}
+.btn-recurso.atividade .br-ico{background:var(--terracota);}
+.btn-recurso.atividade:hover .br-ico{background:var(--petroleo);}
+.btn-recurso.atividade .br-seta{color:var(--petroleo-claro);}
+@media print{.btn-recurso{display:none;}}
+
+/* ---------- BOXES ---------- */
+.termo-box{
+  background:var(--branco);border:1px solid var(--borda);border-left:5px solid var(--terracota);
+  border-radius:var(--raio);padding:16px 20px;margin:18px 0;
+}
+.termo-box .rot{
+  display:block;font-family:var(--serif-titulo);color:var(--terracota);
+  font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;
+}
+.termo-box p:last-child{margin-bottom:0;}
+
+.saiba-box{
+  background:#eef3ef;border:1px dashed var(--musgo);border-radius:var(--raio);
+  padding:16px 20px;margin:18px 0;
+}
+.saiba-box .rot{display:block;color:var(--musgo);font-weight:600;font-size:.85rem;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.saiba-box p:last-child{margin-bottom:0;}
+
+.goias-box{
+  background:linear-gradient(135deg,#fdf6ec,#f7e9d6);
+  border:1px solid var(--terracota-claro);border-radius:var(--raio);
+  padding:20px 24px;margin:22px 0;box-shadow:var(--sombra);
+}
+.goias-box .rot{display:block;color:var(--terracota);font-family:var(--serif-titulo);
+  font-size:1rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.goias-box p:last-child{margin-bottom:0;}
+
+.cita{
+  border-left:4px solid var(--petroleo-claro);background:var(--branco);
+  padding:14px 20px;margin:20px 0;font-style:italic;color:#3a3a3a;border-radius:0 var(--raio) var(--raio) 0;
+}
+.cita .fonte{display:block;font-style:normal;font-size:.82rem;color:var(--cinza);margin-top:8px;text-align:right;}
+
+.pesquise{
+  background:var(--petroleo);color:var(--areia);border-radius:var(--raio);
+  padding:18px 22px;margin:20px 0;
+}
+.pesquise .rot{display:block;font-family:var(--serif-titulo);font-size:.9rem;
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;color:#f0c9a8;}
+.pesquise p:last-child{margin-bottom:0;}
+.pesquise ul{margin:8px 0 0;padding-left:20px;}
+.pesquise li{margin-bottom:6px;}
+
+/* ---------- ACCORDION ---------- */
+.acc{border:1px solid var(--borda);border-radius:var(--raio);overflow:hidden;margin:14px 0;background:var(--branco);}
+.acc-head{
+  width:100%;text-align:left;background:var(--branco);border:0;cursor:pointer;
+  font-family:var(--serif-titulo);font-size:1.02rem;color:var(--petroleo);
+  padding:15px 46px 15px 18px;position:relative;
+}
+.acc-head:hover{background:#f9f6ef;}
+.acc-head::after{
+  content:'+';position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  font-size:1.4rem;color:var(--terracota);font-family:var(--serif-corpo);
+}
+.acc.aberto .acc-head::after{content:'–';}
+.acc-body{display:none;padding:4px 18px 18px;border-top:1px solid var(--areia-escura);}
+.acc.aberto .acc-body{display:block;}
+
+/* ---------- TABELAS ---------- */
+.tabela-wrap{overflow-x:auto;margin:20px 0;}
+table{border-collapse:collapse;width:100%;background:var(--branco);font-size:.93rem;}
+caption{caption-side:top;text-align:left;font-size:.85rem;color:var(--cinza);padding-bottom:8px;font-style:italic;}
+th,td{border:1px solid var(--borda);padding:10px 12px;vertical-align:top;text-align:left;}
+th{background:var(--petroleo);color:var(--areia);font-family:var(--serif-titulo);font-weight:600;}
+tbody tr:nth-child(even){background:#faf7f0;}
+
+/* ---------- LINHA DO TEMPO ---------- */
+.linha{border-left:3px solid var(--terracota-claro);margin:22px 0 22px 10px;padding-left:20px;}
+.linha .item{margin-bottom:16px;position:relative;}
+.linha .item::before{
+  content:'';position:absolute;left:-27px;top:8px;width:11px;height:11px;
+  background:var(--terracota);border-radius:50%;border:2px solid var(--areia);
+}
+.linha .ano{font-family:var(--serif-titulo);color:var(--petroleo);font-weight:700;}
+
+/* ---------- ROTEIRO ---------- */
+.roteiro{counter-reset:passo;padding:0;list-style:none;margin:20px 0;}
+.roteiro li{
+  counter-increment:passo;background:var(--branco);border:1px solid var(--borda);
+  border-radius:var(--raio);padding:14px 18px 14px 56px;position:relative;margin-bottom:10px;
+}
+.roteiro li::before{
+  content:counter(passo);position:absolute;left:16px;top:14px;
+  width:28px;height:28px;line-height:28px;text-align:center;border-radius:50%;
+  background:var(--musgo);color:#fff;font-size:.9rem;font-weight:600;
+}
+
+/* ---------- SÍNTESE ---------- */
+.sintese{background:var(--branco);border:1px solid var(--borda);border-top:6px solid var(--musgo);
+  border-radius:var(--raio);padding:22px 26px;box-shadow:var(--sombra);}
+.sintese ul{margin:0;padding-left:20px;}
+.sintese li{margin-bottom:10px;}
+
+/* ---------- GLOSSÁRIO ---------- */
+.glossario dl{margin:0;}
+.glossario dt{font-family:var(--serif-titulo);color:var(--petroleo);font-weight:700;margin-top:14px;}
+.glossario dd{margin:2px 0 0;padding-left:0;color:#3a3a3a;}
+
+/* ---------- REFERÊNCIAS ---------- */
+.refs{font-size:.88rem;color:var(--cinza);}
+.refs li{margin-bottom:8px;}
+
+/* ---------- RODAPÉ ---------- */
+footer{
+  background:var(--petroleo);color:var(--areia);text-align:center;
+  padding:28px var(--gutter) calc(28px + env(safe-area-inset-bottom));
+  font-size:.86rem;letter-spacing:.04em;
+}
+footer p{text-align:center;margin:0;}
+footer strong{color:#f0c9a8;}
+
+
+
+
+/* ================= CABEÇALHO NOVO ================= */
+.progresso{
+  position:fixed;top:0;left:0;right:0;height:3px;background:rgba(15,61,62,.12);z-index:800;
+}
+.progresso span{
+  display:block;height:100%;width:0;background:linear-gradient(90deg,var(--terracota),#e0a15f);
+  transition:width .08s linear;
+}
+.topbar{
+  position:sticky;top:0;z-index:790;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:var(--petroleo);color:var(--areia);
+  padding:9px var(--gutter);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
+  border-bottom:1px solid rgba(246,242,233,.16);
+  min-height:40px;
+}
+.topbar-inner{
+  max-width:var(--medida);margin:0 auto;width:100%;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.tb-marca{font-family:var(--serif-titulo);font-weight:700;letter-spacing:.22em;}
+.tb-sep{width:1px;height:14px;background:rgba(246,242,233,.35);}
+.tb-disc{opacity:.85;}
+.tb-hab{
+  margin-left:auto;background:var(--terracota);color:#fff;
+  padding:3px 10px;border-radius:100px;letter-spacing:.12em;font-size:.7rem;
+}
+
+.hero{
+  background:
+    radial-gradient(1100px 380px at 82% -12%,rgba(180,83,42,.42),transparent 62%),
+    linear-gradient(158deg,#0c3334 0%,#12494a 52%,#1c6461 100%);
+  color:var(--areia);border-bottom:0;text-align:left;
+  padding:clamp(34px,7vw,68px) var(--gutter) clamp(30px,5vw,52px);
+  position:relative;
+}
+.hero::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:4px;
+  background:linear-gradient(90deg,var(--terracota) 0%,var(--musgo) 55%,var(--petroleo-claro) 100%);
+}
+.hero-inner{max-width:var(--medida);margin:0 auto;}
+.hero-eyebrow{
+  font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:#f0c9a8;
+  margin:0 0 14px;padding-left:16px;position:relative;text-align:left;
+}
+.hero-eyebrow::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:8px;height:8px;background:var(--terracota);border-radius:2px;
+}
+.hero h1{
+  font-size:clamp(1.85rem,6.2vw,3.1rem);margin:0 0 14px;max-width:16ch;line-height:1.12;
+  letter-spacing:-.01em;
+}
+.hero .sub{
+  font-size:clamp(1rem,2.6vw,1.16rem);max-width:60ch;margin:0;opacity:.94;
+  font-style:normal;line-height:1.6;text-align:left;
+}
+.hero-tags{
+  list-style:none;display:flex;flex-wrap:wrap;gap:8px;
+  margin:22px 0 0;padding:0;
+}
+.hero-tags li{
+  border:1px solid rgba(246,242,233,.34);border-radius:100px;
+  padding:5px 13px;font-size:.78rem;letter-spacing:.03em;background:rgba(255,255,255,.06);
+}
+.hero .meta{
+  margin:24px 0 0;font-size:.8rem;letter-spacing:.08em;opacity:.72;text-align:left;
+  padding-top:16px;border-top:1px solid rgba(246,242,233,.18);
+}
+
+/* ---------- TRILHA DO TEMA (acordeão fixo na topbar) ---------- */
+.sumario-box{position:relative;}
+.sum-toggle{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(246,242,233,.10);border:1px solid rgba(246,242,233,.26);
+  border-radius:100px;padding:5px 12px 5px 8px;
+  color:var(--areia);font-family:var(--serif-corpo);
+  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;min-height:32px;line-height:1;
+  transition:background .16s ease,border-color .16s ease;
+}
+.sum-toggle:hover{background:rgba(246,242,233,.2);border-color:rgba(246,242,233,.5);}
+.sumario-box.aberto .sum-toggle{background:var(--terracota);border-color:var(--terracota);}
+.sum-ico{font-size:.9rem;line-height:1;}
+.sum-rot{font-family:var(--serif-corpo);}
+.sum-cont{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:18px;height:18px;padding:0 5px;border-radius:100px;
+  background:rgba(246,242,233,.22);font-size:.66rem;letter-spacing:0;
+}
+.sumario-box.aberto .sum-cont{background:rgba(0,0,0,.22);}
+.sum-seta{font-size:.9rem;line-height:1;transition:transform .22s ease;}
+.sumario-box.aberto .sum-seta{transform:rotate(180deg);}
+
+/* painel em cascata, ancorado abaixo da topbar */
+.sum-chips{
+  display:none;flex-direction:column;
+  position:absolute;top:calc(100% + 15px);left:0;
+  width:min(340px,calc(100vw - 2 * var(--gutter)));
+  max-height:70vh;max-height:70dvh;overflow-y:auto;overscroll-behavior:contain;
+  background:var(--branco);border:1px solid var(--borda);border-top:4px solid var(--terracota);
+  border-radius:var(--raio);box-shadow:0 16px 38px rgba(15,61,62,.28);
+  padding:6px 0;z-index:795;text-transform:none;letter-spacing:normal;
+}
+.sumario-box.aberto .sum-chips{display:flex;}
+.sum-chips a{
+  display:flex;align-items:center;gap:11px;
+  padding:11px 16px;min-height:46px;
+  color:var(--petroleo);text-decoration:none;font-size:.92rem;line-height:1.35;
+  border-bottom:1px solid var(--areia-escura);
+  opacity:0;transform:translateY(-8px);
+  animation:cascata .24s ease forwards;
+  animation-delay:calc(var(--i,0) * 40ms);
+}
+.sum-chips a:last-child{border-bottom:0;}
+.sum-chips a:hover,.sum-chips a:focus{background:var(--areia);color:var(--terracota);}
+.sum-chips a b{
+  display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+  width:22px;height:22px;border-radius:50%;background:var(--petroleo);color:var(--areia);
+  font-size:.72rem;font-family:var(--serif-corpo);font-weight:400;
+}
+.sum-chips a:hover b{background:var(--terracota);}
+
+@keyframes cascata{to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion:reduce){
+  .sum-chips a{animation:none;opacity:1;transform:none;}
+}
+
+@media (max-width:820px){
+  .sum-chips{
+    position:fixed;top:var(--topbar-h);left:0;right:0;width:auto;
+    border-radius:0;border-left:0;border-right:0;
+    max-height:calc(100vh - var(--topbar-h) - 12px);
+    max-height:calc(100dvh - var(--topbar-h) - 12px);
+  }
+  .sum-chips a{min-height:50px;font-size:.95rem;}
+}
+@media (max-width:520px){
+  .sum-toggle{padding:5px 10px 5px 7px;}
+  .sum-rot{display:none;}
+}
+
+h2.secao,section[id],[id]{scroll-margin-top:calc(var(--topbar-h) + 18px);}
+
+/* ================= OTIMIZAÇÃO MOBILE ================= */
+.tabela-wrap{position:relative;}
+.tabela-wrap::after{
+  content:'arraste para o lado \2192';
+  display:none;font-size:.72rem;color:var(--cinza);letter-spacing:.08em;
+  text-transform:uppercase;padding-top:6px;
+}
+.tabela-wrap.tem-scroll::after{display:block;}
+
+@media (max-width:820px){
+  body{font-size:16.5px;}
+  p{text-align:left;hyphens:auto;}
+  main{padding:0 var(--gutter) 48px;}
+  section{margin-top:34px;}
+  h2.secao{font-size:1.35rem;}
+  h2.secao .num{width:26px;height:26px;line-height:26px;font-size:.78rem;margin-right:9px;}
+  .acc-head{padding:16px 44px 16px 16px;min-height:56px;font-size:1rem;}
+  .acc-body{padding:4px 16px 16px;}
+  .ficha-btn{padding:16px;min-height:58px;}
+  .tabela-wrap{
+    overflow-x:auto;-webkit-overflow-scrolling:touch;
+    border-right:1px solid var(--areia-escura);
+  }
+  table{font-size:.88rem;min-width:480px;}
+  th,td{padding:9px 10px;}
+  .linha{margin-left:6px;padding-left:16px;}
+  .roteiro li{padding:14px 14px 14px 50px;}
+  .goias-box,.pesquise{padding:16px 18px;}
+  .cita{padding:12px 16px;}
+  .glossario dd{font-size:.95rem;}
+}
+
+@media (max-width:520px){
+  :root{--gutter:15px;}
+  .topbar{font-size:.68rem;gap:8px;padding:8px var(--gutter);}
+  .tb-disc{display:none;}
+  .tb-sep{display:none;}
+  .hero-tags li{font-size:.73rem;padding:4px 11px;}
+  .hero h1{max-width:100%;}
+}
+
+/* ---------- MODAL EM TELA CHEIA NO CELULAR ---------- */
+@media (max-width:720px){
+  .modal-fundo{padding:0;}
+  .modal-cx{
+    max-width:100%;border-radius:0;margin:0;
+    height:100vh;height:100dvh;max-height:none;
+  }
+  .modal-topo{padding:16px;}
+  .modal-topo h3{font-size:1.12rem;}
+  .modal-corpo{padding:18px 16px 24px;}
+  .modal-corpo li{font-size:.95rem;}
+  .modal-rodape{
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    justify-content:center;
+  }
+  .modal-rodape span{display:none;}
+  .modal-rodape button{width:100%;min-height:46px;font-size:.95rem;}
+  .modal-fechar{width:40px;height:40px;font-size:1.35rem;}
+}
+
+@media print{
+  .topbar,.progresso,.sumario-box,.ficha-btn,.caso-btn,.btn-recurso,
+  .rec-grid,.modal-fundo{display:none !important;}
+  .hero{background:none;color:#000;padding:0 0 18px;}
+  .hero::after{display:none;}
+  .hero-eyebrow,.hero .meta{color:#444;}
+  .hero-tags li{border-color:#999;}
+  body{background:#fff;font-size:11pt;}
+  main{max-width:none;padding:0;}
+  .acc-body{display:block !important;}   /* imprime tudo, inclusive acordeoes fechados */
+  .acc-head::after{content:'';}
+  section,.acc,.sintese,.objetivos{break-inside:avoid;}
+  h2.secao{break-after:avoid;}
+  table{min-width:0 !important;font-size:9.5pt;}
+  .tabela-wrap{overflow:visible !important;}
+  .tabela-wrap::after{display:none !important;}
+  footer{background:none;color:#000;border-top:1px solid #999;}
+  footer strong{color:#000;}
+}
+
+/* ---------- GRID DE MATERIAL DE CONSULTA ---------- */
+.rec-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:20px 0 6px;
+}
+.rec-card{
+  display:flex;flex-direction:column;align-items:flex-start;gap:4px;cursor:pointer;
+  background:var(--branco);border:1px solid var(--borda);border-top:5px solid var(--musgo);
+  border-radius:var(--raio);padding:18px 16px;text-align:left;
+  font-family:var(--serif-corpo);box-shadow:var(--sombra);
+  transition:transform .12s ease,border-color .12s ease;
+}
+.rec-card:hover{transform:translateY(-3px);border-top-color:var(--terracota);}
+.rec-ico{
+  display:flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:8px;background:var(--petroleo);color:var(--areia);
+  font-family:var(--serif-titulo);font-size:.9rem;margin-bottom:6px;
+}
+.rec-tit{font-family:var(--serif-titulo);font-size:1.02rem;color:var(--petroleo);line-height:1.3;}
+.rec-sub{font-size:.82rem;color:var(--cinza);line-height:1.45;}
+@media (max-width:900px){.rec-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:520px){.rec-grid{grid-template-columns:1fr;}.rec-card{flex-direction:row;align-items:center;gap:14px;flex-wrap:wrap;}
+  .rec-card .rec-ico{margin-bottom:0;}
+  .rec-card .rec-tit{flex:1 1 auto;}
+  .rec-card .rec-sub{flex:1 1 100%;}}
+
+/* ---------- FICHAMENTO (botão + modal) ---------- */
+.ficha-btn{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+  background:linear-gradient(135deg,#0f3d3e,#1b5c5d);color:var(--areia);
+  border:0;border-left:5px solid var(--terracota);border-radius:var(--raio);
+  padding:14px 18px;margin:18px 0;font-family:var(--serif-corpo);font-size:1rem;
+  box-shadow:var(--sombra);transition:transform .12s ease,filter .12s ease;
+}
+.ficha-btn:hover{filter:brightness(1.12);transform:translateY(-1px);}
+.ficha-btn .ico{
+  flex:0 0 auto;width:34px;height:34px;border-radius:8px;background:var(--terracota);
+  display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:700;
+  font-family:var(--serif-titulo);
+}
+.ficha-btn .txt{flex:1;}
+.ficha-btn .txt strong{display:block;font-family:var(--serif-titulo);font-size:1.02rem;}
+.ficha-btn .txt em{font-style:normal;font-size:.85rem;opacity:.82;}
+.ficha-btn .seta{font-size:1.3rem;color:#f0c9a8;}
+
+.modal-fundo{
+  display:none;position:fixed;inset:0;background:rgba(15,61,62,.72);
+  z-index:900;padding:24px 16px;overscroll-behavior:contain;
+}
+.modal-fundo.ativo{display:flex;align-items:flex-start;justify-content:center;}
+.modal-cx{
+  background:var(--branco);width:100%;max-width:880px;margin:0 auto;border-radius:14px;
+  box-shadow:0 18px 50px rgba(0,0,0,.35);overflow:hidden;animation:sobe .18s ease-out;
+  display:flex;flex-direction:column;
+  max-height:calc(100vh - 48px);max-height:calc(100dvh - 48px);
+}
+@keyframes sobe{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+.modal-topo{
+  background:var(--petroleo);color:var(--areia);padding:18px 22px;
+  display:flex;align-items:flex-start;gap:14px;flex:0 0 auto;
+}
+.modal-topo .rot{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:#f0c9a8;display:block;}
+.modal-topo h3{margin:2px 0 0;font-size:1.3rem;color:var(--areia);}
+.modal-fechar{
+  margin-left:auto;background:transparent;border:1px solid rgba(246,242,233,.45);
+  color:var(--areia);width:34px;height:34px;border-radius:8px;font-size:1.2rem;
+  cursor:pointer;line-height:1;flex:0 0 auto;
+}
+.modal-fechar:hover{background:rgba(246,242,233,.15);}
+.modal-corpo{
+  padding:20px 24px 26px;flex:1 1 auto;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+}
+.modal-corpo h4{
+  font-family:var(--serif-titulo);color:var(--terracota);font-size:.85rem;
+  letter-spacing:.1em;text-transform:uppercase;margin:20px 0 6px;
+  border-bottom:1px solid var(--areia-escura);padding-bottom:5px;
+}
+.modal-corpo h4:first-child{margin-top:0;}
+.modal-corpo ul{margin:0;padding-left:20px;}
+.modal-corpo li{margin-bottom:7px;text-align:left;font-size:.97rem;}
+.modal-rodape{
+  border-top:1px solid var(--areia-escura);padding:14px 24px;background:#faf7f0;
+  display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  flex:0 0 auto;
+}
+.modal-rodape span{font-size:.82rem;color:var(--cinza);}
+.modal-rodape button{
+  background:var(--musgo);color:#fff;border:0;border-radius:8px;padding:9px 16px;
+  font-family:var(--serif-corpo);font-size:.9rem;cursor:pointer;
+}
+.modal-rodape button:hover{filter:brightness(1.1);}
+@media print{.ficha-btn{display:none;}}
+@media (max-width:620px){
+  body{font-size:16px;}
+  .modal-topo h3{font-size:1.08rem;}
+}
+
+/* ---------- TEXTOS DE APOIO LONGOS (dentro dos acordeões) ---------- */
+.texto-apoio{font-size:.97rem;}
+.texto-apoio h3{font-size:1.05rem;color:var(--petroleo);margin:22px 0 8px;}
+.texto-apoio .ta-fonte{display:block;font-size:.82rem;color:var(--cinza);font-style:italic;margin-bottom:14px;}
+.texto-apoio .ta-destaque{background:var(--areia);border-left:4px solid var(--terracota);
+  border-radius:0 var(--raio) var(--raio) 0;padding:14px 18px;margin:0 0 18px;}
+.texto-apoio .ta-nota{background:#eef3ef;border:1px dashed var(--musgo);border-radius:var(--raio);
+  padding:14px 18px;margin:18px 0;}
+.texto-apoio .ta-nota .ta-rot{display:block;color:var(--musgo);font-weight:600;font-size:.82rem;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.texto-apoio .ta-citacao{border-left:4px solid var(--petroleo-claro);background:var(--branco);
+  margin:20px 0;padding:14px 20px;font-style:italic;border-radius:0 var(--raio) var(--raio) 0;}
+.texto-apoio .ta-citacao .ta-autor{display:block;font-style:normal;font-size:.82rem;
+  color:var(--cinza);margin-top:8px;text-align:right;}
+.texto-apoio .ta-tempo{margin:14px 0;padding-left:20px;}
+.texto-apoio .ta-tempo li{margin-bottom:8px;}
+.texto-apoio .ta-tempo b{color:var(--petroleo);font-family:var(--serif-titulo);}
+.texto-apoio table{margin:0;}
+.acc-body .tabela-wrap{margin:16px 0;}
+
+/* ---------- BOTÃO DE CASO EM ANÁLISE (abre modal) ---------- */
+.caso-btn{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+  background:linear-gradient(135deg,#b4532a,#8f3f1f);color:#fff8f0;
+  border:0;border-left:5px solid var(--petroleo);border-radius:var(--raio);
+  padding:16px 18px;margin:20px 0;font-family:var(--serif-corpo);font-size:1rem;
+  box-shadow:var(--sombra);transition:transform .12s ease,filter .12s ease;
+}
+.caso-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
+.caso-btn .ico{
+  flex:0 0 auto;width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;font-size:1.15rem;font-weight:700;
+  font-family:var(--serif-titulo);
+}
+.caso-btn .txt{flex:1;}
+.caso-btn .txt strong{display:block;font-family:var(--serif-titulo);font-size:1.06rem;}
+.caso-btn .txt em{font-style:normal;font-size:.85rem;opacity:.9;display:block;margin-top:2px;}
+.caso-btn .seta{font-size:1.3rem;opacity:.85;}
+@media (max-width:820px){.caso-btn{padding:16px;min-height:64px;}}
+
+/* ================= AJUSTES FINAIS: TOQUE, MOVIMENTO, QUEBRA ================= */
+
+/* em telas de toque o :hover fica "grudado" apos o tap - desliga os efeitos */
+@media (hover:none){
+  .btn-recurso:hover,.rec-card:hover,.ficha-btn:hover,.caso-btn:hover{
+    transform:none;filter:none;box-shadow:var(--sombra);
+  }
+  .btn-recurso:hover{border-left-color:var(--musgo);}
+  .btn-recurso.atividade:hover{border-left-color:var(--terracota);}
+  .btn-recurso:hover .br-ico{background:var(--musgo);}
+  .btn-recurso.atividade:hover .br-ico{background:var(--terracota);}
+  .rec-card:hover{border-top-color:var(--musgo);}
+  .acc-head:hover{background:var(--branco);}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+
+/* palavras longas (URLs, siglas) nao estouram a linha no celular */
+p,li,dd,dt,td,th,.br-txt,.rec-tit,.rec-sub,.txt{overflow-wrap:break-word;}
+.refs li{overflow-wrap:anywhere;}
+
+/* alvos de toque minimos */
+@media (max-width:820px){
+  .rec-card{min-height:64px;}
+  .sum-chips a{padding:12px 16px;}
+  .modal-fechar{min-width:40px;min-height:40px;}
+}
+
+/* telas largas: um respiro maior de leitura */
+@media (min-width:1200px){
+  :root{--medida:960px;}
+}
+
+/* ================= PROPOSTA DE REDAÇÃO ================= */
+.instrucoes{
+  background:var(--branco);border:1px solid var(--borda);border-left:6px solid var(--petroleo);
+  border-radius:var(--raio);padding:22px 26px;box-shadow:var(--sombra);margin-top:34px;
+}
+.instrucoes p:last-child{margin-bottom:0;}
+
+.motivador{
+  background:var(--branco);border:1px solid var(--borda);border-radius:var(--raio);
+  padding:18px 22px;margin:20px 0;box-shadow:var(--sombra);
+}
+.motivador .rot{
+  display:block;font-family:var(--serif-titulo);color:var(--terracota);
+  font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;
+  border-bottom:1px solid var(--areia-escura);padding-bottom:6px;
+}
+.motivador p:last-of-type{margin-bottom:0;}
+.motivador .fonte{
+  display:block;font-size:.8rem;color:var(--cinza);font-style:italic;
+  margin-top:10px;text-align:right;
+}
+
+.tema-box{
+  background:linear-gradient(158deg,#0c3334 0%,#12494a 55%,#1c6461 100%);
+  color:var(--areia);border-radius:var(--raio);padding:26px 28px;margin:26px 0;
+  box-shadow:0 6px 22px rgba(15,61,62,.28);position:relative;overflow:hidden;
+}
+.tema-box::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:4px;
+  background:linear-gradient(90deg,var(--terracota) 0%,var(--musgo) 55%,var(--petroleo-claro) 100%);
+}
+.tema-box .rot{
+  display:block;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;
+  color:#f0c9a8;margin-bottom:10px;
+}
+.tema-box .tema{
+  font-family:var(--serif-titulo);font-size:clamp(1.3rem,4.2vw,1.75rem);
+  line-height:1.25;margin:0;
+}
+
+.alerta{
+  background:#fdf3ef;border:1px solid var(--terracota-claro);border-left:5px solid var(--terracota);
+  border-radius:var(--raio);padding:16px 20px;margin:20px 0;
+}
+.alerta .rot{display:block;color:var(--terracota);font-weight:600;font-size:.82rem;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.alerta ul{margin:6px 0 0;padding-left:20px;}
+.alerta li{margin-bottom:6px;}
+.alerta p:last-child,.alerta ul:last-child{margin-bottom:0;}
+
+/* competências */
+.comp{counter-reset:none;}
+.comp .acc-head{padding-left:56px;}
+.comp .acc-head .cn{
+  position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;line-height:28px;text-align:center;border-radius:50%;
+  background:var(--petroleo);color:var(--areia);font-family:var(--serif-corpo);
+  font-size:.85rem;font-weight:600;
+}
+.comp .acc.aberto .acc-head .cn{background:var(--terracota);}
+
+/* modelo de intervenção */
+.intervencao{
+  background:var(--branco);border:1px solid var(--borda);border-top:5px solid var(--musgo);
+  border-radius:var(--raio);padding:20px 24px;margin:20px 0;box-shadow:var(--sombra);
+}
+.intervencao dl{margin:0;}
+.intervencao dt{
+  font-family:var(--serif-titulo);color:var(--musgo);font-size:.8rem;
+  letter-spacing:.1em;text-transform:uppercase;margin-top:14px;
+}
+.intervencao dt:first-child{margin-top:0;}
+.intervencao dd{margin:2px 0 0;color:#3a3a3a;}
+.intervencao .exemplo{
+  margin-top:18px;padding-top:16px;border-top:1px solid var(--areia-escura);
+  font-style:italic;color:#3a3a3a;
+}
+
+.checklist{list-style:none;padding:0;margin:18px 0;}
+.checklist li{
+  position:relative;padding:10px 14px 10px 40px;margin-bottom:8px;
+  background:var(--branco);border:1px solid var(--borda);border-radius:var(--raio);
+}
+.checklist li::before{
+  content:'\2610';position:absolute;left:14px;top:9px;
+  font-size:1.1rem;color:var(--terracota);
+}
+
+
+/* ================= ÁREA DE ESCRITA DIGITAL ================= */
+.envio{
+  --folha-w:718px;                 /* 60px + 640px de linha + 16px + 2px de borda */
+  background:var(--branco);border:1px solid var(--borda);border-top:5px solid var(--petroleo);
+  border-radius:var(--raio);padding:24px;box-shadow:var(--sombra);margin-top:24px;
+}
+/* tudo dentro do cartao compartilha a mesma largura da folha */
+.envio-campos,.folha-digital,.envio-barra{max-width:var(--folha-w);}
+
+.envio-campos{
+  display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px;
+}
+@media (max-width:620px){.envio-campos{grid-template-columns:1fr;gap:14px;}}
+
+.campo{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.campo-rot{
+  font-family:var(--serif-titulo);font-size:.74rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--petroleo);line-height:1.2;
+}
+.campo input{
+  font-family:var(--serif-corpo);font-size:1rem;padding:11px 14px;height:46px;
+  box-sizing:border-box;width:100%;
+  border:1px solid var(--borda);border-radius:6px;background:#fdfcf9;color:var(--grafite);
+  -webkit-user-select:text;user-select:text;
+}
+.campo input::placeholder{color:#a8a29a;}
+.campo input:focus{outline:3px solid var(--terracota);outline-offset:1px;border-color:var(--terracota);}
+
+.folha-digital{display:flex;flex-direction:column;gap:6px;}
+.folha-caixa{position:relative;}
+
+/* margem numerada: so aparece quando a linha na tela tem a largura da folha */
+.folha-num{
+  display:none;position:absolute;left:1px;top:1px;bottom:1px;width:44px;
+  overflow:hidden;pointer-events:none;background:#f5f1e7;
+  border-right:1px solid var(--areia-escura);border-radius:6px 0 0 6px;
+}
+.folha-num .fn-in{padding-top:13px;will-change:transform;}
+.folha-num span{
+  display:block;height:26px;line-height:26px;text-align:right;padding-right:9px;
+  font-family:var(--serif-corpo);font-size:11px;color:#a8a196;
+  font-variant-numeric:tabular-nums;
+}
+.folha-num span.atual{color:var(--terracota);font-weight:600;}
+.folha-num span.cheia{color:#6f6a60;}
+
+.linha-atual{
+  display:block;font-size:.78rem;color:var(--petroleo);margin-top:2px;
+  font-variant-numeric:tabular-nums;
+}
+#txtRedacao{
+  display:block;width:100%;box-sizing:border-box;
+  font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:26px;
+  padding:13px 16px;border:1px solid var(--borda);border-radius:6px;background:#fdfcf9;
+  color:var(--grafite);resize:vertical;min-height:520px;overflow-y:auto;
+  overflow-wrap:break-word;word-break:break-word;
+  -webkit-user-select:text;user-select:text;
+  background-image:repeating-linear-gradient(
+    to bottom,transparent 0,transparent 25px,var(--areia-escura) 25px,var(--areia-escura) 26px);
+  background-attachment:local;
+  background-origin:content-box;background-clip:content-box;
+}
+#txtRedacao:focus{outline:3px solid var(--terracota);outline-offset:1px;}
+#txtRedacao::placeholder{color:#a8a29a;font-style:italic;}
+
+@media (min-width:860px){
+  .folha-num{display:block;}
+  /* 30 linhas x 26px + 13px de recuo em cima e embaixo + 1px de borda de cada lado */
+  #txtRedacao{
+    padding-left:60px !important;
+    height:808px;min-height:808px;
+    overflow-y:hidden;resize:none;
+  }
+}
+
+
+.envio-barra{
+  display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+  margin-top:16px;padding-top:16px;border-top:1px solid var(--areia-escura);
+}
+.contador{font-size:.9rem;color:var(--cinza);}
+.contador b{font-family:var(--serif-titulo);color:var(--petroleo);font-size:1.05rem;}
+.contador.limite b{color:var(--terracota);}
+.contador .aviso{display:block;font-size:.78rem;margin-top:2px;}
+
+.btn-envio{
+  font-family:var(--serif-titulo);font-size:1rem;padding:13px 26px;min-height:48px;
+  background:var(--petroleo);color:var(--areia);border:0;border-radius:6px;cursor:pointer;
+  letter-spacing:.04em;transition:background .15s ease;
+}
+.btn-envio:hover{background:var(--petroleo-claro);}
+.btn-envio:disabled{background:#b9b3a6;cursor:not-allowed;}
+@media (hover:none){.btn-envio:hover{background:var(--petroleo);}}
+
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(14px);
+  background:var(--terracota);color:#fff;padding:12px 20px;border-radius:8px;
+  font-size:.92rem;box-shadow:0 8px 24px rgba(0,0,0,.28);z-index:950;
+  opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;
+  max-width:min(420px,calc(100vw - 32px));text-align:center;
+}
+.toast.ativo{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ---------- folha de envio (só na impressão) ---------- */
+#folhaEnvio{display:none;}
+#folhaEnvio .fe-cab{border-bottom:2pt solid #B4532A;padding-bottom:0.12cm;margin-bottom:0.22cm;}
+#folhaEnvio .fe-escola{
+  font-family:'Playfair Display',Georgia,serif;font-size:10pt;letter-spacing:.08em;
+  text-transform:uppercase;color:#0f3d3e;margin:0;line-height:1.25;
+}
+#folhaEnvio .fe-disc{font-size:8pt;color:#5d5d5d;margin:0.04cm 0 0;line-height:1.25;}
+#folhaEnvio .fe-tema{
+  font-family:'Playfair Display',Georgia,serif;font-size:11.5pt;color:#0f3d3e;
+  margin:0.22cm 0 0.16cm;line-height:1.25;
+}
+#folhaEnvio .fe-id{
+  display:flex;flex-wrap:wrap;gap:0.06cm 0.7cm;font-size:8.5pt;color:#2b2b2b;
+  margin:0 0 0.62cm;padding:0.14cm 0;
+  border-top:0.5pt solid #d8d0be;border-bottom:0.5pt solid #d8d0be;
+}
+#folhaEnvio .fe-id span{white-space:nowrap;}
+#folhaEnvio .fe-id b{color:#0f3d3e;}
+#folhaEnvio .fe-linhas{width:100%;margin:0;}
+#folhaEnvio .fe-l{
+  display:flex;align-items:flex-end;gap:0.25cm;
+  height:0.72cm;border-bottom:0.5pt solid #9a9a9a;
+  break-inside:avoid;page-break-inside:avoid;
+}
+#folhaEnvio .fe-n{
+  flex:0 0 0.7cm;text-align:right;font-size:7pt;color:#8a8a8a;line-height:0.72cm;
+}
+#folhaEnvio .fe-t{
+  flex:1 1 auto;font-family:'Source Serif 4',Georgia,serif;font-size:10.5pt;
+  line-height:0.64cm;white-space:pre;overflow:hidden;
+}
+#folhaEnvio .fe-rod{
+  margin-top:0.24cm;padding-top:0.12cm;border-top:0.5pt solid #d8d0be;
+  font-size:7pt;color:#5d5d5d;display:flex;justify-content:space-between;gap:0.6cm;
+}
+
+
+/* ---------- overlay de geracao do PDF ---------- */
+.pdf-overlay{
+  display:none;position:fixed;inset:0;z-index:960;
+  background:rgba(15,61,62,.72);align-items:center;justify-content:center;padding:20px;
+}
+.pdf-overlay.ativo{display:flex;}
+.pdf-cx{
+  background:var(--branco);border-radius:12px;padding:26px 30px;text-align:center;
+  max-width:320px;width:100%;box-shadow:0 14px 40px rgba(0,0,0,.3);
+}
+.pdf-cx h4{margin:0 0 6px;color:var(--petroleo);font-size:1.15rem;}
+.pdf-cx p{margin:0 0 14px;color:var(--cinza);font-size:.86rem;}
+.pdf-barra{background:var(--areia-escura);border-radius:6px;overflow:hidden;height:8px;}
+.pdf-barra span{display:block;height:100%;width:0;background:var(--terracota);transition:width .25s ease;}
+
+/* ================= AJUSTES DE TELA: CELULAR E PC ================= */
+
+/* --- tablets e telas medias --- */
+@media (max-width:820px){
+  .instrucoes{padding:18px 18px 20px;}
+  .motivador{padding:16px 18px;}
+  .intervencao{padding:16px 18px;}
+  .envio{padding:18px;}
+  .tema-box{padding:22px 20px;}
+  .alerta{padding:14px 16px;}
+  .comp .acc-head{padding-left:52px;}
+  .comp .acc-head .cn{left:13px;width:26px;height:26px;line-height:26px;font-size:.8rem;}
+  .checklist li{padding:10px 12px 10px 36px;}
+  .checklist li::before{left:12px;}
+  .intervencao .exemplo{font-size:.95rem;}
+}
+
+/* --- celulares --- */
+@media (max-width:620px){
+  .instrucoes,.motivador,.intervencao,.envio{padding:16px 14px;}
+  .tema-box{padding:20px 16px;}
+  .motivador .rot{font-size:.76rem;}
+  .motivador .fonte{text-align:left;}
+
+  /* a folha ocupa a tela toda, sem desperdicio lateral */
+  #txtRedacao{
+    min-height:clamp(320px,58vh,520px);
+    padding:12px 13px;font-size:17px;
+  }
+  .campo input{font-size:17px;}   /* 17px evita o zoom automatico do iOS ao focar */
+
+  /* barra de acoes empilhada, botao de largura total */
+  .envio-barra{flex-direction:column;align-items:stretch;gap:12px;}
+  .envio-barra .contador{text-align:center;}
+  .btn-envio{width:100%;}
+
+  .intervencao dt{font-size:.75rem;}
+  .checklist li{font-size:.95rem;}
+}
+
+/* --- telas largas: a folha respira junto com o texto --- */
+@media (min-width:1200px){
+  .motivador{padding:20px 26px;}
+  .instrucoes{padding:24px 30px;}
+}
+
+/* --- barra de aviso acima da area segura do aparelho --- */
+.toast{bottom:calc(24px + env(safe-area-inset-bottom));}
+
+/* --- impressao normal da pagina (nao a folha de envio) --- */
+@media print{
+  .envio,.toast,.btn-envio{display:none !important;}
+  .instrucoes,.motivador,.alerta,.intervencao,.tema-box,.checklist li,.acc{
+    break-inside:avoid;page-break-inside:avoid;
+  }
+  .tema-box{
+    background:none !important;color:#000 !important;
+    border:2px solid #0f3d3e;box-shadow:none;
+  }
+  .tema-box::after{display:none;}
+  .tema-box .rot{color:#B4532A !important;}
+  .tema-box .tema{color:#0f3d3e !important;}
+  .motivador,.instrucoes,.intervencao{box-shadow:none;}
+  .comp .acc-head .cn{background:#0f3d3e !important;color:#fff !important;}
+}
+
+@media print{
+  @page{size:A4 portrait;margin:1.2cm 1.4cm;}
+  html,body{height:auto !important;}
+  body.modo-envio > *{display:none !important;}
+  body.modo-envio #folhaEnvio{display:block !important;}
+  body.modo-envio{background:#fff;}
+  /* a folha precisa caber em uma única página */
+  #folhaEnvio{break-inside:avoid;page-break-inside:avoid;break-after:avoid;page-break-after:avoid;}
+  #folhaEnvio .fe-rod{break-before:avoid;page-break-before:avoid;}
+}
+
+</style>
+</head>
+<body>
+
+<div class="progresso"><span id="barraProgresso"></span></div>
+
+<div class="topbar">
+ <div class="topbar-inner">
+  <span class="tb-marca">CERO</span>
+  <div class="sumario-box" id="sumBox">
+    <button class="sum-toggle" id="sumToggle" type="button" aria-expanded="false" aria-controls="sumChips">
+      <span class="sum-ico">&#9776;</span>
+      <span class="sum-rot">Roteiro da proposta</span>
+      <span class="sum-cont" id="sumCount">0</span>
+      <span class="sum-seta" aria-hidden="true">&#9662;</span>
+    </button>
+    <div class="sum-chips" id="sumChips"></div>
+  </div>
+  <span class="tb-sep"></span>
+  <span class="tb-disc">Reda&ccedil;&atilde;o &middot; 3&ordf; s&eacute;rie EM</span>
+  <span class="tb-hab">Modelo ENEM</span>
+ </div>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Proposta de reda&ccedil;&atilde;o &middot; modelo ENEM</p>
+    <h1>Meio ambiente &eacute; direito social?</h1>
+    <p class="sub">Uma proposta dissertativo-argumentativa constru&iacute;da a partir do tema
+      &ldquo;Quem guarda a natureza?&rdquo;: o que a Constitui&ccedil;&atilde;o de 1988 escreveu, o que ela
+      deixou de escrever e o que isso custa na pr&aacute;tica.</p>
+    <ul class="hero-tags">
+      <li>Art. 6&ordm; e art. 225</li>
+      <li>ADPF 708</li>
+      <li>Lei n&ordm; 15.190/2025</li>
+      <li>Cerrado goiano</li>
+      <li>Cinco compet&ecirc;ncias</li>
+    </ul>
+    <p class="meta">Col&eacute;gio Estadual Rodolfo de Oliveira &middot; 2026 &middot; Prof. Claudio</p>
+  </div>
+</header>
+
+<main>
+
+  <section class="instrucoes">
+    <span class="hab">EM13CHS305 &middot; Hist&oacute;ria &middot; 3&ordf; s&eacute;rie do Ensino M&eacute;dio</span>
+    <p class="lead">Esta proposta segue a estrutura oficial do exame: textos motivadores, tema e
+      instru&ccedil;&atilde;o padr&atilde;o. Leia tudo antes de come&ccedil;ar a escrever &mdash; o rascunho faz
+      parte do trabalho.</p>
+    <p><strong>Instru&ccedil;&atilde;o.</strong> A partir da leitura dos textos motivadores e com base nos
+      conhecimentos constru&iacute;dos ao longo de sua forma&ccedil;&atilde;o, redija texto
+      dissertativo-argumentativo em modalidade escrita formal da l&iacute;ngua portuguesa sobre o tema
+      apresentado adiante, apresentando proposta de interven&ccedil;&atilde;o que respeite os direitos
+      humanos. Selecione, organize e relacione, de forma coerente e coesa, argumentos e fatos para
+      defesa de seu ponto de vista.</p>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false">O que zera a reda&ccedil;&atilde;o</button>
+      <div class="acc-body">
+        <ul>
+          <li>Fuga completa ao tema.</li>
+          <li>N&atilde;o obedecer &agrave; estrutura dissertativo-argumentativa (texto narrativo, po&eacute;tico ou puramente descritivo).</li>
+          <li>Extens&atilde;o de at&eacute; 7 linhas escritas.</li>
+          <li>C&oacute;pia de trecho dos textos motivadores sem que haja produ&ccedil;&atilde;o pr&oacute;pria suficiente.</li>
+          <li>Desrespeito aos direitos humanos na proposta de interven&ccedil;&atilde;o.</li>
+          <li>Parte deliberadamente desconectada do tema, impropriedades, marcas de identifica&ccedil;&atilde;o ou desenhos.</li>
+        </ul>
+        <p>O limite m&aacute;ximo &eacute; de 30 linhas. Escreva com caneta preta ou azul de tinta indel&eacute;vel.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 1 ================= -->
+  <section>
+    <h2 class="secao" id="t1" data-sum="Textos motivadores"><span class="num">1</span>Textos motivadores</h2>
+
+    <div class="motivador">
+      <span class="rot">Texto I</span>
+      <p><strong>Art. 6&ordm;</strong> S&atilde;o direitos sociais a educa&ccedil;&atilde;o, a sa&uacute;de, a
+        alimenta&ccedil;&atilde;o, o trabalho, a moradia, o transporte, o lazer, a seguran&ccedil;a, a
+        previd&ecirc;ncia social, a prote&ccedil;&atilde;o &agrave; maternidade e &agrave; inf&acirc;ncia, a
+        assist&ecirc;ncia aos desamparados, na forma desta Constitui&ccedil;&atilde;o.</p>
+      <p><strong>Art. 225.</strong> Todos t&ecirc;m direito ao meio ambiente ecologicamente equilibrado, bem de
+        uso comum do povo e essencial &agrave; sadia qualidade de vida, impondo-se ao Poder P&uacute;blico e
+        &agrave; coletividade o dever de defend&ecirc;-lo e preserv&aacute;-lo para as presentes e futuras
+        gera&ccedil;&otilde;es.</p>
+      <span class="fonte">BRASIL. Constitui&ccedil;&atilde;o da Rep&uacute;blica Federativa do Brasil, 1988.</span>
+    </div>
+
+    <div class="motivador">
+      <span class="rot">Texto II</span>
+      <p>O meio ambiente ecologicamente equilibrado n&atilde;o consta da lista de direitos sociais do art. 6&ordm;
+        da Constitui&ccedil;&atilde;o. Ele foi inscrito em cap&iacute;tulo pr&oacute;prio, o art. 225, e a doutrina
+        jur&iacute;dica o classifica como direito fundamental <em>difuso</em>, de terceira dimens&atilde;o. A
+        diferen&ccedil;a de coluna, no quadro abaixo, tem consequ&ecirc;ncias pr&aacute;ticas.</p>
+      <div class="tabela-wrap">
+        <table>
+          <caption>Duas formas de inscrever um direito na Constitui&ccedil;&atilde;o de 1988</caption>
+          <thead>
+            <tr><th>Aspecto</th><th>Direitos sociais (art. 6&ordm;)</th><th>Meio ambiente (art. 225)</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Natureza do direito</td>
+              <td>Direito social, de segunda dimens&atilde;o: exige presta&ccedil;&atilde;o do Estado.</td>
+              <td>Direito difuso, de terceira dimens&atilde;o: pertence a todos e a ningu&eacute;m em particular.</td>
+            </tr>
+            <tr>
+              <td>Titular</td>
+              <td>Pessoa determin&aacute;vel &mdash; o aluno, o paciente, o trabalhador.</td>
+              <td>Coletividade indeterminada, incluindo as futuras gera&ccedil;&otilde;es.</td>
+            </tr>
+            <tr>
+              <td>Quem tem o dever</td>
+              <td>O Poder P&uacute;blico.</td>
+              <td>O Poder P&uacute;blico <em>e</em> a coletividade.</td>
+            </tr>
+            <tr>
+              <td>Garantia de financiamento</td>
+              <td>Vincula&ccedil;&atilde;o constitucional de receita: pisos m&iacute;nimos para sa&uacute;de e educa&ccedil;&atilde;o.</td>
+              <td>Sem piso constitucional; o or&ccedil;amento da fiscaliza&ccedil;&atilde;o depende da decis&atilde;o de cada governo.</td>
+            </tr>
+            <tr>
+              <td>Como se cobra na justi&ccedil;a</td>
+              <td>A&ccedil;&atilde;o individual &eacute; comum e direta.</td>
+              <td>Predominam a&ccedil;&otilde;es coletivas: a&ccedil;&atilde;o civil p&uacute;blica, ADI, ADPF.</td>
+            </tr>
+            <tr>
+              <td>Efeito no debate p&uacute;blico</td>
+              <td>Poucos defendem abertamente extinguir o SUS ou o Fundeb.</td>
+              <td>Discute-se rotineiramente flexibilizar licenciamento e reduzir a estrutura de fiscaliza&ccedil;&atilde;o.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <span class="fonte">Quadro elaborado para fins did&aacute;ticos a partir do texto constitucional.</span>
+    </div>
+
+    <div class="motivador">
+      <span class="rot">Texto III</span>
+      <p>Ao julgar a Argui&ccedil;&atilde;o de Descumprimento de Preceito Fundamental n&ordm; 708, em julho de
+        2022, o Supremo Tribunal Federal decidiu, por 10 votos a 1, que o Poder Executivo tem o dever
+        constitucional de fazer funcionar o Fundo Nacional sobre Mudan&ccedil;a do Clima e de destinar seus
+        recursos anualmente, vedado o contingenciamento. A Corte firmou que a tutela ambiental &eacute;
+        vinculante e n&atilde;o pertence ao ju&iacute;zo pol&iacute;tico de conveni&ecirc;ncia do governante, e
+        que os tratados sobre direito ambiental constituem esp&eacute;cie do g&ecirc;nero tratados de direitos
+        humanos, com status supranacional. A decis&atilde;o registra ainda que a situa&ccedil;&atilde;o ambiental
+        brasileira guarda estrita rela&ccedil;&atilde;o de depend&ecirc;ncia com o n&uacute;cleo essencial de
+        m&uacute;ltiplos direitos fundamentais.</p>
+      <span class="fonte">Adaptado de: BRASIL. Supremo Tribunal Federal. ADPF 708, rel. min. Lu&iacute;s Roberto Barroso, j. 1&ordm; jul. 2022.</span>
+    </div>
+
+    <div class="motivador">
+      <span class="rot">Texto IV</span>
+      <p>O mesmo texto legal recebeu dois nomes opostos. Para os &oacute;rg&atilde;os oficiais e para o
+        Congresso, &eacute; a <em>Lei Geral do Licenciamento Ambiental</em> &mdash; a Lei n&ordm; 15.190/2025,
+        originada do PL 2.159/2021, que unifica em um &uacute;nico diploma regras antes dispersas em
+        resolu&ccedil;&otilde;es do Conama, leis estaduais e normas municipais. Para organiza&ccedil;&otilde;es
+        ambientalistas e parte da oposi&ccedil;&atilde;o, &eacute; o <strong>&ldquo;PL da
+        Devasta&ccedil;&atilde;o&rdquo;</strong>. A mat&eacute;ria tramitou por cerca de duas d&eacute;cadas, foi
+        aprovada em julho de 2025, sancionada em agosto com dezenas de vetos, teve a quase totalidade desses vetos
+        derrubada pelo Congresso em novembro, entrou em vigor em fevereiro de 2026 e chegou ao Supremo Tribunal
+        Federal por meio das ADIs 7913, 7916 e 7919.</p>
+      <p>Os argumentos, em seus pr&oacute;prios termos:</p>
+      <ul>
+        <li><strong>Cr&iacute;ticos.</strong> Trata-se do maior afrouxamento da prote&ccedil;&atilde;o ambiental em
+          quatro d&eacute;cadas; a licen&ccedil;a por ades&atilde;o e compromisso equivale a autolicenciamento;
+          permitir que estados e munic&iacute;pios definam o que exige licen&ccedil;a fragmenta as normas e reduz a
+          transpar&ecirc;ncia, contrariando o pr&oacute;prio objetivo de simplifica&ccedil;&atilde;o; e a
+          aprova&ccedil;&atilde;o &agrave;s v&eacute;speras da COP30 exp&otilde;e a posi&ccedil;&atilde;o do Brasil
+          nas negocia&ccedil;&otilde;es clim&aacute;ticas.</li>
+        <li><strong>Defensores.</strong> O licenciamento brasileiro se tornara lento, imprevis&iacute;vel e caro,
+          com prazos indefinidos que travam obras de infraestrutura, saneamento e energia, inclusive de interesse
+          social; a lei re&uacute;ne regras dispersas e reduz a inseguran&ccedil;a jur&iacute;dica; procedimentos
+          simplificados para atividades de baixo impacto liberam o corpo t&eacute;cnico para os casos graves; e a
+          defini&ccedil;&atilde;o local de compet&ecirc;ncias respeita o pacto federativo.</li>
+      </ul>
+      <span class="fonte">Adaptado de material did&aacute;tico de Hist&oacute;ria, CERO, 2026, a partir da tramita&ccedil;&atilde;o legislativa e de notas de posicionamento das partes.</span>
+    </div>
+
+    <div class="motivador">
+      <span class="rot">Texto V</span>
+      <p>Entre os pontos mais contestados da nova lei est&aacute; a restri&ccedil;&atilde;o da consulta a povos
+        ind&iacute;genas e quilombolas apenas a terras j&aacute; homologadas ou tituladas. A quest&atilde;o
+        encontra terreno preparado: o percentual de reserva legal exigido no Cerrado fora da Amaz&ocirc;nia Legal
+        &eacute; substancialmente menor que o exigido na &aacute;rea florestal amaz&ocirc;nica. N&atilde;o &eacute;
+        erro t&eacute;cnico, e sim decis&atilde;o hist&oacute;rica, tomada quando a Amaz&ocirc;nia concentrava
+        aten&ccedil;&atilde;o internacional e o Cerrado era descrito como &aacute;rea de expans&atilde;o. Some-se a
+        assimetria de repercuss&atilde;o: uma queimada na Amaz&ocirc;nia vira not&iacute;cia internacional;
+        supress&atilde;o equivalente no Cerrado, raramente. Em Goi&aacute;s, comunidades como o territ&oacute;rio
+        quilombola Kalunga convivem h&aacute; d&eacute;cadas com a redefini&ccedil;&atilde;o dos limites de
+        unidades de conserva&ccedil;&atilde;o.</p>
+      <span class="fonte">Adaptado de material did&aacute;tico de Hist&oacute;ria, CERO, 2026.</span>
+    </div>
+  </section>
+
+  <!-- ================= 2 ================= -->
+  <section>
+    <h2 class="secao" id="t2" data-sum="O tema"><span class="num">2</span>O tema</h2>
+
+    <div class="tema-box">
+      <span class="rot">Tema da reda&ccedil;&atilde;o</span>
+      <p class="tema">Desafios para a efetiva&ccedil;&atilde;o do direito ao meio ambiente equilibrado como direito social no Brasil</p>
+    </div>
+
+    <p>O tema n&atilde;o pede que voc&ecirc; defenda a natureza. Pede que voc&ecirc; explique <strong>por que um
+      direito reconhecido como essencial &agrave; vida digna n&atilde;o recebe o mesmo tratamento pr&aacute;tico
+      que os demais direitos sociais</strong> &mdash; e o que fazer a respeito. A palavra &ldquo;desafios&rdquo;
+      indica que se espera diagn&oacute;stico; a palavra &ldquo;efetiva&ccedil;&atilde;o&rdquo; indica que o
+      problema n&atilde;o &eacute; a aus&ecirc;ncia de lei, mas a dist&acirc;ncia entre a lei e a realidade.</p>
+
+    <div class="alerta">
+      <span class="rot">Erro factual que vai custar caro</span>
+      <p>N&atilde;o escreva que &ldquo;o meio ambiente &eacute; um direito social previsto no art. 6&ordm; da
+        Constitui&ccedil;&atilde;o&rdquo;. Ele n&atilde;o est&aacute; l&aacute;. Repert&oacute;rio mal usado vale
+        menos que repert&oacute;rio nenhum. A formula&ccedil;&atilde;o correta &eacute;:</p>
+      <p><em>&ldquo;direito fundamental inscrito no art. 225, de natureza difusa, cuja efetiva&ccedil;&atilde;o
+        depende de pol&iacute;ticas p&uacute;blicas de car&aacute;ter social&rdquo;</em>.</p>
+    </div>
+  </section>
+
+  <!-- ================= 3 ================= -->
+  <section>
+    <h2 class="secao" id="t3" data-sum="Como se corrige hoje"><span class="num">3</span>Como o ENEM corrige hoje</h2>
+
+    <p class="lead">A estrutura da prova n&atilde;o mudou: continua a reda&ccedil;&atilde;o dissertativo-argumentativa,
+      corrigida pelas mesmas cinco compet&ecirc;ncias, com nota m&aacute;xima de 1000. O que mudou foi o
+      <strong>n&iacute;vel de exig&ecirc;ncia na aplica&ccedil;&atilde;o dos crit&eacute;rios</strong>: f&oacute;rmula
+      pronta, repert&oacute;rio decorado e argumento gen&eacute;rico deixaram de garantir nota alta. Abra cada
+      compet&ecirc;ncia para ver o que isso significa neste tema.</p>
+
+    <div class="comp">
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false"><span class="cn">1</span>Dom&iacute;nio da norma padr&atilde;o</button>
+      <div class="acc-body">
+        <p>Nada mudou aqui, mas o tema tem armadilhas pr&oacute;prias. Nomes de leis e institui&ccedil;&otilde;es
+          precisam vir escritos corretamente: <em>Constitui&ccedil;&atilde;o Federal de 1988</em>, <em>Supremo
+          Tribunal Federal</em>, <em>Ibama</em>, <em>ICMBio</em>. Sigla mal grafada n&atilde;o zera nada, mas sinaliza
+          ao corretor que o repert&oacute;rio foi decorado de ouvido.</p>
+        <p>Cuidado com a reg&ecirc;ncia de verbos que este tema atrai: <em>implicar</em> (algo, sem preposi&ccedil;&atilde;o),
+          <em>visar a</em> (no sentido de ter por objetivo), <em>obedecer a</em>. E com a concord&acirc;ncia em
+          sujeitos longos: &ldquo;a aus&ecirc;ncia de mecanismos constitucionais de financiamento da
+          fiscaliza&ccedil;&atilde;o ambiental <strong>compromete</strong>&rdquo; &mdash; n&atilde;o
+          &ldquo;comprometem&rdquo;.</p>
+      </div>
+    </div>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false"><span class="cn">2</span>Compreens&atilde;o do tema e repert&oacute;rio</button>
+      <div class="acc-body">
+        <p>Esta &eacute; a compet&ecirc;ncia onde a exig&ecirc;ncia mais subiu. N&atilde;o basta citar; o
+          repert&oacute;rio precisa ser <strong>leg&iacute;timo</strong> (fonte real e identific&aacute;vel),
+          <strong>pertinente</strong> (ligado ao recorte do tema) e <strong>produtivo</strong> (usado para sustentar
+          o argumento, n&atilde;o para enfeitar o par&aacute;grafo).</p>
+        <p>Compare:</p>
+        <div class="cita">
+          <p>Repert&oacute;rio improdutivo: &ldquo;Como afirma a Constitui&ccedil;&atilde;o de 1988, todos t&ecirc;m
+            direito ao meio ambiente equilibrado. Portanto, &eacute; preciso preservar.&rdquo;</p>
+          <p>Repert&oacute;rio produtivo: &ldquo;A Constitui&ccedil;&atilde;o de 1988 inscreveu o meio ambiente no
+            art. 225, e n&atilde;o entre os direitos sociais do art. 6&ordm;. A escolha de lugar no texto
+            constitucional antecipou a fragilidade posterior: sa&uacute;de e educa&ccedil;&atilde;o ganharam piso de
+            gasto obrigat&oacute;rio; a fiscaliza&ccedil;&atilde;o ambiental, n&atilde;o.&rdquo;</p>
+          <span class="fonte">O segundo trecho usa a mesma fonte para <em>sustentar uma tese</em>.</span>
+        </div>
+        <p>Fuja do &ldquo;tema paralelo&rdquo;: escrever sobre reciclagem, consumo consciente ou aquecimento global
+          em geral &eacute; tangenciar. O recorte &eacute; <em>efetiva&ccedil;&atilde;o de um direito</em>.</p>
+      </div>
+    </div>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false"><span class="cn">3</span>Projeto de texto e argumenta&ccedil;&atilde;o</button>
+      <div class="acc-body">
+        <p>&ldquo;Projeto de texto&rdquo; significa que d&aacute; para perceber, lendo, que voc&ecirc; sabia onde ia
+          chegar desde o primeiro par&aacute;grafo. Os dois desenvolvimentos precisam ser <strong>argumentos
+          diferentes</strong>, n&atilde;o o mesmo argumento com outras palavras.</p>
+        <p>Uma divis&atilde;o que funciona neste tema:</p>
+        <ul>
+          <li><strong>D1 &mdash; a fragilidade institucional.</strong> O direito existe, mas sem garantia de
+            financiamento e com &oacute;rg&atilde;os cuja atua&ccedil;&atilde;o depende da vontade de cada governo.
+            Repert&oacute;rio: art. 225 x art. 6&ordm;; ADPF 708.</li>
+          <li><strong>D2 &mdash; a desigualdade na distribui&ccedil;&atilde;o do dano.</strong> Quando o direito
+            falha, ele n&atilde;o falha igualmente para todos: a assimetria entre biomas e a restri&ccedil;&atilde;o
+            da consulta a comunidades tradicionais mostram quem paga a conta. Repert&oacute;rio: reserva legal do
+            Cerrado; Lei n&ordm; 15.190/2025.</li>
+        </ul>
+        <p>Repare que o segundo argumento &eacute; o que transforma a reda&ccedil;&atilde;o em texto sobre
+          <em>direito social</em>, e n&atilde;o sobre ecologia.</p>
+      </div>
+    </div>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false"><span class="cn">4</span>Coes&atilde;o e articula&ccedil;&atilde;o</button>
+      <div class="acc-body">
+        <p>Contar conectivos deixou de resolver. A avalia&ccedil;&atilde;o passou a considerar a articula&ccedil;&atilde;o
+          efetiva entre as partes: <strong>par&aacute;grafo que retoma o anterior</strong>, refer&ecirc;ncia
+          pronominal clara, substitui&ccedil;&otilde;es lexicais que evitam repeti&ccedil;&atilde;o.</p>
+        <p>Encher o texto de &ldquo;outrossim&rdquo;, &ldquo;destarte&rdquo; e &ldquo;ademais&rdquo; sem que as ideias
+          se liguem de fato produz o efeito inverso: sinaliza f&oacute;rmula. Prefira retomadas de conte&uacute;do
+          &mdash; &ldquo;essa fragilidade or&ccedil;ament&aacute;ria&rdquo;, &ldquo;tal assimetria&rdquo;,
+          &ldquo;a decis&atilde;o citada&rdquo; &mdash; que amarram os par&aacute;grafos pelo sentido.</p>
+        <p>Para variar o vocabul&aacute;rio sem repetir &ldquo;meio ambiente&rdquo; dez vezes: <em>patrim&ocirc;nio
+          natural, bem de uso comum do povo, prote&ccedil;&atilde;o ambiental, tutela ambiental, equil&iacute;brio
+          ecol&oacute;gico</em>.</p>
+      </div>
+    </div>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false"><span class="cn">5</span>Proposta de interven&ccedil;&atilde;o</button>
+      <div class="acc-body">
+        <p>Cinco elementos, todos detalhados: <strong>agente, a&ccedil;&atilde;o, meio, finalidade e
+          detalhamento</strong>. O que mudou &eacute; o rigor com o detalhamento &mdash; repetir a finalidade com
+          outras palavras n&atilde;o conta como detalhamento.</p>
+        <p>A vantagem deste tema: por tratar de direito social, ele pede instrumento de garantia, e n&atilde;o boa
+          vontade. Vincula&ccedil;&atilde;o or&ccedil;ament&aacute;ria, piso de gasto, indicador afer&iacute;vel,
+          &oacute;rg&atilde;o de controle &mdash; tudo isso &eacute; concreto e verific&aacute;vel.</p>
+        <p>Agentes plaus&iacute;veis: Congresso Nacional, Minist&eacute;rio do Meio Ambiente, Ibama, ICMBio, CONAMA,
+          &oacute;rg&atilde;os ambientais estaduais, Minist&eacute;rio P&uacute;blico, Defensoria P&uacute;blica.
+          Evite &ldquo;a sociedade&rdquo; e &ldquo;o governo&rdquo; sem especifica&ccedil;&atilde;o.</p>
+      </div>
+    </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 4 ================= -->
+  <section>
+    <h2 class="secao" id="t4" data-sum="Construindo o texto"><span class="num">4</span>Construindo o texto</h2>
+
+    <h3>Um esqueleto poss&iacute;vel</h3>
+    <ol class="roteiro">
+      <li><strong>Introdu&ccedil;&atilde;o.</strong> Contextualize com a escolha constitucional de 1988 (o meio
+        ambiente ficou no art. 225, fora da lista do art. 6&ordm;) e apresente a tese: o direito &eacute;
+        reconhecido, mas n&atilde;o recebe os instrumentos de garantia dos demais direitos essenciais.</li>
+      <li><strong>Desenvolvimento 1.</strong> A fragilidade institucional e or&ccedil;ament&aacute;ria. Use a ADPF
+        708 para mostrar que foi preciso uma decis&atilde;o do Supremo para obrigar o Executivo a executar recursos
+        j&aacute; destinados por lei.</li>
+      <li><strong>Desenvolvimento 2.</strong> A distribui&ccedil;&atilde;o desigual do dano. Use a assimetria da
+        reserva legal e a restri&ccedil;&atilde;o da consulta a comunidades tradicionais para mostrar quem suporta a
+        parcela maior do preju&iacute;zo.</li>
+      <li><strong>Conclus&atilde;o.</strong> Retome a tese em uma frase e apresente a proposta de
+        interven&ccedil;&atilde;o completa, com os cinco elementos.</li>
+    </ol>
+
+    <h3>Modelo de proposta de interven&ccedil;&atilde;o</h3>
+    <div class="intervencao">
+      <dl>
+        <dt>Agente</dt><dd>Congresso Nacional</dd>
+        <dt>A&ccedil;&atilde;o</dt><dd>estabelecer piso m&iacute;nimo de investimento em fiscaliza&ccedil;&atilde;o e prote&ccedil;&atilde;o ambiental</dd>
+        <dt>Meio</dt><dd>por emenda constitucional que vincule percentual da receita, nos moldes j&aacute; aplicados &agrave; sa&uacute;de e &agrave; educa&ccedil;&atilde;o</dd>
+        <dt>Finalidade</dt><dd>retirar a prote&ccedil;&atilde;o ambiental da discricionariedade or&ccedil;ament&aacute;ria de cada governo</dd>
+        <dt>Detalhamento</dt><dd>com publica&ccedil;&atilde;o anual de indicadores de fiscaliza&ccedil;&atilde;o desagregados por bioma, de modo que o Cerrado deixe de ser medido pelo padr&atilde;o amaz&ocirc;nico</dd>
+      </dl>
+      <p class="exemplo">Redigido: &ldquo;Cabe ao Congresso Nacional estabelecer piso m&iacute;nimo de investimento
+        em fiscaliza&ccedil;&atilde;o ambiental, por meio de emenda constitucional que vincule percentual da receita
+        &mdash; nos moldes j&aacute; aplicados &agrave; sa&uacute;de e &agrave; educa&ccedil;&atilde;o &mdash;, a fim
+        de retirar a tutela do patrim&ocirc;nio natural da discricionariedade or&ccedil;ament&aacute;ria de cada
+        governo, acompanhada da publica&ccedil;&atilde;o anual de indicadores desagregados por bioma, de modo que o
+        Cerrado deixe de ser avaliado pelo padr&atilde;o amaz&ocirc;nico.&rdquo;</p>
+    </div>
+
+    <div class="alerta">
+      <span class="rot">Armadilhas deste tema</span>
+      <ul>
+        <li><strong>Virar texto de ecologia.</strong> Se a sua reda&ccedil;&atilde;o funcionaria igual com o tema
+          &ldquo;a import&acirc;ncia de preservar o meio ambiente&rdquo;, ela tangenciou.</li>
+        <li><strong>Catastrofismo.</strong> &ldquo;O planeta vai acabar&rdquo; n&atilde;o &eacute; argumento; &eacute;
+          previs&atilde;o. Argumento se sustenta em fato datado e verific&aacute;vel.</li>
+        <li><strong>Culpar o indiv&iacute;duo.</strong> Reduzir o problema a &ldquo;falta de
+          conscientiza&ccedil;&atilde;o da popula&ccedil;&atilde;o&rdquo; contradiz a pr&oacute;pria ideia de direito
+          social, que &eacute; dever do Estado.</li>
+        <li><strong>Tomar partido sem reconstituir.</strong> Ao usar o caso da Lei n&ordm; 15.190/2025, apresente o
+          que a lei muda e quem sustenta o qu&ecirc;, antes de avaliar. O texto que s&oacute; xinga convence apenas
+          quem j&aacute; concordava.</li>
+        <li><strong>Adotar um dos dois nomes como se fosse descri&ccedil;&atilde;o.</strong> Escrever &ldquo;o PL da
+          Devasta&ccedil;&atilde;o&rdquo; sem aspas nem atribui&ccedil;&atilde;o entrega a an&aacute;lise antes de
+          come&ccedil;&aacute;-la; o mesmo vale para tratar &ldquo;moderniza&ccedil;&atilde;o&rdquo; como fato.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= 5 ================= -->
+  <section>
+    <h2 class="secao" id="t5" data-sum="Repertório disponível"><span class="num">5</span>Repert&oacute;rio dispon&iacute;vel</h2>
+
+    <p class="lead">Tudo o que est&aacute; abaixo veio do material do tema. &Eacute; repert&oacute;rio
+      leg&iacute;timo, datado e nomeado &mdash; exatamente o que a corre&ccedil;&atilde;o passou a premiar. Escolha
+      dois ou tr&ecirc;s e use-os bem; n&atilde;o tente citar todos.</p>
+
+    <div class="tabela-wrap">
+      <table>
+        <caption>Repert&oacute;rio por finalidade argumentativa</caption>
+        <thead>
+          <tr><th>Serve para argumentar que&hellip;</th><th>Repert&oacute;rio</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>o direito existe, mas sem instrumento de garantia equivalente</td>
+            <td>Art. 225 x art. 6&ordm; da CF/1988; aus&ecirc;ncia de piso constitucional de gasto ambiental</td>
+          </tr>
+          <tr>
+            <td>foi preciso o Judici&aacute;rio para obrigar o cumprimento</td>
+            <td>ADPF 708 (Fundo Clima), STF, 2022; ADIs 7913, 7916 e 7919 contra a Lei n&ordm; 15.190/2025</td>
+          </tr>
+          <tr>
+            <td>a estrutura de fiscaliza&ccedil;&atilde;o &eacute; recente e disputada</td>
+            <td>Lei n&ordm; 6.938/1981 (Pol&iacute;tica Nacional do Meio Ambiente e SISNAMA); Ibama, 1989; ICMBio, 2007</td>
+          </tr>
+          <tr>
+            <td>o dano se distribui de forma desigual</td>
+            <td>Reserva legal menor no Cerrado; restri&ccedil;&atilde;o da consulta a ind&iacute;genas e quilombolas; territ&oacute;rio Kalunga, em Goi&aacute;s</td>
+          </tr>
+          <tr>
+            <td>a lei muda conforme a correla&ccedil;&atilde;o de for&ccedil;as</td>
+            <td>C&oacute;digo Florestal em tr&ecirc;s reda&ccedil;&otilde;es: 1934, 1965 e 2012; vetos derrubados em 2025</td>
+          </tr>
+          <tr>
+            <td>o compromisso internacional cria obriga&ccedil;&atilde;o interna</td>
+            <td>Estocolmo, 1972; Rio-92 e as responsabilidades comuns, por&eacute;m diferenciadas; Acordo de Paris, 2015; COP30 no Brasil</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Antes de entregar</h3>
+    <ul class="checklist">
+      <li>A tese aparece no primeiro par&aacute;grafo e reaparece na conclus&atilde;o?</li>
+      <li>Os dois desenvolvimentos defendem coisas diferentes?</li>
+      <li>Cada repert&oacute;rio citado sustenta um argumento &mdash; ou est&aacute; s&oacute; enfeitando?</li>
+      <li>A proposta de interven&ccedil;&atilde;o tem os cinco elementos, e o detalhamento n&atilde;o repete a finalidade?</li>
+      <li>O agente da interven&ccedil;&atilde;o &eacute; um &oacute;rg&atilde;o nomeado, e n&atilde;o &ldquo;a sociedade&rdquo;?</li>
+      <li>Escrevi &ldquo;art. 225&rdquo; e n&atilde;o &ldquo;art. 6&ordm;&rdquo; ao me referir ao meio ambiente?</li>
+      <li>O texto tem entre 20 e 30 linhas e est&aacute; em terceira pessoa?</li>
+    </ul>
+  </section>
+
+  <!-- ================= 6 ================= -->
+  <section>
+    <h2 class="secao" id="t6" data-sum="Escrever e enviar"><span class="num">6</span>Escreva sua reda&ccedil;&atilde;o</h2>
+
+    <p class="lead">Digite abaixo o texto definitivo. O espa&ccedil;o tem <strong>30 linhas</strong>, contadas no
+      mesmo padr&atilde;o da folha oficial &mdash; ao chegar ao limite, o campo para de aceitar texto. Ao
+      finalizar, o sistema gera uma folha para salvar em PDF, com o seu nome, a turma e a data e hora do
+      envio.</p>
+
+    <div class="alerta">
+      <span class="rot">Aten&ccedil;&atilde;o</span>
+      <p>Copiar e colar est&aacute; desativado nesta &aacute;rea. O texto precisa ser digitado por voc&ecirc;.
+        Consulte os textos motivadores acima quantas vezes quiser, mas escreva com suas pr&oacute;prias
+        palavras &mdash; c&oacute;pia de trecho dos motivadores sem produ&ccedil;&atilde;o pr&oacute;pria zera a
+        reda&ccedil;&atilde;o.</p>
+    </div>
+
+    <div class="envio">
+      <div class="envio-campos">
+        <div class="campo">
+          <label class="campo-rot" for="campoNome">Nome completo</label>
+          <input type="text" id="campoNome" autocomplete="off" spellcheck="false" placeholder="Seu nome">
+        </div>
+        <div class="campo">
+          <label class="campo-rot" for="campoTurma">Turma</label>
+          <input type="text" id="campoTurma" autocomplete="off" spellcheck="false" placeholder="Ex.: 3&ordm; A">
+        </div>
+      </div>
+
+      <div class="folha-digital">
+        <label class="campo-rot" for="txtRedacao">Texto definitivo</label>
+        <div class="folha-caixa">
+          <div class="folha-num" id="folhaNum" aria-hidden="true"><div class="fn-in" id="folhaNumIn"></div></div>
+          <textarea id="txtRedacao" rows="19" spellcheck="true"
+            placeholder="Comece a escrever aqui&hellip;"
+            aria-describedby="contadorLinhas"></textarea>
+        </div>
+      </div>
+
+      <div class="envio-barra">
+        <p class="contador" id="contadorLinhas">
+          <b><span id="numLinhas">0</span> de 30</b> linhas
+          <span class="aviso" id="avisoLinhas">M&iacute;nimo de 8 linhas para envio.</span>
+          <span class="linha-atual" id="linhaAtual"></span>
+        </p>
+        <button class="btn-envio" id="btnEnviar" type="button" disabled>Finalizar e salvar em PDF</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p><strong>Col&eacute;gio Estadual Rodolfo de Oliveira &middot; CERO &middot; 2026</strong><br>
+  Hist&oacute;ria &mdash; 3&ordf; s&eacute;rie do Ensino M&eacute;dio &middot; Habilidade EM13CHS305 (BNCC / DC-GO)<br>
+  Proposta de reda&ccedil;&atilde;o elaborada pelo Prof. Claudio</p>
+</footer>
+
+<div id="folhaEnvio" aria-hidden="true">
+  <div class="fe-cab">
+    <p class="fe-escola">Col&eacute;gio Estadual Rodolfo de Oliveira &middot; CERO &middot; 2026</p>
+    <p class="fe-disc">Hist&oacute;ria &middot; 3&ordf; s&eacute;rie do Ensino M&eacute;dio &middot; EM13CHS305 &middot; Prof. Claudio</p>
+  </div>
+  <p class="fe-tema">Desafios para a efetiva&ccedil;&atilde;o do direito ao meio ambiente equilibrado como direito social no Brasil</p>
+  <div class="fe-id">
+    <span><b>Aluno(a):</b> <span id="feNome"></span></span>
+    <span><b>Turma:</b> <span id="feTurma"></span></span>
+    <span><b>Envio:</b> <span id="feData"></span></span>
+    <span><b>Linhas:</b> <span id="feLinhas"></span></span>
+  </div>
+  <div class="fe-linhas" id="feLinhasBox"></div>
+  <div class="fe-rod">
+    <span>C&oacute;digo de verifica&ccedil;&atilde;o: <strong id="feCodigo"></strong></span>
+    <span>Texto digitado na p&aacute;gina da proposta &middot; cola desativada</span>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="pdf-overlay" id="pdfOverlay" aria-hidden="true">
+  <div class="pdf-cx">
+    <h4>Gerando o PDF&hellip;</h4>
+    <p id="pdfMsg">Preparando a folha.</p>
+    <div class="pdf-barra"><span id="pdfProg"></span></div>
+  </div>
+</div>
+
+<script>
+
+(function(){
+  var d = document, raiz = d.documentElement;
+
+  var topbar = d.querySelector('.topbar');
+  function medirTopbar(){
+    if(!topbar) return;
+    raiz.style.setProperty('--topbar-h', Math.round(topbar.getBoundingClientRect().height) + 'px');
+  }
+  medirTopbar();
+  window.addEventListener('resize', medirTopbar);
+  window.addEventListener('orientationchange', medirTopbar);
+  if(d.fonts && d.fonts.ready){ d.fonts.ready.then(medirTopbar); }
+
+  function marcarTabelas(){
+    d.querySelectorAll('.tabela-wrap').forEach(function(w){
+      w.classList.toggle('tem-scroll', w.scrollWidth > w.clientWidth + 2);
+    });
+  }
+  window.addEventListener('resize', marcarTabelas);
+  window.addEventListener('load', marcarTabelas);
+  marcarTabelas();
+
+  d.querySelectorAll('.acc-head').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var aberto = btn.parentElement.classList.toggle('aberto');
+      btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      if(aberto) setTimeout(marcarTabelas, 0);
+    });
+  });
+
+  function escapar(t){
+    return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  var chips = d.getElementById('sumChips');
+  var box   = d.getElementById('sumBox');
+  var bt    = d.getElementById('sumToggle');
+
+  function fecharTrilha(){
+    if(!box || !box.classList.contains('aberto')) return;
+    box.classList.remove('aberto');
+    bt.setAttribute('aria-expanded','false');
+  }
+
+  if(chips){
+    d.querySelectorAll('h2.secao[id]').forEach(function(h){
+      var n = h.querySelector('.num');
+      var texto = h.dataset.sum;
+      if(!texto){
+        texto = h.textContent.replace(n ? n.textContent : '', '').trim();
+      }
+      var a = d.createElement('a');
+      a.href = '#' + h.id;
+      a.innerHTML = '<b>' + (n ? n.textContent : '') + '</b>' + escapar(texto);
+      a.style.setProperty('--i', chips.children.length);
+      chips.appendChild(a);
+    });
+    var cont = d.getElementById('sumCount');
+    if(cont) cont.textContent = chips.children.length;
+
+    if(bt && box){
+      bt.addEventListener('click', function(e){
+        e.stopPropagation();
+        var aberto = box.classList.toggle('aberto');
+        bt.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+        if(aberto) medirTopbar();
+      });
+      chips.addEventListener('click', function(e){ if(e.target.closest('a')) fecharTrilha(); });
+      d.addEventListener('click', function(e){
+        if(box.classList.contains('aberto') && !box.contains(e.target)) fecharTrilha();
+      });
+      window.addEventListener('resize', fecharTrilha);
+    }
+  }
+
+  d.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' || e.key === 'Esc') fecharTrilha();
+  });
+
+  var barra = d.getElementById('barraProgresso');
+  if(barra){
+    var pedido = false;
+    function atualizarProgresso(){
+      pedido = false;
+      var alt = raiz.scrollHeight - window.innerHeight;
+      var pct = alt > 0 ? (window.pageYOffset / alt) * 100 : 0;
+      barra.style.width = Math.min(100, Math.max(0, pct)) + '%';
+    }
+    function agendar(){
+      if(pedido) return;
+      pedido = true;
+      window.requestAnimationFrame(atualizarProgresso);
+    }
+    window.addEventListener('scroll', agendar, {passive:true});
+    window.addEventListener('resize', agendar);
+    window.addEventListener('load', agendar);
+    atualizarProgresso();
+  }
+})();
+
+
+/* ================= ÁREA DE ESCRITA, ANTICOLA E EXPORTAÇÃO ================= */
+(function(){
+  var d = document;
+  var ta = d.getElementById('txtRedacao');
+  if(!ta) return;
+
+  var MAX = 30, MIN = 8;
+  var LARGURA_CANON = 640;                                   /* px: largura da linha na folha */
+  var FONTE_CANON = '17px "Source Serif 4", Georgia, serif';
+
+  var nome  = d.getElementById('campoNome');
+  var turma = d.getElementById('campoTurma');
+  var btn   = d.getElementById('btnEnviar');
+  var elN   = d.getElementById('numLinhas');
+  var elAv  = d.getElementById('avisoLinhas');
+  var elLa  = d.getElementById('linhaAtual');
+  var numIn = d.getElementById('folhaNumIn');
+  var numBx = d.getElementById('folhaNum');
+  var cont  = d.getElementById('contadorLinhas');
+  var toast = d.getElementById('toast');
+
+  /* ---------------------------------------------------------------
+     A quebra de linha e feita pelo proprio navegador, num espelho
+     invisivel com a largura exata da folha. Assim a linha contada, a
+     linha vista na tela e a linha do PDF sao sempre a mesma coisa.
+     --------------------------------------------------------------- */
+  var espelho = d.createElement('div');
+  espelho.setAttribute('aria-hidden', 'true');
+  espelho.style.cssText =
+    'position:absolute;left:-99999px;top:0;visibility:hidden;' +
+    'width:' + LARGURA_CANON + 'px;padding:0;margin:0;border:0;' +
+    'font:' + FONTE_CANON + ';line-height:26px;' +
+    'white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;';
+  d.body.appendChild(espelho);
+
+  var faixa = d.createRange();
+  var EPS = 2;
+
+  /* topos das linhas ocupadas pelos primeiros `m` caracteres */
+  function toposAte(no, m){
+    if(m <= 0) return [];
+    faixa.setStart(no, 0);
+    faixa.setEnd(no, m);
+    var rects = faixa.getClientRects(), tops = [];
+    for(var i = 0; i < rects.length; i++){
+      var t = rects[i].top;
+      if(!tops.length || Math.abs(t - tops[tops.length - 1]) > EPS) tops.push(t);
+    }
+    return tops;
+  }
+
+  function quebrarParagrafo(par){
+    if(par === '') return [''];
+    espelho.textContent = par;
+    var no = espelho.firstChild;
+    if(!no) return [par];
+
+    var tops = toposAte(no, par.length);
+    if(tops.length <= 1) return [par];
+
+    var saida = [], ini = 0;
+    for(var k = 1; k < tops.length; k++){
+      var alvo = tops[k];
+      var lo = ini + 1, hi = par.length, m = par.length;
+      while(lo <= hi){                       /* primeiro caractere da linha k */
+        var mid = (lo + hi) >> 1;
+        var lr = toposAte(no, mid);
+        var ultimo = lr.length ? lr[lr.length - 1] : tops[0];
+        if(ultimo >= alvo - EPS){ m = mid; hi = mid - 1; } else { lo = mid + 1; }
+      }
+      var corte = Math.max(ini, m - 1);
+      saida.push(par.slice(ini, corte).replace(/\s+$/, ''));
+      ini = corte;
+      while(/\s/.test(par.charAt(ini) || '')) ini++;   /* linha nao comeca com espaco */
+    }
+    saida.push(par.slice(ini).replace(/\s+$/, ''));
+    return saida;
+  }
+
+  /* duas memorias: o texto inteiro e o trecho ate o cursor.
+     Sem isso, uma chamada invalidaria a outra a cada tecla. */
+  var memoria = [{t:null, l:null}, {t:null, l:null}];
+
+  function quebrarCom(txt, slot){
+    txt = String(txt);
+    var m = memoria[slot];
+    if(txt === m.t) return m.l;
+    var linhas = [];
+    txt.split('\n').forEach(function(par){
+      linhas = linhas.concat(quebrarParagrafo(par));
+    });
+    m.t = txt; m.l = linhas;
+    return linhas;
+  }
+  function quebrar(txt){ return quebrarCom(txt, 0); }
+
+  /* a fonte da web muda a medida: recalcula quando ela terminar de carregar */
+  if(d.fonts && d.fonts.ready){
+    d.fonts.ready.then(function(){
+      memoria[0].t = null; memoria[1].t = null;
+      atualizar();
+    });
+  }
+
+  var ultimoBom = '';
+
+  /* ---- margem numerada de 1 a 30 ---- */
+  var celulas = [];
+  (function montarNumeros(){
+    if(!numIn) return;
+    for(var i = 1; i <= MAX; i++){
+      var sp = d.createElement('span');
+      sp.textContent = i;
+      numIn.appendChild(sp);
+      celulas.push(sp);
+    }
+  })();
+
+  function sincronizarRolagem(){
+    if(numIn) numIn.style.transform = 'translateY(' + (-ta.scrollTop) + 'px)';
+  }
+  ta.addEventListener('scroll', sincronizarRolagem, {passive:true});
+
+  function linhaDoCursor(){
+    var pos = ta.selectionStart;
+    if(pos == null) return 0;
+    if(pos === 0) return 1;
+    return quebrarCom(ta.value.slice(0, pos), 1).length;
+  }
+
+  function pintarNumeros(usadas, atual){
+    for(var i = 0; i < celulas.length; i++){
+      celulas[i].classList.toggle('cheia', i < usadas);
+      celulas[i].classList.toggle('atual', (i + 1) === atual);
+    }
+  }
+
+  function avisar(msg){
+    if(!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('ativo');
+    clearTimeout(avisar._t);
+    avisar._t = setTimeout(function(){ toast.classList.remove('ativo'); }, 2600);
+  }
+
+  function atualizar(){
+    var linhas = quebrar(ta.value);
+    var n = ta.value.trim() === '' ? 0 : linhas.length;
+    elN.textContent = n;
+    cont.classList.toggle('limite', n >= MAX);
+
+    if(n === 0)            elAv.textContent = 'M\u00ednimo de 8 linhas para envio.';
+    else if(n < MIN)       elAv.textContent = 'Faltam ' + (MIN - n) + ' linha(s) para o m\u00ednimo.';
+    else if(n >= MAX)      elAv.textContent = 'Limite de 30 linhas atingido.';
+    else                   elAv.textContent = 'Restam ' + (MAX - n) + ' linha(s).';
+
+    var atual = d.activeElement === ta ? Math.min(linhaDoCursor(), MAX) : 0;
+    pintarNumeros(n, atual);
+    if(elLa) elLa.textContent = atual ? ('Cursor na linha ' + atual + '.') : '';
+    sincronizarRolagem();
+
+    var ok = n >= MIN && nome.value.trim().length >= 3 && turma.value.trim().length >= 1;
+    btn.disabled = !ok;
+    return n;
+  }
+
+  ['click','keyup','select','focus','blur'].forEach(function(ev){
+    ta.addEventListener(ev, atualizar);
+  });
+
+  /* ---- limite de 30 linhas ---- */
+  ta.addEventListener('input', function(){
+    if(quebrar(ta.value).length > MAX){
+      var pos = ta.selectionStart;
+      ta.value = ultimoBom;
+      try{ ta.setSelectionRange(Math.min(pos, ultimoBom.length), Math.min(pos, ultimoBom.length)); }catch(e){}
+      avisar('Limite de 30 linhas atingido.');
+    } else {
+      ultimoBom = ta.value;
+    }
+    atualizar();
+  });
+
+  [nome, turma].forEach(function(c){ c.addEventListener('input', atualizar); });
+
+  /* ---- anticola ---- */
+  function bloquear(e){
+    e.preventDefault();
+    avisar('Copiar e colar est\u00e1 desativado nesta atividade.');
+    return false;
+  }
+  ['paste','copy','cut','drop','dragstart','dragover','contextmenu'].forEach(function(ev){
+    ta.addEventListener(ev, bloquear);
+  });
+
+  ta.addEventListener('beforeinput', function(e){
+    if(e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop' ||
+       e.inputType === 'insertFromPasteAsQuotation'){
+      e.preventDefault();
+      avisar('Copiar e colar est\u00e1 desativado nesta atividade.');
+    }
+  });
+
+  /* painel de \u00e1rea de transfer\u00eancia do Android insere blocos sem disparar beforeinput */
+  var anterior = '';
+  ta.addEventListener('input', function(e){
+    if(e.inputType === 'insertReplacementText'){ anterior = ta.value; return; }  /* autocorre\u00e7\u00e3o: liberado */
+    var delta = ta.value.length - anterior.length;
+    if(delta >= 25){
+      ta.value = anterior;
+      ultimoBom = anterior;
+      avisar('Inser\u00e7\u00e3o de bloco de texto bloqueada.');
+      atualizar();
+      return;
+    }
+    anterior = ta.value;
+  });
+
+  /* ---- c\u00f3digo de verifica\u00e7\u00e3o ---- */
+  function codigo(str){
+    var h = 5381;
+    for(var i = 0; i < str.length; i++){ h = ((h << 5) + h + str.charCodeAt(i)) >>> 0; }
+    return ('000000' + h.toString(36).toUpperCase()).slice(-7);
+  }
+
+  function agora(){
+    var dt = new Date();
+    function z(v){ return (v < 10 ? '0' : '') + v; }
+    return z(dt.getDate()) + '/' + z(dt.getMonth()+1) + '/' + dt.getFullYear() +
+           ' \u00e0s ' + z(dt.getHours()) + ':' + z(dt.getMinutes());
+  }
+
+  /* ---- montar a folha e imprimir ---- */
+  /* ================= EXPORTACAO EM PDF (1 PAGINA) ================= */
+  /* Renderiza uma folha propria fora da tela em largura fixa e a converte
+     em imagem: o resultado e identico no celular e no PC, e nao depende do
+     dialogo de impressao do navegador. */
+
+  var overlay = d.getElementById('pdfOverlay');
+  var pdfProg = d.getElementById('pdfProg');
+  var pdfMsg  = d.getElementById('pdfMsg');
+
+  function progresso(pct, msg){
+    if(pdfProg) pdfProg.style.width = pct + '%';
+    if(pdfMsg && msg) pdfMsg.textContent = msg;
+  }
+  function abrirOverlay(){
+    if(!overlay) return;
+    overlay.classList.add('ativo');
+    overlay.setAttribute('aria-hidden','false');
+    progresso(0, 'Preparando a folha.');
+  }
+  function fecharOverlay(){
+    if(!overlay) return;
+    overlay.classList.remove('ativo');
+    overlay.setAttribute('aria-hidden','true');
+  }
+  function esperar(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+  function esc(t){
+    return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  /* folha de exportacao: medidas em px, independentes do CSS de impressao */
+  function montarFolha(dados){
+    var L = '';
+    for(var i = 0; i < MAX; i++){
+      L += '<div style="display:flex;align-items:flex-end;height:26px;' +
+           'border-bottom:1px solid #9a9a9a;">' +
+             '<span style="flex:0 0 26px;text-align:right;padding-right:9px;font-size:10px;' +
+             'line-height:26px;color:#8a8a8a;font-family:Georgia,serif;">' + (i+1) + '</span>' +
+             '<span style="flex:1 1 auto;font-family:\'Source Serif 4\',Georgia,serif;' +
+             'font-size:15px;line-height:24px;white-space:pre;overflow:hidden;color:#2b2b2b;">' +
+             esc(dados.linhas[i] || '') + '</span>' +
+           '</div>';
+    }
+
+    var el = d.createElement('div');
+    el.style.cssText = 'position:absolute;left:-99999px;top:0;width:700px;' +
+      'background:#ffffff;padding:26px 28px;box-sizing:border-box;';
+    el.innerHTML =
+      '<div style="border-bottom:2px solid #B4532A;padding-bottom:6px;margin-bottom:10px;">' +
+        '<div style="font-family:\'Playfair Display\',Georgia,serif;font-size:13px;' +
+        'letter-spacing:1.4px;text-transform:uppercase;color:#0f3d3e;">' +
+        'Col&eacute;gio Estadual Rodolfo de Oliveira &middot; CERO &middot; 2026</div>' +
+        '<div style="font-size:11px;color:#5d5d5d;margin-top:2px;font-family:Georgia,serif;">' +
+        'Hist&oacute;ria &middot; 3&ordf; s&eacute;rie do Ensino M&eacute;dio &middot; EM13CHS305 &middot; Prof. Claudio</div>' +
+      '</div>' +
+      '<div style="font-family:\'Playfair Display\',Georgia,serif;font-size:15px;color:#0f3d3e;' +
+      'line-height:1.3;margin:0 0 10px;">' + esc(dados.tema) + '</div>' +
+      '<div style="font-size:11.5px;color:#2b2b2b;font-family:Georgia,serif;padding:7px 0;' +
+      'border-top:1px solid #d8d0be;border-bottom:1px solid #d8d0be;margin-bottom:16px;">' +
+        '<span style="display:inline-block;margin-right:20px;">' +
+          '<b style="color:#0f3d3e;">Aluno(a):</b> ' + esc(dados.nome) + '</span>' +
+        '<span style="display:inline-block;margin-right:20px;white-space:nowrap;">' +
+          '<b style="color:#0f3d3e;">Turma:</b> ' + esc(dados.turma) + '</span>' +
+        '<span style="display:inline-block;margin-right:20px;white-space:nowrap;">' +
+          '<b style="color:#0f3d3e;">Envio:</b> ' + esc(dados.carimbo) + '</span>' +
+        '<span style="display:inline-block;white-space:nowrap;">' +
+          '<b style="color:#0f3d3e;">Linhas:</b> ' + dados.usadas + ' de 30</span>' +
+      '</div>' +
+      '<div>' + L + '</div>' +
+      '<div style="margin-top:12px;padding-top:7px;border-top:1px solid #d8d0be;' +
+      'display:flex;justify-content:space-between;gap:16px;font-size:10px;color:#5d5d5d;' +
+      'font-family:Georgia,serif;">' +
+        '<span>C&oacute;digo de verifica&ccedil;&atilde;o: <b>' + esc(dados.cod) + '</b></span>' +
+        '<span>Texto digitado na p&aacute;gina da proposta &middot; cola desativada</span>' +
+      '</div>';
+    return el;
+  }
+
+  function nomeArquivo(dados){
+    var base = 'Redacao - ' + dados.nome + ' - ' + dados.turma;
+    return base.replace(/[\\/:*?"<>|]/g, '-').replace(/\s+/g, ' ').trim() + '.pdf';
+  }
+
+  /* plano B: se as bibliotecas nao carregarem, usa a impressao do navegador */
+  function exportarPorImpressao(dados){
+    d.getElementById('feNome').textContent   = dados.nome;
+    d.getElementById('feTurma').textContent  = dados.turma;
+    d.getElementById('feData').textContent   = dados.carimbo;
+    d.getElementById('feLinhas').textContent = dados.usadas + ' de 30';
+    d.getElementById('feCodigo').textContent = dados.cod;
+    var cx = d.getElementById('feLinhasBox');
+    cx.innerHTML = '';
+    for(var i = 0; i < MAX; i++){
+      var l = d.createElement('div'); l.className = 'fe-l';
+      var n = d.createElement('span'); n.className = 'fe-n'; n.textContent = (i + 1);
+      var t = d.createElement('span'); t.className = 'fe-t'; t.textContent = dados.linhas[i] || '';
+      l.appendChild(n); l.appendChild(t); cx.appendChild(l);
+    }
+    d.body.classList.add('modo-envio');
+    setTimeout(function(){
+      window.print();
+      setTimeout(function(){ d.body.classList.remove('modo-envio'); }, 1200);
+    }, 80);
+  }
+  window.addEventListener('afterprint', function(){ d.body.classList.remove('modo-envio'); });
+
+  btn.addEventListener('click', function(){
+    var linhas = quebrar(ta.value);
+    if(linhas.length < MIN){ avisar('Escreva pelo menos 8 linhas.'); return; }
+
+    var carimbo = agora();
+    var dados = {
+      nome:   nome.value.trim(),
+      turma:  turma.value.trim(),
+      carimbo:carimbo,
+      usadas: linhas.length,
+      linhas: linhas,
+      tema:   'Desafios para a efetiva\u00e7\u00e3o do direito ao meio ambiente equilibrado como direito social no Brasil',
+      cod:    codigo(nome.value.trim() + '|' + turma.value.trim() + '|' + carimbo + '|' + ta.value)
+    };
+
+    if(!window.html2canvas || !window.jspdf){
+      avisar('Gerando pela impress\u00e3o do navegador.');
+      exportarPorImpressao(dados);
+      return;
+    }
+
+    btn.disabled = true;
+    abrirOverlay();
+
+    var folha = montarFolha(dados);
+    d.body.appendChild(folha);
+
+    var prontas = (d.fonts && d.fonts.ready) ? d.fonts.ready : Promise.resolve();
+
+    prontas.then(function(){
+      progresso(20, 'Desenhando a folha.');
+      return esperar(120);
+    }).then(function(){
+      return window.html2canvas(folha, {
+        scale: 2, backgroundColor: '#ffffff', logging: false,
+        windowWidth: 900, scrollX: 0, scrollY: 0
+      });
+    }).then(function(canvas){
+      progresso(70, 'Montando o PDF.');
+      var jsPDF = window.jspdf.jsPDF;
+      var pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      var PW = pdf.internal.pageSize.getWidth();
+      var PH = pdf.internal.pageSize.getHeight();
+      var M  = 12;
+      var maxW = PW - M * 2, maxH = PH - M * 2;
+
+      /* encaixa a folha inteira em uma unica pagina */
+      var escala = Math.min(maxW / canvas.width, maxH / canvas.height);
+      var w = canvas.width * escala, h = canvas.height * escala;
+      var x = (PW - w) / 2, y = M;
+
+      pdf.addImage(canvas.toDataURL('image/jpeg', 0.94), 'JPEG', x, y, w, h);
+      progresso(95, 'Salvando.');
+      pdf.save(nomeArquivo(dados));
+      return esperar(300);
+    }).then(function(){
+      progresso(100, 'Pronto.');
+      return esperar(300);
+    })['catch'](function(err){
+      avisar('N\u00e3o foi poss\u00edvel gerar o arquivo. Tentando pela impress\u00e3o.');
+      exportarPorImpressao(dados);
+    }).then(function(){
+      if(folha.parentNode) folha.parentNode.removeChild(folha);
+      fecharOverlay();
+      btn.disabled = false;
+      atualizar();
+    });
+  });
+
+  atualizar();
+})();
+
+</script>
+</body>
+</html>
