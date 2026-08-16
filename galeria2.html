@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Galeria de slides — Desenvolver a que custo? Governos populistas, desenvolvimentismo e a questão ambiental (1946–1964). Habilidade GO-EMCHS305A.">
+<meta name="theme-color" content="#26402f">
+<title>Galeria de slides — Desenvolver a que custo? · GO-EMCHS305A</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --petroleo:#26402f;
+  --petroleo-claro:#3d6349;
+  --terracota:#a8551d;
+  --terracota-claro:#cf8145;
+  --areia:#f6f2e9;
+  --areia-escura:#e8e0d0;
+  --grafite:#2b2b2b;
+  --cinza:#5d5d5d;
+  --musgo:#6b7a3f;
+  --borda:#d8d0be;
+  --branco:#fffdf9;
+  --serif-titulo:'Playfair Display',Georgia,serif;
+  --serif-corpo:'Source Serif 4',Georgia,serif;
+  --mono:'Space Mono',monospace;
+  --raio:10px;
+  --sombra:0 2px 10px rgba(15,61,62,.12);
+  --medida:1180px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;background:var(--areia);color:var(--grafite);
+  font-family:var(--serif-corpo);font-size:16px;line-height:1.65;
+}
+img{max-width:100%;display:block;}
+
+.papel{
+  background-image:
+    linear-gradient(rgba(38,64,47,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(38,64,47,.05) 1px, transparent 1px);
+  background-size:26px 26px;
+}
+
+header.topo{
+  background:var(--petroleo);color:var(--areia);
+  padding:44px 24px 38px;position:relative;overflow:hidden;
+}
+header.topo::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(246,242,233,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246,242,233,.06) 1px, transparent 1px);
+  background-size:24px 24px;pointer-events:none;
+}
+.topo-inner{max-width:var(--medida);margin:0 auto;position:relative;}
+.eyebrow{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:#e0c9a8;margin:0 0 10px;
+}
+header.topo h1{
+  font-family:var(--serif-titulo);font-size:clamp(1.7rem,4vw,2.7rem);
+  margin:0 0 10px;line-height:1.15;max-width:760px;
+}
+header.topo p.sub{
+  max-width:640px;font-size:1.02rem;color:#d9e0d2;margin:0 0 18px;
+}
+.selo-fila{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.selo{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid rgba(246,242,233,.35);color:#f0e6d2;padding:5px 11px;border-radius:100px;
+}
+
+main{max-width:var(--medida);margin:0 auto;padding:36px 24px 80px;}
+
+.instrucao{
+  display:flex;align-items:center;gap:14px;background:var(--branco);
+  border:1px solid var(--borda);border-left:5px solid var(--terracota);
+  border-radius:var(--raio);padding:15px 20px;margin-bottom:30px;box-shadow:var(--sombra);
+  font-size:.95rem;color:var(--cinza);
+}
+.instrucao b{color:var(--petroleo);font-family:var(--serif-titulo);font-weight:700;}
+.instrucao .ic{
+  flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--musgo);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;
+}
+
+.grade{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px;
+}
+.card{
+  background:var(--branco);border:1px solid var(--borda);border-radius:var(--raio);
+  overflow:hidden;box-shadow:var(--sombra);cursor:pointer;position:relative;
+  transition:transform .16s ease, box-shadow .16s ease;
+  display:flex;flex-direction:column;text-align:left;padding:0;
+  font-family:inherit;color:inherit;
+}
+.card:hover, .card:focus-visible{
+  transform:translateY(-4px);box-shadow:0 10px 24px rgba(15,61,62,.20);
+  outline:none;
+}
+.card:focus-visible{outline:3px solid var(--terracota);outline-offset:2px;}
+.card .num{
+  position:absolute;top:10px;left:10px;z-index:2;
+  font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--areia);
+  background:rgba(38,64,47,.82);padding:3px 9px;border-radius:100px;letter-spacing:.04em;
+}
+.card .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--areia-escura);}
+.card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease;}
+.card:hover .thumb img{transform:scale(1.045);}
+.card .thumb::after{
+  content:'clique para abrir';font-family:var(--mono);font-size:.66rem;letter-spacing:.05em;
+  color:#fff;background:rgba(38,64,47,.85);position:absolute;right:8px;bottom:8px;
+  padding:4px 9px;border-radius:100px;opacity:0;transition:opacity .16s ease;text-transform:uppercase;
+}
+.card:hover .thumb::after,.card:focus-visible .thumb::after{opacity:1;}
+.card .info{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column;gap:6px;}
+.card .grupo{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;color:var(--terracota);
+}
+.card h3{
+  font-family:var(--serif-titulo);font-size:1.02rem;line-height:1.28;color:var(--petroleo);
+  margin:0;font-weight:700;
+}
+
+/* ---------- MODAL ---------- */
+.fundo-modal{
+  position:fixed;inset:0;background:rgba(20,26,20,.72);
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:26px 16px;overflow-y:auto;z-index:100;
+  opacity:0;pointer-events:none;transition:opacity .18s ease;
+}
+.fundo-modal.ativo{opacity:1;pointer-events:auto;}
+.modal{
+  background:var(--branco);border-radius:14px;max-width:760px;width:100%;
+  margin:auto;box-shadow:0 20px 60px rgba(0,0,0,.35);overflow:hidden;
+  transform:translateY(14px);transition:transform .18s ease;
+}
+.fundo-modal.ativo .modal{transform:translateY(0);}
+.modal-topo{position:relative;background:var(--petroleo);}
+.modal-topo img{width:100%;display:block;}
+.fechar-modal{
+  position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;
+  background:rgba(20,26,20,.75);color:#fff;border:0;font-size:1.2rem;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.fechar-modal:hover{background:var(--terracota);}
+.modal-corpo{padding:26px 28px 28px;}
+.modal-corpo .grupo{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--terracota);
+  margin-bottom:6px;display:block;
+}
+.modal-corpo h2{
+  font-family:var(--serif-titulo);color:var(--petroleo);font-size:1.5rem;margin:0 0 14px;line-height:1.2;
+}
+.modal-corpo p.curto{font-size:1.02rem;color:var(--grafite);margin:0 0 20px;}
+.modal-acoes{display:flex;flex-wrap:wrap;gap:12px;}
+.btn{
+  font-family:var(--serif-corpo);font-weight:600;font-size:.94rem;
+  border-radius:100px;padding:11px 22px;border:1px solid var(--petroleo);cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+}
+.btn-primario{background:var(--petroleo);color:var(--areia);}
+.btn-primario:hover{background:var(--petroleo-claro);}
+.btn-secundario{background:transparent;color:var(--petroleo);border-color:var(--borda);}
+.btn-secundario:hover{border-color:var(--petroleo);}
+
+/* rodape */
+footer{
+  text-align:center;padding:26px 20px 40px;color:var(--cinza);font-size:.82rem;
+  font-family:var(--mono);letter-spacing:.03em;
+}
+
+@media (max-width:480px){
+  header.topo{padding:34px 18px 28px;}
+  .grade{grid-template-columns:1fr 1fr;gap:14px;}
+  .card h3{font-size:.88rem;}
+  .modal-corpo{padding:20px 18px 22px;}
+}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-inner">
+    <p class="eyebrow">História · 3ª série EM · CERO · Habilidade GO-EMCHS305A</p>
+    <h1>Desenvolver a que custo?</h1>
+    <p class="sub">Governos populistas, desenvolvimentismo e a questão ambiental (1946–1964). Clique em qualquer slide para abrir o resumo e o fichamento temático completo.</p>
+    <div class="selo-fila">
+      <span class="selo">8 slides principais</span>
+      <span class="selo">Fichamentos integrados</span>
+      <span class="selo">Foco ENEM</span>
+    </div>
+  </div>
+</header>
+
+<main class="papel">
+  <div class="instrucao">
+    <span class="ic">i</span>
+    <div><b>Como usar:</b> clique em um slide para abrir a síntese explicativa. Para consultar os conceitos aprofundados, clique no botão <b>“Ler o fichamento completo”</b> dentro do painel.</div>
+  </div>
+
+  <div class="grade" id="grade"></div>
+</main>
+
+<footer>
+  História — 3ª série EM · Colégio Estadual Rodolfo de Oliveira · Habilidade GO-EMCHS305A (BNCC / DC-GO)
+</footer>
+
+<div class="fundo-modal" id="fundoModal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+    <div class="modal-topo">
+      <button class="fechar-modal" id="fecharModal" aria-label="Fechar">×</button>
+      <img id="modalImg" src="" alt="">
+    </div>
+    <div class="modal-corpo">
+      <span class="grupo" id="modalGrupo"></span>
+      <h2 id="modalTitulo"></h2>
+      <p class="curto" id="modalCurto"></p>
+      <div class="modal-acoes">
+        <button class="btn btn-primario" id="btnFicha">Ler o fichamento completo ↗</button>
+        <button class="btn btn-secundario" id="btnFecharBaixo">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var SLIDES = [
+{
+  arquivo:"1p.webp",
+  grupo:"Abertura",
+  titulo:"Desenvolver a que custo? (1946–1964)",
+  curto:"Abertura do tema: governos populistas, desenvolvimentismo e a questão ambiental. O período de esperança e contradições que definiu o avanço industrial e os custos socioambientais do Brasil moderno.",
+  ficha:{ titulo:"Abertura: Desenvolver a que custo?", blocos:[
+    ["Habilidade GO-EMCHS305A",["Identificar as instituições e organismos de controle e fiscalização ambiental, analisando textos geográficos, históricos, dados estatísticos, mapas e fontes para avaliar o papel desses organismos na questão ambiental.","Recorte: governos populistas (1946–1964) e os impactos territoriais da política de desenvolvimento."]],
+    ["Nota de estudo",["O que a História cobra no Enem não é apenas o que aconteceu, mas o que NÃO foi debatido: a ausência de órgãos reguladores e o custo ecológico do crescimento acelerado."]]
+  ]}
+},
+{
+  arquivo:"2p.webp",
+  grupo:"1 · Contexto Histórico",
+  titulo:"Brasil entre 1946 e 1964: Populismo e Dilemas",
+  curto:"Quatro dimensões estruturais (política, econômica, social e cultural) somadas ao cenário internacional da Guerra Fria consolidam o crescimento econômico pautado na exploração intensiva da natureza.",
+  ficha:{ titulo:"Contexto Histórico (1946–1964)", blocos:[
+    ["Quatro Dimensões do Período",["Político: redemocratização em 1945, Constituição de 1946 com restabelecimento de eleições diretas, sob instabilidade política crônica.","Econômico: nacional-desenvolvimentismo com forte atuação estatal, industrialização e investimentos pesados em infraestrutura e energia.","Social: aceleração da urbanização, migrações internas e expansão da classe trabalhadora em meio à desigualdade persistente.","Cultural: valorização da identidade nacional, rádio, cinema e ampliação da cultura de massas."]],
+    ["Cenário Internacional",["Guerra Fria: polarização entre EUA e URSS; Doutrina Truman (1947) e influência norte-americana na América Latina.","Revolução Cubana (1959): radicalização das tensões e fortalecimento do discurso anticomunista."]],
+    ["Ideia-chave",["Desenvolver era a palavra de ordem. A natureza era vista exclusivamente como recurso inesgotável para alavancar a industrialização."]]
+  ]}
+},
+{
+  arquivo:"3p.webp",
+  grupo:"2 · Forças em Disputa",
+  titulo:"Quem decidiu os rumos do Brasil?",
+  curto:"Vargas, JK, Jânio e Jango: o embate entre o projeto populista-trabalhista e o desenvolvimentismo associado, cercados pela pressão de elites agrárias, militares e movimentos sociais.",
+  ficha:{ titulo:"Personagens e Forças em Disputa", blocos:[
+    ["Atores Políticos em Conflito",["Classes populares e trabalhadores: base eleitoral do populismo, reivindicando direitos e aumento salarial.","Empresariado industrial: defesa do protecionismo e expansão da infraestrutura estatal.","Elites agrárias: forte resistência a reformas estruturais e defesa da concentração fundiária.","Militares e Igreja Católica: defesa da ordem e combate ferrenho ao avanço das esquerdas."]],
+    ["Projetos em Disputa",["Populismo / Trabalhismo (Vargas): relação líder-massas, nacionalismo econômico, controle estatal de recursos e legislação social.","Desenvolvimentismo (JK): planejamento estatal, abertura ao capital estrangeiro, integração nacional ('50 anos em 5')."]],
+    ["Movimentos e Organizações",["Urbanos: sindicatos de trabalhadores, UNE e movimentos por serviços públicos.","Rurais: Ligas Camponesas exigindo 'reforma agrária na lei ou na marra', gerando conflitos no campo."]]
+  ]}
+},
+{
+  arquivo:"4p.webp",
+  grupo:"3 · Linha do Tempo",
+  titulo:"1946–1964: Principais Acontecimentos",
+  curto:"Do fim do Estado Novo e promulgação da Carta de 1946 ao suicídio de Vargas, anos JK, renúncia de Jânio e a deposição de Jango no golpe de 1964.",
+  ficha:{ titulo:"Linha do Tempo: Do Pós-Guerra ao Golpe Militar", blocos:[
+    ["Cronologia Política",["1945–1946: Fim do Estado Novo e promulgação da Constituição democrática.","1950–1954: Retorno de Vargas, campanha 'O Petróleo é Nosso', criação da Petrobras (1953) e crise culminando no suicídio (1954).","1956–1961: Governo JK, Plano de Metas, construção de Brasília e salto industrial.","1961: Governo Jânio Quadros, política externa independente e renúncia após 7 meses.","1961–1964: Governo João Goulart, fase parlamentarista, retorno ao presidencialismo e proposta das Reformas de Base.","1964: Deposição militar de Jango em 31 de março / 1º de abril."]],
+    ["O que estava em jogo",["Disputa entre projetos nacionalistas e liberal-conservadores, papel do capital estrangeiro e tensão em torno da soberania e dos direitos sociais."]]
+  ]}
+},
+{
+  arquivo:"5p.webp",
+  grupo:"4 · Reformas e Conflitos",
+  titulo:"Debates que Dividiram o País e a Questão Ambiental",
+  curto:"As Reformas de Base de Jango enfrentaram a oposição das elites econômicas. Ao mesmo tempo, a abertura de rodovias e o avanço da fronteira ocorriam sob ausência de regulação ambiental integrada.",
+  ficha:{ titulo:"Reformas de Base, Conflitos e Degradação Ambiental", blocos:[
+    ["Reformas de Base em Debate",["Reforma Agrária: alteração da estrutura fundiária improdutiva para justiça no campo.","Reformas Urbana, Bancária, Universitária e Fiscal: modernização do capitalismo e combate à especulação."]],
+    ["Conflitos e Resistências",["Reação coordenada de latifundiários, empresários e setores da classe média sob o discurso anticomunista da Guerra Fria."]],
+    ["A Questão Ambiental no Período",["Expansão e Degradação: abertura de rodovias de integração (Belém-Brasília) acelerando desmatamentos.","Avanço sobre a Amazônia e o Cerrado: impactos severos sobre povos indígenas e posseiros tradicionais.","Poluição Urbana: concentração fabril no Sudeste sem tratamento de resíduos, efluentes ou controle do ar.","Ausência de Legislação: inexistência de órgão federal fiscalizador independente e ausência de estudos prévios de impacto."]]
+  ]}
+},
+{
+  arquivo:"6p.webp",
+  grupo:"5 · Crise e Ruptura",
+  titulo:"A Crise que Abriu Caminho para 1964",
+  curto:"Instabilidade econômica, Marcha da Família com Deus pela Liberdade e mobilização militar articulada interrompem a experiência democrática e instauram o regime autoritário.",
+  ficha:{ titulo:"A Crise de 1964 e a Ruptura Institucional", blocos:[
+    ["Causas da Crise",["Econômicas: aceleração da inflação, déficit público e queda no poder aquisitivo dos salários.","Políticas e Sociais: impasse radical entre o Executivo reformista e o Congresso conservador; comício da Central do Brasil em março de 1964.","Internacionais: aplicação da Doutrina de Segurança Nacional com apoio norte-americano aos opositores de Jango."]],
+    ["O Desfecho Autoritário",["Marchas conservadoras, levante de tropas em Minas Gerais e deposição de João Goulart.","Fim da ordem democrática e instauração do regime militar que perdurou por 21 anos."]]
+  ]}
+},
+{
+  arquivo:"7p.webp",
+  grupo:"6 · O que 1964 Herda?",
+  titulo:"Desenvolvimentismo, Território e Fiscalização Ambiental",
+  curto:"O golpe não paralisou as grandes obras: herdou estatais, estradas e bancos de fomento, eliminando a mediação política e mantendo a proteção ambiental em plano secundário.",
+  ficha:{ titulo:"Legados, Permanências e Fragilidade Ambiental", blocos:[
+    ["O que o Regime Militar Herdou",["Empresas estatais estratégicas (Petrobras, Eletrobras, Vale do Rio Doce).","Bancos de fomento (BNDE, BASA, BNB) e modelo prioritariamente rodoviário de integração territorial.","Frentes agropecuárias e de mineração em plena expansão rumo ao Centro-Oeste e Amazônia."]],
+    ["Fiscalização Ambiental: Herança de Lacunas",["Legislação incipiente e dispersa, subordinada aos interesses do Ministério da Agricultura.","Parques criados em decretos sem desapropriação real de terras ou equipes de fiscalização em campo."]],
+    ["Permanências x Mudanças",["Permaneceu: desenvolvimentismo acelerado, exploração intensa de recursos e intervenção econômica estatal.","Mudou: centralização do poder, censura à imprensa, cassação de direitos políticos e repressão total a movimentos sociais."]]
+  ]}
+},
+{
+  arquivo:"8p.webp",
+  grupo:"Síntese Geral",
+  titulo:"Da Redemocratização à Ruptura (1946–1964)",
+  curto:"Panorama global do ciclo desenvolvimentista: avanços industriais, expansão de infraestrutura, contradições socioambientais e os custos deixados para as gerações futuras.",
+  ficha:{ titulo:"Síntese do Período: Desenvolvimentismo e Crise", blocos:[
+    ["Balanço do Ciclo (1946–1964)",["Industrialização acelerada e integração física do território nacional.","Crescimento com alto custo social: inflação, desigualdade de renda e conflitos de terra."]],
+    ["Impactos da Ruptura de 1964",["Fechamento do espaço democrático, expurgo de lideranças sindicais e continuidade do desenvolvimentismo agora com viés autoritário."]],
+    ["Dica Mestra para Provas e ENEM",["Ao analisar textos e gráficos sobre o desenvolvimentismo, busque sempre identificar a externalidade: quem arcou com o preço ecológico e humano que ficou de fora das estatísticas do PIB oficial."]]
+  ]}
+}
+];
+
+var d = document;
+var grade = d.getElementById("grade");
+
+SLIDES.forEach(function(s, i){
+  var card = d.createElement("button");
+  card.className = "card";
+  card.type = "button";
+  card.setAttribute("aria-label", "Abrir slide: " + s.titulo);
+  card.innerHTML =
+    '<span class="num">' + String(i+1).padStart(2,"0") + ' / ' + String(SLIDES.length).padStart(2,"0") + '</span>' +
+    '<span class="thumb"><img src="img/' + s.arquivo + '" alt="' + escapar(s.titulo) + '" loading="lazy"></span>' +
+    '<span class="info"><span class="grupo">' + escapar(s.grupo) + '</span><h3>' + escapar(s.titulo) + '</h3></span>';
+  card.addEventListener("click", function(){ abrirModal(i); });
+  grade.appendChild(card);
+});
+
+function escapar(t){
+  return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+/* ---------- MODAL ---------- */
+var fundo = d.getElementById("fundoModal");
+var modalImg = d.getElementById("modalImg");
+var modalGrupo = d.getElementById("modalGrupo");
+var modalTitulo = d.getElementById("modalTitulo");
+var modalCurto = d.getElementById("modalCurto");
+var btnFicha = d.getElementById("btnFicha");
+var indiceAtual = 0;
+var focoAnterior = null;
+
+function abrirModal(i){
+  indiceAtual = i;
+  var s = SLIDES[i];
+  focoAnterior = d.activeElement;
+  modalImg.src = "img/" + s.arquivo;
+  modalImg.alt = s.titulo;
+  modalGrupo.textContent = s.grupo;
+  modalTitulo.textContent = s.titulo;
+  modalCurto.textContent = s.curto;
+  fundo.classList.add("ativo");
+  fundo.setAttribute("aria-hidden","false");
+  d.body.style.overflow = "hidden";
+  btnFicha.focus();
+}
+
+function fecharModal(){
+  fundo.classList.remove("ativo");
+  fundo.setAttribute("aria-hidden","true");
+  d.body.style.overflow = "";
+  if(focoAnterior) focoAnterior.focus();
+}
+
+d.getElementById("fecharModal").addEventListener("click", fecharModal);
+d.getElementById("btnFecharBaixo").addEventListener("click", fecharModal);
+fundo.addEventListener("click", function(e){ if(e.target === fundo) fecharModal(); });
+d.addEventListener("keydown", function(e){
+  if(e.key === "Escape" && fundo.classList.contains("ativo")) fecharModal();
+});
+
+/* ---------- POP-UP FICHAMENTO ---------- */
+btnFicha.addEventListener("click", function(){
+  var s = SLIDES[indiceAtual];
+  abrirFichaPopup(s);
+});
+
+function abrirFichaPopup(s){
+  var janela = window.open("", "ficha_" + s.arquivo.replace('.','_'), "width=640,height=780,resizable=yes,scrollbars=yes");
+  if(!janela){
+    alert("O navegador bloqueou o pop-up. Permita pop-ups para este site e tente novamente.");
+    return;
+  }
+  var f = s.ficha;
+  var blocosHtml = f.blocos.map(function(bl){
+    return '<h4>' + escapar(bl[0]) + '</h4><ul>' +
+      bl[1].map(function(item){ return '<li>' + item.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/“/g,"&ldquo;").replace(/”/g,"&rdquo;") + '</li>'; }).join('') +
+      '</ul>';
+  }).join('');
+
+  var doc = janela.document;
+  doc.open();
+  doc.write('<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+    '<title>' + escapar(f.titulo) + ' — Fichamento</title>' +
+    '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Space+Mono&display=swap" rel="stylesheet">' +
+    '<style>' +
+    ':root{--petroleo:#26402f;--terracota:#a8551d;--areia:#f6f2e9;--borda:#d8d0be;--grafite:#2b2b2b;--cinza:#5d5d5d;}' +
+    '*{box-sizing:border-box;} body{margin:0;background:var(--areia);color:var(--grafite);font-family:"Source Serif 4",Georgia,serif;font-size:16px;line-height:1.65;padding:0 0 40px;}' +
+    'header{background:var(--petroleo);color:var(--areia);padding:26px 28px 22px;}' +
+    'header .eyebrow{font-family:"Space Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#e0c9a8;margin:0 0 8px;}' +
+    'header h1{font-family:"Playfair Display",Georgia,serif;font-size:1.5rem;margin:0;line-height:1.22;}' +
+    'main{max-width:640px;margin:0 auto;padding:26px 28px 10px;}' +
+    'h4{font-family:"Playfair Display",Georgia,serif;color:var(--terracota);font-size:1.05rem;margin:22px 0 8px;}' +
+    'h4:first-child{margin-top:0;}' +
+    'ul{margin:0 0 4px;padding-left:20px;} li{margin-bottom:9px;text-align:justify;}' +
+    '.rodape{max-width:640px;margin:20px auto 0;padding:16px 28px 0;border-top:1px solid var(--borda);color:var(--cinza);font-family:"Space Mono",monospace;font-size:.74rem;letter-spacing:.02em;}' +
+    '.fechar{position:fixed;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;border:0;font-size:1.1rem;cursor:pointer;}' +
+    '.fechar:hover{background:var(--terracota);}' +
+    '@media(max-width:480px){header{padding:20px 18px;} main{padding:20px 18px 6px;} .rodape{padding:14px 18px 0;}}' +
+    '</style></head><body>' +
+    '<header><button class="fechar" onclick="window.close()" aria-label="Fechar">×</button>' +
+    '<p class="eyebrow">Fichamento completo</p><h1>' + escapar(f.titulo) + '</h1></header>' +
+    '<main>' + blocosHtml + '</main>' +
+    '<p class="rodape">Fonte: material de apoio “Desenvolver a que custo?” — História, 3ª série EM · Habilidade GO-EMCHS305A.</p>' +
+    '</body></html>');
+  doc.close();
+  janela.focus();
+}
+
+})();
+</script>
+</body>
+</html>

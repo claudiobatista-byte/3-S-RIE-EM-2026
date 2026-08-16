@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atividade — Uma república em disputa: por que a natureza não estava na pauta | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#f2f3fa;
+    --bg-alt:#e3e6f6;
+    --paper:#ffffff;
+    --ink:#1b1c2b;
+    --ink-soft:#4e5168;
+    --azul:#2f3d7e;
+    --azul-dark:#1a2250;
+    --azul-2:#4b5aa6;
+    --ambar:#b8760f;
+    --ambar-light:#f6e6cb;
+    --line:#ccd1e8;
+    --shadow:0 10px 30px rgba(30,36,80,.12);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-touch-callout:none;
+    user-select:none;
+  }
+  .selecionavel, main{user-select:text;}
+  .campo-resposta{user-select:text;}
+
+  /* ===== CAPA / GATE ===== */
+  #capa{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(to bottom, #1a2250, #2f3d7e, #4b5aa6);
+    padding:24px;
+  }
+  #capa .grade-centralizada{
+    position:absolute;
+    top:0; bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:896px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.08;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px);
+    background-size:40px 40px;
+  }
+  .capa-card{
+    position:relative;
+    z-index:1;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:480px;
+    width:100%;
+    padding:36px 32px;
+    text-align:center;
+  }
+  .capa-card .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--azul-dark);
+    background:rgba(47,61,126,.12); padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .capa-card h1{font-family:var(--font-title); font-size:1.5rem; margin:0 0 10px; color:var(--azul-dark);}
+  .capa-card p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 22px;}
+  .capa-card input{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:1rem; margin-bottom:14px;
+  }
+  .capa-card button{
+    width:100%; padding:13px; border:none; border-radius:8px;
+    background:var(--azul); color:#fff; font-weight:600; font-size:1rem; cursor:pointer;
+    font-family:var(--font-body); transition:filter .15s ease;
+  }
+  .capa-card button:hover{filter:brightness(1.08);}
+  .capa-aviso{font-size:.78rem; color:#a33; margin-top:8px; display:none;}
+
+  /* ===== APP ===== */
+  #app{display:none;}
+  .sticky-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--azul-dark); color:#eef0fa;
+    padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:8px;
+    font-family:var(--font-mono); font-size:.82rem;
+  }
+  .sticky-header .aluno{font-family:var(--font-body); font-weight:600; font-size:.92rem;}
+  .barra-progresso-trilho{
+    flex:1; min-width:120px; height:8px; background:rgba(255,255,255,.2); border-radius:6px; overflow:hidden; margin:0 14px;
+  }
+  .barra-progresso-fill{height:100%; background:var(--ambar); width:0%; transition:width .3s ease;}
+
+  .wrap{max-width:800px; margin:0 auto; padding:32px 24px 60px;}
+
+  header.topo{margin-bottom:28px;}
+  header.topo .hero-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--azul-dark);
+    background:rgba(47,61,126,.12); padding:5px 12px; border-radius:999px; margin-bottom:12px;
+  }
+  header.topo h1{font-family:var(--font-title); font-size:clamp(1.5rem,4vw,2rem); margin:0 0 8px; color:var(--ink);}
+  header.topo p.sub{color:var(--ink-soft); margin:0; font-size:.98rem;}
+  .descritor-bar{
+    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:8px 14px; margin-bottom:14px; display:inline-block;
+  }
+  .ficha-id{
+    display:flex; flex-wrap:wrap; gap:10px 26px;
+    background:var(--paper); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin-top:12px; font-family:var(--font-mono); font-size:.84rem; color:var(--ink);
+  }
+  .ficha-id span b{color:var(--azul-dark);}
+
+  /* ===== TEXTO DE APOIO ===== */
+  .texto-apoio{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:24px 28px; margin-bottom:20px;
+    border-left:5px solid var(--azul-2);
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.2rem; color:var(--azul-dark); margin:0 0 4px;}
+  .texto-apoio .fonte-tag{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-bottom:12px; display:block;}
+  .texto-apoio p{margin:0 0 12px; color:var(--ink);}
+  .texto-apoio p:last-of-type{margin-bottom:0;}
+  .texto-apoio blockquote{
+    margin:14px 0; padding:12px 18px; background:var(--bg-alt);
+    border-left:4px solid var(--ambar); border-radius:0 8px 8px 0;
+    font-style:italic; color:var(--azul-dark); font-size:.94rem;
+  }
+  .texto-apoio blockquote .autor{
+    display:block; font-style:normal; font-family:var(--font-mono);
+    font-size:.72rem; color:var(--ink-soft); margin-top:6px;
+  }
+  .tabela-apoio{width:100%; border-collapse:collapse; margin:14px 0; font-size:.88rem;}
+  .tabela-apoio th{background:var(--azul); color:#fff; text-align:left; padding:9px 12px; font-family:var(--font-mono); font-size:.76rem; text-transform:uppercase; letter-spacing:.04em;}
+  .tabela-apoio td{border:1px solid var(--line); padding:9px 12px; vertical-align:top;}
+  .tabela-apoio tr:nth-child(even) td{background:#f7f8fd;}
+
+  /* ===== QUESTOES ===== */
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.3rem; color:var(--azul-dark);
+    margin:28px 0 18px; display:flex; align-items:center; gap:10px; border-bottom:2px solid var(--ambar); padding-bottom:6px;
+  }
+  .questao{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; margin-bottom:24px;
+  }
+  .questao .num-q{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--azul);
+    color:#fff; font-family:var(--font-mono); font-size:.78rem; margin-right:8px; flex-shrink:0;
+  }
+  .questao .enunciado{font-weight:600; color:var(--ink); margin-bottom:12px; display:flex; align-items:flex-start;}
+  .questao .base-obj{
+    background:#f7f8fd; border:1px solid var(--line); border-left:4px solid var(--ambar);
+    border-radius:0 8px 8px 0; padding:12px 16px; margin-bottom:12px;
+    font-size:.9rem; color:var(--ink); line-height:1.65;
+  }
+  .questao .base-obj .ref{display:block; font-family:var(--font-mono); font-size:.7rem; color:var(--ink-soft); margin-top:8px;}
+  .questao textarea{
+    width:100%; min-height:120px; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:.96rem; resize:vertical; color:var(--ink);
+  }
+  .questao textarea:focus{outline:2px solid var(--azul-2); outline-offset:1px;}
+  .contador-chars{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-top:6px; text-align:right;}
+
+  /* ===== OPCOES (OBJETIVAS) ===== */
+  .opcao{
+    display:flex; gap:12px; align-items:flex-start;
+    padding:12px 14px; border:1.5px solid var(--line); border-radius:8px;
+    margin-bottom:8px; cursor:pointer; transition:all .15s ease; background:var(--paper);
+  }
+  .opcao:hover{border-color:var(--azul); background:var(--bg-alt);}
+  .opcao.sel{border-color:var(--azul); background:var(--bg-alt);}
+  .opcao.correta{border-color:#2e7d4f; background:#e8f6ed;}
+  .opcao.errada{border-color:#c0392b; background:#fdeeee;}
+  .opcao.travada{cursor:default;}
+  .opcao-letra{
+    flex:0 0 auto; width:26px; height:26px; border-radius:50%;
+    background:var(--bg-alt); color:var(--ink-soft);
+    font-family:var(--font-mono); font-weight:700; font-size:.78rem;
+    display:flex; align-items:center; justify-content:center; transition:all .15s ease;
+  }
+  .opcao.sel .opcao-letra{background:var(--azul); color:#fff;}
+  .opcao.correta .opcao-letra{background:#2e7d4f; color:#fff;}
+  .opcao.errada .opcao-letra{background:#c0392b; color:#fff;}
+  .opcao-txt{font-size:.94rem; color:var(--ink); line-height:1.6; padding-top:2px;}
+  .opcao-marca{margin-left:auto; font-size:1rem; align-self:center; display:none; flex:0 0 auto;}
+  .gabarito-info{
+    display:none; margin-top:12px; padding:12px 16px;
+    background:#fdf4e6; border:1px solid var(--ambar-light); border-radius:8px;
+    font-size:.88rem; color:#6b4508;
+  }
+  .gabarito-info.show{display:block;}
+  .gabarito-info b{color:var(--ambar);}
+  .questao .badge-resultado{
+    display:none; font-family:var(--font-mono); font-size:.68rem; font-weight:700;
+    padding:2px 10px; border-radius:20px; margin-left:8px; color:#fff;
+  }
+  .questao .badge-resultado.ok{display:inline-block; background:#2e7d4f;}
+  .questao .badge-resultado.no{display:inline-block; background:#c0392b;}
+
+  .comentario-prof{
+    display:none; margin-top:14px; padding:14px 16px;
+    background:#eceffb; border:1px solid #c3caea; border-radius:8px; font-size:.9rem; color:var(--azul-dark);
+  }
+  .comentario-prof.show{display:block;}
+  .comentario-prof b{display:block; margin-bottom:4px; font-family:var(--font-title); font-size:.92rem;}
+
+  /* ===== ALERTA / FINALIZAR ===== */
+  .alerta-incompleto{
+    display:none; background:#fdf3e2; border:1px solid #f1d9a6; color:#8a5a10;
+    padding:12px 16px; border-radius:8px; font-size:.9rem; margin-bottom:16px;
+  }
+  .alerta-incompleto.show{display:block;}
+
+  .acoes-finais{display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;}
+  .btn{
+    font-family:var(--font-body); font-weight:600; font-size:.94rem; padding:12px 22px;
+    border-radius:8px; border:none; cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn-primario{background:var(--azul); color:#fff;}
+  .btn-secundario{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-pdf{background:var(--ambar); color:#fff;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  /* ===== POPUP ===== */
+  .popup-overlay{
+    display:none; position:fixed; inset:0; background:rgba(26,34,80,.6);
+    align-items:center; justify-content:center; z-index:200; padding:20px;
+  }
+  .popup-overlay.show{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:420px; width:100%; padding:32px 28px; text-align:center;
+  }
+  .popup-card .emoji{font-size:2.4rem; margin-bottom:10px;}
+  .popup-card h3{font-family:var(--font-title); margin:0 0 8px; color:var(--azul-dark);}
+  .popup-card p{color:var(--ink-soft); font-size:.94rem; margin:0 0 20px;}
+
+  footer.rodape{text-align:center; padding:24px; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;}
+
+  @media (max-width:600px){
+    .wrap{padding:24px 16px 50px;}
+    .texto-apoio, .questao{padding:18px 18px;}
+    .tabela-apoio{font-size:.8rem;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== CAPA ===== -->
+<div id="capa">
+  <div class="grade-centralizada"></div>
+  <div class="capa-card">
+    <span class="tag">3ª série · Ensino Médio · CERO</span>
+    <h1>Uma república em disputa: por que a natureza não estava na pauta</h1>
+    <p class="desc">Atividade do Tópico 1 do material "Desenvolver a que custo?" (GO-EMCHS305A). Contém 1 questão dissertativa de leitura do período e 5 questões objetivas com gabarito comentado.</p>
+    <input type="text" id="nome-aluno" placeholder="Seu nome completo">
+    <input type="text" id="turma-aluno" placeholder="Turma (ex.: 3ª A)">
+    <button onclick="iniciarAtividade()">Iniciar atividade</button>
+    <div class="capa-aviso" id="capa-aviso">Por favor, digite seu nome para continuar.</div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <div class="sticky-header">
+    <span class="aluno" id="header-nome"></span>
+    <div class="barra-progresso-trilho"><div class="barra-progresso-fill" id="barra-fill"></div></div>
+    <span id="contador-geral">Respondidas: 0/6</span>
+  </div>
+
+  <div class="wrap">
+    <header class="topo selecionavel">
+      <span class="descritor-bar">Ciências Humanas e Sociais Aplicadas / 3ª série do Ensino Médio &nbsp;|&nbsp; (GO-EMCHS305A) – Desenvolver a que custo?</span>
+      <span class="hero-tag" style="display:block; margin-top:10px;">Atividade Avaliativa · Tópico 1</span>
+      <h1>Uma república em disputa: por que a natureza não estava na pauta</h1>
+      <p class="sub">Leia cada bloco de apoio antes de responder. Analise o quadro das plataformas e o comentário de Boris Fausto antes de responder à questão dissertativa. As questões objetivas trazem, cada uma, o seu próprio texto-base.</p>
+      <div class="ficha-id" id="ficha-id">
+        <span><b>NOME:</b> <span id="ficha-nome"></span></span>
+        <span><b>DATA:</b> <span id="ficha-data"></span></span>
+        <span><b>TURMA:</b> <span id="ficha-turma"></span></span>
+      </div>
+    </header>
+
+    <main>
+      <h2 class="questoes-titulo">&#9997;&#65039; Parte I — Leitura de Apoio e Questão Dissertativa</h2>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Os dois campos em disputa</h2>
+        <span class="fonte-tag">Leitura de Apoio · Quadro das plataformas em disputa entre 1946 e 1964</span>
+        <table class="tabela-apoio">
+          <thead><tr><th>Grupos progressistas defendiam</th><th>Grupos conservadores defendiam</th></tr></thead>
+          <tbody>
+            <tr><td>Nacionalismo econômico e restrição ao capital estrangeiro</td><td>Liberdade do capital estrangeiro no Brasil</td></tr>
+            <tr><td>Intervenção do Estado na economia e protecionismo</td><td>Não intervenção do Estado na economia</td></tr>
+            <tr><td>Ampliação das leis trabalhistas</td><td>Eliminação de direitos trabalhistas conquistados</td></tr>
+            <tr><td>Reforma agrária</td><td>Combate à reforma agrária</td></tr>
+            <tr><td>Política externa independente dos EUA</td><td>Colaboração externa com os EUA</td></tr>
+          </tbody>
+        </table>
+        <p class="fonte-tag" style="margin-top:0;">Quadro reproduzido do material da rede estadual (Revisa Goiás), tema República Populista.</p>
+      </section>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Na voz do autor · Boris Fausto: quem eram os adversários dos nacionalistas</h2>
+        <span class="fonte-tag">Leitura de Apoio · Comentário elaborado a partir do trecho indicado ao final</span>
+        <p>O quadro acima opõe dois campos, mas não explica o que cada um <em>propunha fazer com o Estado</em>. Boris Fausto resume a plataforma dos adversários dos nacionalistas em quatro pontos: menor intervenção estatal na economia; industrialização como prioridade menor; progresso do país apoiado numa abertura controlada ao capital estrangeiro; e combate rígido à inflação, por meio do controle da emissão de moeda e do equilíbrio das contas públicas.</p>
+        <blockquote>Nenhum dos quatro pontos menciona a natureza — nem para explorá-la, nem para protegê-la. O mesmo vale para a plataforma nacionalista. A disputa central do período era sobre <em>quem</em> financia e <em>quem</em> controla a industrialização, não sobre seus efeitos físicos sobre rios, solos e florestas. Quando um tema não aparece em nenhum dos lados de uma disputa, ele não está sendo debatido e perdido: ele está fora do campo do pensável.<span class="autor">O detalhe que muda a leitura</span></blockquote>
+        <p>Guarde também um ponto de método: essa plataforma reaparecerá quase intacta depois de 1964, com o alinhamento aos Estados Unidos, a revogação das restrições à remessa de lucros e os acordos com o Fundo Monetário Internacional. Identificar a permanência de uma plataforma através de uma ruptura de regime é um bom exercício historiográfico.</p>
+        <p class="fonte-tag" style="margin-top:14px;">FAUSTO, Boris. História do Brasil. 2. ed. São Paulo: Edusp/FDE, 1995, p. 40 (trecho reproduzido em Caminhos do Homem — História 3, manual do professor, PNLD 2018).</p>
+      </section>
+
+      <div class="questao" data-questao="1">
+        <div class="enunciado"><span class="num-q">1</span> A partir do quadro das duas plataformas e do comentário de Boris Fausto, escreva uma leitura do período de 1946 a 1964 que relacione o projeto de desenvolvimento e a questão ambiental. Explique o que separava progressistas e conservadores, mostre o que os dois campos tinham em comum quanto ao uso da natureza e argumente por que a proteção ambiental não aparece como pauta em nenhuma das duas colunas.</div>
+        <textarea id="resp-1" class="campo-resposta dissertativa" data-min="400" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 400)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se um texto articulado, e não a leitura linha a linha do quadro. Sobre o que separava os campos: os progressistas defendiam nacionalismo econômico, restrição ao capital estrangeiro, intervenção do Estado, ampliação das leis trabalhistas, reforma agrária e política externa independente; os conservadores defendiam o oposto — e Boris Fausto detalha essa segunda plataforma em quatro pontos: menor intervenção estatal, industrialização como prioridade menor, abertura controlada ao capital estrangeiro e combate rígido à inflação. Sobre o que havia em comum: para os dois lados, floresta, rio, solo e subsolo eram recursos, matéria-prima de um projeto de nação; a divergência era sobre quem deveria explorá-los — o Estado ou o capital privado —, nunca sobre se deveriam ser explorados. Sobre a ausência: espera-se que o estudante evite dizer que faltou vontade dos governantes e perceba que o tema não estava sendo debatido e perdido, e sim que estava fora do campo do pensável; a disputa era sobre quem financia e quem controla a industrialização, não sobre seus efeitos físicos. Valoriza-se ainda quem observar que a Constituição de 1946 menciona águas, florestas, caça e pesca apenas como objeto de aproveitamento econômico, e que o anacronismo deve ser evitado nas duas direções: não se cobra de 1958 um estudo de impacto criado em 1986, mas também não se supõe que todos pensassem igual — os irmãos Villas-Bôas, Darcy Ribeiro e a FBCN são a prova em contrário.
+        </div>
+      </div>
+
+      <!-- PARTE II - OBJETIVAS -->
+      <h2 class="questoes-titulo">&#128221; Parte II — Questões Objetivas</h2>
+
+      <div class="questao objetiva" data-questao="obj-1" data-correta="4">
+        <div class="base-obj">O período que vai da Constituição de 1946 ao golpe de 1964 aparece nos livros com dois nomes. Chamar de redemocratização destaca o retorno das eleições diretas, do pluripartidarismo, do direito de greve e o fim da censura prévia. Chamar de República Populista destaca o sindicalismo atrelado ao Estado, herdado do Estado Novo, a manipulação dos meios de comunicação e o uso das aspirações populares por meio do trabalhismo.<span class="ref">Elaborado a partir do material de estudo do tópico 1.</span></div>
+        <div class="enunciado"><span class="num-q">1</span> (GO-EMCHS305A) A existência dessas duas denominações para o mesmo período indica que: <span class="badge-resultado" id="badge-obj-1"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(1,0)"><div class="opcao-letra">A</div><div class="opcao-txt">Uma das denominações está historicamente incorreta e deveria ser abandonada pelos livros didáticos de História.</div><div class="opcao-marca" id="marca-1-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(1,1)"><div class="opcao-letra">B</div><div class="opcao-txt">Os historiadores ainda não reuniram fontes suficientes para descrever o que ocorreu no período.</div><div class="opcao-marca" id="marca-1-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(1,2)"><div class="opcao-letra">C</div><div class="opcao-txt">As duas expressões são sinônimas e a escolha entre elas depende apenas do estilo de cada autor.</div><div class="opcao-marca" id="marca-1-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(1,3)"><div class="opcao-letra">D</div><div class="opcao-txt">O período foi curto demais para receber um nome próprio consagrado pela tradição historiográfica.</div><div class="opcao-marca" id="marca-1-3"></div></div>
+        <div class="opcao" data-idx="4" onclick="marcarOpcao(1,4)"><div class="opcao-letra">E</div><div class="opcao-txt">Nomear um período já é interpretá-lo, pois cada nome destaca aquilo que mudou ou aquilo que permaneceu.</div><div class="opcao-marca" id="marca-1-4"></div></div>
+        <div class="gabarito-info" id="gab-1"><b>Gabarito: E.</b> Cada denominação seleciona um aspecto: "redemocratização" ilumina as rupturas — eleições, partidos, greve, fim da censura — e "República Populista" ilumina as continuidades com o Estado Novo. Não há sinonímia (C) nem erro a corrigir (A); o problema não é falta de fontes (B) nem a duração do período (D), mas o recorte interpretativo embutido em cada nome.</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-2" data-correta="2">
+        <div class="base-obj">A Constituição de 1946 foi a quinta do país e a quarta da República. Restabeleceu o presidencialismo, com mandato de cinco anos e eleição separada para presidente e vice, e garantiu o voto universal e secreto, menos para os analfabetos, que eram então mais da metade da população adulta brasileira.<span class="ref">Elaborado a partir do material de estudo do tópico 1.</span></div>
+        <div class="enunciado"><span class="num-q">2</span> (GO-EMCHS305A) A restrição mencionada permite afirmar que a democracia restabelecida em 1946: <span class="badge-resultado" id="badge-obj-2"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(2,0)"><div class="opcao-letra">A</div><div class="opcao-txt">Ampliou a participação política a ponto de tornar o voto obrigatório para toda a população adulta do país.</div><div class="opcao-marca" id="marca-2-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(2,1)"><div class="opcao-letra">B</div><div class="opcao-txt">Foi suspensa poucos meses depois de promulgada, em razão do número reduzido de eleitores aptos a votar.</div><div class="opcao-marca" id="marca-2-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(2,2)"><div class="opcao-letra">C</div><div class="opcao-txt">Nasceu com uma exclusão estrutural embutida, já que a maioria adulta ficava de fora do direito de voto.</div><div class="opcao-marca" id="marca-2-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(2,3)"><div class="opcao-letra">D</div><div class="opcao-txt">Manteve o voto restrito por critério de renda, como no período monárquico.</div><div class="opcao-marca" id="marca-2-3"></div></div>
+        <div class="opcao" data-idx="4" onclick="marcarOpcao(2,4)"><div class="opcao-letra">E</div><div class="opcao-txt">Concedeu aos analfabetos o direito de votar, embora lhes vedasse a candidatura a cargos eletivos.</div><div class="opcao-marca" id="marca-2-4"></div></div>
+        <div class="gabarito-info" id="gab-2"><b>Gabarito: C.</b> Se mais da metade da população adulta era analfabeta e os analfabetos não votavam, o sufrágio dito universal excluía a maior parte do país — exclusão estrutural, e não detalhe técnico. A alternativa D troca o critério, que era de alfabetização e não de renda; E inverte a regra; A e B afirmam fatos que o texto não sustenta.</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-3" data-correta="0">
+        <div class="base-obj">Boris Fausto resume a plataforma dos adversários dos nacionalistas em quatro pontos: menor intervenção estatal na economia; industrialização como prioridade menor; progresso apoiado numa abertura controlada ao capital estrangeiro; e combate rígido à inflação. Do outro lado, os nacionalistas defendiam restrição ao capital estrangeiro, intervenção do Estado, ampliação das leis trabalhistas e reforma agrária.<span class="ref">Elaborado a partir do material de estudo do tópico 1.</span></div>
+        <div class="enunciado"><span class="num-q">3</span> (GO-EMCHS305A) A comparação entre as duas plataformas permite concluir que, no período: <span class="badge-resultado" id="badge-obj-3"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(3,0)"><div class="opcao-letra">A</div><div class="opcao-txt">A proteção da natureza não era pauta em nenhum dos campos, que divergiam apenas sobre quem exploraria os recursos.</div><div class="opcao-marca" id="marca-3-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(3,1)"><div class="opcao-letra">B</div><div class="opcao-txt">Os nacionalistas incorporaram a defesa dos recursos naturais como argumento central contra as empresas estrangeiras.</div><div class="opcao-marca" id="marca-3-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(3,2)"><div class="opcao-letra">C</div><div class="opcao-txt">Os conservadores condicionavam a entrada do capital externo ao cumprimento de exigências de conservação ambiental.</div><div class="opcao-marca" id="marca-3-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(3,3)"><div class="opcao-letra">D</div><div class="opcao-txt">O combate à inflação substituiu a industrialização como principal ponto de convergência entre os dois campos em disputa.</div><div class="opcao-marca" id="marca-3-3"></div></div>
+        <div class="opcao" data-idx="4" onclick="marcarOpcao(3,4)"><div class="opcao-letra">E</div><div class="opcao-txt">A disputa entre as plataformas se resolveu com a criação de um órgão federal de fiscalização dos recursos naturais.</div><div class="opcao-marca" id="marca-3-4"></div></div>
+        <div class="gabarito-info" id="gab-3"><b>Gabarito: A.</b> Nenhum dos oito pontos elencados menciona a natureza, seja para explorá-la, seja para protegê-la: para os dois lados, rios, solos e florestas eram recursos de um projeto de nação, e a divergência recaía sobre quem deveria explorá-los. B e C atribuem aos campos preocupações que suas plataformas não expressam; D inverte a hierarquia dos pontos; E supõe um desfecho institucional que não ocorreu no período.</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-4" data-correta="3">
+        <div class="base-obj">Marly Rodrigues descreve o Estado do período como um Estado que, embora contemplasse no plano econômico os interesses da burguesia industrial, apresentava-se politicamente como representante de todas as classes, sem distinção. Essa posição só se sustentava enquanto houvesse equilíbrio entre forças diversas, e os governos recorriam a categorias amplas, como "povo" e "nação", pregando a harmonia entre as classes.<span class="ref">Elaborado a partir do material de estudo do tópico 1.</span></div>
+        <div class="enunciado"><span class="num-q">4</span> (GO-EMCHS305A) Essa caracterização ajuda a explicar a ausência, no período, de um órgão ambiental com poder real porque: <span class="badge-resultado" id="badge-obj-4"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(4,0)"><div class="opcao-letra">A</div><div class="opcao-txt">O Estado não dispunha de corpo técnico qualificado para elaborar normas sobre florestas, águas e solos.</div><div class="opcao-marca" id="marca-4-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(4,1)"><div class="opcao-letra">B</div><div class="opcao-txt">A legislação da época proibia expressamente a criação de autarquias voltadas ao controle das atividades produtivas.</div><div class="opcao-marca" id="marca-4-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(4,2)"><div class="opcao-letra">C</div><div class="opcao-txt">A população urbana, principal base eleitoral dos governos, era indiferente às condições ambientais das cidades.</div><div class="opcao-marca" id="marca-4-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(4,3)"><div class="opcao-letra">D</div><div class="opcao-txt">Fiscalizar exige contrariar um grupo em nome de outro, o que rompe a promessa de harmonia entre as classes.</div><div class="opcao-marca" id="marca-4-3"></div></div>
+        <div class="opcao" data-idx="4" onclick="marcarOpcao(4,4)"><div class="opcao-letra">E</div><div class="opcao-txt">Os interesses da burguesia industrial coincidiam com as demandas dos trabalhadores quanto ao uso do território.</div><div class="opcao-marca" id="marca-4-4"></div></div>
+        <div class="gabarito-info" id="gab-4"><b>Gabarito: D.</b> Um Estado que se legitima como representante de todos não pode escolher perdedores — e embargar uma obra, negar uma licença ou desapropriar terras para criar um parque é exatamente escolher um perdedor. A ausência de fiscalização com poder real não é apenas atraso institucional: é coerente com a lógica política descrita. A, B e C atribuem a causa a fatores técnicos, legais ou de opinião pública que o texto não menciona; E contraria o equilíbrio de forças que a autora descreve.</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-5" data-correta="1">
+        <div class="base-obj">A Constituição de 1946 não tem capítulo sobre meio ambiente. O que há são menções esparsas e subordinadas à lógica econômica: a União recebe competência para legislar sobre águas, florestas, caça e pesca, e as riquezas do subsolo são separadas da propriedade do solo. Só em 1988 a natureza ganharia artigo próprio e a condição de bem de uso comum do povo.<span class="ref">Elaborado a partir do material de estudo do tópico 1.</span></div>
+        <div class="enunciado"><span class="num-q">5</span> (GO-EMCHS305A) A leitura historiograficamente adequada desse contraste entre 1946 e 1988 consiste em afirmar que: <span class="badge-resultado" id="badge-obj-5"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(5,0)"><div class="opcao-letra">A</div><div class="opcao-txt">Os constituintes de 1946 foram omissos por desprezarem o valor das florestas e das águas do território nacional.</div><div class="opcao-marca" id="marca-5-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(5,1)"><div class="opcao-letra">B</div><div class="opcao-txt">A natureza entra no texto de 1946 como objeto de aproveitamento, condição que só se altera quatro décadas depois.</div><div class="opcao-marca" id="marca-5-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(5,2)"><div class="opcao-letra">C</div><div class="opcao-txt">A ausência de capítulo ambiental em 1946 demonstra que nenhum grupo do período defendia áreas protegidas no Brasil.</div><div class="opcao-marca" id="marca-5-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(5,3)"><div class="opcao-letra">D</div><div class="opcao-txt">A competência da União sobre águas e florestas equivale, na prática, ao sistema de licenciamento ambiental atual.</div><div class="opcao-marca" id="marca-5-3"></div></div>
+        <div class="opcao" data-idx="4" onclick="marcarOpcao(5,4)"><div class="opcao-letra">E</div><div class="opcao-txt">O texto de 1988 apenas repetiu, com outras palavras, o tratamento que a Constituição de 1946 já dava ao tema.</div><div class="opcao-marca" id="marca-5-4"></div></div>
+        <div class="gabarito-info" id="gab-5"><b>Gabarito: B.</b> As menções de 1946 subordinam a natureza à lógica econômica — competência para legislar sobre seu uso e separação entre solo e subsolo —, ao passo que 1988 a institui como bem de uso comum do povo. A alternativa A substitui a análise por juízo de intenção; C ignora que os irmãos Villas-Bôas, Darcy Ribeiro e a FBCN pensavam diferente; D é anacrônica, pois o licenciamento data de 1981 e 1986; E apaga a mudança de estatuto jurídico.</div>
+      </div>
+
+
+      <div class="alerta-incompleto" id="alerta-incompleto">
+        &#9888;&#65039; Ainda há questões incompletas (dissertativas com o mínimo de caracteres ou objetivas não marcadas). Revise antes de finalizar.
+      </div>
+
+      <div class="acoes-finais">
+        <button class="btn btn-primario" onclick="finalizarAtividade()">Finalizar e corrigir</button>
+        <button class="btn btn-secundario" onclick="refazerAtividade()">Refazer</button>
+        <button class="btn btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
+      </div>
+    </main>
+  </div>
+
+  <footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+</div>
+
+<!-- ===== POPUP ===== -->
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <div class="emoji">&#127881;</div>
+    <h3>Atividade concluída!</h3>
+    <p id="popup-nota" style="font-family:var(--font-mono); font-weight:700; color:var(--azul-dark); font-size:1rem; margin:0 0 12px;"></p>
+    <p>Suas respostas foram registradas com sucesso. Os comentários do professor e o gabarito comentado das questões objetivas estão disponíveis para revisão.</p>
+    <button class="btn btn-primario" onclick="fecharPopup()">Continuar</button>
+  </div>
+</div>
+
+<script>
+/* ===== GATE DE NOME ===== */
+function iniciarAtividade(){
+  const nome = document.getElementById('nome-aluno').value.trim();
+  const turma = document.getElementById('turma-aluno').value.trim();
+  const aviso = document.getElementById('capa-aviso');
+  if(!nome){
+    aviso.style.display = 'block';
+    return;
+  }
+  aviso.style.display = 'none';
+  const hoje = new Date();
+  const dataFormatada = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+  document.getElementById('header-nome').textContent = nome;
+  document.getElementById('ficha-nome').textContent = nome;
+  document.getElementById('ficha-data').textContent = dataFormatada;
+  document.getElementById('ficha-turma').textContent = turma || '—';
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+/* ===== CONTADOR DE CARACTERES E PROGRESSO ===== */
+const textareas = document.querySelectorAll('textarea.dissertativa');
+const TOTAL_OBJ = 5;
+let respMC = {};
+let corrigido = false;
+
+function marcarOpcao(num, idx){
+  if (corrigido) return;
+  respMC[num] = idx;
+  const questaoEl = document.querySelector('.questao[data-questao="obj-' + num + '"]');
+  questaoEl.querySelectorAll('.opcao').forEach(function(op){
+    op.classList.toggle('sel', parseInt(op.dataset.idx,10) === idx);
+  });
+  atualizarProgresso();
+}
+
+function atualizarProgresso(){
+  let respondidas = 0;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length >= min) respondidas++;
+  });
+  respondidas += Object.keys(respMC).length;
+  const total = textareas.length + TOTAL_OBJ;
+  document.getElementById('contador-geral').textContent = 'Respondidas: ' + respondidas + '/' + total;
+  document.getElementById('barra-fill').style.width = (respondidas / total * 100) + '%';
+}
+
+textareas.forEach(function(t){
+  const contadorEl = t.parentElement.querySelector('.contador-chars');
+  const min = parseInt(t.dataset.min, 10);
+  t.addEventListener('input', function(){
+    contadorEl.textContent = t.value.length + ' caracteres (mínimo ' + min + ')';
+    atualizarProgresso();
+  });
+});
+
+/* ===== FINALIZAR ===== */
+function finalizarAtividade(){
+  let completo = true;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length < min) completo = false;
+  });
+  for(let n=1; n<=TOTAL_OBJ; n++){
+    if(respMC[n] === undefined) completo = false;
+  }
+
+  const alerta = document.getElementById('alerta-incompleto');
+  if(!completo){
+    alerta.classList.add('show');
+    alerta.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  alerta.classList.remove('show');
+
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.add('show');
+  });
+
+  corrigido = true;
+  let acertos = 0;
+  document.querySelectorAll('.questao.objetiva').forEach(function(qEl){
+    const num = qEl.dataset.questao.replace('obj-','');
+    const correta = parseInt(qEl.dataset.correta, 10);
+    const escolha = respMC[num];
+    const acertou = escolha === correta;
+    if(acertou) acertos++;
+    qEl.querySelectorAll('.opcao').forEach(function(op){
+      const idx = parseInt(op.dataset.idx, 10);
+      op.classList.add('travada');
+      const marca = document.getElementById('marca-'+num+'-'+idx);
+      if(idx === correta && marca){ op.classList.add('correta'); marca.textContent='✓'; marca.style.display='block'; }
+      if(idx === escolha && !acertou){ op.classList.add('errada'); if(marca){ marca.textContent='✗'; marca.style.display='block'; } }
+    });
+    document.getElementById('gab-'+num).classList.add('show');
+    const badge = document.getElementById('badge-obj-'+num);
+    badge.textContent = acertou ? '✓ Acertou' : '✗ Errou';
+    badge.className = 'badge-resultado ' + (acertou ? 'ok' : 'no');
+  });
+  window.__acertos = acertos;
+
+  const pct = Math.round(acertos/TOTAL_OBJ*100);
+  document.getElementById('popup-nota').textContent = acertos + '/' + TOTAL_OBJ + ' acertos nas objetivas (' + pct + '%)';
+  document.getElementById('popup-overlay').classList.add('show');
+}
+
+function fecharPopup(){
+  document.getElementById('popup-overlay').classList.remove('show');
+}
+
+function refazerAtividade(){
+  textareas.forEach(function(t){
+    t.value = '';
+    t.parentElement.querySelector('.contador-chars').textContent = '0 caracteres (mínimo ' + t.dataset.min + ')';
+  });
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.remove('show');
+  });
+  document.querySelectorAll('.opcao').forEach(function(op){
+    op.classList.remove('sel','correta','errada','travada');
+  });
+  document.querySelectorAll('.opcao-marca').forEach(function(m){ m.style.display='none'; m.textContent=''; });
+  document.querySelectorAll('.gabarito-info').forEach(function(g){ g.classList.remove('show'); });
+  document.querySelectorAll('.badge-resultado').forEach(function(b){ b.textContent=''; b.className='badge-resultado'; });
+  respMC = {};
+  corrigido = false;
+  document.getElementById('alerta-incompleto').classList.remove('show');
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+/* ===== EXPORTAR PDF ===== */
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+function esc(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML.replace(/\n/g, '<br>');
+}
+
+async function exportarPDF(){
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(26,34,80,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:300px;box-shadow:0 10px 30px rgba(30,36,80,.3);font-family:Georgia,serif;">' +
+      '<div style="font-size:2rem;margin-bottom:8px;">📄</div>' +
+      '<h4 style="margin:0 0 4px;color:#1a2250;font-family:Georgia,serif;">Gerando PDF…</h4>' +
+      '<p style="margin:0 0 14px;color:#4e5168;font-size:.86rem;">Aguarde alguns instantes.</p>' +
+      '<div style="background:#e3e6f6;border-radius:6px;overflow:hidden;height:8px;">' +
+        '<div id="pdf-prog" style="height:100%;width:0%;background:#2f3d7e;transition:width .2s ease;"></div>' +
+      '</div>' +
+      '<div id="pdf-prog-txt" style="margin-top:8px;font-family:monospace;font-size:.74rem;color:#4e5168;">0%</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  await sleep(80);
+  function setP(pct, msg){
+    const pp = document.getElementById('pdf-prog'), pt = document.getElementById('pdf-prog-txt');
+    if(pp) pp.style.width = pct + '%';
+    if(pt) pt.textContent = msg || (pct + '%');
+  }
+
+  try{
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait', unit:'px', format:'a4', hotfixes:['px_scaling']});
+    const PW = pdf.internal.pageSize.getWidth(), PH = pdf.internal.pageSize.getHeight();
+    const ML = 28, CW = PW - ML*2;
+    let y = ML;
+
+    async function addImg(el){
+      const canvas = await html2canvas(el, {scale:2, useCORS:true, logging:false, backgroundColor:'#ffffff', scrollX:0, scrollY:0, windowWidth:860});
+      const imgW = CW, imgH = (canvas.height / canvas.width) * imgW;
+      const dataUrl = canvas.toDataURL('image/jpeg', .92), avail = PH - ML*2;
+      if(imgH <= avail){
+        if(y + imgH > PH - ML){ pdf.addPage(); y = ML; }
+        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
+        y += imgH + 8;
+      } else {
+        const pxPerPdfPt = canvas.width / imgW;
+        let srcY = 0;
+        while(srcY < canvas.height){
+          const availPt = PH - y - ML, sliceH_pt = Math.min(availPt, avail);
+          const sliceH_px = Math.round(sliceH_pt * pxPerPdfPt), actualH_px = Math.min(sliceH_px, canvas.height - srcY);
+          const tmp = document.createElement('canvas');
+          tmp.width = canvas.width; tmp.height = actualH_px;
+          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
+          const sliceUrl = tmp.toDataURL('image/jpeg', .92), slicePt = (actualH_px / canvas.width) * imgW;
+          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
+          srcY += actualH_px; y += slicePt;
+          if(srcY < canvas.height){ pdf.addPage(); y = ML; }
+        }
+        y += 8;
+      }
+    }
+
+    async function band(tag, txt){
+      const b = document.createElement('div');
+      b.style.cssText = 'width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      b.innerHTML = '<div style="background:linear-gradient(90deg,#2f3d7e,#1a2250);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px">' +
+        '<span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">' + tag + '</span>' +
+        '<span style="color:#fff;font-size:15px;font-weight:700">' + txt + '</span></div>';
+      document.body.appendChild(b);
+      await sleep(20);
+      await addImg(b);
+      document.body.removeChild(b);
+    }
+
+    const nome = document.getElementById('header-nome').textContent || 'Aluno(a)';
+    const turma = document.getElementById('ficha-turma').textContent || '—';
+    const acertos = window.__acertos !== undefined ? window.__acertos : '—';
+    const pct = window.__acertos !== undefined ? Math.round(window.__acertos/5*100)+'%' : '—';
+    const now = new Date();
+    const dtStr = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+
+    setP(5, 'Preparando capa…'); await sleep(40);
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
+    coverEl.innerHTML =
+      '<div style="background:linear-gradient(135deg,#1a2250 0%,#2f3d7e 60%,#4b5aa6 100%);padding:32px 48px 28px;color:white">' +
+        '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">Ciências Humanas e Sociais Aplicadas · 3ª série do Ensino Médio · GO-EMCHS305A</div>' +
+        '<div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">Uma república em disputa: por que a natureza não estava na pauta</div>' +
+        '<div style="font-size:13px;opacity:.8;font-style:italic">Atividade do Tópico 1 · 1 questão dissertativa + 5 questões objetivas</div>' +
+      '</div>' +
+      '<div style="background:#f2f3fa;padding:22px 48px 26px;border-bottom:3px solid #b8760f">' +
+        '<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#2f3d7e;font-weight:700;margin-bottom:5px">Aluno(a)</div>' +
+        '<div style="font-size:20px;font-weight:700;color:#1b1c2b;border-bottom:2.5px solid #2f3d7e;padding-bottom:6px;display:inline-block;margin-bottom:16px">' + esc(nome) + '</div>' +
+        '<div style="display:flex;gap:12px;flex-wrap:wrap">' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#2f3d7e">' + esc(turma) + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Turma</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#b8760f">1</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Dissertativas</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#2f3d7e">' + acertos + '/5</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Objetivas (' + pct + ')</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">' +
+            '<div style="font-size:13px;font-weight:700;color:#333">' + dtStr + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>' +
+      '</div>';
+    document.body.appendChild(coverEl); await sleep(60); await addImg(coverEl); document.body.removeChild(coverEl);
+
+    // QUESTÕES DISSERTATIVAS
+    setP(15, 'Preparando dissertativas…'); await sleep(20);
+    await band('DISSERTATIVAS', 'Parte I — Questões Dissertativas');
+
+    const QUESTOES = [
+      { num:'1', id:'resp-1',
+        enunc:'A partir do quadro das duas plataformas e do comentário de Boris Fausto, escreva uma leitura do período de 1946 a 1964 que relacione o projeto de desenvolvimento e a questão ambiental: o que separava progressistas e conservadores, o que os dois campos tinham em comum quanto ao uso da natureza e por que a proteção ambiental não aparece como pauta em nenhuma das duas colunas.',
+        coment:'Espera-se um texto articulado, e não a leitura linha a linha do quadro. O que separava os campos: nacionalismo econômico, intervenção do Estado, ampliação das leis trabalhistas, reforma agrária e política externa independente, de um lado; do outro, a plataforma que Boris Fausto resume em quatro pontos — menor intervenção estatal, industrialização como prioridade menor, abertura controlada ao capital estrangeiro e combate rígido à inflação. O que havia em comum: para os dois lados, floresta, rio, solo e subsolo eram recursos de um projeto de nação; a divergência era sobre quem os exploraria, nunca sobre se seriam explorados. A ausência: o tema não estava sendo debatido e perdido, e sim fora do campo do pensável — a disputa era sobre quem financia e quem controla a industrialização. Valoriza-se quem observar que a Constituição de 1946 trata águas, florestas, caça e pesca como objeto de aproveitamento, e quem evitar o anacronismo nas duas direções: nem cobrar de 1958 um estudo de impacto criado em 1986, nem supor que todos pensassem igual.' }
+    ];
+
+    for(let i=0; i<QUESTOES.length; i++){
+      const q = QUESTOES[i];
+      setP(15 + Math.round(i/QUESTOES.length*38), 'Dissertativa ' + q.num + '/1…'); await sleep(10);
+
+      const valor = document.getElementById(q.id) ? document.getElementById(q.id).value : '';
+      const respostaHTML =
+        '<div style="background:#f5f6fc;border:1.5px solid #ccd1e8;border-radius:8px;padding:12px 15px;min-height:40px">' +
+          '<div style="font-size:12px;color:#1b1c2b;line-height:1.75;white-space:pre-wrap">' + (esc(valor) || '<span style="color:#aaa">(sem resposta)</span>') + '</div>' +
+        '</div>';
+
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #ccd1e8;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML =
+        '<div style="background:linear-gradient(90deg,#2f3d7e,#1a2250);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + q.num + '</span>' +
+          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>' +
+        '<div style="padding:18px 24px 16px;background:#ffffff">' +
+          '<div style="font-size:13px;font-weight:700;color:#1b1c2b;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">' + esc(q.enunc) + '</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+            '<div style="width:4px;height:15px;background:#2f3d7e;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#2f3d7e;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>' +
+          respostaHTML +
+          '<div style="display:flex;align-items:center;gap:8px;margin:12px 0 7px">' +
+            '<div style="width:4px;height:15px;background:#b8760f;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#8a5808;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
+          '<div style="background:#fdf4e6;border:1.5px solid #f6e6cb;border-radius:8px;padding:13px 16px">' +
+            '<div style="font-size:12px;color:#6b4508;line-height:1.8">' + esc(q.coment) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(10); await addImg(qEl); document.body.removeChild(qEl);
+    }
+
+    // QUESTÕES OBJETIVAS
+    setP(55, 'Preparando objetivas…'); await sleep(20);
+    await band('OBJETIVAS', 'Parte II — Questões Objetivas');
+
+    const LETRAS_PDF = ['A','B','C','D','E'];
+    const objetivasEls = document.querySelectorAll('.questao.objetiva');
+    let oi = 0;
+    for(const qEl0 of objetivasEls){
+      const num = qEl0.dataset.questao.replace('obj-','');
+      const correta = parseInt(qEl0.dataset.correta, 10);
+      const escolha = respMC[num];
+      const acertou = escolha === correta;
+      const enuncClone = qEl0.querySelector('.enunciado').cloneNode(true);
+      const badgeInClone = enuncClone.querySelector('.badge-resultado');
+      if(badgeInClone) badgeInClone.remove();
+      const numQInClone = enuncClone.querySelector('.num-q');
+      if(numQInClone) numQInClone.remove();
+      const enunc = enuncClone.textContent.trim();
+      const baseEl = qEl0.querySelector('.base-obj');
+      const baseTxt = baseEl ? baseEl.textContent.trim() : '';
+      setP(55 + Math.round(oi/objetivasEls.length*35), 'Objetiva ' + num + '/5…'); await sleep(10);
+
+      let altsHTML = '';
+      qEl0.querySelectorAll('.opcao').forEach(function(op){
+        const idx = parseInt(op.dataset.idx, 10);
+        const txt = op.querySelector('.opcao-txt').textContent;
+        let bg='#ffffff', bd='#ccd1e8', cor='#1b1c2b', tag='';
+        if(idx===correta){ bg='#e8f6ed'; bd='#8ed8a5'; cor='#0d381c'; tag='<span style="color:#0a6e38;font-weight:700"> ✓ correta</span>'; }
+        if(idx===escolha && !acertou){ bg='#fdeeee'; bd='#e3a3a3'; cor='#7a1f1f'; tag='<span style="color:#a83232;font-weight:700"> ✗ sua resposta</span>'; }
+        else if(idx===escolha && acertou){ tag='<span style="color:#0a6e38;font-weight:700"> ← sua resposta</span>'; }
+        altsHTML += '<div style="display:flex;gap:9px;align-items:flex-start;background:'+bg+';border:1px solid '+bd+';border-radius:6px;padding:8px 12px;margin-bottom:6px"><div style="flex:0 0 auto;font-weight:700;color:#2f3d7e;font-size:12px">'+LETRAS_PDF[idx]+')</div><div style="font-size:12px;color:'+cor+';line-height:1.55">'+esc(txt)+tag+'</div></div>';
+      });
+
+      const baseHTML = baseTxt ? '<div style="background:#f5f6fc;border-left:4px solid #b8760f;border-radius:0 6px 6px 0;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#3a3d55;line-height:1.6">' + esc(baseTxt) + '</div>' : '';
+      const headBg = acertou ? 'linear-gradient(90deg,#2f3d7e,#1a2250)' : 'linear-gradient(90deg,#a83232,#7a1f1f)';
+      const gabTxt = qEl0.querySelector('.gabarito-info').textContent.trim();
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #ccd1e8;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML =
+        '<div style="background:'+headBg+';padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + num + '</span>' +
+          '<span style="background:rgba(255,255,255,.2);color:white;font-size:11px;padding:3px 12px;border-radius:20px;font-weight:700">' + (acertou?'ACERTOU':'ERROU') + '</span></div>' +
+        '<div style="padding:16px 24px 14px;background:#ffffff">' +
+          baseHTML +
+          '<div style="font-size:13px;font-weight:700;color:#1b1c2b;line-height:1.6;margin-bottom:12px">' + esc(enunc) + '</div>' +
+          altsHTML +
+          '<div style="margin-top:10px;background:#fdf4e6;border:1px solid #f6e6cb;border-radius:6px;padding:10px 14px">' +
+            '<div style="font-size:12px;color:#6b4508;line-height:1.6">' + esc(gabTxt) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(10); await addImg(qEl); document.body.removeChild(qEl);
+      oi++;
+    }
+
+    // RODAPÉ EM TODAS AS PÁGINAS
+    setP(92, 'Finalizando…'); await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for(let p=1; p<=totalPages; p++){
+      pdf.setPage(p);
+      const fEl = document.createElement('div');
+      fEl.style.cssText = 'width:' + Math.round(CW) + 'px;height:22px;background:#f2f3fa;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      fEl.innerHTML = '<span>Atividade Tópico 1 — 3ª série · ' + esc(nome) + ' · Objetivas: ' + acertos + '/5</span><span>Página ' + p + ' de ' + totalPages + '</span>';
+      document.body.appendChild(fEl);
+      const fc = await html2canvas(fEl, {scale:2, logging:false, backgroundColor:'#f2f3fa'});
+      document.body.removeChild(fEl);
+      const fUrl = fc.toDataURL('image/jpeg', .9), fH = (fc.height / fc.width) * CW;
+      pdf.setFillColor(242,243,250); pdf.rect(ML, PH-fH, CW, fH, 'F');
+      pdf.addImage(fUrl, 'JPEG', ML, PH-fH, CW, fH);
+    }
+
+    setP(100, 'Salvando…'); await sleep(200);
+    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    pdf.save('Atividade_GO-EMCHS305A_Topico1_' + safeName + '.pdf');
+
+  } catch(err){
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message);
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if(ov) document.body.removeChild(ov);
+  }
+}
+
+/* ===== PROTEÇÃO ANTI-COLA ===== */
+(function () {
+  const CAMPOS_PROTEGIDOS = document.querySelectorAll('textarea.dissertativa, .campo-resposta');
+  const LIMITE_BLOCO = 25;
+
+  function bloquear(e) {
+    e.preventDefault();
+    mostrarToast('Colar não permitido nesta atividade.');
+  }
+
+  CAMPOS_PROTEGIDOS.forEach(function (campo) {
+    ['paste', 'copy', 'cut', 'drop', 'dragover', 'contextmenu'].forEach(function (evt) {
+      campo.addEventListener(evt, bloquear);
+    });
+
+    campo.addEventListener('beforeinput', function (e) {
+      if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+        e.preventDefault();
+        mostrarToast('Colar não permitido nesta atividade.');
+      }
+    });
+
+    let valorAnterior = campo.value;
+    campo.addEventListener('input', function (e) {
+      const diferenca = campo.value.length - valorAnterior.length;
+      if (diferenca >= LIMITE_BLOCO && e.inputType !== 'insertReplacementText') {
+        campo.value = valorAnterior;
+        mostrarToast('Colar não permitido nesta atividade.');
+      } else {
+        valorAnterior = campo.value;
+      }
+    });
+  });
+
+  function mostrarToast(mensagem) {
+    let toast = document.getElementById('anti-cola-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'anti-cola-toast';
+      toast.style.cssText =
+        'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);' +
+        'background:#333;color:#fff;padding:10px 20px;border-radius:8px;' +
+        'font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = mensagem;
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(function () {
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+})();
+</script>
+
+</body>
+</html>
