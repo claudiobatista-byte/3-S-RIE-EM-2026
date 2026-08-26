@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Material de estudo de História (Ensino Médio - EM13CHS605 / GO-EMCHS605B): a construção histórica dos direitos humanos, da cidadania liberal à Constituição de 1988 e aos movimentos sociais contemporâneos. CERO - Prof. Claudio.">
+<meta name="theme-color" content="#26402f">
+<meta name="color-scheme" content="light only">
+<title>Direitos Humanos: conquista histórica, disputa permanente — História · Ensino Médio · CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* PALETA — trocar os 5 valores abaixo muda o tema inteiro */
+  --petroleo:#26402f;      /* cor-base escura   */
+  --petroleo-claro:#3d6349;
+  --terracota:#a8551d;     /* cor de acento     */
+  --terracota-claro:#cf8145;
+  --areia:#f6f2e9;         /* fundo de papel    */
+  --areia-escura:#e8e0d0;
+  --grafite:#2b2b2b;
+  --cinza:#5d5d5d;
+  --musgo:#6b7a3f;         /* cor de apoio      */
+  --borda:#d8d0be;
+  --branco:#fffdf9;
+  --serif-titulo:'Playfair Display',Georgia,'Times New Roman',serif;
+  --serif-corpo:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --raio:10px;
+  --sombra:0 2px 10px rgba(15,61,62,.10);
+  --medida:900px;          /* largura util do conteudo */
+  --gutter:clamp(16px,4vw,28px);
+  --topbar-h:44px;         /* atualizado por JS */
+}
+html{
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;
+  scroll-behavior:smooth;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;background:var(--areia);color:var(--grafite);
+  font-family:var(--serif-corpo);font-size:17px;line-height:1.7;
+  -webkit-user-select:none;user-select:none;
+  -webkit-tap-highlight-color:rgba(180,83,42,.18);
+}
+main,.conteudo,.glossario,.modal-corpo{-webkit-user-select:text;user-select:text;}
+h1,h2,h3,h4{font-family:var(--serif-titulo);line-height:1.25;overflow-wrap:break-word;}
+img,svg,video{max-width:100%;height:auto;}
+
+a:focus-visible,button:focus-visible,summary:focus-visible{
+  outline:3px solid var(--terracota);outline-offset:2px;border-radius:4px;
+}
+.topbar a:focus-visible,.topbar button:focus-visible,.hero a:focus-visible{
+  outline-color:#f0c9a8;
+}
+
+/* ---------- LAYOUT ---------- */
+main{max-width:var(--medida);margin:0 auto;padding:0 var(--gutter) 60px;}
+section{margin-top:44px;}
+h2.secao{
+  font-size:1.6rem;color:var(--petroleo);margin:0 0 6px;
+  border-bottom:2px solid var(--areia-escura);padding-bottom:10px;
+}
+h2.secao .num{
+  display:inline-block;background:var(--terracota);color:#fff;font-family:var(--serif-corpo);
+  font-size:.85rem;font-weight:600;width:30px;height:30px;line-height:30px;text-align:center;
+  border-radius:50%;margin-right:12px;vertical-align:2px;
+}
+h3{font-size:1.15rem;color:var(--petroleo-claro);margin:26px 0 8px;}
+p{margin:0 0 14px;text-align:justify;}
+.lead{font-size:1.06rem;color:var(--cinza);}
+
+
+/* ---------- BOX SLIDES DA AULA EM PDF ---------- */
+.slides-aula-box{
+  background:var(--branco);
+  border-left:6px solid var(--terracota);
+  border-radius:var(--raio);
+  padding:22px 26px;
+  box-shadow:var(--sombra);
+  margin-top:28px;
+}
+.slides-aula-box .slides-conteudo{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+}
+.slides-aula-box h2{margin:0;color:var(--terracota);font-size:1.15rem;}
+.slides-aula-box p{margin:5px 0 0;color:var(--cinza);font-size:.94rem;}
+.slides-pdf-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  flex:0 0 auto;padding:11px 18px;border-radius:10px;
+  background:var(--terracota);color:#fff;text-decoration:none;font-weight:700;
+  box-shadow:0 5px 14px rgba(0,0,0,.12);transition:transform .15s,filter .15s;
+}
+.slides-pdf-btn:hover{transform:translateY(-2px);filter:brightness(1.08);}
+@media(max-width:700px){
+  .slides-aula-box .slides-conteudo{flex-direction:column;align-items:flex-start;}
+  .slides-pdf-btn{width:100%;}
+}
+
+/* ---------- BOX ATIVIDADE DE REVISÃO (fim do tópico 6) ---------- */
+.atividade-revisao-box{
+  margin-top:26px;
+  background:
+    radial-gradient(700px 220px at 88% 0%,rgba(180,83,42,.35),transparent 60%),
+    linear-gradient(135deg,#1d3325 0%,#2a4a34 55%,#3f6b4b 100%);
+  border-radius:var(--raio);
+  padding:24px 28px;
+  box-shadow:var(--sombra);
+  color:var(--areia);
+}
+.atividade-revisao-conteudo{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+}
+.atividade-revisao-tag{
+  display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:#f0c9a8;margin-bottom:8px;
+}
+.atividade-revisao-box h2{margin:0 0 6px;font-size:1.22rem;color:#fff;}
+.atividade-revisao-box p{margin:0;color:rgba(246,242,233,.86);font-size:.94rem;max-width:52ch;text-align:left;}
+.atividade-revisao-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  flex:0 0 auto;padding:13px 22px;border-radius:10px;
+  background:var(--terracota);color:#fff;text-decoration:none;font-weight:700;
+  box-shadow:0 5px 14px rgba(0,0,0,.18);transition:transform .15s,filter .15s;
+  white-space:nowrap;
+}
+.atividade-revisao-btn:hover{transform:translateY(-2px);filter:brightness(1.08);}
+@media(max-width:700px){
+  .atividade-revisao-box{padding:18px 20px;}
+  .atividade-revisao-conteudo{flex-direction:column;align-items:flex-start;}
+  .atividade-revisao-btn{width:100%;}
+}
+
+/* ---------- OBJETIVOS ---------- */
+.objetivos{
+  background:var(--branco);border-left:6px solid var(--petroleo);border-radius:var(--raio);
+  padding:22px 26px;box-shadow:var(--sombra);margin-top:34px;
+}
+.objetivos .acc{margin:0;}
+.objetivos .acc-head{font-size:1.15rem;}
+.objetivos ul{margin:0;padding-left:20px;}
+.objetivos li{margin-bottom:8px;}
+.hab{
+  display:inline-block;background:var(--areia-escura);color:var(--petroleo);
+  font-size:.75rem;letter-spacing:.08em;padding:3px 10px;border-radius:100px;
+  font-weight:600;margin-bottom:10px;
+}
+
+/* ---------- BOXES ---------- */
+.termo-box{
+  background:var(--branco);border:1px solid var(--borda);border-left:5px solid var(--terracota);
+  border-radius:var(--raio);padding:16px 20px;margin:18px 0;
+}
+.termo-box .rot{
+  display:block;font-family:var(--serif-titulo);color:var(--terracota);
+  font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;
+}
+.termo-box p:last-child{margin-bottom:0;}
+
+.saiba-box{
+  background:#eef3ef;border:1px dashed var(--musgo);border-radius:var(--raio);
+  padding:16px 20px;margin:18px 0;
+}
+.saiba-box .rot{display:block;color:var(--musgo);font-weight:600;font-size:.85rem;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.saiba-box p:last-child{margin-bottom:0;}
+
+.goias-box{
+  background:linear-gradient(135deg,#fdf6ec,#f7e9d6);
+  border:1px solid var(--terracota-claro);border-radius:var(--raio);
+  padding:20px 24px;margin:22px 0;box-shadow:var(--sombra);
+}
+.goias-box .rot{display:block;color:var(--terracota);font-family:var(--serif-titulo);
+  font-size:1rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.goias-box p:last-child{margin-bottom:0;}
+
+.cita{
+  border-left:4px solid var(--petroleo-claro);background:var(--branco);
+  padding:14px 20px;margin:20px 0;font-style:italic;color:#3a3a3a;border-radius:0 var(--raio) var(--raio) 0;
+}
+.cita .fonte{display:block;font-style:normal;font-size:.82rem;color:var(--cinza);margin-top:8px;text-align:right;}
+
+.pesquise{
+  background:var(--petroleo);color:var(--areia);border-radius:var(--raio);
+  padding:18px 22px;margin:20px 0;
+}
+.pesquise .rot{display:block;font-family:var(--serif-titulo);font-size:.9rem;
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;color:#f0c9a8;}
+.pesquise p:last-child{margin-bottom:0;}
+.pesquise ul{margin:8px 0 0;padding-left:20px;}
+.pesquise li{margin-bottom:6px;}
+
+/* ---------- ACCORDION ---------- */
+.acc{border:1px solid var(--borda);border-radius:var(--raio);overflow:hidden;margin:14px 0;background:var(--branco);}
+.acc-head{
+  width:100%;text-align:left;background:var(--branco);border:0;cursor:pointer;
+  font-family:var(--serif-titulo);font-size:1.02rem;color:var(--petroleo);
+  padding:15px 46px 15px 18px;position:relative;
+}
+.acc-head:hover{background:#f9f6ef;}
+.acc-head::after{
+  content:'+';position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  font-size:1.4rem;color:var(--terracota);font-family:var(--serif-corpo);
+}
+.acc.aberto .acc-head::after{content:'–';}
+.acc-body{display:none;padding:4px 18px 18px;border-top:1px solid var(--areia-escura);}
+.acc.aberto .acc-body{display:block;}
+
+/* ---------- TABELAS ---------- */
+.tabela-wrap{overflow-x:auto;margin:20px 0;position:relative;}
+table{border-collapse:collapse;width:100%;background:var(--branco);font-size:.93rem;}
+caption{caption-side:top;text-align:left;font-size:.85rem;color:var(--cinza);padding-bottom:8px;font-style:italic;}
+th,td{border:1px solid var(--borda);padding:10px 12px;vertical-align:top;text-align:left;}
+th{background:var(--petroleo);color:var(--areia);font-family:var(--serif-titulo);font-weight:600;}
+tbody tr:nth-child(even){background:#faf7f0;}
+.tabela-wrap::after{
+  content:'arraste para o lado \2192';
+  display:none;font-size:.72rem;color:var(--cinza);letter-spacing:.08em;
+  text-transform:uppercase;padding-top:6px;
+}
+.tabela-wrap.tem-scroll::after{display:block;}
+
+/* ---------- LINHA DO TEMPO ---------- */
+.linha{border-left:3px solid var(--terracota-claro);margin:22px 0 22px 10px;padding-left:20px;}
+.linha .item{margin-bottom:16px;position:relative;}
+.linha .item::before{
+  content:'';position:absolute;left:-27px;top:8px;width:11px;height:11px;
+  background:var(--terracota);border-radius:50%;border:2px solid var(--areia);
+}
+.linha .ano{font-family:var(--serif-titulo);color:var(--petroleo);font-weight:700;}
+
+/* ---------- SÍNTESE ---------- */
+.sintese{background:var(--branco);border:1px solid var(--borda);border-top:6px solid var(--musgo);
+  border-radius:var(--raio);padding:22px 26px;box-shadow:var(--sombra);}
+.sintese ul{margin:0;padding-left:20px;}
+.sintese li{margin-bottom:10px;}
+
+/* ---------- GLOSSÁRIO ---------- */
+.glossario dl{margin:0;}
+.glossario dt{font-family:var(--serif-titulo);color:var(--petroleo);font-weight:700;margin-top:14px;}
+.glossario dd{margin:2px 0 0;padding-left:0;color:#3a3a3a;}
+
+/* ---------- REFERÊNCIAS ---------- */
+.refs{font-size:.88rem;color:var(--cinza);}
+.refs li{margin-bottom:8px;overflow-wrap:anywhere;}
+
+/* ---------- RODAPÉ ---------- */
+footer{
+  background:var(--petroleo);color:var(--areia);text-align:center;
+  padding:28px var(--gutter) calc(28px + env(safe-area-inset-bottom));
+  font-size:.86rem;letter-spacing:.04em;
+}
+footer p{text-align:center;margin:0;}
+footer strong{color:#f0c9a8;}
+
+/* ================= CABEÇALHO ================= */
+.progresso{
+  position:fixed;top:0;left:0;right:0;height:3px;background:rgba(15,61,62,.12);z-index:800;
+}
+.progresso span{
+  display:block;height:100%;width:0;background:linear-gradient(90deg,var(--terracota),#e0a15f);
+  transition:width .08s linear;
+}
+.topbar{
+  position:sticky;top:0;z-index:790;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:var(--petroleo);color:var(--areia);
+  padding:9px var(--gutter);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
+  border-bottom:1px solid rgba(246,242,233,.16);
+  min-height:40px;
+}
+.topbar-inner{
+  max-width:var(--medida);margin:0 auto;width:100%;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.tb-marca{font-family:var(--serif-titulo);font-weight:700;letter-spacing:.22em;}
+.tb-sep{width:1px;height:14px;background:rgba(246,242,233,.35);}
+.tb-disc{opacity:.85;}
+.tb-hab{
+  margin-left:auto;background:var(--terracota);color:#fff;
+  padding:3px 10px;border-radius:100px;letter-spacing:.12em;font-size:.7rem;
+}
+
+.hero{
+  background:
+    radial-gradient(1100px 380px at 82% -12%,rgba(180,83,42,.42),transparent 62%),
+    linear-gradient(158deg,#1d3325 0%,#2a4a34 52%,#3f6b4b 100%);
+  color:var(--areia);border-bottom:0;text-align:left;
+  padding:clamp(34px,7vw,68px) var(--gutter) clamp(30px,5vw,52px);
+  position:relative;
+}
+.hero::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:4px;
+  background:linear-gradient(90deg,var(--terracota) 0%,var(--musgo) 55%,var(--petroleo-claro) 100%);
+}
+.hero-inner{max-width:var(--medida);margin:0 auto;}
+.hero-eyebrow{
+  font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:#f0c9a8;
+  margin:0 0 14px;padding-left:16px;position:relative;text-align:left;
+}
+.hero-eyebrow::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:8px;height:8px;background:var(--terracota);border-radius:2px;
+}
+.hero h1{
+  font-size:clamp(1.85rem,6.2vw,3.1rem);margin:0 0 14px;max-width:18ch;line-height:1.12;
+  letter-spacing:-.01em;
+}
+.hero .sub{
+  font-size:clamp(1rem,2.6vw,1.16rem);max-width:60ch;margin:0;opacity:.94;
+  font-style:normal;line-height:1.6;text-align:left;
+}
+.hero-tags{
+  list-style:none;display:flex;flex-wrap:wrap;gap:8px;
+  margin:22px 0 0;padding:0;
+}
+.hero-tags li{
+  border:1px solid rgba(246,242,233,.34);border-radius:100px;
+  padding:5px 13px;font-size:.78rem;letter-spacing:.03em;background:rgba(255,255,255,.06);
+}
+.hero .meta{
+  margin:24px 0 0;font-size:.8rem;letter-spacing:.08em;opacity:.72;text-align:left;
+  padding-top:16px;border-top:1px solid rgba(246,242,233,.18);
+}
+
+/* ---------- TRILHA DO TEMA (acordeão fixo na topbar) ---------- */
+.sumario-box{position:relative;}
+.sum-toggle{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(246,242,233,.10);border:1px solid rgba(246,242,233,.26);
+  border-radius:100px;padding:5px 12px 5px 8px;
+  color:var(--areia);font-family:var(--serif-corpo);
+  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;min-height:32px;line-height:1;
+  transition:background .16s ease,border-color .16s ease;
+}
+.sum-toggle:hover{background:rgba(246,242,233,.2);border-color:rgba(246,242,233,.5);}
+.sumario-box.aberto .sum-toggle{background:var(--terracota);border-color:var(--terracota);}
+.sum-ico{font-size:.9rem;line-height:1;}
+.sum-rot{font-family:var(--serif-corpo);}
+.sum-cont{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:18px;height:18px;padding:0 5px;border-radius:100px;
+  background:rgba(246,242,233,.22);font-size:.66rem;letter-spacing:0;
+}
+.sumario-box.aberto .sum-cont{background:rgba(0,0,0,.22);}
+.sum-seta{font-size:.9rem;line-height:1;transition:transform .22s ease;}
+.sumario-box.aberto .sum-seta{transform:rotate(180deg);}
+
+.sum-chips{
+  display:none;flex-direction:column;
+  position:absolute;top:calc(100% + 15px);left:0;
+  width:min(340px,calc(100vw - 2 * var(--gutter)));
+  max-height:70vh;max-height:70dvh;overflow-y:auto;overscroll-behavior:contain;
+  background:var(--branco);border:1px solid var(--borda);border-top:4px solid var(--terracota);
+  border-radius:var(--raio);box-shadow:0 16px 38px rgba(15,61,62,.28);
+  padding:6px 0;z-index:795;text-transform:none;letter-spacing:normal;
+}
+.sumario-box.aberto .sum-chips{display:flex;}
+.sum-chips a{
+  display:flex;align-items:center;gap:11px;
+  padding:11px 16px;min-height:46px;
+  color:var(--petroleo);text-decoration:none;font-size:.92rem;line-height:1.35;
+  border-bottom:1px solid var(--areia-escura);
+  opacity:0;transform:translateY(-8px);
+  animation:cascata .24s ease forwards;
+  animation-delay:calc(var(--i,0) * 40ms);
+}
+.sum-chips a:last-child{border-bottom:0;}
+.sum-chips a:hover,.sum-chips a:focus{background:var(--areia);color:var(--terracota);}
+.sum-chips a b{
+  display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+  width:22px;height:22px;border-radius:50%;background:var(--petroleo);color:var(--areia);
+  font-size:.72rem;font-family:var(--serif-corpo);font-weight:400;
+}
+.sum-chips a:hover b{background:var(--terracota);}
+
+@keyframes cascata{to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion:reduce){
+  .sum-chips a{animation:none;opacity:1;transform:none;}
+}
+
+@media (max-width:820px){
+  .sum-chips{
+    position:fixed;top:var(--topbar-h);left:0;right:0;width:auto;
+    border-radius:0;border-left:0;border-right:0;
+    max-height:calc(100vh - var(--topbar-h) - 12px);
+    max-height:calc(100dvh - var(--topbar-h) - 12px);
+  }
+  .sum-chips a{min-height:50px;font-size:.95rem;}
+}
+@media (max-width:520px){
+  .sum-toggle{padding:5px 10px 5px 7px;}
+  .sum-rot{display:none;}
+}
+
+h2.secao,section[id],[id]{scroll-margin-top:calc(var(--topbar-h) + 18px);}
+
+/* ================= OTIMIZAÇÃO MOBILE ================= */
+@media (max-width:820px){
+  body{font-size:16.5px;}
+  p{text-align:left;hyphens:auto;}
+  main{padding:0 var(--gutter) 48px;}
+  section{margin-top:34px;}
+  h2.secao{font-size:1.35rem;}
+  h2.secao .num{width:26px;height:26px;line-height:26px;font-size:.78rem;margin-right:9px;}
+  .acc-head{padding:16px 44px 16px 16px;min-height:56px;font-size:1rem;}
+  .acc-body{padding:4px 16px 16px;}
+  .ficha-btn{padding:16px;min-height:58px;}
+  .tabela-wrap{
+    overflow-x:auto;-webkit-overflow-scrolling:touch;
+    border-right:1px solid var(--areia-escura);
+  }
+  table{font-size:.88rem;min-width:480px;}
+  th,td{padding:9px 10px;}
+  .linha{margin-left:6px;padding-left:16px;}
+  .goias-box,.pesquise{padding:16px 18px;}
+  .cita{padding:12px 16px;}
+  .glossario dd{font-size:.95rem;}
+}
+
+@media (max-width:520px){
+  :root{--gutter:15px;}
+  .topbar{font-size:.68rem;gap:8px;padding:8px var(--gutter);}
+  .tb-disc{display:none;}
+  .tb-sep{display:none;}
+  .hero-tags li{font-size:.73rem;padding:4px 11px;}
+  .hero h1{max-width:100%;}
+}
+
+/* ---------- MODAL EM TELA CHEIA NO CELULAR ---------- */
+@media (max-width:720px){
+  .modal-fundo{padding:0;}
+  .modal-cx{
+    max-width:100%;border-radius:0;margin:0;
+    height:100vh;height:100dvh;max-height:none;
+  }
+  .modal-topo{padding:16px;}
+  .modal-topo h3{font-size:1.12rem;}
+  .modal-corpo{padding:18px 16px 24px;}
+  .modal-corpo li{font-size:.95rem;}
+  .modal-rodape{
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    justify-content:center;
+  }
+  .modal-rodape span{display:none;}
+  .modal-rodape button{width:100%;min-height:46px;font-size:.95rem;}
+  .modal-fechar{width:40px;height:40px;font-size:1.35rem;}
+}
+
+@media print{
+  .topbar,.progresso,.sumario-box,.ficha-btn,.rec-grid,.modal-fundo,.slides-aula-box,.atividade-revisao-box,.revisando-box,.revisao-destaque,.revisao-popup,.instagram-fundo{display:none !important;}
+  .hero{background:none;color:#000;padding:0 0 18px;}
+  .hero::after{display:none;}
+  .hero-eyebrow,.hero .meta{color:#444;}
+  .hero-tags li{border-color:#999;}
+  body{background:#fff;font-size:11pt;}
+  main{max-width:none;padding:0;}
+  .acc-body{display:block !important;}
+  .acc-head::after{content:'';}
+  section,.acc,.sintese,.objetivos{break-inside:avoid;}
+  h2.secao{break-after:avoid;}
+  table{min-width:0 !important;font-size:9.5pt;}
+  .tabela-wrap{overflow:visible !important;}
+  .tabela-wrap::after{display:none !important;}
+  footer{background:none;color:#000;border-top:1px solid #999;}
+  footer strong{color:#000;}
+}
+
+/* ---------- GRID DE MATERIAL DE CONSULTA ---------- */
+.rec-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:20px 0 6px;
+}
+.rec-card{
+  display:flex;flex-direction:column;align-items:flex-start;gap:4px;cursor:pointer;
+  background:var(--branco);border:1px solid var(--borda);border-top:5px solid var(--musgo);
+  border-radius:var(--raio);padding:18px 16px;text-align:left;
+  font-family:var(--serif-corpo);box-shadow:var(--sombra);
+  transition:transform .12s ease,border-color .12s ease;
+}
+.rec-card:hover{transform:translateY(-3px);border-top-color:var(--terracota);}
+.rec-ico{
+  display:flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:8px;background:var(--petroleo);color:var(--areia);
+  font-family:var(--serif-titulo);font-size:.9rem;margin-bottom:6px;
+}
+.rec-tit{font-family:var(--serif-titulo);font-size:1.02rem;color:var(--petroleo);line-height:1.3;}
+.rec-sub{font-size:.82rem;color:var(--cinza);line-height:1.45;}
+@media (max-width:900px){.rec-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:520px){.rec-grid{grid-template-columns:1fr;}.rec-card{flex-direction:row;align-items:center;gap:14px;flex-wrap:wrap;}
+  .rec-card .rec-ico{margin-bottom:0;}
+  .rec-card .rec-tit{flex:1 1 auto;}
+  .rec-card .rec-sub{flex:1 1 100%;}}
+
+/* ---------- FICHAMENTO (botão + modal) ---------- */
+.ficha-btn{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+  background:linear-gradient(135deg,#26402f,#3d6349);color:var(--areia);
+  border:0;border-left:5px solid var(--terracota);border-radius:var(--raio);
+  padding:14px 18px;margin:18px 0;font-family:var(--serif-corpo);font-size:1rem;
+  box-shadow:var(--sombra);transition:transform .12s ease,filter .12s ease;
+}
+.ficha-btn:hover{filter:brightness(1.12);transform:translateY(-1px);}
+.ficha-btn .ico{
+  flex:0 0 auto;width:34px;height:34px;border-radius:8px;background:var(--terracota);
+  display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:700;
+  font-family:var(--serif-titulo);
+}
+.ficha-btn .txt{flex:1;}
+.ficha-btn .txt strong{display:block;font-family:var(--serif-titulo);font-size:1.02rem;}
+.ficha-btn .txt em{font-style:normal;font-size:.85rem;opacity:.82;}
+.ficha-btn .seta{font-size:1.3rem;color:#f0c9a8;}
+
+.modal-fundo{
+  display:none;position:fixed;inset:0;background:rgba(15,61,62,.72);
+  z-index:900;padding:24px 16px;overscroll-behavior:contain;
+}
+.modal-fundo.ativo{display:flex;align-items:flex-start;justify-content:center;}
+.modal-cx{
+  background:var(--branco);width:100%;max-width:880px;margin:0 auto;border-radius:14px;
+  box-shadow:0 18px 50px rgba(0,0,0,.35);overflow:hidden;animation:sobe .18s ease-out;
+  display:flex;flex-direction:column;
+  max-height:calc(100vh - 48px);max-height:calc(100dvh - 48px);
+}
+@keyframes sobe{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+.modal-topo{
+  background:var(--petroleo);color:var(--areia);padding:18px 22px;
+  display:flex;align-items:flex-start;gap:14px;flex:0 0 auto;
+}
+.modal-topo .rot{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:#f0c9a8;display:block;}
+.modal-topo h3{margin:2px 0 0;font-size:1.3rem;color:var(--areia);}
+.modal-fechar{
+  margin-left:auto;background:transparent;border:1px solid rgba(246,242,233,.45);
+  color:var(--areia);width:34px;height:34px;border-radius:8px;font-size:1.2rem;
+  cursor:pointer;line-height:1;flex:0 0 auto;
+}
+.modal-fechar:hover{background:rgba(246,242,233,.15);}
+.modal-corpo{
+  padding:20px 24px 26px;flex:1 1 auto;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+}
+.modal-corpo h4{
+  font-family:var(--serif-titulo);color:var(--terracota);font-size:.85rem;
+  letter-spacing:.1em;text-transform:uppercase;margin:20px 0 6px;
+  border-bottom:1px solid var(--areia-escura);padding-bottom:5px;
+}
+.modal-corpo h4:first-child{margin-top:0;}
+.modal-corpo ul{margin:0;padding-left:20px;}
+.modal-corpo li{margin-bottom:7px;text-align:left;font-size:.97rem;}
+.modal-rodape{
+  border-top:1px solid var(--areia-escura);padding:14px 24px;background:#faf7f0;
+  display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  flex:0 0 auto;
+}
+.modal-rodape span{font-size:.82rem;color:var(--cinza);}
+.modal-rodape button{
+  background:var(--musgo);color:#fff;border:0;border-radius:8px;padding:9px 16px;
+  font-family:var(--serif-corpo);font-size:.9rem;cursor:pointer;
+}
+.modal-rodape button:hover{filter:brightness(1.1);}
+@media print{.ficha-btn{display:none;}}
+@media (max-width:620px){
+  body{font-size:16px;}
+  .modal-topo h3{font-size:1.08rem;}
+}
+
+/* ---------- TEXTOS DE APOIO LONGOS (dentro dos acordeões) ---------- */
+.texto-apoio{font-size:.97rem;}
+.texto-apoio h3{font-size:1.05rem;color:var(--petroleo);margin:22px 0 8px;}
+.texto-apoio .ta-fonte{display:block;font-size:.82rem;color:var(--cinza);font-style:italic;margin-bottom:14px;}
+.texto-apoio .ta-destaque{background:var(--areia);border-left:4px solid var(--terracota);
+  border-radius:0 var(--raio) var(--raio) 0;padding:14px 18px;margin:0 0 18px;}
+.texto-apoio .ta-nota{background:#eef3ef;border:1px dashed var(--musgo);border-radius:var(--raio);
+  padding:14px 18px;margin:18px 0;}
+.texto-apoio .ta-nota .ta-rot{display:block;color:var(--musgo);font-weight:600;font-size:.82rem;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.texto-apoio .ta-citacao{border-left:4px solid var(--petroleo-claro);background:var(--branco);
+  margin:20px 0;padding:14px 20px;font-style:italic;border-radius:0 var(--raio) var(--raio) 0;}
+.texto-apoio .ta-citacao .ta-autor{display:block;font-style:normal;font-size:.82rem;
+  color:var(--cinza);margin-top:8px;text-align:right;}
+.texto-apoio table{margin:0;}
+.acc-body .tabela-wrap{margin:16px 0;}
+
+/* ================= AJUSTES FINAIS: TOQUE, MOVIMENTO, QUEBRA ================= */
+@media (hover:none){
+  .ficha-btn:hover,.rec-card:hover{transform:none;filter:none;box-shadow:var(--sombra);}
+  .rec-card:hover{border-top-color:var(--musgo);}
+  .acc-head:hover{background:var(--branco);}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+p,li,dd,dt,td,th,.rec-tit,.rec-sub,.txt{overflow-wrap:break-word;}
+@media (max-width:820px){
+  .rec-card{min-height:64px;}
+  .sum-chips a{padding:12px 16px;}
+  .modal-fechar{min-width:40px;min-height:40px;}
+}
+
+@media (min-width:1200px){
+  :root{--medida:960px;}
+}
+
+
+/* ---------- IMAGEM DE REVISÃO ACIMA DO MATERIAL DE CONSULTA ---------- */
+.revisao-destaque{
+  width:100%;
+  margin:0 0 22px;
+  display:flex;
+  justify-content:center;
+}
+.revisao-zoom{
+  width:100%;
+  max-width:1100px;
+  overflow:hidden;
+  border-radius:14px;
+  cursor:zoom-in;
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
+  background:#fff;
+}
+.revisao-zoom img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.revisao-zoom:hover{
+  box-shadow:0 10px 30px rgba(0,0,0,.18);
+}
+@media(max-width:700px){
+  .revisao-destaque{margin-bottom:16px;}
+  .revisao-zoom{border-radius:10px;}
+}
+
+
+/* ---------- POPUP DA IMAGEM DE REVISÃO ---------- */
+.revisao-popup{position:fixed;inset:0;z-index:1500;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.90);padding:24px;cursor:zoom-out;opacity:0;transition:opacity .25s ease;}
+.revisao-popup.ativo{display:flex;opacity:1;}
+.revisao-popup-conteudo{position:relative;max-width:96vw;max-height:94vh;display:flex;align-items:center;justify-content:center;}
+.revisao-popup-img{display:block;max-width:96vw;max-height:92vh;width:auto;height:auto;object-fit:contain;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.65);transform:scale(.72);transition:transform .35s cubic-bezier(.2,.8,.2,1);cursor:zoom-out;}
+.revisao-popup.ativo .revisao-popup-img{transform:scale(1);}
+.revisao-popup-fechar{position:fixed;top:18px;right:22px;width:48px;height:48px;border:0;border-radius:50%;background:rgba(20,20,20,.72);color:#fff;font-size:32px;line-height:1;cursor:pointer;z-index:2;}
+.revisao-popup-fechar:hover{background:rgba(255,255,255,.18);}
+.revisao-zoom:focus{outline:3px solid rgba(31,78,121,.45);outline-offset:3px;}
+@media(max-width:700px){.revisao-popup{padding:10px}.revisao-popup-img{max-width:98vw;max-height:88vh}.revisao-popup-fechar{top:10px;right:10px;width:44px;height:44px}}
+
+/* ---------- BOX TÓPICO 7 — REVISANDO ---------- */
+.revisando-box{
+  width:100%;
+  margin:24px 0 14px;
+  padding:16px 20px;
+  border:1.5px solid #b58b2a;
+  border-radius:14px;
+  background:linear-gradient(135deg,#fffdf5,#fff8df);
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+.revisando-titulo{display:flex;align-items:center;gap:14px;}
+.revisando-num{
+  flex:0 0 46px;width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#b58b2a;color:#fff;font-size:24px;font-weight:800;
+}
+.revisando-box h2{margin:0;color:#765b0c;font-size:1.35rem;}
+.revisando-box p{margin:4px 0 0;color:#5d5d5d;font-size:.92rem;}
+@media(max-width:700px){.revisando-box{padding:14px}.revisando-box h2{font-size:1.05rem}.revisando-titulo{gap:10px}.revisando-num{width:40px;height:40px;flex-basis:40px;font-size:20px;}}
+
+/* ---------- REVISA GOIÁS CHSA — largura total da página ---------- */
+.rec-card[data-rec="textos"]{
+  grid-column:1 / -1;
+  width:100%;
+}
+
+
+/* ---------- GALERIA REVISA — modelo Instagram ---------- */
+#btnImagensRevisa{display:none;}
+#btnImagensRevisa.visivel{display:inline-flex;align-items:center;justify-content:center;gap:7px;}
+#btnSlidesRevisa{display:none;}
+#btnSlidesRevisa.visivel{display:inline-flex;align-items:center;justify-content:center;gap:7px;}
+.instagram-fundo{
+  position:fixed;inset:0;z-index:1200;display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.88);padding:18px;
+}
+.instagram-fundo.ativo{display:flex;}
+.instagram-caixa{
+  width:min(100%,1040px);height:min(92vh,820px);display:flex;align-items:center;justify-content:center;
+  position:relative;outline:none;
+}
+.instagram-img{
+  display:block;max-width:calc(100% - 96px);max-height:88vh;width:auto;height:auto;
+  object-fit:contain;border-radius:10px;box-shadow:0 18px 60px rgba(0,0,0,.5);
+  user-select:none;-webkit-user-drag:none;
+}
+.instagram-fechar,.instagram-nav{
+  position:absolute;border:0;cursor:pointer;color:#fff;background:rgba(20,20,20,.62);
+  width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.7rem;line-height:1;backdrop-filter:blur(6px);transition:transform .12s,background .12s;
+}
+.instagram-fechar:hover,.instagram-nav:hover{background:rgba(20,20,20,.9);transform:scale(1.05);}
+.instagram-fechar{right:10px;top:10px;font-size:1.8rem;}
+.instagram-nav.prev{left:8px;top:50%;transform:translateY(-50%);}
+.instagram-nav.next{right:8px;top:50%;transform:translateY(-50%);}
+.instagram-nav.prev:hover,.instagram-nav.next:hover{transform:translateY(-50%) scale(1.05);}
+.instagram-contador{
+  position:absolute;top:16px;left:50%;transform:translateX(-50%);
+  color:#fff;background:rgba(20,20,20,.62);padding:7px 13px;border-radius:999px;
+  font:600 .82rem/1 var(--serif-corpo);letter-spacing:.04em;backdrop-filter:blur(6px);
+}
+.instagram-legenda{
+  position:absolute;left:50%;bottom:8px;transform:translateX(-50%);color:#fff;
+  background:rgba(20,20,20,.62);padding:8px 14px;border-radius:999px;font-size:.8rem;
+  white-space:nowrap;max-width:calc(100% - 100px);overflow:hidden;text-overflow:ellipsis;
+}
+.instagram-dots{position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);display:flex;gap:7px;}
+.instagram-dot{width:7px;height:7px;border:0;border-radius:50%;background:rgba(255,255,255,.45);padding:0;cursor:pointer;}
+.instagram-dot.ativo{background:#fff;transform:scale(1.15);}
+@media(max-width:600px){
+  .instagram-fundo{padding:8px;}
+  .instagram-img{max-width:calc(100% - 30px);max-height:82vh;border-radius:6px;}
+  .instagram-nav{width:40px;height:40px;font-size:1.35rem;}
+  .instagram-nav.prev{left:2px}.instagram-nav.next{right:2px}.instagram-fechar{right:2px;top:2px;}
+  .instagram-legenda{bottom:0;font-size:.72rem;max-width:80%;}
+}
+
+
+.modal-acoes{display:flex;align-items:center;justify-content:flex-end;gap:10px;}
+.modal-acoes button{margin:0;}
+#btnImagensRevisa{background:var(--petroleo);color:var(--areia);border:1px solid var(--petroleo);}
+#btnImagensRevisa:hover{filter:brightness(1.1);}
+#btnSlidesRevisa{background:var(--terracota);color:#fff;border:1px solid var(--terracota);}
+#btnSlidesRevisa:hover{filter:brightness(1.1);}
+@media(max-width:520px){#btnSlidesRevisa{flex:1 1 100%;}}
+@media(max-width:520px){.modal-acoes{width:100%;flex-wrap:wrap}.modal-acoes button{flex:1 1 100%;}}
+
+</style>
+</head>
+<body>
+
+<div class="progresso"><span id="barraProgresso"></span></div>
+
+<div class="topbar">
+ <div class="topbar-inner">
+  <span class="tb-marca">CERO</span>
+  <div class="sumario-box" id="sumBox">
+    <button class="sum-toggle" id="sumToggle" aria-expanded="false" aria-controls="sumChips">
+      <span class="sum-ico">&#9776;</span>
+      <span class="sum-rot">Trilha do tema</span>
+      <span class="sum-cont" id="sumCount">0</span>
+      <span class="sum-seta" aria-hidden="true">&#9662;</span>
+    </button>
+    <div class="sum-chips" id="sumChips"></div>
+  </div>
+  <span class="tb-sep"></span>
+  <span class="tb-disc">Hist&oacute;ria &middot; Ensino M&eacute;dio</span>
+  <span class="tb-hab">EM13CHS605 &middot; GO-EMCHS605B</span>
+ </div>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Ci&ecirc;ncias Humanas e Sociais Aplicadas</p>
+    <h1>Direitos Humanos: conquista hist&oacute;rica, disputa permanente</h1>
+    <p class="sub">Da cidadania liberal do s&eacute;culo XVIII &agrave; Declara&ccedil;&atilde;o Universal de 1948, da Constitui&ccedil;&atilde;o Cidad&atilde; aos movimentos sociais de hoje: uma leitura hist&oacute;rica de como os direitos humanos foram conquistados &mdash; e por que continuam sendo disputados.</p>
+    <ul class="hero-tags">
+      <li>Declara&ccedil;&atilde;o Universal de 1948</li>
+      <li>Constitui&ccedil;&atilde;o Cidad&atilde;</li>
+      <li>Conven&ccedil;&otilde;es da ONU</li>
+      <li>Movimentos sociais</li>
+      <li>Pra&ccedil;a da Paz Celestial</li>
+    </ul>
+    <p class="meta">Col&eacute;gio Estadual Rodolfo de Oliveira &middot; 2026 &middot; Prof. Claudio</p>
+  </div>
+</header>
+
+<main>
+
+  <section class="objetivos">
+    <span class="hab">EM13CHS605 &middot; GO-EMCHS605B &middot; Ci&ecirc;ncias Humanas e Sociais Aplicadas</span>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false">Habilidade e objetivos de aprendizagem</button>
+      <div class="acc-body">
+        <p class="lead"><strong>EM13CHS605 / GO-EMCHS605B:</strong> reconhecer os direitos humanos como resultado de processos hist&oacute;ricos de disputa pol&iacute;tica, e n&atilde;o como algo dado ou natural, avaliando impasses &eacute;tico-pol&iacute;ticos decorrentes de sua defesa e de sua viola&ccedil;&atilde;o no mundo contempor&acirc;neo. <em>Recorte deste tema:</em> a constru&ccedil;&atilde;o hist&oacute;rica dos direitos humanos, do Iluminismo &agrave;s convenc&otilde;es internacionais e aos movimentos sociais do presente.</p>
+        <p class="lead">Ao final deste material, voc&ecirc; dever&aacute; ser capaz de:</p>
+        <ul>
+          <li>Relacionar o Iluminismo, as revolu&ccedil;&otilde;es inglesas e a Revolu&ccedil;&atilde;o Francesa &agrave; forma&ccedil;&atilde;o da <strong>cidadania liberal</strong> e do Estado de Direito.</li>
+          <li>Explicar o contexto de cria&ccedil;&atilde;o da <strong>Declara&ccedil;&atilde;o Universal dos Direitos Humanos</strong> (1948) e seus desdobramentos nas conven&ccedil;&otilde;es internacionais posteriores.</li>
+          <li>Analisar como a <strong>Constitui&ccedil;&atilde;o de 1988</strong> incorporou os direitos humanos ao ordenamento jur&iacute;dico brasileiro, com aten&ccedil;&atilde;o a grupos historicamente marginalizados.</li>
+          <li>Avaliar conquistas e desafios atuais dos <strong>movimentos sociais</strong> que lutam pela efetiva&ccedil;&atilde;o de direitos no Brasil e no mundo.</li>
+          <li>Reconhecer que a defesa de direitos pode ser alvo de <strong>repress&atilde;o</strong>, a partir de um caso de disputa internacional concreto.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SLIDES DA AULA ================= -->
+  <section class="slides-aula-box" aria-label="Slides da aula em PDF">
+    <div class="slides-conteudo">
+      <div>
+        <h2>Slides da aula em PDF</h2>
+        <p>Material de apoio para acompanhar e revisar o conteúdo da aula.</p>
+      </div>
+      <a class="slides-pdf-btn" href="https://drive.google.com/file/d/18iNhL66TwtMBJ3v4jtz3cElpXC2uDb8F/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+        &#128196; Abrir slides em PDF
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= 1 ================= -->
+  <section>
+    <h2 class="secao" id="t1" data-sum="Cidadania liberal e Estado de Direito"><span class="num">1</span>Da cidadania liberal ao Estado de Direito</h2>
+
+    <button class="ficha-btn" type="button" data-ficha="1">
+      <span class="ico">1</span>
+      <span class="txt"><strong>Fichamento do t&oacute;pico 1</strong><em>Resumo em t&oacute;picos: conceitos e ideias-chave</em></span>
+      <span class="seta">&#8250;</span>
+    </button>
+
+    <p>Em mar&ccedil;o de 2018, a vereadora Marielle Franco foi assassinada no Rio de Janeiro por seu engajamento na defesa dos direitos humanos. O crime expôs uma disputa que atravessa a sociedade brasileira: para uma parte da popula&ccedil;&atilde;o, os direitos humanos s&atilde;o conquistas civilizat&oacute;rias que protegem a dignidade de todas as pessoas; para outra, s&atilde;o alvo de desconfian&ccedil;a e desinforma&ccedil;&atilde;o. Antes de julgar essa disputa, &eacute; preciso entender de onde vem a pr&oacute;pria ideia de que existem direitos pertencentes a toda pessoa, apenas por ela ser humana &mdash; porque essa ideia n&atilde;o &eacute; natural nem sempre existiu: &eacute; resultado de um longo processo hist&oacute;rico.</p>
+
+    <p>No s&eacute;culo XVIII, pensadores europeus passaram a defender que a raz&atilde;o &mdash; e n&atilde;o a tradi&ccedil;&atilde;o ou a vontade dos reis &mdash; deveria orientar a organiza&ccedil;&atilde;o da sociedade. Esse movimento, o <strong>Iluminismo</strong>, questionou o absolutismo, sistema em que a autoridade do monarca era limitada apenas por costumes locais e por uma suposta origem divina do poder.</p>
+
+    <p>A Inglaterra foi pioneira nessa transi&ccedil;&atilde;o. Depois da Revolu&ccedil;&atilde;o Puritana (1640-1649) e da Revolu&ccedil;&atilde;o Gloriosa (1688-1689), o rei Guilherme de Orange aceitou, em 1689, respeitar a <strong>Bill of Rights</strong> (Declara&ccedil;&atilde;o de Direitos), documento que transferia ao Parlamento o poder de legislar. Esse acordo &eacute; considerado um marco inicial do <strong>Estado de Direito</strong>: um modelo pol&iacute;tico em que at&eacute; o governante est&aacute; submetido &agrave;s leis.</p>
+
+    <p>Um s&eacute;culo depois, a Revolu&ccedil;&atilde;o Francesa consolidou esse processo com a <strong>Declara&ccedil;&atilde;o dos Direitos do Homem e do Cidad&atilde;o</strong> (1789), que rompeu com a l&oacute;gica de s&uacute;ditos sem poder de decis&atilde;o e consagrou a figura do cidad&atilde;o, portador de deveres, mas tamb&eacute;m de direitos. Historiadores chamam essa conquista de <strong>cidadania liberal</strong>, fundamento da no&ccedil;&atilde;o de direitos humanos que conhecemos hoje.</p>
+
+    <div class="termo-box">
+      <span class="rot">Conceito-chave</span>
+      <p><strong>Tr&ecirc;s dimens&otilde;es dos direitos humanos.</strong> Desde sua formula&ccedil;&atilde;o original, os direitos humanos deveriam ser <em>naturais</em> (inerentes a todo ser humano), <em>iguais</em> (v&aacute;lidos da mesma forma para todos) e <em>universais</em> (aplic&aacute;veis em qualquer lugar do mundo). Na pr&aacute;tica, por&eacute;m, essas tr&ecirc;s exig&ecirc;ncias sempre entraram em tens&atilde;o com desigualdades sociais, econ&ocirc;micas, raciais e de g&ecirc;nero.</p>
+    </div>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false">&#128214; Texto de apoio &middot; Por que a igualdade e a universalidade nunca foram simples</button>
+      <div class="acc-body">
+        <div class="texto-apoio">
+          <span class="ta-fonte">Texto elaborado para este material a partir da bibliografia indicada ao final.</span>
+          <p>Se, por um lado, a natureza desses direitos &mdash; a ideia de que eles pertencem a todo ser humano por sua pr&oacute;pria condi&ccedil;&atilde;o &mdash; foi facilmente aceita pelos pensadores iluministas, por outro, a resolu&ccedil;&atilde;o das demandas por igualdade e universalidade continuou sendo de dif&iacute;cil cumprimento desde o final do s&eacute;culo XVIII. Isso porque as ideias de igualdade e universalidade contrastam com a realidade das rela&ccedil;&otilde;es sociais, permeadas por diferen&ccedil;as de diversos tipos: social, cultural, econ&ocirc;mica, religiosa, pol&iacute;tica, de g&ecirc;nero, entre outras.</p>
+          <div class="ta-destaque">
+            <p>Nesse cen&aacute;rio desigual, o desrespeito aos direitos humanos persiste ao longo da hist&oacute;ria: no s&eacute;culo XIX, ocorreu sobretudo nas regi&otilde;es colonizadas e escravistas; no s&eacute;culo XX, as duas grandes guerras mundiais levaram &agrave; morte cerca de 90 milh&otilde;es de pessoas.</p>
+          </div>
+          <p>Essa &eacute; a raz&atilde;o pela qual o estudo dos direitos humanos n&atilde;o pode se limitar &agrave; leitura dos documentos que os proclamam: &eacute; preciso acompanhar tamb&eacute;m a hist&oacute;ria das lutas concretas &mdash; de indiv&iacute;duos e de movimentos sociais &mdash; que tentaram fazer valer, na pr&aacute;tica, o que os documentos prometiam no papel. Os t&oacute;picos seguintes acompanham essa hist&oacute;ria.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2 ================= -->
+  <section>
+    <h2 class="secao" id="t2" data-sum="A Declara&ccedil;&atilde;o Universal de 1948"><span class="num">2</span>A Declara&ccedil;&atilde;o Universal dos Direitos Humanos (1948)</h2>
+
+    <button class="ficha-btn" type="button" data-ficha="2">
+      <span class="ico">2</span>
+      <span class="txt"><strong>Fichamento do t&oacute;pico 2</strong><em>Resumo em t&oacute;picos: conceitos e ideias-chave</em></span>
+      <span class="seta">&#8250;</span>
+    </button>
+
+    <p>Os crimes cometidos durante a Segunda Guerra Mundial &mdash; o extermínio de judeus, ciganos, pessoas com defici&ecirc;ncia e homossexuais nos campos de concentra&ccedil;&atilde;o nazistas, al&eacute;m das mortes causadas pelas bombas at&ocirc;micas em Hiroshima e Nagasaki &mdash; representaram uma ruptura sem precedentes na hist&oacute;ria da viol&ecirc;ncia contra popula&ccedil;&otilde;es civis. Diante desse cen&aacute;rio, a rec&eacute;m-criada Organiza&ccedil;&atilde;o das Na&ccedil;&otilde;es Unidas (ONU) aprovou, em 10 de dezembro de 1948, a <strong>Declara&ccedil;&atilde;o Universal dos Direitos Humanos</strong> (DUDH).</p>
+
+    <p>Diretamente inspirado na Declara&ccedil;&atilde;o dos Direitos do Homem e do Cidad&atilde;o de 1789, o documento se apoia em quatro pilares: <strong>dignidade, liberdade, igualdade e fraternidade</strong>. Ele elegeu a vida, a liberdade, a igualdade perante a lei, a educa&ccedil;&atilde;o, o trabalho, a liberdade religiosa e a seguran&ccedil;a pessoal como direitos inalien&aacute;veis, que deveriam sustentar &ldquo;a justi&ccedil;a e a paz no mundo&rdquo;.</p>
+
+    <div class="cita">
+      &ldquo;Todos os seres humanos nascem livres e iguais em dignidade e direitos. S&atilde;o dotados de raz&atilde;o e consci&ecirc;ncia e devem agir em rela&ccedil;&atilde;o uns aos outros com esp&iacute;rito de fraternidade.&rdquo;
+      <span class="fonte">Artigo 1&ordm; da Declara&ccedil;&atilde;o Universal dos Direitos Humanos. DECLARA&Ccedil;&Atilde;O Universal dos Direitos Humanos [1948]. Unicef Brasil, Bras&iacute;lia, DF.</span>
+    </div>
+
+    <p>Por sua import&acirc;ncia, a DUDH foi traduzida para mais de 500 idiomas e passou a servir de base para tratados internacionais e para constitui&ccedil;&otilde;es democr&aacute;ticas em todo o planeta &mdash; inclusive a Constitui&ccedil;&atilde;o brasileira de 1988, cujo artigo 4&ordm; estabelece a prevalência dos direitos humanos entre os princ&iacute;pios que regem as rela&ccedil;&otilde;es internacionais do pa&iacute;s, e cujo artigo 5&ordm; considera fundamentais a igualdade entre homens e mulheres, a liberdade de express&atilde;o, a liberdade religiosa e a igualdade perante a lei.</p>
+
+    <div class="saiba-box">
+      <span class="rot">Saiba mais</span>
+      <p>Em 2018, ano em que se comemoraram os setenta anos da Declara&ccedil;&atilde;o, a diretora-geral da Unesco, Audrey Azoulay, declarou: &ldquo;a Declara&ccedil;&atilde;o Universal dos Direitos Humanos est&aacute; completando 70 anos em tempos de desafios crescentes, quando o &oacute;dio, a discrimina&ccedil;&atilde;o e a viol&ecirc;ncia permanecem vivos&rdquo;, e defendeu que a educa&ccedil;&atilde;o em direitos humanos deveria come&ccedil;ar o quanto antes nas carteiras das escolas &mdash; &eacute; exatamente esse o objetivo deste tema.</p>
+    </div>
+
+    <p>Ainda assim, o documento tem limites: por vincular-se sobretudo aos direitos civis e pol&iacute;ticos, tratou de forma secund&aacute;ria os direitos econ&ocirc;micos e sociais, e deixou a cada pa&iacute;s a tarefa de criar mecanismos concretos para garantir e fiscalizar esses direitos em seu territ&oacute;rio. &Eacute; justamente essa tarefa &mdash; a de transformar princ&iacute;pio em institui&ccedil;&atilde;o &mdash; que os t&oacute;picos seguintes acompanham no caso brasileiro.</p>
+  </section>
+
+  <!-- ================= 3 ================= -->
+  <section>
+    <h2 class="secao" id="t3" data-sum="A Constitui&ccedil;&atilde;o de 1988"><span class="num">3</span>Os direitos humanos na Constitui&ccedil;&atilde;o de 1988</h2>
+
+    <button class="ficha-btn" type="button" data-ficha="3">
+      <span class="ico">3</span>
+      <span class="txt"><strong>Fichamento do t&oacute;pico 3</strong><em>Resumo em t&oacute;picos: conceitos e ideias-chave</em></span>
+      <span class="seta">&#8250;</span>
+    </button>
+
+    <p>No Brasil, o fim da ditadura civil-militar abriu caminho para a reorganiza&ccedil;&atilde;o democr&aacute;tica do pa&iacute;s. Eleita em 1986, a Assembleia Constituinte trabalhou at&eacute; outubro de 1988 na elabora&ccedil;&atilde;o de uma nova Carta Magna, com ampla participa&ccedil;&atilde;o da sociedade civil: cerca de 72 mil sugest&otilde;es enviadas pela popula&ccedil;&atilde;o deram origem a emendas populares incorporadas ao texto final. Por seu compromisso com os direitos humanos e com direitos pol&iacute;ticos e sociais, a Constitui&ccedil;&atilde;o de 1988 ficou conhecida como <strong>Constitui&ccedil;&atilde;o Cidad&atilde;</strong>.</p>
+
+    <p>Entre suas conquistas est&atilde;o o fim da censura e da tortura como pr&aacute;ticas de Estado, a liberdade sindical e o direito de greve, a separa&ccedil;&atilde;o entre os tr&ecirc;s poderes, elei&ccedil;&otilde;es diretas, a criminaliza&ccedil;&atilde;o do racismo e o reconhecimento jur&iacute;dico da igualdade entre homens e mulheres. O texto tamb&eacute;m garantiu direitos trabalhistas, como a jornada m&aacute;xima de 44 horas semanais, e viabilizou a cria&ccedil;&atilde;o do Sistema &Uacute;nico de Sa&uacute;de (SUS) e de um sistema previdenci&aacute;rio &uacute;nico para trabalhadores urbanos e rurais.</p>
+
+    <p>O artigo 227 responsabilizou o Estado, a sociedade e a fam&iacute;lia pelo bem-estar de crian&ccedil;as e adolescentes, abrindo caminho para o <strong>Estatuto da Crian&ccedil;a e do Adolescente</strong> (ECA), aprovado em 1990. Passadas mais de tr&ecirc;s d&eacute;cadas de sua cria&ccedil;&atilde;o, a evas&atilde;o escolar no Brasil caiu 64% e a mortalidade infantil, 24% &mdash; indicadores associados &agrave; efetiva&ccedil;&atilde;o desses direitos. De modo semelhante, os princ&iacute;pios constitucionais sobre a prote&ccedil;&atilde;o aos idosos deram base ao Estatuto do Idoso, aprovado em 2003.</p>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false">Povos ind&iacute;genas e comunidades quilombolas na Constituinte</button>
+      <div class="acc-body">
+        <p>A Assembleia Constituinte tamb&eacute;m foi marcada pela mobiliza&ccedil;&atilde;o de povos ind&iacute;genas, que viajaram de diferentes regi&otilde;es do pa&iacute;s e acamparam em frente ao Congresso Nacional para pressionar por seus direitos. Como resultado, a Constitui&ccedil;&atilde;o reconheceu as formas de organiza&ccedil;&atilde;o social e as culturas ind&iacute;genas, al&eacute;m do direito &agrave; posse permanente das terras tradicionalmente ocupadas. At&eacute; 2024, 784 Terras Ind&iacute;genas haviam sido registradas no Brasil, representando cerca de 13% do territ&oacute;rio nacional.</p>
+        <p>Comunidades quilombolas obtiveram conquista semelhante: o texto constitucional, promulgado no centen&aacute;rio da aboli&ccedil;&atilde;o da escravid&atilde;o, garantiu-lhes o direito &agrave;s terras herdadas de seus antepassados. Ainda assim, o processo de reconhecimento e titula&ccedil;&atilde;o dessas terras permanece lento e conflituoso: at&eacute; 2024, havia 1.775 terras quilombolas reconhecidas no Brasil, mas apenas 172 definitivamente tituladas.</p>
+      </div>
+    </div>
+
+    <div class="goias-box">
+      <span class="rot">Recorte de Goi&aacute;s</span>
+      <p>A redemocratiza&ccedil;&atilde;o vivida pelo Brasil na d&eacute;cada de 1980 tamb&eacute;m teve rebatimento direto no estado: a Constitui&ccedil;&atilde;o do Estado de Goi&aacute;s foi promulgada em 1989, seguindo os princ&iacute;pios da Constitui&ccedil;&atilde;o Cidad&atilde; de 1988. No cotidiano, esses princ&iacute;pios se expressam em institui&ccedil;&otilde;es como o pr&oacute;prio CERO: uma escola p&uacute;blica estadual &eacute;, ela mesma, uma efetiva&ccedil;&atilde;o concreta do direito constitucional &agrave; educa&ccedil;&atilde;o (artigos 205 e 208 da Constitui&ccedil;&atilde;o Federal), garantido a toda crian&ccedil;a e adolescente goiano independentemente de sua origem social.</p>
+    </div>
+  </section>
+
+  <!-- ================= 4 ================= -->
+  <section>
+    <h2 class="secao" id="t4" data-sum="Conven&ccedil;&otilde;es e leis"><span class="num">4</span>Direitos das minorias: conven&ccedil;&otilde;es e leis</h2>
+
+    <button class="ficha-btn" type="button" data-ficha="4">
+      <span class="ico">4</span>
+      <span class="txt"><strong>Fichamento do t&oacute;pico 4</strong><em>Resumo em t&oacute;picos: conceitos e ideias-chave</em></span>
+      <span class="seta">&#8250;</span>
+    </button>
+
+    <p>A partir da segunda metade do s&eacute;culo XX, a ONU passou a elaborar conven&ccedil;&otilde;es espec&iacute;ficas voltadas a grupos historicamente marginalizados, ampliando o alcance da Declara&ccedil;&atilde;o de 1948. O Brasil ratificou todas essas conven&ccedil;&otilde;es e, desde a redemocratiza&ccedil;&atilde;o, aprovou leis nacionais para efetiv&aacute;-las.</p>
+
+    <div class="tabela-wrap">
+      <table>
+        <caption>Conven&ccedil;&otilde;es internacionais e sua efetiva&ccedil;&atilde;o em leis brasileiras</caption>
+        <thead><tr><th>Conven&ccedil;&atilde;o da ONU</th><th>Ano</th><th>Lei brasileira correspondente</th></tr></thead>
+        <tbody>
+          <tr><td>Elimina&ccedil;&atilde;o de Todas as Formas de Discrimina&ccedil;&atilde;o Racial</td><td>1965</td><td>Lei 7.716/1989, que criminalizou o racismo</td></tr>
+          <tr><td>Elimina&ccedil;&atilde;o de Todas as Formas de Discrimina&ccedil;&atilde;o contra a Mulher</td><td>1979</td><td>Lei Maria da Penha (Lei 11.340/2006)</td></tr>
+          <tr><td>Direitos da Crian&ccedil;a</td><td>1989</td><td>Estatuto da Crian&ccedil;a e do Adolescente (Lei 8.069/1990)</td></tr>
+          <tr><td>Direitos das Pessoas com Defici&ecirc;ncia</td><td>2006</td><td>Estatuto da Pessoa com Defici&ecirc;ncia (Lei 13.146/2015)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Al&eacute;m dessas, o Brasil aprovou a <strong>Lei das Cotas</strong> para o ensino superior (Lei 12.711/2012), que ampliou o acesso &agrave; universidade para jovens de baixa renda, negros, ind&iacute;genas e pessoas com defici&ecirc;ncia, e a <strong>PEC das Dom&eacute;sticas</strong> (Emenda Constitucional 72/2013), que estendeu direitos trabalhistas &agrave;s trabalhadoras dom&eacute;sticas.</p>
+
+    <div class="termo-box">
+      <span class="rot">Por que conven&ccedil;&otilde;es espec&iacute;ficas?</span>
+      <p>A universalidade dos direitos humanos n&atilde;o significa que todos os grupos vivam as mesmas viola&ccedil;&otilde;es. Conven&ccedil;&otilde;es voltadas a grupos espec&iacute;ficos reconhecem que discrimina&ccedil;&otilde;es hist&oacute;ricas &mdash; racismo, machismo, capacitismo &mdash; exigem pol&iacute;ticas e leis tamb&eacute;m espec&iacute;ficas para serem efetivamente superadas.</p>
+    </div>
+  </section>
+
+  <!-- ================= 5 ================= -->
+  <section>
+    <h2 class="secao" id="t5" data-sum="Movimentos sociais"><span class="num">5</span>Conquistas e desafios dos movimentos sociais</h2>
+
+    <button class="ficha-btn" type="button" data-ficha="5">
+      <span class="ico">5</span>
+      <span class="txt"><strong>Fichamento do t&oacute;pico 5</strong><em>Resumo em t&oacute;picos: conceitos e ideias-chave</em></span>
+      <span class="seta">&#8250;</span>
+    </button>
+
+    <p>Embora Estados e organismos internacionais tenham papel importante na cria&ccedil;&atilde;o de leis e tratados, a maior parte das conquistas em direitos humanos resultou da mobiliza&ccedil;&atilde;o de <strong>movimentos sociais</strong>. A luta antirracista levou os Estados Unidos a aprovar, em 1964, a Lei dos Direitos Civis; a &Aacute;frica do Sul a abolir, em 1994, o apartheid; e o Brasil a criminalizar o racismo, em 1989. O movimento feminista conquistou, em diversos pa&iacute;ses, o direito ao voto, a licen&ccedil;a-maternidade e a liberdade de escolha profissional para as mulheres. Desde a d&eacute;cada de 1970, o movimento LGBTQIAPN+ ampliou a no&ccedil;&atilde;o de igualdade de direitos civis para pessoas de diferentes orienta&ccedil;&otilde;es sexuais e identidades de g&ecirc;nero, incluindo o reconhecimento do casamento entre pessoas do mesmo sexo em diversos pa&iacute;ses.</p>
+
+    <p>No Brasil, o movimento ind&iacute;gena avan&ccedil;ou na demarca&ccedil;&atilde;o de terras e na participa&ccedil;&atilde;o pol&iacute;tica, inclusive em cargos governamentais. Dois movimentos sociais se destacam na luta por moradia e terra: o <strong>Movimento dos Trabalhadores Sem-Teto</strong> (MTST) e o <strong>Movimento dos Trabalhadores Rurais Sem Terra</strong> (MST), que buscam efetivar dispositivos previstos na pr&oacute;pria Constitui&ccedil;&atilde;o de 1988, como o direito &agrave; moradia (artigo 6&ordm;) e a reforma agr&aacute;ria (artigos 184 a 191).</p>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false">Os desafios que permanecem no Brasil</button>
+      <div class="acc-body">
+        <p>Essas conquistas convivem com permanências hist&oacute;ricas: pessoas negras seguem em situa&ccedil;&atilde;o socioecon&ocirc;mica desigual e s&atilde;o as principais v&iacute;timas de a&ccedil;&otilde;es policiais letais; mulheres continuam expostas a viol&ecirc;ncia de g&ecirc;nero e recebem, em m&eacute;dia, sal&aacute;rios mais baixos que os dos homens; pessoas LGBTQIAPN+ s&atilde;o alvo frequente de preconceito e agress&otilde;es; povos ind&iacute;genas e comunidades quilombolas seguem lutando pela posse efetiva de suas terras.</p>
+        <div class="ta-nota" style="background:#eef3ef;border:1px dashed var(--musgo);border-radius:var(--raio);padding:14px 18px;margin:18px 0;">
+          <span class="ta-rot" style="display:block;color:var(--musgo);font-weight:600;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">O que essas permanências ensinam</span>
+          <p style="margin:0;">Essas permanências n&atilde;o tornam as lutas passadas in&uacute;teis &mdash; mostram, ao contr&aacute;rio, que garantir direitos exige vigil&acirc;ncia constante sobre conquistas j&aacute; obtidas, e n&atilde;o apenas a conquista de novos direitos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="linha">
+      <div class="item"><span class="ano">1964</span> &mdash; Estados Unidos aprovam a Lei dos Direitos Civis, pondo fim ao racismo institucional no pa&iacute;s.</div>
+      <div class="item"><span class="ano">1979</span> &mdash; ONU ratifica a Conven&ccedil;&atilde;o sobre a Elimina&ccedil;&atilde;o de Todas as Formas de Discrimina&ccedil;&atilde;o contra a Mulher.</div>
+      <div class="item"><span class="ano">1988</span> &mdash; Promulga&ccedil;&atilde;o da Constitui&ccedil;&atilde;o Cidad&atilde; no Brasil.</div>
+      <div class="item"><span class="ano">1989</span> &mdash; Lei 7.716 criminaliza o racismo no Brasil; ONU aprova a Conven&ccedil;&atilde;o sobre os Direitos da Crian&ccedil;a.</div>
+      <div class="item"><span class="ano">1990</span> &mdash; Aprova&ccedil;&atilde;o do Estatuto da Crian&ccedil;a e do Adolescente (ECA) no Brasil.</div>
+      <div class="item"><span class="ano">1994</span> &mdash; Fim do apartheid na &Aacute;frica do Sul.</div>
+      <div class="item"><span class="ano">2006</span> &mdash; Lei Maria da Penha; ONU aprova a Conven&ccedil;&atilde;o sobre os Direitos das Pessoas com Defici&ecirc;ncia.</div>
+      <div class="item"><span class="ano">2012&ndash;2015</span> &mdash; Lei das Cotas (2012), PEC das Dom&eacute;sticas (2013) e Estatuto da Pessoa com Defici&ecirc;ncia (2015).</div>
+    </div>
+
+    <div class="pesquise">
+      <span class="rot">Pesquise mais</span>
+      <p>Escolha um movimento social ativo em sua regi&atilde;o ou no Brasil hoje &mdash; antirracista, feminista, LGBTQIAPN+, ind&iacute;gena, por moradia ou terra &mdash; e responda por escrito:</p>
+      <ul>
+        <li>Que direito espec&iacute;fico esse movimento reivindica?</li>
+        <li>Esse direito j&aacute; est&aacute; previsto em lei ou na Constitui&ccedil;&atilde;o? Por que, mesmo assim, ainda &eacute; necess&aacute;rio lutar por ele?</li>
+        <li>Que conquistas concretas esse movimento j&aacute; obteve nos &uacute;ltimos anos?</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= 6 ================= -->
+  <section>
+    <h2 class="secao" id="t6" data-sum="Pra&ccedil;a da Paz Celestial (1989)"><span class="num">6</span>Quando os direitos s&atilde;o negados: a Pra&ccedil;a da Paz Celestial</h2>
+
+    <button class="ficha-btn" type="button" data-ficha="6">
+      <span class="ico">6</span>
+      <span class="txt"><strong>Fichamento do t&oacute;pico 6</strong><em>Resumo em t&oacute;picos: conceitos e ideias-chave</em></span>
+      <span class="seta">&#8250;</span>
+    </button>
+
+    <p>A defesa de direitos frequentemente &eacute; alvo de repress&atilde;o estatal &mdash; um lembrete de que essas conquistas nunca s&atilde;o autom&aacute;ticas nem definitivas. Em abril de 1989, estudantes, oper&aacute;rios e intelectuais chineses iniciaram um movimento por reformas democr&aacute;ticas, exigindo maior participa&ccedil;&atilde;o pol&iacute;tica, liberdade de express&atilde;o e de imprensa, redu&ccedil;&atilde;o da desigualdade social e combate &agrave; corrup&ccedil;&atilde;o no Partido Comunista Chin&ecirc;s, no poder desde 1949.</p>
+
+    <p>Em maio, milhares de manifestantes ocuparam a <strong>Pra&ccedil;a da Paz Celestial</strong>, em Pequim, e iniciaram uma greve de fome; cerca de 1 milh&atilde;o de pessoas chegaram a se concentrar no local em apoio ao movimento. O governo respondeu com a lei marcial e, em 3 de junho, ordenou que tropas e ve&iacute;culos blindados avan&ccedil;assem sobre a multid&atilde;o. Estima-se entre 2 mil e 5 mil mortos nos confrontos &mdash; as autoridades chinesas reconhecem oficialmente apenas 200. O epis&oacute;dio sufocou um dos eventos mais marcantes da luta por direitos humanos do s&eacute;culo XX e permanece, at&eacute; hoje, como um tema de debate pol&iacute;tico restrito na China.</p>
+
+    <div class="termo-box">
+      <span class="rot">Retomando o percurso</span>
+      <p>Revolu&ccedil;&otilde;es inglesas e Bill of Rights &rarr; Iluminismo e Revolu&ccedil;&atilde;o Francesa &rarr; cidadania liberal &rarr; Declara&ccedil;&atilde;o Universal de 1948 &rarr; conven&ccedil;&otilde;es da ONU e leis nacionais &rarr; movimentos sociais e suas conquistas, seguidas de novos desafios &mdash; e, em qualquer ponto desse percurso, a possibilidade real de repress&atilde;o &agrave;quilo que ainda est&aacute; sendo conquistado.</p>
+    </div>
+
+    <div class="atividade-revisao-box" aria-label="Atividade de revisão do tema">
+      <div class="atividade-revisao-conteudo">
+        <div>
+          <span class="atividade-revisao-tag">Feche o ciclo de estudo</span>
+          <h2>Atividade de revisão &mdash; Tema 3</h2>
+          <p>5 quest&otilde;es dissertativas e 5 quest&otilde;es objetivas, com corre&ccedil;&atilde;o autom&aacute;tica, gabarito comentado e exporta&ccedil;&atilde;o em PDF.</p>
+        </div>
+        <a class="atividade-revisao-btn" href="tema3/atvt3.html" target="_blank" rel="noopener noreferrer">
+          &#9997;&#65039; Iniciar atividade
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MATERIAL DE CONSULTA ================= -->
+  <section class="recursos">
+    <h2 class="secao" id="t-recursos" data-sum="Material de consulta"><span class="num">+</span>Material de consulta</h2>
+    <p class="lead">Clique para abrir em janela. S&atilde;o os apoios de revis&atilde;o do tema &mdash; use durante o estudo e na hora de escrever.</p>
+    <div class="rec-grid">
+      <button class="rec-card" type="button" data-rec="sintese">
+        <span class="rec-ico">&#10003;</span>
+        <span class="rec-tit">S&iacute;ntese do tema</span>
+        <span class="rec-sub">7 ideias que amarram o percurso</span>
+      </button>
+      <button class="rec-card" type="button" data-rec="glossario">
+        <span class="rec-ico">A-Z</span>
+        <span class="rec-tit">Gloss&aacute;rio do tema</span>
+        <span class="rec-sub">12 termos definidos</span>
+      </button>
+      <button class="rec-card" type="button" data-rec="linha">
+        <span class="rec-ico">&#8594;</span>
+        <span class="rec-tit">Linha do tempo</span>
+        <span class="rec-sub">De 1689 a 2015</span>
+      </button>
+      <button class="rec-card" type="button" data-rec="refs">
+        <span class="rec-ico">&sect;</span>
+        <span class="rec-tit">Refer&ecirc;ncias e fontes</span>
+        <span class="rec-sub">Leis, documentos e cole&ccedil;&otilde;es consultadas</span>
+      </button>
+      <button class="rec-card" type="button" data-rec="textos">
+        <span class="rec-ico">&#128196;</span>
+        <span class="rec-tit">REVISA GOIÁS CHSA 3ºBIM/HISTÓRIA</span>
+        <span class="rec-sub">Texto III e Texto IX na &iacute;ntegra, com fichamento ao final</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= TÓPICO 7 — REVISANDO ================= -->
+  <section class="atividade-revisao-box" aria-label="Tópico 7 — Revisando com IA">
+    <div class="atividade-revisao-conteudo">
+      <div>
+        <span class="atividade-revisao-tag">Revisando com IA</span>
+        <h2 id="t7" data-sum="Revisando com IA"><span class="num">+</span>Explore a síntese visual do tema</h2>
+        <p>Imagem de revisão gerada por IA — clique para ampliar e explorar os conceitos de forma visual.</p>
+      </div>
+      <a class="atividade-revisao-btn" href="#" onclick="document.getElementById('revisaoImagemAbrir').click(); return false;">
+        ✨ Ver síntese visual
+      </a>
+    </div>
+  </section>
+
+  <!-- Imagem só abre no popup ao clicar no botão "Ver síntese visual" -->
+  <div id="revisaoImagemAbrir" style="display:none;">
+    <img src="tema3/revisão.webp" alt="Revisão — Direitos Humanos: conquista histórica, disputa permanente">
+  </div>
+
+  <!-- Popup da imagem de revisão -->
+  <div class="revisao-popup" id="revisaoPopup" aria-hidden="true" role="dialog" aria-label="Imagem de revisão ampliada">
+    <button class="revisao-popup-fechar" id="fecharRevisaoPopup" type="button" aria-label="Fechar imagem ampliada">&times;</button>
+    <div class="revisao-popup-conteudo">
+      <img class="revisao-popup-img" id="revisaoPopupImg" src="" alt="">
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p><strong>Col&eacute;gio Estadual Rodolfo de Oliveira &middot; CERO &middot; 2026</strong><br>
+  Hist&oacute;ria &mdash; Ensino M&eacute;dio &middot; Habilidade EM13CHS605 / GO-EMCHS605B (BNCC / DC-GO)<br>
+  Material de estudo elaborado pelo Prof. Claudio</p>
+</footer>
+
+<div class="modal-fundo" id="modalFicha" role="dialog" aria-modal="true" aria-labelledby="fichaTitulo" aria-hidden="true">
+  <div class="modal-cx">
+    <div class="modal-topo">
+      <div>
+        <span class="rot" id="fichaRot">Fichamento</span>
+        <h3 id="fichaTitulo"></h3>
+      </div>
+      <button class="modal-fechar" id="fecharFicha" type="button" aria-label="Fechar">&times;</button>
+    </div>
+    <div class="modal-corpo" id="fichaCorpo" tabindex="-1"></div>
+    <div class="modal-rodape">
+      <span>Col&eacute;gio Estadual Rodolfo de Oliveira &middot; CERO &middot; 2026</span>
+      <div class="modal-acoes">
+        <button id="btnImagensRevisa" type="button" aria-label="Abrir imagens da revisão">&#128247; Ver imagens</button>
+        <button id="btnSlidesRevisa" type="button" aria-label="Abrir slides em PDF">&#128196; Ver slides PDF</button>
+        <button id="fecharFicha2" type="button">Voltar ao material</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="instagram-fundo" id="galeriaRevisa" role="dialog" aria-modal="true" aria-label="Imagens da revisão" aria-hidden="true">
+  <div class="instagram-caixa" id="galeriaCaixa" tabindex="-1">
+    <button class="instagram-fechar" id="fecharGaleria" type="button" aria-label="Fechar imagens">&times;</button>
+    <button class="instagram-nav prev" id="galeriaAnterior" type="button" aria-label="Imagem anterior">&#10094;</button>
+    <img class="instagram-img" id="imagemRevisa" src="" alt="Imagem da revisão">
+    <button class="instagram-nav next" id="galeriaProxima" type="button" aria-label="Próxima imagem">&#10095;</button>
+    <div class="instagram-contador" id="galeriaContador">1 / 2</div>
+    <div class="instagram-legenda" id="galeriaLegenda">Revisa Goiás CHSA · 3º Bimestre · História</div>
+    <div class="instagram-dots" id="galeriaDots" aria-label="Selecionar imagem"></div>
+  </div>
+</div>
+
+<script>
+const RECURSOS = {"sintese": {"titulo": "Síntese do tema", "html": "<div class=\"sintese\"><ul><li><strong>A ideia de direitos humanos não é natural: é histórica.</strong> Ela nasce da cidadania liberal construída pelas revoluções inglesas e pela Revolução Francesa, que transformou súditos sem poder de decisão em cidadãos com direitos.</li><li><strong>A Declaração Universal de 1948 é resposta à desumanização da Segunda Guerra.</strong> Apoiada em dignidade, liberdade, igualdade e fraternidade, tornou-se base de tratados e constituições em todo o mundo — inclusive a brasileira.</li><li><strong>A Constituição de 1988 é o principal instrumento brasileiro de efetivação desses direitos.</strong> Fim da censura e da tortura, ECA, Estatuto do Idoso, reconhecimento de terras indígenas e quilombolas nasceram dela.</li><li><strong>Direitos universais convivem com convenções específicas.</strong> Discriminações históricas — racismo, machismo, capacitismo — exigem leis voltadas a grupos determinados para serem efetivamente superadas.</li><li><strong>A maior parte das conquistas veio de movimentos sociais</strong>, não de concessão espontânea de Estados: luta antirracista, feminismo, LGBTQIAPN+, movimento indígena, MST e MTST.</li><li><strong>Conquistar um direito não é o fim da luta.</strong> Desigualdades persistem mesmo onde a lei já mudou — garantir direitos exige vigilância constante sobre o que já foi conquistado.</li><li><strong>A defesa de direitos pode ser reprimida.</strong> A Praça da Paz Celestial (1989) mostra que nenhuma conquista é automática ou definitiva.</li></ul></div>"}, "glossario": {"titulo": "Glossário do tema", "html": "<div class=\"glossario\"><dl><dt>Apartheid</dt><dd>regime de segregação racial institucionalizado que vigorou na África do Sul até 1994, proibindo, entre outras coisas, que pessoas negras e brancas habitassem os mesmos bairros.</dd><dt>Cidadania liberal</dt><dd>conquista consolidada pela Revolução Francesa que rompeu com a lógica de súditos sem poder de decisão e consagrou o cidadão como portador de deveres e de direitos.</dd><dt>Constituição Cidadã</dt><dd>nome pelo qual ficou conhecida a Constituição brasileira de 1988, em razão de seu compromisso com os direitos humanos, políticos e sociais.</dd><dt>Declaração Universal dos Direitos Humanos (DUDH)</dt><dd>documento aprovado pela ONU em 1948, que estabelece direitos e liberdades fundamentais como padrão comum a todos os povos e nações.</dd><dt>Estado de Direito</dt><dd>modelo político em que o próprio governante e as instituições estão submetidos às leis, e não acima delas.</dd><dt>LGBTQIAPN+</dt><dd>sigla que agrupa a diversidade de orientações sexuais e identidades de gênero: lésbicas, gays, bissexuais, transexuais, travestis e transgêneros, queer, intersexuais, assexuais, pansexuais e não binários.</dd><dt>Quilombola</dt><dd>relativo às comunidades remanescentes de quilombos, que preservam tradições afro-brasileiras e têm direito constitucional às terras herdadas de seus antepassados.</dd><dt>Racismo institucional</dt><dd>racismo praticado pelos próprios Estados e por suas instituições, e não apenas por indivíduos isolados.</dd><dt>Movimentos sociais</dt><dd>formas de organização coletiva por meio das quais grupos historicamente marginalizados reivindicam e conquistam direitos, como o movimento negro, o feminista, o LGBTQIAPN+, o indígena e os movimentos por moradia e terra (MTST e MST).</dd><dt>MST e MTST</dt><dd>Movimento dos Trabalhadores Rurais Sem Terra e Movimento dos Trabalhadores Sem-Teto: lutam, respectivamente, pela reforma agrária e pelo direito à moradia previstos na Constituição de 1988.</dd><dt>Reformas de base populares (ECA, Lei Maria da Penha etc.)</dt><dd>conjunto de leis brasileiras pós-1988 que efetivaram, no plano nacional, convenções internacionais de direitos humanos ratificadas pelo país.</dd><dt>Três dimensões dos direitos humanos</dt><dd>a exigência de que os direitos humanos sejam naturais (inerentes a todo ser humano), iguais (válidos da mesma forma para todos) e universais (aplicáveis em qualquer lugar do mundo).</dd></dl></div>"}, "linha": {"titulo": "Linha do tempo do tema", "html": "<p class=\"lead\">Do Estado de Direito inglês às leis brasileiras mais recentes de efetivação de direitos.</p><div class=\"linha\"><div class=\"item\"><span class=\"ano\">1689</span> — Bill of Rights, na Inglaterra: marco inicial do Estado de Direito.</div><div class=\"item\"><span class=\"ano\">1789</span> — Declaração dos Direitos do Homem e do Cidadão, na Revolução Francesa: consolida a cidadania liberal.</div><div class=\"item\"><span class=\"ano\">1948</span> — Declaração Universal dos Direitos Humanos, aprovada pela ONU após a Segunda Guerra Mundial.</div><div class=\"item\"><span class=\"ano\">1964</span> — Lei dos Direitos Civis nos Estados Unidos.</div><div class=\"item\"><span class=\"ano\">1965</span> — Convenção Internacional sobre a Eliminação de Todas as Formas de Discriminação Racial.</div><div class=\"item\"><span class=\"ano\">1979</span> — Convenção sobre a Eliminação de Todas as Formas de Discriminação contra a Mulher.</div><div class=\"item\"><span class=\"ano\">1988</span> — Constituição Cidadã, no Brasil.</div><div class=\"item\"><span class=\"ano\">1989</span> — Lei 7.716 criminaliza o racismo no Brasil; massacre da Praça da Paz Celestial, na China; Convenção sobre os Direitos da Criança.</div><div class=\"item\"><span class=\"ano\">1990</span> — Estatuto da Criança e do Adolescente (ECA).</div><div class=\"item\"><span class=\"ano\">1994</span> — Fim do apartheid na África do Sul.</div><div class=\"item\"><span class=\"ano\">2003</span> — Estatuto do Idoso.</div><div class=\"item\"><span class=\"ano\">2006</span> — Lei Maria da Penha; Convenção Internacional sobre os Direitos das Pessoas com Deficiência.</div><div class=\"item\"><span class=\"ano\">2012–2015</span> — Lei das Cotas (2012), PEC das Domésticas (2013) e Estatuto da Pessoa com Deficiência (2015).</div></div>"}, "refs": {"titulo": "Referências e fontes consultadas", "html": "<h4>Documentos e legislação</h4><ul class=\"refs\"><li>DECLARAÇÃO Universal dos Direitos Humanos [1948]. Unicef Brasil, Brasília, DF.</li><li>BRASIL. Constituição da República Federativa do Brasil, de 5 de outubro de 1988, arts. 4º, 5º, 6º, 184–191, 205, 208, 227.</li><li>BRASIL. Lei 7.716/1989; Lei 8.069/1990 (ECA); Lei 10.741/2003 (Estatuto do Idoso); Lei 11.340/2006 (Lei Maria da Penha); Lei 12.711/2012 (Lei das Cotas); Emenda Constitucional 72/2013 (PEC das Domésticas); Lei 13.146/2015 (Estatuto da Pessoa com Deficiência).</li><li>ORGANIZAÇÃO DAS NAÇÕES UNIDAS. Convenção Internacional sobre a Eliminação de Todas as Formas de Discriminação Racial (1965); Convenção sobre a Eliminação de Todas as Formas de Discriminação contra a Mulher (1979); Convenção sobre os Direitos da Criança (1989); Convenção Internacional sobre os Direitos das Pessoas com Deficiência (2006).</li></ul><h4>Coleções didáticas consultadas</h4><ul class=\"refs\"><li><em>Por Toda Parte — História</em> (Moderna): capítulo dedicado à Declaração Universal dos Direitos Humanos, direitos das minorias e conquistas dos movimentos sociais, incluindo o caso da Praça da Paz Celestial.</li><li><em>Moderna Plus — História</em>: capítulo sobre a Constituição Cidadã, direitos políticos e sociais, e reconhecimento constitucional de terras indígenas e quilombolas.</li><li><em>Ser Protagonista — História</em>: atividades e textos sobre a Declaração Universal dos Direitos Humanos e seus 70 anos, com declaração de Audrey Azoulay (Unesco).</li><li><em>Interação — História</em>: capítulo sobre o surgimento do nazifascismo, a Segunda Guerra Mundial e a Declaração Universal dos Direitos Humanos como resposta à desumanização.</li></ul><h4>Outras fontes citadas nos materiais didáticos consultados</h4><ul class=\"refs\"><li>LAFER, C. Declaração Universal dos Direitos Humanos (1948). In: MAGNOLI, D. (org.). <em>História da paz</em>. São Paulo: Contexto, 2008.</li><li>Observatório de Terras Quilombolas, Comissão Pró-Índio — dados sobre terras quilombolas tituladas até 2024.</li><li>Fundação Nacional dos Povos Indígenas (Funai) — dados sobre Terras Indígenas registradas até 2024.</li></ul>"}, "textos": {"titulo": "Textos-fonte do tema (na íntegra)", "html": "<h4>Texto III — Princípios da Declaração dos Direitos do Homem e do Cidadão</h4><p style=\"font-size:.82rem;color:var(--cinza);margin:-6px 0 14px;\"><em>Temática: Princípios da Declaração dos Direitos do Homem e do Cidadão. Habilidade EM13CHS605 — Objeto de conhecimento: Declaração Universal dos Direitos Humanos.</em></p><p>A Declaração dos Direitos do Homem e do Cidadão foi votada e aprovada pela Assembleia Nacional Constituinte da França, em 26 de agosto de 1789. Inspirada pelos ideais iluministas, foi importante na fundação do Estado Democrático de Direito que conhecemos hoje.</p><p>No final do século XVIII, o absolutismo estava em franca decadência na Europa. A ideologia liberal iluminista pulsava por todo o continente, advinda dos burgueses que tinham o poder econômico e agora desejavam emancipação e participação políticas.</p><p>Os dezessetes artigos eram inspirados nessa ideologia e na Declaração de Independência dos EUA, que também era permeada por tais ideias. O documento serviu de base para a primeira Constituição da Revolução Francesa, e entrou para história como um dos primeiros na busca por um estado de Direito, legalmente justo e igualitário (em tese).</p><p>Foram inseridos os conceitos resumidos pelo famoso lema revolucionário: Liberdade, Igualdade e Fraternidade. Na prática, eram os direitos considerados naturais, universais e inalienáveis a todos os homens: vida, liberdade e propriedade. Essa última passaria, inclusive, a ser o critério de designação social, não mais os laços sanguíneos ou de tradição, o dízimo foi prontamente abolido, bem como o Direito Divino do Rei. O poder passava a emanar do povo.</p><p>Apesar de ainda ter diversos problemas e não ser tão universal quanto se pretendia, a Declaração dos Direitos do Homem e do Cidadão foi um importante marco na luta pela soberania do indivíduo em busca de suas liberdades.</p><p>Sua influência é sentida até hoje nas constituições de países pelo mundo afora, mas principalmente na Declaração Universal dos Direitos Humanos, adotada pela ONU em 1948.</p><p style=\"text-align:right;font-size:.85rem;color:var(--cinza);font-style:italic;\">Texto de Vinicius Buono – Adaptado.</p><h4>Texto IX — A evolução dos Direitos Humanos no Brasil</h4><p style=\"font-size:.82rem;color:var(--cinza);margin:-6px 0 14px;\"><em>Temática: Direitos humanos no mundo contemporâneo. Habilidade GO-EMCHS605B — Objeto de conhecimento: Direitos Humanos.</em></p><p>Os direitos humanos são um importante instrumento de proteção a toda e qualquer pessoa no mundo. Por isso, são garantidos por inúmeros tratados e documentos jurídicos em diversos países, um deles o Brasil. Nosso país conta com uma série de fermentas para garantir que os direitos humanos sejam estendidos a todos os nossos cidadãos, mas infelizmente na prática ainda não atingimos este objetivo.</p><p>Confira esse iconográfico a seguir, para entender a história dos direitos humanos no mundo.</p><p>No Brasil, os direitos humanos são garantidos na Constituição Federal de 1988, o que é considerado um grande avanço jurídico, visto que o país conta com uma história marcada por graves desrespeito a esses direitos, sobretudo no período da Ditadura militar.</p><p>A mais recente constituição garante os direitos civis, políticos, econômicos, sociais e culturais dos nossos cidadãos. Essas garantias aparecem, por exemplo, logo no primeiro artigo, onde é estabelecido o princípio da cidadania, da dignidade da pessoa humana e os valores sociais do trabalho. Já no artigo 5º é estabelecido o direito à vida, à privacidade, à igualdade, à liberdade e outros importantes direitos fundamentais, sejam eles individuais ou coletivos. Ainda que a Constituição de 1988 seja o marco mais evidente dos direitos humanos no Brasil, eles já apareciam anteriormente, até mesmo em outras constituições.</p><p>É através das diversas Constituições brasileiras, que entendemos a evolução dos direitos humanos no Brasil. Princípios de garantia dos direitos políticos e civis apareciam já na Constituição de 1824, ainda que o poder estivesse concentrado nas mãos do imperador. O objetivo era garantir principalmente a liberdade, a segurança individual e a propriedade. Ainda nesse período, continuava a existir a escravidão. As violências sofridas pelas pessoas negras, como o desrespeito à sua integridade física e a perda da própria vida, é uma violação extrema aos direitos humanos, ao qual essa constituição legitimava.</p><p>Na constituição de 1891, já no período republicano, defendia os princípios de liberdade, igualdade e justiça, garantindo o sufrágio direto para eleições de deputados, senadores, presidente e vice-presidente, mas não era universal. Mulheres, mendigos e analfabetos eram proibidos de votarem. Entre algumas medidas dessa Constituição, está o direito à pela liberdade religiosa.</p><p>A Constituição de 1934 irá estabelecer diverso ganhos em direitos sociais, como a proibição de diferença salarial para uma mesma função, proibição do trabalho para menores de 14 anos e a determinação a estipulação de um salário mínimo ao trabalhador, descanso semanal remunerado e a limitação diária de jornada a 8h. Porém, essa Constituição só vigorou por apenas três anos. Chegou a seu fim com o início do Estado Novo, em 1937, período marcado pela quase inexistência dos direitos humanos.</p><p>Com o início do Estado Novo passa a vigorar a Constituição de 1937, que tinha influências fascistas e autoritárias. Em meio a este cenário problemático, os direitos fundamentais foram enfraquecidos e esquecidos, sobretudo por causa da Polícia Especial e do Departamento de Imprensa e Propaganda (DIP), que censurava as comunicações orais e escritas, inclusive em correspondências.</p><p>Este cenário só foi alterado em 1946, quando terminou o Estado Novo e uma nova constituição passou a vigorar. Essa constituição restaurou os direitos e garantias individuais, além de ampliá-los, quando em comparação com o texto de 1934. Mas esta melhoria não durou muito, pois o desrespeito aos direitos fundamentais volta a aparecer em 1964, com a instauração do Regime Militar.</p><p>O período militar foi conturbado para os direitos humanos no Brasil. Em 1964 os militares assumiram o governo brasileiro com a promessa de que a intervenção duraria um curto tempo, até que o país superasse os problemas que levaram à intervenção. Apesar da promessa, o Regime Militar durou 21 anos e, marcado por um centralismo e autoritarismo, resultou em sérias consequências aos direitos fundamentais.</p><p>O Regime Militar foi um período marcado sobretudo pelas torturas, sequestros, assassinatos e desaparecimento de opositores. Havia diversos centros de tortura espalhados pelo país, ligados ao Destacamento de Operações e Informações - Centro de Operações de Defesa Interna (DOI-Codi), um órgão de inteligência subordinado ao Estado.</p><p>Em 2012, foi instaurada a Comissão Nacional da Verdade (CNV) para investigar as violações contra os direitos humanos cometidas entre 1946 e 1988, com maior foco para o período da ditadura militar. O relatório final, divulgado em 2014, apontou 434 vítimas entre mortos e desaparecidos, e mostrou também 377 responsáveis pelos crimes cometidos no período. Embora a comissão não tenha poder de punição, defende que os 196 responsáveis ainda vivos sejam levados à Justiça.</p><p>Os direitos fundamentais resguardados pela atual constituição colocam o Brasil como um dos países com o mais completo ordenamento jurídico em relação aos direitos humanos. Com isso, os direitos humanos tornaram-se um compromisso do Governo Federal e hoje são conduzidos como uma política pública. Contudo, décadas após a instauração da nova constituição, ainda existem muitas dificuldades em tirar esses princípios do papel.</p><p>O relatório Estado dos Direitos Humanos no Mundo, organizado pela Anistia Internacional, mostra que entre as principais falhas do Brasil em direitos humanos, aparecem problemas como:</p><ul><li>a alta taxa de homicídios no país, sobretudo de jovens negros;</li><li>os abusos policiais e as execuções extrajudiciais, cometidas por policiais em operações formais ou paralelas, em grupos de extermínio ou milícias;</li><li>a situação do sistema prisional;</li><li>a vulnerabilidade dos defensores de direitos humanos, principalmente em áreas rurais;</li><li>a violência sofrida pela população indígena, sobretudo pelas falhas em políticas de demarcação de terras; e</li><li>as várias formas de violência contra as mulheres.</li></ul><p>A grande preocupação é que estes problemas persistem no país há cerca de 30 anos, sem que as autoridades tenham criado soluções efetivas para mudar o cenário. Para o diretor executivo da Anistia Internacional no Brasil, Atila Roque, o Brasil vive em um estado permanente de violação de direitos humanos. Mesmo que o país tenha avançado em algumas áreas, como na redução da pobreza, a situação se manteve crítica em diversos outros setores.</p><p style=\"text-align:right;font-size:.85rem;color:var(--cinza);font-style:italic;\">Texto de Isabela Souza. Adaptado.</p><button class=\"ficha-btn\" type=\"button\" onclick=\"window.abrirFichamentoTextos()\" style=\"margin-top:24px;\"><span class=\"ico\">R</span><span class=\"txt\"><strong>Fichamento dos textos</strong><em>Resumo em tópicos do Texto III e do Texto IX</em></span><span class=\"seta\">›</span></button>"}};
+
+(function(){
+  var d = document, raiz = d.documentElement;
+
+  /* ---------- altura real da topbar -> offset das ancoras ---------- */
+  var topbar = d.querySelector('.topbar');
+  function medirTopbar(){
+    if(!topbar) return;
+    raiz.style.setProperty('--topbar-h', Math.round(topbar.getBoundingClientRect().height) + 'px');
+  }
+  medirTopbar();
+  window.addEventListener('resize', medirTopbar);
+  window.addEventListener('orientationchange', medirTopbar);
+  if(d.fonts && d.fonts.ready){ d.fonts.ready.then(medirTopbar); }
+
+  /* ---------- aviso "arraste" apenas em tabela que realmente rola ---------- */
+  function marcarTabelas(){
+    d.querySelectorAll('.tabela-wrap').forEach(function(w){
+      w.classList.toggle('tem-scroll', w.scrollWidth > w.clientWidth + 2);
+    });
+  }
+  window.addEventListener('resize', marcarTabelas);
+  window.addEventListener('load', marcarTabelas);
+  marcarTabelas();
+
+  /* ---------- acordeoes ---------- */
+  d.querySelectorAll('.acc-head').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var aberto = btn.parentElement.classList.toggle('aberto');
+      btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      if(aberto) setTimeout(marcarTabelas, 0);
+    });
+  });
+
+  /* ---------- trava de rolagem sem perder a posicao (iOS inclusive) ---------- */
+  var posSalva = 0, travado = false;
+  function travarScroll(){
+    if(travado) return;
+    posSalva = window.pageYOffset || raiz.scrollTop || 0;
+    d.body.style.position = 'fixed';
+    d.body.style.top = (-posSalva) + 'px';
+    d.body.style.left = '0';
+    d.body.style.right = '0';
+    d.body.style.width = '100%';
+    travado = true;
+  }
+  function liberarScroll(){
+    if(!travado) return;
+    var antes = raiz.style.scrollBehavior;
+    raiz.style.scrollBehavior = 'auto';
+    d.body.style.position = '';
+    d.body.style.top = '';
+    d.body.style.left = '';
+    d.body.style.right = '';
+    d.body.style.width = '';
+    window.scrollTo(0, posSalva);
+    raiz.style.scrollBehavior = antes;
+    travado = false;
+  }
+
+  /* ---------- modal (fichamentos e material de consulta) ---------- */
+  var fundo = d.getElementById('modalFicha');
+  var corpo = d.getElementById('fichaCorpo');
+  var tit   = d.getElementById('fichaTitulo');
+  var rot   = d.getElementById('fichaRot');
+  var focoAnterior = null;
+
+  function escapar(t){
+    return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function modalAberto(){ return fundo.classList.contains('ativo'); }
+
+  function abrirModal(rotulo, titulo, html, gatilho){
+    focoAnterior = gatilho || d.activeElement;
+    rot.textContent = rotulo;
+    tit.textContent = titulo;
+    corpo.innerHTML = html;
+    fundo.classList.add('ativo');
+    fundo.setAttribute('aria-hidden','false');
+    travarScroll();
+    corpo.scrollTop = 0;
+    marcarTabelas();
+    corpo.focus({preventScroll:true});
+  }
+  function fecharModal(){
+    if(!modalAberto()) return;
+    fundo.classList.remove('ativo');
+    fundo.setAttribute('aria-hidden','true');
+    if(btnImagens) btnImagens.classList.remove('visivel');
+    if(btnSlides) btnSlides.classList.remove('visivel');
+    liberarScroll();
+    corpo.innerHTML = '';
+    if(focoAnterior && d.contains(focoAnterior)) focoAnterior.focus({preventScroll:true});
+    focoAnterior = null;
+  }
+
+  fundo.addEventListener('keydown', function(e){
+    if(e.key !== 'Tab') return;
+    var itens = Array.prototype.filter.call(
+      fundo.querySelectorAll('a[href], button:not([disabled])'),
+      function(el){ return el.offsetParent !== null; }
+    );
+    if(!itens.length) return;
+    var primeiro = itens[0], ultimo = itens[itens.length - 1];
+    if(e.shiftKey && (d.activeElement === primeiro || d.activeElement === corpo)){
+      e.preventDefault(); ultimo.focus();
+    } else if(!e.shiftKey && d.activeElement === ultimo){
+      e.preventDefault(); primeiro.focus();
+    }
+  });
+
+  var FICHAS = {
+    "1": {
+      "titulo": "Da cidadania liberal ao Estado de Direito",
+      "blocos": [
+        ["Ponto de partida", [
+          "Em março de 2018, a vereadora <strong>Marielle Franco</strong> foi assassinada no Rio de Janeiro por seu engajamento na defesa dos direitos humanos — um episódio que expõe a disputa que, até hoje, divide a sociedade brasileira sobre o tema.",
+          "A ideia de que existem direitos pertencentes a toda pessoa, apenas por ela ser humana, não é natural nem sempre existiu: é resultado de um longo processo histórico."
+        ]],
+        ["Do absolutismo ao Iluminismo", [
+          "<strong>Absolutismo</strong>: sistema em que a autoridade do monarca era limitada apenas por costumes locais e por uma suposta origem divina do poder.",
+          "No século XVIII, o <strong>Iluminismo</strong> defendeu que a razão — e não a tradição ou a vontade dos reis — deveria orientar a sociedade, questionando o absolutismo."
+        ]],
+        ["Marcos institucionais", [
+          "Inglaterra: após a Revolução Puritana (1640–1649) e a Revolução Gloriosa (1688–1689), o rei Guilherme de Orange aceitou, em <strong>1689</strong>, a <strong>Bill of Rights</strong>, que transferiu ao Parlamento o poder de legislar — marco inicial do <strong>Estado de Direito</strong> (modelo em que até o governante está submetido às leis).",
+          "França: um século depois, a Revolução Francesa consolidou esse processo com a <strong>Declaração dos Direitos do Homem e do Cidadão</strong> (1789), que rompeu a lógica de súditos sem poder de decisão e consagrou o cidadão como portador de direitos — a chamada <strong>cidadania liberal</strong>."
+        ]],
+        ["Três dimensões dos direitos humanos", [
+          "<strong>Naturais</strong>: inerentes a todo ser humano.",
+          "<strong>Iguais</strong>: válidos da mesma forma para todos.",
+          "<strong>Universais</strong>: aplicáveis em qualquer lugar do mundo.",
+          "Na prática, essas três exigências sempre entraram em tensão com desigualdades sociais, econômicas, raciais e de gênero."
+        ]],
+        ["A distância entre o ideal e a prática", [
+          "As ideias de igualdade e universalidade sempre contrastaram com a realidade das relações sociais — diferenças de ordem social, cultural, econômica, religiosa, política e de gênero.",
+          "Século XIX: o desrespeito aos direitos humanos ocorreu sobretudo nas regiões colonizadas e escravistas.",
+          "Século XX: as duas guerras mundiais levaram à morte cerca de <strong>90 milhões de pessoas</strong>.",
+          "Por isso, o estudo dos direitos humanos não pode se limitar à leitura dos documentos que os proclamam — é preciso acompanhar também a história das lutas concretas que tentaram efetivá-los na prática."
+        ]],
+        ["Para a prova", [
+          "Palavra-chave: nomear os direitos humanos como “naturais, iguais e universais” descreve um <strong>ideal</strong> — a história é a distância entre esse ideal e sua efetivação."
+        ]]
+      ]
+    },
+    "2": {
+      "titulo": "A Declaração Universal dos Direitos Humanos (1948)",
+      "blocos": [
+        ["Contexto", [
+          "Resposta aos crimes da Segunda Guerra Mundial: extermínio de judeus, ciganos, pessoas com deficiência e homossexuais nos campos de concentração nazistas, além das mortes causadas pelas bombas atômicas em Hiroshima e Nagasaki.",
+          "Aprovada pela recém-criada <strong>ONU</strong>, em <strong>10 de dezembro de 1948</strong>, diretamente inspirada na Declaração dos Direitos do Homem e do Cidadão de 1789."
+        ]],
+        ["Estrutura", [
+          "Apoia-se em quatro pilares: <strong>dignidade, liberdade, igualdade e fraternidade</strong>.",
+          "Elegeu como direitos inalienáveis a vida, a liberdade, a igualdade perante a lei, a educação, o trabalho, a liberdade religiosa e a segurança pessoal — para sustentar “a justiça e a paz no mundo”.",
+          "Artigo 1º (citação de prova): “Todos os seres humanos nascem livres e iguais em dignidade e direitos. São dotados de razão e consciência e devem agir em relação uns aos outros com espírito de fraternidade.”"
+        ]],
+        ["Alcance e limites", [
+          "Traduzida para mais de <strong>500 idiomas</strong>; tornou-se base de tratados internacionais e de constituições democráticas em todo o mundo — inclusive a Constituição brasileira de 1988: art. 4º (prevalência dos direitos humanos nas relações internacionais do país) e art. 5º (igualdade entre homens e mulheres, liberdade de expressão, liberdade religiosa e igualdade perante a lei).",
+          "Limite: por vincular-se sobretudo aos direitos civis e políticos, tratou de forma secundária os direitos econômicos e sociais, e deixou a cada país a tarefa de criar mecanismos concretos de garantia e fiscalização."
+        ]],
+        ["Saiba mais", [
+          "Em 2018, nos 70 anos da Declaração, a diretora-geral da Unesco, Audrey Azoulay, declarou que o documento completava aniversário “em tempos de desafios crescentes, quando o ódio, a discriminação e a violência permanecem vivos”, defendendo que a educação em direitos humanos deveria começar o quanto antes nas escolas."
+        ]],
+        ["Para a prova", [
+          "Palavra-chave: a Declaração de 1948 é <strong>princípio internacional</strong> — sua efetivação depende de cada país, tema dos próximos tópicos."
+        ]]
+      ]
+    },
+    "3": {
+      "titulo": "Os direitos humanos na Constituição de 1988",
+      "blocos": [
+        ["A Constituição Cidadã", [
+          "O fim da ditadura civil-militar abriu caminho para a redemocratização do país: eleita em 1986, a Assembleia Constituinte trabalhou até outubro de 1988, com ampla participação popular — cerca de <strong>72 mil sugestões</strong> enviadas pela população deram origem a emendas incorporadas ao texto final.",
+          "Por seu compromisso com os direitos humanos e com direitos políticos e sociais, ficou conhecida como <strong>Constituição Cidadã</strong>.",
+          "Conquistas: fim da censura e da tortura como práticas de Estado, liberdade sindical e direito de greve, separação dos três poderes, eleições diretas, criminalização do racismo e reconhecimento jurídico da igualdade entre homens e mulheres."
+        ]],
+        ["Direitos sociais efetivados", [
+          "Direitos trabalhistas, como a jornada máxima de <strong>44 horas semanais</strong>; criação do Sistema Único de Saúde (<strong>SUS</strong>) e de um sistema previdenciário único para trabalhadores urbanos e rurais.",
+          "O artigo 227 responsabilizou Estado, sociedade e família pelo bem-estar de crianças e adolescentes, abrindo caminho para o <strong>Estatuto da Criança e do Adolescente</strong> (ECA, 1990): a evasão escolar caiu 64% e a mortalidade infantil, 24%.",
+          "Os princípios constitucionais de proteção aos idosos deram base ao <strong>Estatuto do Idoso</strong> (2003)."
+        ]],
+        ["Povos indígenas e quilombolas", [
+          "Povos indígenas se mobilizaram na Constituinte — viajaram de diferentes regiões do país e acamparam em frente ao Congresso — e conquistaram o reconhecimento de suas formas de organização social e cultura, além do direito à posse permanente das terras tradicionalmente ocupadas: <strong>784 Terras Indígenas</strong> registradas até 2024 (cerca de 13% do território nacional).",
+          "Comunidades quilombolas conquistaram o direito às terras herdadas de seus antepassados — a Constituição foi promulgada no centenário da abolição da escravidão. Até 2024, havia <strong>1.775 terras quilombolas</strong> reconhecidas, mas apenas <strong>172 tituladas</strong> definitivamente: o processo permanece lento e conflituoso."
+        ]],
+        ["Recorte de Goiás", [
+          "A Constituição do Estado de Goiás foi promulgada em <strong>1989</strong>, seguindo os princípios da Constituição Cidadã.",
+          "No cotidiano, esses princípios se expressam em instituições como o próprio CERO: uma escola pública estadual é, ela mesma, uma efetivação concreta do direito constitucional à educação (arts. 205 e 208), garantido a toda criança e adolescente goiano, independentemente de sua origem social."
+        ]],
+        ["Para a prova", [
+          "Palavra-chave: a Constituição de 1988 transforma o princípio da Declaração de 1948 em <strong>direito positivo</strong> brasileiro — mas a titulação de terras indígenas e quilombolas mostra que garantia formal e efetivação prática são etapas distintas."
+        ]]
+      ]
+    },
+    "4": {
+      "titulo": "Direitos das minorias: convenções e leis",
+      "blocos": [
+        ["Por que convenções específicas?", [
+          "A partir da segunda metade do século XX, a ONU passou a elaborar convenções voltadas a grupos historicamente marginalizados, ampliando o alcance da Declaração de 1948. O Brasil ratificou todas elas e, desde a redemocratização, aprovou leis nacionais para efetivá-las.",
+          "A universalidade dos direitos humanos não significa que todos os grupos vivam as mesmas violações: discriminações históricas — racismo, machismo, capacitismo — exigem políticas e leis específicas para serem efetivamente superadas."
+        ]],
+        ["Convenções da ONU e leis brasileiras correspondentes", [
+          "<strong>1965</strong> — Eliminação de Todas as Formas de Discriminação Racial → Lei 7.716/1989, que criminalizou o racismo.",
+          "<strong>1979</strong> — Eliminação de Todas as Formas de Discriminação contra a Mulher → Lei Maria da Penha (Lei 11.340/2006).",
+          "<strong>1989</strong> — Direitos da Criança → Estatuto da Criança e do Adolescente (Lei 8.069/1990).",
+          "<strong>2006</strong> — Direitos das Pessoas com Deficiência → Estatuto da Pessoa com Deficiência (Lei 13.146/2015)."
+        ]],
+        ["Outras leis de ampliação de direitos", [
+          "<strong>Lei das Cotas</strong> (Lei 12.711/2012): ampliou o acesso ao ensino superior para jovens de baixa renda, negros, indígenas e pessoas com deficiência.",
+          "<strong>PEC das Domésticas</strong> (Emenda Constitucional 72/2013): estendeu direitos trabalhistas às trabalhadoras domésticas."
+        ]],
+        ["Para a prova", [
+          "Palavra-chave: universalidade não significa tratamento idêntico — significa igual dignidade diante de violações históricas diferentes, que exigem leis específicas."
+        ]]
+      ]
+    },
+    "5": {
+      "titulo": "Conquistas e desafios dos movimentos sociais",
+      "blocos": [
+        ["Ideia central", [
+          "Embora Estados e organismos internacionais tenham papel importante na criação de leis e tratados, a maior parte das conquistas em direitos humanos resultou da <strong>mobilização de movimentos sociais</strong>."
+        ]],
+        ["Conquistas por movimento", [
+          "<strong>Antirracista</strong>: Lei dos Direitos Civis nos EUA (1964); fim do apartheid na África do Sul (1994); Lei 7.716 no Brasil (1989).",
+          "<strong>Feminista</strong>: direito ao voto, licença-maternidade e liberdade de escolha profissional para as mulheres, em diversos países.",
+          "<strong>LGBTQIAPN+</strong>: desde os anos 1970, ampliação dos direitos civis para diferentes orientações sexuais e identidades de gênero, incluindo o casamento entre pessoas do mesmo sexo em diversos países.",
+          "<strong>Indígena</strong>: avanços na demarcação de terras e na participação política, inclusive em cargos governamentais.",
+          "<strong>MST e MTST</strong>: lutam por reforma agrária (arts. 184 a 191) e direito à moradia (art. 6º), ambos já previstos na Constituição de 1988."
+        ]],
+        ["Desafios que permanecem", [
+          "Pessoas negras seguem em situação socioeconômica desigual e são as principais vítimas de ações policiais letais.",
+          "Mulheres continuam expostas a violência de gênero e recebem, em média, salários mais baixos que os dos homens.",
+          "Pessoas LGBTQIAPN+ são alvo frequente de preconceito e agressões.",
+          "Povos indígenas e comunidades quilombolas seguem lutando pela posse efetiva de suas terras."
+        ]],
+        ["Para a prova", [
+          "Palavra-chave: permanências históricas não invalidam conquistas — mostram que garantir direitos exige <strong>vigilância constante</strong> sobre o que já foi obtido, e não apenas a conquista de novos direitos."
+        ]]
+      ]
+    },
+    "6": {
+      "titulo": "Quando os direitos são negados: a Praça da Paz Celestial",
+      "blocos": [
+        ["O movimento de 1989", [
+          "Em abril de 1989, estudantes, operários e intelectuais chineses exigiram maior participação política, liberdade de expressão e de imprensa, redução da desigualdade social e combate à corrupção no Partido Comunista Chinês, no poder desde 1949.",
+          "Em maio, milhares de manifestantes ocuparam a <strong>Praça da Paz Celestial</strong>, em Pequim, e iniciaram uma greve de fome; cerca de <strong>1 milhão de pessoas</strong> chegaram a se concentrar no local em apoio ao movimento."
+        ]],
+        ["A repressão", [
+          "O governo respondeu com a lei marcial. Em <strong>3 de junho de 1989</strong>, tropas e veículos blindados avançaram sobre a multidão.",
+          "Estima-se entre <strong>2 mil e 5 mil mortos</strong> nos confrontos; o governo chinês reconhece oficialmente apenas 200.",
+          "O episódio permanece, até hoje, como tema de debate político restrito na China."
+        ]],
+        ["Retomando o percurso do tema", [
+          "Revoluções inglesas e Bill of Rights → Iluminismo e Revolução Francesa → cidadania liberal → Declaração Universal de 1948 → convenções da ONU e leis nacionais → movimentos sociais e suas conquistas, seguidas de novos desafios.",
+          "Em qualquer ponto desse percurso, existe a possibilidade real de repressão àquilo que ainda está sendo conquistado."
+        ]],
+        ["Para a prova", [
+          "Palavra-chave: nenhuma conquista de direitos é automática ou definitiva — pode ser reprimida mesmo em pleno andamento."
+        ]]
+      ]
+    },
+    "textos": {
+      "titulo": "Fichamento dos textos-fonte",
+      "blocos": [
+        ["Texto III — Princípios da Declaração dos Direitos do Homem e do Cidadão (EM13CHS605)", [
+          "Votada e aprovada pela Assembleia Nacional Constituinte da França em <strong>26 de agosto de 1789</strong>, inspirada pelos ideais iluministas.",
+          "Contexto: absolutismo em decadência na Europa; burguesia com poder econômico buscando emancipação e participação política.",
+          "Os <strong>17 artigos</strong> se inspiraram no Iluminismo e na Declaração de Independência dos EUA; serviram de base para a primeira Constituição da Revolução Francesa.",
+          "Lema resumido: <strong>Liberdade, Igualdade e Fraternidade</strong> — direitos considerados naturais, universais e inalienáveis: vida, liberdade e propriedade.",
+          "A propriedade passa a ser o critério de designação social, no lugar dos laços de sangue ou tradição; aboliram-se o dízimo e o Direito Divino do Rei — o poder passa a emanar do povo.",
+          "Apesar de limites e de não ser tão universal quanto pretendia, é marco na luta pela soberania do indivíduo; influenciou constituições no mundo todo e, diretamente, a Declaração Universal dos Direitos Humanos de 1948."
+        ]],
+        ["Texto IX — A evolução dos Direitos Humanos no Brasil (GO-EMCHS605B)", [
+          "<strong>Constituição de 1824</strong>: garantias de liberdade, segurança individual e propriedade concentradas nas mãos do imperador; conviveu com a escravidão.",
+          "<strong>Constituição de 1891</strong>: sufrágio direto, mas não universal — mulheres, mendigos e analfabetos não podiam votar; trouxe a liberdade religiosa.",
+          "<strong>Constituição de 1934</strong>: ganhos sociais (isonomia salarial, proibição do trabalho a menores de 14 anos, salário mínimo, jornada de 8h), mas vigorou por apenas 3 anos.",
+          "<strong>Constituição de 1937</strong> (Estado Novo): influência fascista e autoritária; direitos enfraquecidos pela Polícia Especial e pelo DIP (censura).",
+          "<strong>Constituição de 1946</strong>: restaura e amplia direitos e garantias individuais — até a ruptura de 1964.",
+          "<strong>Regime Militar (1964–1985)</strong>: 21 anos marcados por tortura, sequestros, assassinatos e desaparecimentos, com o DOI-Codi como principal aparato repressivo.",
+          "<strong>Comissão Nacional da Verdade</strong> (2012, relatório de 2014): 434 vítimas entre mortos e desaparecidos; 377 responsáveis identificados, 196 ainda vivos.",
+          "<strong>Constituição de 1988</strong>: art. 1º (cidadania e dignidade da pessoa humana) e art. 5º (vida, privacidade, igualdade, liberdade) como marco mais completo dos direitos humanos no Brasil.",
+          "Falhas apontadas pela Anistia Internacional: homicídios de jovens negros, abusos policiais e execuções extrajudiciais, sistema prisional, vulnerabilidade de defensores de direitos humanos, violência contra povos indígenas e contra mulheres.",
+          "Diagnóstico do texto: são problemas que persistem há cerca de 30 anos sem solução efetiva — avanços como a redução da pobreza convivem com um quadro descrito pela Anistia Internacional como “estado permanente de violação de direitos humanos”."
+        ]],
+        ["Para a prova", [
+          "Palavra-chave: os dois textos mostram a mesma lógica em escalas diferentes — princípios universais (Texto III) só valem na prática quando um Estado os transforma em direito positivo e o aplica de fato (Texto IX)."
+        ]]
+      ]
+    }
+  };
+
+  function blocosParaHtml(blocos){
+    return blocos.map(function(bl){
+      return '<h4>' + escapar(bl[0]) + '</h4><ul>' +
+             bl[1].map(function(i){ return '<li>' + i + '</li>'; }).join('') + '</ul>';
+    }).join('');
+  }
+
+  d.querySelectorAll('.ficha-btn').forEach(function(b){
+    b.addEventListener('click', function(){
+      var f = FICHAS[b.dataset.ficha];
+      if(!f) return;
+      var html = blocosParaHtml(f.blocos);
+      abrirModal('Fichamento · Tópico ' + b.dataset.ficha, f.titulo, html, b);
+      if(btnImagens) btnImagens.classList.remove('visivel');
+      if(btnSlides) btnSlides.classList.remove('visivel');
+    });
+  });
+
+  /* fichamento apenas dos dois textos-fonte, acessado pelo botão dentro do próprio popup */
+  window.abrirFichamentoTextos = function(){
+    var f = FICHAS['textos'];
+    if(!f) return;
+    abrirModal('Fichamento · Textos-fonte', f.titulo, blocosParaHtml(f.blocos));
+    if(btnImagens) btnImagens.classList.add('visivel');
+    if(btnSlides) btnSlides.classList.add('visivel');
+  };
+
+  d.querySelectorAll('.rec-card').forEach(function(c){
+    c.addEventListener('click', function(){
+      var r = RECURSOS[c.dataset.rec];
+      if(!r) return;
+      abrirModal('Material de consulta', r.titulo, r.html, c);
+      var ehTextos = c.dataset.rec === 'textos';
+      if(btnImagens) btnImagens.classList.toggle('visivel', ehTextos);
+      if(btnSlides) btnSlides.classList.toggle('visivel', ehTextos);
+    });
+  });
+
+  d.getElementById('fecharFicha').addEventListener('click', fecharModal);
+  d.getElementById('fecharFicha2').addEventListener('click', fecharModal);
+  fundo.addEventListener('click', function(e){ if(e.target === fundo) fecharModal(); });
+
+  /* ---------- galeria REVISA — popup estilo Instagram ---------- */
+  var galeria = d.getElementById('galeriaRevisa');
+  var galeriaCaixa = d.getElementById('galeriaCaixa');
+  var imagemRevisa = d.getElementById('imagemRevisa');
+  var contadorGaleria = d.getElementById('galeriaContador');
+  var legendaGaleria = d.getElementById('galeriaLegenda');
+  var dotsGaleria = d.getElementById('galeriaDots');
+  var btnImagens = d.getElementById('btnImagensRevisa');
+  var btnSlides = d.getElementById('btnSlidesRevisa');
+  var urlSlidesRevisa = 'https://drive.google.com/file/d/1TSDijllcO9u0nRI8TUFWirT6Fpt_hjDk/view?usp=sharing';
+  btnSlides.addEventListener('click', function(){ window.open(urlSlidesRevisa, '_blank', 'noopener,noreferrer'); });
+  var indiceImagem = 0;
+  var imagensRevisa = [
+    {src:'tema3/revisa1.webp', alt:'Revisa Goiás CHSA — História — imagem 1'},
+    {src:'tema3/revisa2.webp', alt:'Revisa Goiás CHSA — História — imagem 2'}
+  ];
+
+  function renderGaleria(){
+    var item = imagensRevisa[indiceImagem];
+    imagemRevisa.src = item.src;
+    imagemRevisa.alt = item.alt;
+    contadorGaleria.textContent = (indiceImagem + 1) + ' / ' + imagensRevisa.length;
+    legendaGaleria.textContent = 'Revisa Goiás CHSA · 3º Bimestre · História';
+    dotsGaleria.innerHTML = '';
+    imagensRevisa.forEach(function(_, i){
+      var dot=d.createElement('button');
+      dot.type='button'; dot.className='instagram-dot' + (i===indiceImagem?' ativo':'');
+      dot.setAttribute('aria-label','Abrir imagem ' + (i+1));
+      dot.addEventListener('click',function(){indiceImagem=i;renderGaleria();});
+      dotsGaleria.appendChild(dot);
+    });
+  }
+  function abrirGaleria(){
+    indiceImagem=0;
+    renderGaleria();
+    galeria.classList.add('ativo');
+    galeria.setAttribute('aria-hidden','false');
+    galeriaCaixa.focus({preventScroll:true});
+  }
+  function fecharGaleria(){
+    if(!galeria.classList.contains('ativo')) return;
+    galeria.classList.remove('ativo');
+    galeria.setAttribute('aria-hidden','true');
+    imagemRevisa.removeAttribute('src');
+    if(btnImagens && d.contains(btnImagens)) btnImagens.focus({preventScroll:true});
+  }
+  function mudarImagem(delta){
+    indiceImagem=(indiceImagem+delta+imagensRevisa.length)%imagensRevisa.length;
+    renderGaleria();
+  }
+  if(btnImagens){
+    btnImagens.addEventListener('click',function(e){e.stopPropagation();abrirGaleria();});
+  }
+  d.getElementById('fecharGaleria').addEventListener('click',fecharGaleria);
+  d.getElementById('galeriaAnterior').addEventListener('click',function(){mudarImagem(-1);});
+  d.getElementById('galeriaProxima').addEventListener('click',function(){mudarImagem(1);});
+  galeria.addEventListener('click',function(e){if(e.target===galeria) fecharGaleria();});
+  d.addEventListener('keydown',function(e){
+    if(!galeria.classList.contains('ativo')) return;
+    if(e.key==='Escape'){e.preventDefault();fecharGaleria();}
+    else if(e.key==='ArrowLeft'){e.preventDefault();mudarImagem(-1);}
+    else if(e.key==='ArrowRight'){e.preventDefault();mudarImagem(1);}
+  });
+  var toqueX=null;
+  imagemRevisa.addEventListener('touchstart',function(e){toqueX=e.changedTouches[0].clientX;},{passive:true});
+  imagemRevisa.addEventListener('touchend',function(e){
+    if(toqueX===null) return;
+    var dx=e.changedTouches[0].clientX-toqueX;
+    if(Math.abs(dx)>45) mudarImagem(dx<0?1:-1);
+    toqueX=null;
+  },{passive:true});
+
+
+  /* ---------- popup da imagem de revisão ---------- */
+  var revisaoAbrir = d.getElementById('revisaoImagemAbrir');
+  var revisaoPopup = d.getElementById('revisaoPopup');
+  var revisaoPopupImg = d.getElementById('revisaoPopupImg');
+  var fecharRevisaoPopup = d.getElementById('fecharRevisaoPopup');
+  function abrirRevisaoPopup(){
+    if(!revisaoAbrir || !revisaoPopup) return;
+    var img = revisaoAbrir.querySelector('img');
+    revisaoPopupImg.src = img.src; revisaoPopupImg.alt = img.alt;
+    revisaoPopup.classList.add('ativo'); revisaoPopup.setAttribute('aria-hidden','false');
+    d.body.style.overflow='hidden'; fecharRevisaoPopup.focus({preventScroll:true});
+  }
+  function fecharRevisao(){
+    if(!revisaoPopup.classList.contains('ativo')) return;
+    revisaoPopup.classList.remove('ativo'); revisaoPopup.setAttribute('aria-hidden','true');
+    revisaoPopupImg.removeAttribute('src'); d.body.style.overflow=''; revisaoAbrir.focus({preventScroll:true});
+  }
+  if(revisaoAbrir){
+    revisaoAbrir.addEventListener('click',abrirRevisaoPopup);
+    revisaoAbrir.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();abrirRevisaoPopup();}});
+  }
+  if(fecharRevisaoPopup) fecharRevisaoPopup.addEventListener('click',fecharRevisao);
+  if(revisaoPopup) revisaoPopup.addEventListener('click',function(e){if(e.target===revisaoPopup) fecharRevisao();});
+  d.addEventListener('keydown',function(e){if(revisaoPopup && revisaoPopup.classList.contains('ativo') && e.key==='Escape'){e.preventDefault();fecharRevisao();}});
+
+  /* ---------- sumario (trilha do tema) ---------- */
+  var chips = d.getElementById('sumChips');
+  var box   = d.getElementById('sumBox');
+  var bt    = d.getElementById('sumToggle');
+
+  function fecharTrilha(){
+    if(!box || !box.classList.contains('aberto')) return;
+    box.classList.remove('aberto');
+    bt.setAttribute('aria-expanded','false');
+  }
+
+  if(chips){
+    d.querySelectorAll('h2.secao[id], h2[data-sum][id]').forEach(function(h){
+      var n = h.querySelector('.num');
+      var texto = h.dataset.sum;
+      if(!texto){
+        texto = h.textContent.replace(n ? n.textContent : '', '').trim();
+        if(texto.length > 34) texto = texto.split(':')[0].split('?')[0].trim();
+      }
+      var a = d.createElement('a');
+      a.href = '#' + h.id;
+      a.innerHTML = '<b>' + (n ? n.textContent : '') + '</b>' + escapar(texto);
+      a.style.setProperty('--i', chips.children.length);
+      chips.appendChild(a);
+    });
+    var cont = d.getElementById('sumCount');
+    if(cont) cont.textContent = chips.children.length;
+
+    if(bt && box){
+      bt.addEventListener('click', function(e){
+        e.stopPropagation();
+        var aberto = box.classList.toggle('aberto');
+        bt.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+        if(aberto) medirTopbar();
+      });
+      chips.addEventListener('click', function(e){
+        if(e.target.closest('a')) fecharTrilha();
+      });
+      d.addEventListener('click', function(e){
+        if(box.classList.contains('aberto') && !box.contains(e.target)) fecharTrilha();
+      });
+      window.addEventListener('resize', fecharTrilha);
+    }
+  }
+
+  /* ---------- Escape: fecha primeiro o modal, depois a trilha ---------- */
+  d.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape' && e.key !== 'Esc') return;
+    if(modalAberto()){ fecharModal(); return; }
+    fecharTrilha();
+  });
+
+  /* ---------- barra de progresso de leitura ---------- */
+  var barra = d.getElementById('barraProgresso');
+  if(barra){
+    var pedido = false;
+    function atualizarProgresso(){
+      pedido = false;
+      if(travado) return;
+      var alt = raiz.scrollHeight - window.innerHeight;
+      var pct = alt > 0 ? (window.pageYOffset / alt) * 100 : 0;
+      barra.style.width = Math.min(100, Math.max(0, pct)) + '%';
+    }
+    function agendar(){
+      if(pedido) return;
+      pedido = true;
+      window.requestAnimationFrame(atualizarProgresso);
+    }
+    window.addEventListener('scroll', agendar, {passive:true});
+    window.addEventListener('resize', agendar);
+    window.addEventListener('load', agendar);
+    atualizarProgresso();
+  }
+})();
+</script>
+</body>
+</html>
