@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revisão Geral — Tema 2: Desenvolvimentismo e Meio Ambiente | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#f5f1ea;
+    --bg-alt:#eeeae0;
+    --paper:#fffef9;
+    --ink:#241e19;
+    --ink-soft:#554d46;
+    --verde:#26402f;
+    --verde-dark:#182a1e;
+    --verde-2:#6b7a3f;
+    --gold:#a8551d;
+    --gold-light:#e6c3a3;
+    --line:#d6cdbd;
+    --shadow:0 10px 30px rgba(36,30,25,.14);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-touch-callout:none;
+    user-select:none;
+  }
+  .selecionavel, main{user-select:text;}
+  .campo-resposta{user-select:text;}
+
+  /* ===== CAPA / GATE ===== */
+  #capa{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(to bottom, #14261a, #26402f, #6b7a3f);
+    padding:24px;
+  }
+  #capa .grade-centralizada{
+    position:absolute;
+    top:0; bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:896px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.08;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px);
+    background-size:40px 40px;
+  }
+  .capa-card{
+    position:relative;
+    z-index:1;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:480px;
+    width:100%;
+    padding:36px 32px;
+    text-align:center;
+  }
+  .capa-card .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(38,64,47,.1); padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .capa-card h1{font-family:var(--font-title); font-size:1.6rem; margin:0 0 10px; color:var(--verde-dark);}
+  .capa-card p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 22px;}
+  .capa-card input{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:1rem; margin-bottom:14px;
+  }
+  .capa-card button{
+    width:100%; padding:13px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:1rem; cursor:pointer;
+    font-family:var(--font-body); transition:filter .15s ease;
+  }
+  .capa-card button:hover{filter:brightness(1.08);}
+  .capa-aviso{font-size:.78rem; color:#a33; margin-top:8px; display:none;}
+
+  /* ===== APP ===== */
+  #app{display:none;}
+  .sticky-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--verde-dark); color:#eafaf0;
+    padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:8px;
+    font-family:var(--font-mono); font-size:.82rem;
+  }
+  .sticky-header .aluno{font-family:var(--font-body); font-weight:600; font-size:.92rem;}
+  .barra-progresso-trilho{
+    flex:1; min-width:120px; height:8px; background:rgba(255,255,255,.2); border-radius:6px; overflow:hidden; margin:0 14px;
+  }
+  .barra-progresso-fill{height:100%; background:var(--gold); width:0%; transition:width .3s ease;}
+
+  .wrap{max-width:800px; margin:0 auto; padding:32px 24px 60px;}
+
+  header.topo{margin-bottom:28px;}
+  header.topo .hero-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(38,64,47,.1); padding:5px 12px; border-radius:999px; margin-bottom:12px;
+  }
+  header.topo h1{font-family:var(--font-title); font-size:clamp(1.5rem,4vw,2rem); margin:0 0 8px; color:var(--ink);}
+  header.topo p.sub{color:var(--ink-soft); margin:0; font-size:.98rem;}
+  header.topo .aluno-info{
+    font-family:var(--font-mono); font-size:.82rem; color:var(--verde-dark);
+    background:var(--bg-alt); display:inline-block; padding:6px 12px; border-radius:8px; margin-top:12px;
+  }
+  .descritor-bar{
+    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:8px 14px; margin-bottom:14px; display:inline-block;
+  }
+  .ficha-id{
+    display:flex; flex-wrap:wrap; gap:10px 26px;
+    background:var(--paper); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin-top:12px; font-family:var(--font-mono); font-size:.84rem; color:var(--ink);
+  }
+  .ficha-id span b{color:var(--verde-dark);}
+
+  /* ===== TEXTO DE APOIO ===== */
+  .texto-apoio{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px 30px; margin-bottom:30px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.25rem; color:var(--verde-dark); margin:0 0 4px;}
+  .texto-apoio .fonte-tag{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-bottom:16px; display:block;}
+  .texto-apoio p{margin:0 0 14px; color:var(--ink);}
+  .texto-apoio p:last-of-type{margin-bottom:0;}
+
+  .referencia-box{
+    margin-top:20px; padding:14px 16px;
+    background:var(--bg-alt); border-left:3px solid var(--gold); border-radius:0 8px 8px 0;
+  }
+  .referencia-box .rot{
+    font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--verde-dark); display:block; margin-bottom:6px;
+  }
+  .referencia-box p{margin:0 0 6px; font-size:.86rem; color:var(--ink-soft); font-family:var(--font-mono); line-height:1.6;}
+  .referencia-box p:last-child{margin-bottom:0;}
+
+  /* ===== SUBITENS (questões com múltiplos campos) ===== */
+  .subitem{margin-top:18px;}
+  .subitem:first-of-type{margin-top:16px;}
+  .subitem-label{display:block; font-weight:600; color:var(--ink); margin-bottom:8px; font-size:.94rem;}
+
+  /* ===== QUESTOES ===== */
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.2rem; color:var(--verde-dark);
+    margin:0 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .questao{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; margin-bottom:18px;
+  }
+  .questao .num-q{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--verde);
+    color:#fff; font-family:var(--font-mono); font-size:.78rem; margin-right:8px; flex-shrink:0;
+  }
+  .questao .enunciado{font-weight:600; color:var(--ink); margin-bottom:12px; display:flex; align-items:flex-start;}
+  .questao textarea{
+    width:100%; min-height:120px; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:.96rem; resize:vertical; color:var(--ink);
+  }
+  .questao textarea:focus{outline:2px solid var(--verde-2); outline-offset:1px;}
+  .contador-chars{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-top:6px; text-align:right;}
+
+  /* ===== OPCOES (OBJETIVAS) ===== */
+  .opcao{
+    display:flex; gap:12px; align-items:flex-start;
+    padding:12px 14px; border:1.5px solid var(--line); border-radius:8px;
+    margin-bottom:8px; cursor:pointer; transition:all .15s ease; background:var(--paper);
+  }
+  .opcao:hover{border-color:var(--verde); background:var(--bg-alt);}
+  .opcao.sel{border-color:var(--verde); background:var(--bg-alt);}
+  .opcao.correta{border-color:var(--verde-2); background:#eef6e6;}
+  .opcao.errada{border-color:#c0392b; background:#fdeeee;}
+  .opcao.travada{cursor:default;}
+  .opcao-letra{
+    flex:0 0 auto; width:26px; height:26px; border-radius:50%;
+    background:var(--bg-alt); color:var(--ink-soft);
+    font-family:var(--font-mono); font-weight:700; font-size:.78rem;
+    display:flex; align-items:center; justify-content:center; transition:all .15s ease;
+  }
+  .opcao.sel .opcao-letra{background:var(--verde); color:#fff;}
+  .opcao.correta .opcao-letra{background:var(--verde-2); color:#fff;}
+  .opcao.errada .opcao-letra{background:#c0392b; color:#fff;}
+  .opcao-txt{font-size:.94rem; color:var(--ink); line-height:1.6; padding-top:2px;}
+  .opcao-marca{margin-left:auto; font-size:1rem; align-self:center; display:none; flex:0 0 auto;}
+  .gabarito-info{
+    display:none; margin-top:12px; padding:12px 16px;
+    background:#f7f0e3; border:1px solid var(--gold-light); border-radius:8px;
+    font-size:.88rem; color:#5c3f15;
+  }
+  .gabarito-info.show{display:block;}
+  .gabarito-info b{color:#8a5a2f;}
+  .questao .badge-resultado{
+    display:none; font-family:var(--font-mono); font-size:.68rem; font-weight:700;
+    padding:2px 10px; border-radius:20px; margin-left:8px; color:#fff;
+  }
+  .questao .badge-resultado.ok{display:inline-block; background:var(--verde-2);}
+  .questao .badge-resultado.no{display:inline-block; background:#c0392b;}
+
+  .comentario-prof{
+    display:none; margin-top:14px; padding:14px 16px;
+    background:#eaf3ec; border:1px solid #bfd8c3; border-radius:8px; font-size:.9rem; color:var(--verde-dark);
+  }
+  .comentario-prof.show{display:block;}
+  .comentario-prof b{display:block; margin-bottom:4px; font-family:var(--font-title); font-size:.92rem;}
+
+  /* ===== ALERTA / FINALIZAR ===== */
+  .alerta-incompleto{
+    display:none; background:#fdf3e2; border:1px solid #f1d9a6; color:#8a5a10;
+    padding:12px 16px; border-radius:8px; font-size:.9rem; margin-bottom:16px;
+  }
+  .alerta-incompleto.show{display:block;}
+
+  .acoes-finais{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
+  .btn{
+    font-family:var(--font-body); font-weight:600; font-size:.94rem; padding:12px 22px;
+    border-radius:8px; border:none; cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn-primario{background:var(--verde); color:#fff;}
+  .btn-secundario{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-pdf{background:var(--gold); color:#fff;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  /* ===== POPUP ===== */
+  .popup-overlay{
+    display:none; position:fixed; inset:0; background:rgba(20,30,24,.6);
+    align-items:center; justify-content:center; z-index:200; padding:20px;
+  }
+  .popup-overlay.show{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:420px; width:100%; padding:32px 28px; text-align:center;
+  }
+  .popup-card .emoji{font-size:2.4rem; margin-bottom:10px;}
+  .popup-card h3{font-family:var(--font-title); margin:0 0 8px; color:var(--verde-dark);}
+  .popup-card p{color:var(--ink-soft); font-size:.94rem; margin:0 0 20px;}
+
+  footer.rodape{text-align:center; padding:24px; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;}
+
+  @media (max-width:600px){
+    .wrap{padding:24px 16px 50px;}
+    .texto-apoio, .questao{padding:18px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== CAPA ===== -->
+<div id="capa">
+  <div class="grade-centralizada"></div>
+  <div class="capa-card">
+    <span class="tag">3ª Série · Ensino Médio · História · CERO</span>
+    <h1>Revisão Geral — Tema 2</h1>
+    <p class="desc">Desenvolver a que custo? Governos populistas, desenvolvimentismo e a questão ambiental (1946–1964). Textos de revisão, 5 questões dissertativas e 5 questões objetivas. Preencha os dados para começar.</p>
+    <input type="text" id="nome-aluno" placeholder="Seu nome completo">
+    <input type="text" id="turma-aluno" placeholder="Turma (ex.: 3º A)">
+    <button onclick="iniciarAtividade()">Iniciar atividade</button>
+    <div class="capa-aviso" id="capa-aviso">Por favor, digite seu nome para continuar.</div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <div class="sticky-header">
+    <span class="aluno" id="header-nome"></span>
+    <div class="barra-progresso-trilho"><div class="barra-progresso-fill" id="barra-fill"></div></div>
+    <span id="contador-geral">Respondidas: 0/11</span>
+  </div>
+
+  <div class="wrap">
+    <header class="topo selecionavel">
+      <span class="descritor-bar">História / 3ª Série do Ensino Médio &nbsp;|&nbsp; (GO-EMCHS305A) – Desenvolvimentismo e Meio Ambiente</span>
+      <span class="hero-tag" style="display:block; margin-top:10px;">Revisão Geral do Tema</span>
+      <h1>Revisão Geral — Tema 2</h1>
+      <p class="sub">Revise cada texto abaixo e responda às 5 questões dissertativas e às 5 questões objetivas.</p>
+      <div class="ficha-id" id="ficha-id">
+        <span><b>NOME:</b> <span id="ficha-nome"></span></span>
+        <span><b>DATA:</b> <span id="ficha-data"></span></span>
+        <span><b>TURMA:</b> <span id="ficha-turma"></span></span>
+      </div>
+    </header>
+
+    <main>
+      <h2 class="questoes-titulo">✍️ Revisão e Questões Dissertativas</h2>
+
+      <section class="texto-apoio selecionavel">
+        <h2>1. Uma república em disputa: por que a natureza não estava na pauta</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>O período entre a Constituição de 1946 e o golpe de 1964 é chamado tanto de "redemocratização" quanto de "República Populista" — nomes que destacam aspectos diferentes do mesmo processo. Progressistas e conservadores discordavam sobre nacionalismo econômico, intervenção estatal e reforma agrária, mas concordavam em um ponto silencioso: a proteção da natureza não aparecia em nenhuma das duas plataformas. Para uns e outros, floresta, rio, solo e subsolo eram recursos — matéria-prima de um projeto de nação. A divergência era sobre quem deveria explorá-los, o Estado ou o capital privado; nunca sobre se deveriam ser explorados.</p>
+        <p>Como explica o historiador Boris Fausto, mesmo a plataforma dos adversários dos nacionalistas — menor intervenção estatal, abertura ao capital estrangeiro, combate à inflação — não menciona a natureza, nem para explorá-la, nem para protegê-la. Quando um tema não aparece em nenhum dos lados de uma disputa política, ele não está sendo debatido e perdido: está fora do campo do pensável.</p>
+      </section>
+
+      <div class="questao" data-questao="1">
+        <div class="enunciado"><span class="num-q">1</span> O texto afirma que, quando um tema "não aparece em nenhum dos lados de uma disputa" política, ele "não está sendo debatido e perdido: está fora do campo do pensável". Desenvolva essa ideia explicando por que a ausência da proteção ambiental nas duas plataformas políticas da República Populista (1946–1964) não deve ser lida simplesmente como "descuido", e relacione essa ausência ao fato de que, para progressistas e conservadores, a natureza era vista sobretudo como recurso a ser explorado.</div>
+        <textarea id="resp-1" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno explique que a ausência de um tema no debate político não é neutra: revela os limites do que era pensável naquele contexto histórico. Como tanto progressistas quanto conservadores tratavam a natureza como recurso a ser explorado — divergindo apenas sobre quem controlaria essa exploração —, a proteção ambiental sequer se constituía como possibilidade política, o que ajuda a explicar por que nenhum órgão de fiscalização ambiental consistente foi criado no período.
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>2. O Plano de Metas e os impactos que ninguém contabilizava</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>O governo de Juscelino Kubitschek (1956–1961) apoiava-se no desenvolvimentismo: a industrialização como condição indispensável para que o país alcançasse o nível dos capitalismos avançados. O Plano de Metas concentrava investimentos em cinco setores, mas os números revelam a hierarquia real das prioridades: cerca de 93% dos recursos foram para transportes, energia e indústria de base; educação e alimentação ficaram com aproximadamente 7%. A meta-síntese foi Brasília, inaugurada em 1960.</p>
+        <p>Os impactos ambientais não eram contabilizados: o represamento de rios para hidrelétricas como Furnas e Três Marias alagou vales e deslocou populações ribeirinhas, sem estudo de impacto ou audiência pública — instrumentos que só nasceriam em 1986. A expansão rodoviária, como a Belém–Brasília, funcionava como eixo de desmatamento. Vinte e oito anos depois da inauguração de Brasília, o próprio urbanista Lúcio Costa reconheceria, em depoimento, que a cidade expunha "o desenvolvimento atolado no subdesenvolvimento" — uma síntese do Brasil, com seus aspectos positivos e negativos.</p>
+      </section>
+
+      <div class="questao" data-questao="2">
+        <div class="enunciado"><span class="num-q">2</span> O depoimento de Lúcio Costa — autor do Plano Piloto de Brasília — de que o país vivia "o desenvolvimento atolado no subdesenvolvimento" é apontado no texto como uma autocrítica relevante justamente por vir de quem executou o projeto. Explique por que esse tipo de fonte tem peso especial para o historiador, e relacione o depoimento ao conceito de "externalidade": custos do desenvolvimentismo (como o represamento de rios e a expansão rodoviária) que não entravam na contabilidade oficial do Plano de Metas.</div>
+        <textarea id="resp-2" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno explique que uma autocrítica de quem executou o projeto tem peso especial porque não pode ser lida como oposição externa nem como desconhecimento técnico — vem de dentro da própria euforia desenvolvimentista. O aluno deve relacionar essa autocrítica ao conceito de externalidade: custos sociais e ambientais (deslocamento de populações, alagamento de vales, desmatamento ao redor de rodovias) que recaíam sobre terceiros e não eram registrados nos números de crescimento do PIB e da produção industrial, porque não havia órgão encarregado de medi-los.
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>3. Quem fiscalizava a natureza em 1955? Norma, instituição e capacidade</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>Não é verdade que não existisse nenhuma norma ambiental antes dos anos 1970: existia legislação, e bastante antiga — o Código Florestal e o Código de Águas, ambos de 1934, os Códigos de Caça e Pesca, o Conselho Florestal Federal. O que não existia era um sistema: um órgão com mandato específico, orçamento próprio, poder de polícia e capacidade de dizer "não" a uma obra do governo. Toda a matéria florestal e de recursos naturais estava alojada dentro do Ministério da Agricultura — a mesma pasta que existia para expandir a produção agropecuária.</p>
+        <p>A distinção central é entre três coisas: a norma (o texto da lei), a instituição (quem aplica) e a capacidade (orçamento, pessoal, tecnologia de monitoramento). Nos anos 1950 o Brasil tinha a primeira, uma versão precária da segunda e praticamente não tinha a terceira — não havia sequer sensoriamento remoto para monitorar áreas como o Cerrado. Competência legal não é o mesmo que capacidade real de ação. Um sistema com órgão, orçamento e poder de polícia só nasceria com a Lei 6.938/1981 (SISNAMA e CONAMA) e com a estruturação do IBAMA, em 1989.</p>
+      </section>
+
+      <div class="questao" data-questao="3">
+        <div class="enunciado"><span class="num-q">3</span> O texto distingue três elementos: a norma (o texto da lei), a instituição (quem aplica) e a capacidade (orçamento, pessoal, tecnologia). Utilizando essa distinção, explique por que a existência de leis ambientais desde 1934 no Brasil não significa que havia, de fato, proteção ambiental efetiva nas décadas seguintes, e por que o fato de a fiscalização florestal estar dentro do próprio Ministério da Agricultura agravava esse problema.</div>
+        <textarea id="resp-3" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno explique que uma norma escrita não se aplica sozinha: exige instituição encarregada e capacidade material (orçamento, pessoal, tecnologia) para ser fiscalizada. Como o Brasil dos anos 1950 tinha apenas a norma e uma instituição frágil, sem capacidade real, a legislação de 1934 existia sobretudo no papel. O aluno deve ainda destacar que abrigar a fiscalização florestal dentro do Ministério da Agricultura — pasta cuja função era justamente expandir a produção agropecuária — colocava fiscal e fomentador na mesma casa, o que tornava improvável qualquer decisão contrária à expansão econômica.
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>4. Goiás, 11 de janeiro de 1961: dois decretos e uma contradição</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>Nas últimas semanas de seu mandato, Juscelino Kubitschek assinou, no mesmo dia, dois decretos que criaram as duas maiores áreas protegidas do Cerrado goiano: o Parque Nacional das Emas e o Parque Nacional do Tocantins (que em 1972 passaria a se chamar Parque Nacional da Chapada dos Veadeiros, com 625 mil hectares). O mesmo presidente que abriu o Cerrado com Brasília e com a rodovia Belém–Brasília assinou, na saída, a proteção de dois de seus fragmentos mais expressivos — não por contradição pessoal, mas pela lógica do período inteiro: a criação de parques funcionava como compensação simbólica, preservando uma ilha enquanto se convertia o entorno.</p>
+        <p>A trajetória territorial da Chapada dos Veadeiros é instrutiva: em 1972, um decreto reduziu o parque de 625 mil para cerca de 172 mil hectares, com base no parecer de uma comissão do Ministério da Agricultura que alegava prejuízo econômico ao município de Alto Paraíso. Em 1981, nova redução, para cerca de 60 mil hectares, para abrir caminho à rodovia GO-239. Em 2001, o parque foi reconhecido como Patrimônio Natural da Humanidade pela UNESCO; em 2017, foi ampliado para cerca de 240 mil hectares. Em quarenta anos, perdeu mais de 90% da área original e depois recuperou parte dela.</p>
+      </section>
+
+      <div class="questao" data-questao="4">
+        <div class="enunciado"><span class="num-q">4</span> A trajetória territorial do Parque Nacional da Chapada dos Veadeiros — criado com 625 mil hectares em 1961, reduzido para cerca de 172 mil em 1972 e para cerca de 60 mil em 1981, depois ampliado para cerca de 240 mil em 2017 — mostra que os limites de uma unidade de conservação não são um dado fixo. Analise o que essa oscilação territorial revela sobre a força real dos órgãos de proteção ambiental em cada período, relacionando-a ao fato de que quem decidiu a redução de 1972 foi o próprio Ministério da Agricultura.</div>
+        <textarea id="resp-4" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno explique que os limites de um parque nacional, criado por decreto e sem regularização fundiária prévia, refletem a correlação de forças políticas e econômicas de cada momento — e não um critério técnico estável de proteção ambiental. O fato de a redução de 1972 ter sido decidida por uma comissão do próprio Ministério da Agricultura (pasta cuja função era fomentar a produção agropecuária) evidencia o mesmo problema institucional do tópico anterior: um órgão de fomento econômico decidindo sobre proteção ambiental tende a favorecer o interesse econômico local em detrimento da conservação, o que só começaria a ser corrigido com a criação da SEMA (1973) e do SISNAMA (1981).
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>5. O golpe de 1964 e os dois silêncios sobre o meio ambiente</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>O golpe civil-militar de 1964 não interrompeu o desenvolvimentismo: herdou-o pronto — as empresas estatais, os bancos de fomento, o modelo rodoviário, a fronteira aberta rumo ao Centro-Oeste e à Amazônia. O que desapareceu foi a mediação política: imprensa livre, sindicatos atuantes e oposição parlamentar. As grandes obras do "milagre econômico" (1968–1973) — a Transamazônica, Itaipu, as usinas de Angra — foram executadas sem esses contrapesos. Segundo o jornalista Elio Gaspari, "o Milagre Brasileiro e os anos de chumbo foram simultâneos": os mesmos anos da Copa de 1970 e do crescimento acelerado foram os anos mais duros da repressão política.</p>
+        <p>O custo ambiental, que no período populista era um custo não contabilizado — por ausência de instituição encarregada —, torna-se agora um custo impedido de ser discutido: são dois silêncios diferentes. Estimativas de pesquisadores apontam mais de duas mil vítimas indígenas no período das grandes obras de infraestrutura, contagem que não entrou nos primeiros levantamentos oficiais sobre os mortos da ditadura. Somente em 1973, sob pressão diplomática internacional pós-Conferência de Estocolmo, seria criada a SEMA — a primeira estrutura federal exclusivamente ambiental do país.</p>
+      </section>
+
+      <div class="questao" data-questao="5">
+        <div class="enunciado"><span class="num-q">5</span> O texto distingue dois "silêncios" sobre o meio ambiente: um, do período populista (1946–1964), por ausência de instituição encarregada de contabilizar os custos; outro, do período pós-1964, por impedimento à discussão pública. Desenvolva essa distinção, explicando em que ela se diferencia e por que, segundo o texto, a criação da SEMA em 1973 não decorreu de "uma conversão ecológica do regime".</div>
+        <textarea id="resp-5" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno explique que, no período populista, o custo ambiental não era contabilizado por ausência de instituição capaz de medi-lo, mas o debate político em torno do modelo de desenvolvimento ainda existia (mediado por imprensa, sindicatos e Congresso); já após 1964, com a censura e o esvaziamento das instituições de mediação política, o custo ambiental passou a ser impedido de ser discutido, mesmo sendo mais visível. O aluno deve relacionar a criação da SEMA em 1973 ao custo diplomático e financeiro de manter, sem nenhuma resposta institucional, a posição assumida pelo Brasil na Conferência de Estocolmo (1972) — inclusive porque bancos internacionais passaram a exigir salvaguardas ambientais —, e não a uma mudança de valores do regime militar.
+        </div>
+      </div>
+
+      <h2 class="questoes-titulo">📝 Questões Objetivas</h2>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Texto para as questões 1, 2 e 3</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>O Plano de Metas do governo Juscelino Kubitschek (1956–1961) prometia "cinquenta anos em cinco" e concentrava investimentos em cinco setores: energia, transporte, indústria de base, educação e alimentação. Cerca de 93% dos recursos foram para os três primeiros setores; educação e alimentação ficaram com aproximadamente 7%. Entre 1955 e 1961, a produção industrial cresceu cerca de 80%; entre 1957 e 1961, o PIB avançou perto de 7% ao ano. Foram erguidas as hidrelétricas de Furnas e Três Marias, a siderúrgica Usiminas, e implantadas as indústrias automobilística e naval — além da construção de Brasília, inaugurada em 1960.</p>
+        <p>Nenhuma dessas decisões passou por avaliação de impacto ambiental ou social prévia — instrumentos que só nasceriam com a Resolução CONAMA 001, em 1986. O represamento de rios, a expansão rodoviária pela Belém–Brasília e a industrialização concentrada no ABC paulista (sem qualquer legislação de controle de emissões) tiveram custos ambientais e sociais altos, entre eles a repressão aos candangos que construíram Brasília, no episódio conhecido como Massacre da Guarda Especial de Brasília (1959).</p>
+      </section>
+
+      <div class="questao objetiva" data-questao="obj-1" data-correta="2">
+        <div class="enunciado"><span class="num-q">1</span> A distribuição dos recursos do Plano de Metas — cerca de 93% para transporte, energia e indústria de base, contra apenas 7% para educação e alimentação — permite concluir que: <span class="badge-resultado" id="badge-obj-1"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(1,0)"><div class="opcao-letra">A</div><div class="opcao-txt">o governo priorizou igualmente todas as áreas sociais e de infraestrutura, sem hierarquia entre elas.</div><div class="opcao-marca" id="marca-1-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(1,1)"><div class="opcao-letra">B</div><div class="opcao-txt">a educação e a alimentação foram as verdadeiras prioridades do plano, apesar do discurso oficial sobre infraestrutura.</div><div class="opcao-marca" id="marca-1-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(1,2)"><div class="opcao-letra">C</div><div class="opcao-txt">a hierarquia real de prioridades do desenvolvimentismo favorecia obras de infraestrutura pesada em detrimento de investimentos sociais diretos.</div><div class="opcao-marca" id="marca-1-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(1,3)"><div class="opcao-letra">D</div><div class="opcao-txt">o Plano de Metas não teve qualquer relação com a construção de Brasília, que foi financiada por recursos externos ao plano.</div><div class="opcao-marca" id="marca-1-3"></div></div>
+        <div class="gabarito-info" id="gab-1"><b>Gabarito: C.</b> Os números revelam a hierarquia real das prioridades do desenvolvimentismo: transporte, energia e indústria de base concentravam a quase totalidade dos investimentos, enquanto educação e alimentação, apresentadas como metas do mesmo plano, receberam recursos residuais — o que descarta A e B. Brasília, por sua vez, era a meta-síntese do próprio Plano, e não algo externo a ele, o que descarta D.</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-2" data-correta="1">
+        <div class="enunciado"><span class="num-q">2</span> O fato de nenhuma das decisões do Plano de Metas ter passado por avaliação de impacto ambiental ou social prévia — instrumentos que só nasceriam em 1986 — ajuda a explicar, sobretudo, por que: <span class="badge-resultado" id="badge-obj-2"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(2,0)"><div class="opcao-letra">A</div><div class="opcao-txt">as obras do período foram tecnicamente mal planejadas, ao contrário das obras de infraestrutura realizadas depois de 1986.</div><div class="opcao-marca" id="marca-2-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(2,1)"><div class="opcao-letra">B</div><div class="opcao-txt">custos sociais e ambientais como o represamento de rios e a repressão aos candangos não entravam na contabilidade oficial do crescimento do período.</div><div class="opcao-marca" id="marca-2-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(2,2)"><div class="opcao-letra">C</div><div class="opcao-txt">o governo Juscelino Kubitschek se opunha, por princípio, a qualquer forma de regulação ambiental futura.</div><div class="opcao-marca" id="marca-2-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(2,3)"><div class="opcao-letra">D</div><div class="opcao-txt">não havia, no período, nenhuma legislação ambiental em vigor no Brasil.</div><div class="opcao-marca" id="marca-2-3"></div></div>
+        <div class="gabarito-info" id="gab-2"><b>Gabarito: B.</b> A ausência de instrumentos de avaliação prévia significa que custos como o alagamento de vales, o deslocamento de populações ribeirinhas e a repressão aos trabalhadores que construíram Brasília não eram registrados nos números oficiais de crescimento (PIB, produção industrial) — e não que as obras fossem tecnicamente inferiores (A) ou que não houvesse legislação alguma (D, incorreta: havia o Código Florestal de 1934, por exemplo, apenas sem instrumentos de avaliação prévia de impacto).</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-3" data-correta="3">
+        <div class="enunciado"><span class="num-q">3</span> O episódio do Massacre da Guarda Especial de Brasília (1959), envolvendo os candangos que construíam a nova capital, é mencionado no texto para evidenciar que: <span class="badge-resultado" id="badge-obj-3"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(3,0)"><div class="opcao-letra">A</div><div class="opcao-txt">a construção de Brasília não teve nenhum tipo de conflito trabalhista, ao contrário de outras obras do período.</div><div class="opcao-marca" id="marca-3-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(3,1)"><div class="opcao-letra">B</div><div class="opcao-txt">os candangos eram, em sua maioria, trabalhadores estrangeiros contratados especificamente para a obra.</div><div class="opcao-marca" id="marca-3-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(3,2)"><div class="opcao-letra">C</div><div class="opcao-txt">o episódio foi amplamente investigado e reparado ainda durante o governo Juscelino Kubitschek.</div><div class="opcao-marca" id="marca-3-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(3,3)"><div class="opcao-letra">D</div><div class="opcao-txt">os custos sociais do desenvolvimentismo recaíram também sobre os próprios trabalhadores que executavam as obras emblemáticas do período.</div><div class="opcao-marca" id="marca-3-3"></div></div>
+        <div class="gabarito-info" id="gab-3"><b>Gabarito: D.</b> Os candangos — em sua maioria migrantes do Nordeste e de Minas Gerais — não podiam morar na cidade que erguiam, viviam em acampamentos, cumpriam jornadas exaustivas e sofreram repressão violenta. O episódio mostra que o custo humano do desenvolvimentismo atingia diretamente os trabalhadores responsáveis pelas obras, e não apenas populações distantes ou o meio ambiente em abstrato.</div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Texto para as questões 4 e 5</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <div class="referencia-box" style="border-left-color:var(--verde-2); background:var(--bg-alt);">
+          <span class="rot">Trecho — Nota historiográfica sobre a Chapada dos Veadeiros</span>
+          <p style="font-family:var(--font-body); font-style:italic; color:var(--ink);">"Um mapa de unidade de conservação é documento. Ele registra, em forma de linha, o resultado provisório de uma negociação política — e por isso muda. Ler o limite de um parque como dado natural é o mesmo erro que ler uma lei como texto sem autor."</p>
+        </div>
+        <p>A cronologia da legislação ambiental brasileira mostra que os órgãos de fiscalização hoje existentes — CONAMA, IBAMA, ICMBio — não são instituições antigas. O Código Florestal (Lei 4.771) e a Lei de Proteção à Fauna vêm de 1965 e 1967; o IBDF, primeiro órgão federal com atribuição florestal executiva, é de 1967; a SEMA, primeira estrutura federal exclusivamente ambiental, é de 1973; a Lei 6.938, que institui o SISNAMA e o CONAMA, é de 1981; a exigência de EIA/RIMA é de 1986; e o meio ambiente só se torna, formalmente, "bem de uso comum do povo" com o artigo 225 da Constituição de 1988. Esses organismos foram criados depois de o país já ter tomado as decisões estruturais sobre onde colocar suas estradas, usinas, fábricas e fronteira agrícola.</p>
+      </section>
+
+      <div class="questao objetiva" data-questao="obj-4" data-correta="0">
+        <div class="enunciado"><span class="num-q">4</span> A afirmação de que "um mapa de unidade de conservação é documento" que "registra o resultado provisório de uma negociação política" dialoga diretamente com qual episódio apresentado na revisão sobre o tema? <span class="badge-resultado" id="badge-obj-4"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(4,0)"><div class="opcao-letra">A</div><div class="opcao-txt">A oscilação dos limites do Parque Nacional da Chapada dos Veadeiros, reduzido em 1972 e 1981 e ampliado em 2017.</div><div class="opcao-marca" id="marca-4-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(4,1)"><div class="opcao-letra">B</div><div class="opcao-txt">A criação do Parque Nacional de Itatiaia, em 1937, cujos limites nunca foram alterados desde então.</div><div class="opcao-marca" id="marca-4-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(4,2)"><div class="opcao-letra">C</div><div class="opcao-txt">A assinatura do TIAR pelo governo Dutra, em 1947, que definiu a política externa brasileira para as décadas seguintes.</div><div class="opcao-marca" id="marca-4-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(4,3)"><div class="opcao-letra">D</div><div class="opcao-txt">A construção da rodovia Belém–Brasília, cujo traçado nunca foi objeto de disputa política.</div><div class="opcao-marca" id="marca-4-3"></div></div>
+        <div class="gabarito-info" id="gab-4"><b>Gabarito: A.</b> A trajetória territorial da Chapada dos Veadeiros — 625 mil hectares em 1961, reduzida para 172 mil em 1972 e para 60 mil em 1981, ampliada para 240 mil em 2017 — é o exemplo concreto, apresentado na revisão, de que o limite de um parque nacional é resultado de disputas políticas e econômicas em cada momento histórico, e não um dado técnico fixo.</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-5" data-correta="2">
+        <div class="enunciado"><span class="num-q">5</span> A cronologia apresentada no texto (1934 → 1965/1967 → 1973 → 1981 → 1986 → 1988) permite concluir que: <span class="badge-resultado" id="badge-obj-5"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(5,0)"><div class="opcao-letra">A</div><div class="opcao-txt">o Brasil não teve nenhuma legislação ambiental antes da Constituição de 1988.</div><div class="opcao-marca" id="marca-5-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(5,1)"><div class="opcao-letra">B</div><div class="opcao-txt">os órgãos ambientais atuais (CONAMA, IBAMA, ICMBio) já existiam durante a República Populista (1946–1964), embora com outros nomes.</div><div class="opcao-marca" id="marca-5-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(5,2)"><div class="opcao-letra">C</div><div class="opcao-txt">o sistema atual de fiscalização e controle ambiental foi construído em etapas, ao longo de décadas, e é bem posterior às decisões estruturais sobre estradas, usinas e fronteira agrícola tomadas a partir de 1946.</div><div class="opcao-marca" id="marca-5-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(5,3)"><div class="opcao-letra">D</div><div class="opcao-txt">todas as etapas da cronologia foram resultado direto de decisões tomadas ainda durante a República Populista.</div><div class="opcao-marca" id="marca-5-3"></div></div>
+        <div class="gabarito-info" id="gab-5"><b>Gabarito: C.</b> A cronologia mostra um processo gradual, que só se consolida como sistema (com órgão, orçamento e poder de polícia) a partir de 1973 (SEMA) e 1981 (SISNAMA/CONAMA) — décadas depois das decisões estruturais do desenvolvimentismo populista (1946–1964) sobre onde construir estradas, usinas e abrir a fronteira agrícola, o que descarta B e D. A existência de normas isoladas desde 1934 descarta A.</div>
+      </div>
+
+      <div class="alerta-incompleto" id="alerta-incompleto">
+        ⚠️ Ainda há questões incompletas (dissertativas com o mínimo de caracteres e todas as 5 objetivas marcadas). Revise antes de finalizar.
+      </div>
+
+      <div class="acoes-finais">
+        <button class="btn btn-primario" onclick="finalizarAtividade()">Finalizar e corrigir</button>
+        <button class="btn btn-secundario" onclick="refazerAtividade()">Refazer</button>
+        <button class="btn btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
+      </div>
+    </main>
+  </div>
+
+  <footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+</div>
+
+<!-- ===== POPUP ===== -->
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <div class="emoji">🎉</div>
+    <h3>Atividade concluída!</h3>
+    <p id="popup-nota" style="font-family:var(--font-mono); font-weight:700; color:var(--verde-dark); font-size:1rem; margin:0 0 12px;"></p>
+    <p>Suas respostas foram registradas. Os comentários do professor e o gabarito comentado já estão disponíveis abaixo de cada questão para você comparar com o que escreveu.</p>
+    <button class="btn btn-primario" onclick="fecharPopup()">Continuar</button>
+  </div>
+</div>
+
+<script>
+/* ===== GATE DE NOME ===== */
+function iniciarAtividade(){
+  const nome = document.getElementById('nome-aluno').value.trim();
+  const turma = document.getElementById('turma-aluno').value.trim();
+  const aviso = document.getElementById('capa-aviso');
+  if(!nome){
+    aviso.style.display = 'block';
+    return;
+  }
+  aviso.style.display = 'none';
+  const hoje = new Date();
+  const dataFormatada = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+  document.getElementById('header-nome').textContent = nome;
+  document.getElementById('ficha-nome').textContent = nome;
+  document.getElementById('ficha-data').textContent = dataFormatada;
+  document.getElementById('ficha-turma').textContent = turma || '—';
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+/* ===== CONTADOR DE CARACTERES E PROGRESSO ===== */
+const textareas = document.querySelectorAll('textarea.dissertativa');
+const TOTAL_OBJ = 5;
+let respMC = {};
+let corrigido = false;
+
+function marcarOpcao(num, idx){
+  if (corrigido) return;
+  respMC[num] = idx;
+  const questaoEl = document.querySelector('.questao[data-questao="obj-' + num + '"]');
+  questaoEl.querySelectorAll('.opcao').forEach(function(op){
+    op.classList.toggle('sel', parseInt(op.dataset.idx,10) === idx);
+  });
+  atualizarProgresso();
+}
+
+function atualizarProgresso(){
+  let respondidas = 0;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length >= min) respondidas++;
+  });
+  respondidas += Object.keys(respMC).length;
+  const total = textareas.length + TOTAL_OBJ;
+  document.getElementById('contador-geral').textContent = 'Respondidas: ' + respondidas + '/' + total;
+  document.getElementById('barra-fill').style.width = (respondidas / total * 100) + '%';
+}
+
+textareas.forEach(function(t){
+  const contadorEl = t.parentElement.querySelector('.contador-chars');
+  const min = parseInt(t.dataset.min, 10);
+  t.addEventListener('input', function(){
+    contadorEl.textContent = t.value.length + ' caracteres (mínimo ' + min + ')';
+    atualizarProgresso();
+  });
+});
+
+/* ===== FINALIZAR ===== */
+function finalizarAtividade(){
+  let completo = true;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length < min) completo = false;
+  });
+  for(let n=1; n<=TOTAL_OBJ; n++){
+    if(respMC[n] === undefined) completo = false;
+  }
+
+  const alerta = document.getElementById('alerta-incompleto');
+  if(!completo){
+    alerta.classList.add('show');
+    alerta.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  alerta.classList.remove('show');
+
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.add('show');
+  });
+
+  corrigido = true;
+  let acertos = 0;
+  document.querySelectorAll('.questao.objetiva').forEach(function(qEl){
+    const num = qEl.dataset.questao.replace('obj-','');
+    const correta = parseInt(qEl.dataset.correta, 10);
+    const escolha = respMC[num];
+    const acertou = escolha === correta;
+    if(acertou) acertos++;
+    qEl.querySelectorAll('.opcao').forEach(function(op){
+      const idx = parseInt(op.dataset.idx, 10);
+      op.classList.add('travada');
+      if(idx === correta){ op.classList.add('correta'); document.getElementById('marca-'+num+'-'+idx).textContent='✓'; document.getElementById('marca-'+num+'-'+idx).style.display='block'; }
+      if(idx === escolha && !acertou){ op.classList.add('errada'); document.getElementById('marca-'+num+'-'+idx).textContent='✗'; document.getElementById('marca-'+num+'-'+idx).style.display='block'; }
+    });
+    document.getElementById('gab-'+num).classList.add('show');
+    const badge = document.getElementById('badge-obj-'+num);
+    badge.textContent = acertou ? '✓ Acertou' : '✗ Errou';
+    badge.className = 'badge-resultado ' + (acertou ? 'ok' : 'no');
+  });
+  window.__acertos = acertos;
+
+  const pct = Math.round(acertos/TOTAL_OBJ*100);
+  document.getElementById('popup-nota').textContent = acertos + '/' + TOTAL_OBJ + ' nas objetivas (' + pct + '%)';
+  document.getElementById('popup-overlay').classList.add('show');
+}
+
+function fecharPopup(){
+  document.getElementById('popup-overlay').classList.remove('show');
+}
+
+function refazerAtividade(){
+  textareas.forEach(function(t){
+    t.value = '';
+    t.parentElement.querySelector('.contador-chars').textContent = '0 caracteres (mínimo ' + t.dataset.min + ')';
+  });
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.remove('show');
+  });
+  document.querySelectorAll('.opcao').forEach(function(op){
+    op.classList.remove('sel','correta','errada','travada');
+  });
+  document.querySelectorAll('.opcao-marca').forEach(function(m){ m.style.display='none'; m.textContent=''; });
+  document.querySelectorAll('.gabarito-info').forEach(function(g){ g.classList.remove('show'); });
+  document.querySelectorAll('.badge-resultado').forEach(function(b){ b.textContent=''; b.className='badge-resultado'; });
+  respMC = {};
+  corrigido = false;
+  document.getElementById('alerta-incompleto').classList.remove('show');
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+/* ===== EXPORTAR PDF ===== */
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+function esc(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML.replace(/\n/g, '<br>');
+}
+
+async function exportarPDF(){
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(20,30,24,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:300px;box-shadow:0 10px 30px rgba(38,64,47,.3);font-family:\'Source Serif 4\',serif;">' +
+      '<div style="font-size:2rem;margin-bottom:8px;">📄</div>' +
+      '<h4 style="margin:0 0 4px;color:#182a1e;font-family:\'Playfair Display\',serif;">Gerando PDF…</h4>' +
+      '<p style="margin:0 0 14px;color:#554d46;font-size:.86rem;">Aguarde alguns instantes.</p>' +
+      '<div style="background:#eeeae0;border-radius:6px;overflow:hidden;height:8px;">' +
+        '<div id="pdf-prog" style="height:100%;width:0%;background:#26402f;transition:width .2s ease;"></div>' +
+      '</div>' +
+      '<div id="pdf-prog-txt" style="margin-top:8px;font-family:\'JetBrains Mono\',monospace;font-size:.74rem;color:#554d46;">0%</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  await sleep(80);
+  function setP(pct, msg){
+    const pp = document.getElementById('pdf-prog'), pt = document.getElementById('pdf-prog-txt');
+    if(pp) pp.style.width = pct + '%';
+    if(pt) pt.textContent = msg || (pct + '%');
+  }
+
+  try{
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait', unit:'px', format:'a4', hotfixes:['px_scaling']});
+    const PW = pdf.internal.pageSize.getWidth(), PH = pdf.internal.pageSize.getHeight();
+    const ML = 28, CW = PW - ML*2;
+    let y = ML;
+
+    async function addImg(el){
+      const canvas = await html2canvas(el, {scale:2, useCORS:true, logging:false, backgroundColor:'#ffffff', scrollX:0, scrollY:0, windowWidth:860});
+      const imgW = CW, imgH = (canvas.height / canvas.width) * imgW;
+      const dataUrl = canvas.toDataURL('image/jpeg', .92), avail = PH - ML*2;
+      if(imgH <= avail){
+        if(y + imgH > PH - ML){ pdf.addPage(); y = ML; }
+        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
+        y += imgH + 8;
+      } else {
+        const pxPerPdfPt = canvas.width / imgW;
+        let srcY = 0;
+        while(srcY < canvas.height){
+          const availPt = PH - y - ML, sliceH_pt = Math.min(availPt, avail);
+          const sliceH_px = Math.round(sliceH_pt * pxPerPdfPt), actualH_px = Math.min(sliceH_px, canvas.height - srcY);
+          const tmp = document.createElement('canvas');
+          tmp.width = canvas.width; tmp.height = actualH_px;
+          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
+          const sliceUrl = tmp.toDataURL('image/jpeg', .92), slicePt = (actualH_px / canvas.width) * imgW;
+          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
+          srcY += actualH_px; y += slicePt;
+          if(srcY < canvas.height){ pdf.addPage(); y = ML; }
+        }
+        y += 8;
+      }
+    }
+
+    async function band(tag, txt){
+      const b = document.createElement('div');
+      b.style.cssText = 'width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      b.innerHTML = '<div style="background:linear-gradient(90deg,#26402f,#182a1e);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px">' +
+        '<span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">' + tag + '</span>' +
+        '<span style="color:#fff;font-size:15px;font-weight:700">' + txt + '</span></div>';
+      document.body.appendChild(b);
+      await sleep(20);
+      await addImg(b);
+      document.body.removeChild(b);
+    }
+
+    const nome = document.getElementById('header-nome').textContent || 'Aluno(a)';
+    const turma = document.getElementById('ficha-turma').textContent || '—';
+    const acertos = window.__acertos !== undefined ? window.__acertos : '—';
+    const pct = window.__acertos !== undefined ? Math.round(window.__acertos/TOTAL_OBJ*100)+'%' : '—';
+    const now = new Date();
+    const dtStr = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+
+    setP(5, 'Preparando capa…'); await sleep(40);
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
+    coverEl.innerHTML =
+      '<div style="background:linear-gradient(135deg,#14261a 0%,#26402f 60%,#6b7a3f 100%);padding:32px 48px 28px;color:white">' +
+        '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">História · 3ª Série do Ensino Médio · GO-EMCHS305A</div>' +
+        '<div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">Revisão Geral — Tema 2</div>' +
+        '<div style="font-size:13px;opacity:.8;font-style:italic">Desenvolvimentismo e a questão ambiental (1946–1964) · 5 dissertativas + 5 objetivas</div>' +
+      '</div>' +
+      '<div style="background:#f5f1ea;padding:22px 48px 26px;border-bottom:3px solid #e6c3a3">' +
+        '<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#26402f;font-weight:700;margin-bottom:5px">Aluno(a)</div>' +
+        '<div style="font-size:20px;font-weight:700;color:#241e19;border-bottom:2.5px solid #26402f;padding-bottom:6px;display:inline-block;margin-bottom:16px">' + esc(nome) + '</div>' +
+        '<div style="display:flex;gap:12px;flex-wrap:wrap">' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#26402f">' + esc(turma) + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Turma</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#a8551d">5</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Dissertativas</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#26402f">' + acertos + '/5</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Objetivas (' + pct + ')</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">' +
+            '<div style="font-size:13px;font-weight:700;color:#333">' + dtStr + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>' +
+      '</div>';
+    document.body.appendChild(coverEl); await sleep(60); await addImg(coverEl); document.body.removeChild(coverEl);
+
+    // QUESTÕES DISSERTATIVAS
+    setP(15, 'Preparando questões…'); await sleep(20);
+    await band('DISSERTATIVAS', 'Questões Dissertativas — Respostas e Orientações');
+
+    const QUESTOES = [
+      { num:'1', enunc:'Explique por que a ausência da proteção ambiental nas duas plataformas políticas da República Populista não deve ser lida como simples descuido, relacionando-a ao fato de que a natureza era vista como recurso a ser explorado.', id:'resp-1',
+        coment:'A ausência de um tema no debate político revela os limites do que era pensável naquele contexto; como ambos os campos tratavam a natureza como recurso a ser explorado, a proteção ambiental sequer se constituía como possibilidade política.' },
+      { num:'2', enunc:'Explique por que a autocrítica de Lúcio Costa tem peso especial como fonte histórica, e relacione-a ao conceito de "externalidade" — custos do desenvolvimentismo que não entravam na contabilidade oficial do Plano de Metas.', id:'resp-2',
+        coment:'Vinda de quem executou o projeto, a autocrítica não pode ser lida como oposição externa; custos sociais e ambientais (deslocamento de populações, alagamento de vales, desmatamento) recaíam sobre terceiros e não eram registrados nos números de crescimento, por ausência de órgão encarregado de medi-los.' },
+      { num:'3', enunc:'Utilizando a distinção entre norma, instituição e capacidade, explique por que a existência de leis ambientais desde 1934 não significa proteção efetiva, e por que a fiscalização florestal estar dentro do Ministério da Agricultura agravava o problema.', id:'resp-3',
+        coment:'Uma norma exige instituição e capacidade material para ser fiscalizada; nos anos 1950 o Brasil tinha apenas a norma e instituição frágil. Abrigar a fiscalização florestal no Ministério da Agricultura colocava fiscal e fomentador na mesma casa, tornando improvável qualquer decisão contrária à expansão econômica.' },
+      { num:'4', enunc:'Analise o que a oscilação territorial do Parque Nacional da Chapada dos Veadeiros (625 mil ha em 1961, 172 mil em 1972, 60 mil em 1981, 240 mil em 2017) revela sobre a força real dos órgãos ambientais em cada período, relacionando-a ao fato de que a redução de 1972 foi decidida pelo próprio Ministério da Agricultura.', id:'resp-4',
+        coment:'Os limites de um parque criado por decreto, sem regularização fundiária prévia, refletem a correlação de forças de cada momento — não um critério técnico estável. A redução decidida pelo Ministério da Agricultura evidencia um órgão de fomento decidindo sobre proteção ambiental, favorecendo o interesse econômico local.' },
+      { num:'5', enunc:'Desenvolva a distinção entre os dois "silêncios" sobre o meio ambiente (ausência de contabilização no período populista x impedimento de discussão pós-1964), e explique por que a criação da SEMA em 1973 não decorreu de "uma conversão ecológica do regime".', id:'resp-5',
+        coment:'No período populista, o custo ambiental não era contabilizado por falta de instituição, mas o debate político existia; após 1964, com a censura, o custo passou a ser impedido de ser discutido. A SEMA nasceu do custo diplomático e financeiro de manter, sem resposta institucional, a posição assumida em Estocolmo (1972), e não de mudança de valores do regime.' }
+    ];
+
+    for(let i=0; i<QUESTOES.length; i++){
+      const q = QUESTOES[i];
+      setP(15 + Math.round(i/QUESTOES.length*38), 'Dissertativa ' + q.num + '/' + QUESTOES.length + '…'); await sleep(10);
+
+      const valor = document.getElementById(q.id) ? document.getElementById(q.id).value : '';
+      const respostaHTML =
+        '<div style="background:#f5eae6;border:1.5px solid #e0b8a8;border-radius:8px;padding:12px 15px;min-height:40px">' +
+          '<div style="font-size:12px;color:#241e19;line-height:1.75;white-space:pre-wrap">' + (esc(valor) || '<span style="color:#aaa">(sem resposta)</span>') + '</div>' +
+        '</div>';
+
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d6cdbd;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML =
+        '<div style="background:linear-gradient(90deg,#26402f,#182a1e);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + q.num + '</span>' +
+          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>' +
+        '<div style="padding:18px 24px 16px;background:#fdfdfa">' +
+          '<div style="font-size:13px;font-weight:700;color:#241e19;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">' + esc(q.enunc) + '</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+            '<div style="width:4px;height:15px;background:#26402f;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#26402f;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>' +
+          respostaHTML +
+          '<div style="display:flex;align-items:center;gap:8px;margin:12px 0 7px">' +
+            '<div style="width:4px;height:15px;background:#a8551d;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#8a5a2f;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
+          '<div style="background:#f7f0e3;border:1.5px solid #e6c3a3;border-radius:8px;padding:13px 16px">' +
+            '<div style="font-size:12px;color:#4a3510;line-height:1.8">' + esc(q.coment) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(10); await addImg(qEl); document.body.removeChild(qEl);
+    }
+
+    // QUESTÕES OBJETIVAS
+    setP(55, 'Preparando objetivas…'); await sleep(20);
+    await band('OBJETIVAS', 'Questões Objetivas — Gabarito Comentado');
+
+    const LETRAS_PDF = ['A','B','C','D'];
+    const objetivasEls = document.querySelectorAll('.questao.objetiva');
+    let oi = 0;
+    for(const qEl0 of objetivasEls){
+      const num = qEl0.dataset.questao.replace('obj-','');
+      const correta = parseInt(qEl0.dataset.correta, 10);
+      const escolha = respMC[num];
+      const acertou = escolha === correta;
+      const enuncClone = qEl0.querySelector('.enunciado').cloneNode(true);
+      const badgeInClone = enuncClone.querySelector('.badge-resultado');
+      if(badgeInClone) badgeInClone.remove();
+      const numQInClone = enuncClone.querySelector('.num-q');
+      if(numQInClone) numQInClone.remove();
+      const enunc = enuncClone.textContent.trim();
+      setP(55 + Math.round(oi/objetivasEls.length*35), 'Objetiva ' + num + '/5…'); await sleep(10);
+
+      let altsHTML = '';
+      qEl0.querySelectorAll('.opcao').forEach(function(op){
+        const idx = parseInt(op.dataset.idx, 10);
+        const txt = op.querySelector('.opcao-txt').textContent;
+        let bg='#fdfdfa', bd='#e3e0d0', cor='#2d2d20', tag='';
+        if(idx===correta){ bg='#eef6e6'; bd='#a8c88e'; cor='#1a3010'; tag='<span style="color:#3f6b1f;font-weight:700"> ✓ correta</span>'; }
+        if(idx===escolha && !acertou){ bg='#fdeeee'; bd='#e3a3a3'; cor='#7a1f1f'; tag='<span style="color:#a83232;font-weight:700"> ✗ sua resposta</span>'; }
+        else if(idx===escolha && acertou){ tag='<span style="color:#3f6b1f;font-weight:700"> ← sua resposta</span>'; }
+        altsHTML += '<div style="display:flex;gap:9px;align-items:flex-start;background:'+bg+';border:1px solid '+bd+';border-radius:6px;padding:8px 12px;margin-bottom:6px"><div style="flex:0 0 auto;font-weight:700;color:#26402f;font-size:12px">'+LETRAS_PDF[idx]+')</div><div style="font-size:12px;color:'+cor+';line-height:1.55">'+esc(txt)+tag+'</div></div>';
+      });
+
+      const headBg = acertou ? 'linear-gradient(90deg,#3f6b1f,#264a12)' : 'linear-gradient(90deg,#a83232,#7a1f1f)';
+      const gabTxt = qEl0.querySelector('.gabarito-info').textContent.trim();
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d6cdbd;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML =
+        '<div style="background:'+headBg+';padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + num + '</span>' +
+          '<span style="background:rgba(255,255,255,.2);color:white;font-size:11px;padding:3px 12px;border-radius:20px;font-weight:700">' + (acertou?'ACERTOU':'ERROU') + '</span></div>' +
+        '<div style="padding:16px 24px 14px;background:#fdfdfa">' +
+          '<div style="font-size:13px;font-weight:700;color:#241e19;line-height:1.6;margin-bottom:12px">' + esc(enunc) + '</div>' +
+          altsHTML +
+          '<div style="margin-top:10px;background:#f7f0e3;border:1px solid #e6c3a3;border-radius:6px;padding:10px 14px">' +
+            '<div style="font-size:12px;color:#4a3510;line-height:1.6">' + esc(gabTxt) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(10); await addImg(qEl); document.body.removeChild(qEl);
+      oi++;
+    }
+
+    // RODAPÉ EM TODAS AS PÁGINAS
+    setP(92, 'Finalizando…'); await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for(let p=1; p<=totalPages; p++){
+      pdf.setPage(p);
+      const fEl = document.createElement('div');
+      fEl.style.cssText = 'width:' + Math.round(CW) + 'px;height:22px;background:#f5f1ea;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      fEl.innerHTML = '<span>Revisão Geral — Tema 2 · ' + esc(nome) + ' · Objetivas: ' + acertos + '/5</span><span>Página ' + p + ' de ' + totalPages + '</span>';
+      document.body.appendChild(fEl);
+      const fc = await html2canvas(fEl, {scale:2, logging:false, backgroundColor:'#f5f1ea'});
+      document.body.removeChild(fEl);
+      const fUrl = fc.toDataURL('image/jpeg', .9), fH = (fc.height / fc.width) * CW;
+      pdf.setFillColor(245,241,234); pdf.rect(ML, PH-fH, CW, fH, 'F');
+      pdf.addImage(fUrl, 'JPEG', ML, PH-fH, CW, fH);
+    }
+
+    setP(100, 'Salvando…'); await sleep(200);
+    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    pdf.save('Revisao_Tema2_' + safeName + '.pdf');
+
+  } catch(err){
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message);
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if(ov) document.body.removeChild(ov);
+  }
+}
+
+/* ===== PROTEÇÃO ANTI-COLA ===== */
+(function () {
+  const CAMPOS_PROTEGIDOS = document.querySelectorAll('textarea.dissertativa, .campo-resposta');
+  const LIMITE_BLOCO = 25;
+
+  function bloquear(e) {
+    e.preventDefault();
+    mostrarToast('Colar não permitido nesta atividade.');
+  }
+
+  CAMPOS_PROTEGIDOS.forEach(function (campo) {
+    ['paste', 'copy', 'cut', 'drop', 'dragover', 'contextmenu'].forEach(function (evt) {
+      campo.addEventListener(evt, bloquear);
+    });
+
+    campo.addEventListener('beforeinput', function (e) {
+      if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+        e.preventDefault();
+        mostrarToast('Colar não permitido nesta atividade.');
+      }
+    });
+
+    let valorAnterior = campo.value;
+    campo.addEventListener('input', function (e) {
+      const diferenca = campo.value.length - valorAnterior.length;
+      if (diferenca >= LIMITE_BLOCO && e.inputType !== 'insertReplacementText') {
+        campo.value = valorAnterior;
+        mostrarToast('Colar não permitido nesta atividade.');
+      } else {
+        valorAnterior = campo.value;
+      }
+    });
+  });
+
+  function mostrarToast(mensagem) {
+    let toast = document.getElementById('anti-cola-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'anti-cola-toast';
+      toast.style.cssText =
+        'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);' +
+        'background:#333;color:#fff;padding:10px 20px;border-radius:8px;' +
+        'font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = mensagem;
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(function () {
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+})();
+</script>
+
+</body>
+</html>
