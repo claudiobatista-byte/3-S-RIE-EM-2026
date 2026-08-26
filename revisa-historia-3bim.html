@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revisa Goiás – 3ª Série | História | 3º Bimestre 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--verde:#4a9e3f;--roxo:#6b2fa0;--laranja:#e67e22;--cinza-escuro:#1a1a2e;--cinza-medio:#4a4a6a;--cinza-claro:#f0f0f8;--branco:#fafafa;--sombra:0 4px 24px rgba(107,47,160,.12);--radius:12px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Source Serif 4",Georgia,serif;background:var(--cinza-claro);color:var(--cinza-escuro);line-height:1.7;-webkit-touch-callout:none;-webkit-user-select:none;-ms-user-select:none;user-select:none}
+.campo-discursivo,.campo-nome{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+.contador-chars{font-size:.75rem;font-family:"JetBrains Mono",monospace;margin-top:6px;display:flex;justify-content:space-between;gap:10px;color:var(--cinza-medio)}
+.contador-chars .qtd{font-weight:700;color:#e67e22}
+.contador-chars.ok .qtd{color:var(--verde)}
+.contador-chars .meta{opacity:.8}
+#anti-cola-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--cinza-escuro);color:#fff;padding:12px 22px;border-radius:10px;font-size:.85rem;font-family:"Source Serif 4",serif;z-index:99999;opacity:0;transition:opacity .3s;pointer-events:none;box-shadow:0 8px 28px rgba(0,0,0,.35);max-width:88%;text-align:center}
+#capa{min-height:100vh;background:linear-gradient(145deg,#1a1a2e 0%,#6b2fa0 55%,#4a9e3f 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;position:relative;overflow:hidden}
+#capa::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.capa-logo-area{display:flex;align-items:center;gap:18px;margin-bottom:32px}
+.capa-logo-circle{width:80px;height:80px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.capa-titulo-revisa{font-family:"Playfair Display",serif;font-size:3rem;font-weight:900;color:white;line-height:1;text-shadow:0 2px 16px rgba(0,0,0,.4)}
+.capa-subtitulo-revisa{font-family:"Source Serif 4",serif;font-size:1rem;color:rgba(255,255,255,.75);font-style:italic}
+.capa-box{background:rgba(255,255,255,.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:48px 56px;max-width:640px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.capa-serie{font-family:"Playfair Display",serif;font-size:2.4rem;font-weight:900;color:white;margin-bottom:8px}
+.capa-disciplina{background:var(--verde);color:white;border-radius:40px;padding:8px 28px;display:inline-block;font-size:1rem;font-weight:600;letter-spacing:.05em;margin-bottom:28px}
+.capa-bimestre{font-family:"JetBrains Mono",monospace;font-size:1.4rem;color:rgba(255,255,255,.9);background:rgba(255,255,255,.1);border-radius:8px;padding:12px 24px;margin-bottom:36px;letter-spacing:.08em}
+.campo-nome-area label{display:block;color:rgba(255,255,255,.8);font-size:.85rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+.campo-nome{width:100%;padding:16px 20px;border:2px solid rgba(255,255,255,.35);border-radius:10px;background:rgba(255,255,255,.15);color:white;font-size:1.15rem;font-family:"Playfair Display",serif;outline:none;transition:border .2s}
+.campo-nome::placeholder{color:rgba(255,255,255,.45)}
+.campo-nome:focus{border-color:var(--verde);background:rgba(255,255,255,.2)}
+.btn-comecar{margin-top:28px;padding:16px 48px;background:var(--verde);color:white;border:none;border-radius:50px;font-size:1.1rem;font-family:"Source Serif 4",serif;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(74,158,63,.4);transition:transform .2s,box-shadow .2s;letter-spacing:.04em}
+.btn-comecar:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(74,158,63,.5)}
+.erro-nome{color:#ffcdd2;font-size:.82rem;margin-top:8px;display:none}
+.seduc-bar{position:absolute;bottom:0;left:0;right:0;background:rgba(255,255,255,.07);padding:14px;text-align:center;color:rgba(255,255,255,.6);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase}
+#conteudo{display:none}
+.container{max-width:960px;margin:0 auto;padding:0 20px 60px}
+.header-top{background:linear-gradient(90deg,var(--roxo) 0%,var(--cinza-escuro) 100%);color:white;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.2)}
+.header-nome-aluno{font-family:"JetBrains Mono",monospace;font-size:.85rem;color:rgba(255,255,255,.75)}
+.header-nome-aluno span{color:#a8e090;font-weight:600}
+.progresso-geral{font-size:.8rem;color:rgba(255,255,255,.7);font-family:"JetBrains Mono",monospace}
+#progresso-count{color:#ffd700;font-weight:700}
+.barra-prog-wrap{height:4px;background:rgba(255,255,255,.15);position:sticky;top:52px;z-index:99}
+.barra-prog{height:4px;background:var(--verde);transition:width .4s;width:0%}
+.secao-texto{background:white;border-radius:var(--radius);padding:40px 48px;margin:32px 0;box-shadow:var(--sombra);border-left:5px solid var(--roxo)}
+.secao-label{font-family:"JetBrains Mono",monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.15em;color:var(--roxo);margin-bottom:16px;font-weight:600}
+.secao-titulo{font-family:"Playfair Display",serif;font-size:1.6rem;font-weight:700;color:var(--cinza-escuro);margin-bottom:20px;line-height:1.3}
+.secao-texto p{margin-bottom:14px;font-size:.97rem}
+.secao-texto strong{color:var(--roxo)}
+.secao-texto h3{font-family:"Playfair Display",serif;font-size:1.15rem;margin:22px 0 10px;color:var(--verde)}
+.atividades-header{background:linear-gradient(135deg,var(--roxo),var(--cinza-escuro));color:white;border-radius:var(--radius);padding:24px 36px;margin:36px 0 24px;display:flex;align-items:center;gap:16px}
+.atividades-header .icon{font-size:2rem}
+.atividades-header h2{font-family:"Playfair Display",serif;font-size:1.5rem}
+.questao{background:white;border-radius:var(--radius);padding:32px 40px;margin:20px 0;box-shadow:var(--sombra);border-top:4px solid var(--cinza-claro);transition:border-color .3s}
+.questao.respondida{border-top-color:var(--verde)}
+.questao.errada{border-top-color:#e74c3c}
+.questao-num{font-family:"JetBrains Mono",monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.15em;color:var(--cinza-medio);margin-bottom:10px}
+.questao-num .badge{background:var(--roxo);color:white;padding:2px 10px;border-radius:20px;font-size:.75rem;margin-left:8px}
+.questao-enunciado{font-size:.98rem;margin-bottom:20px;color:var(--cinza-escuro);line-height:1.7}
+.questao-fonte{font-size:.78rem;color:var(--cinza-medio);font-style:italic;margin:-10px 0 18px}
+.questao-img{max-width:340px;width:100%;border-radius:8px;margin:14px auto;display:block;border:1px solid #e8e8f0;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.opcoes{display:flex;flex-direction:column;gap:10px}
+.opcao{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:8px;border:2px solid #e8e8f0;cursor:pointer;transition:all .2s;font-size:.93rem;background:var(--cinza-claro)}
+.opcao:hover:not(.bloqueada){border-color:var(--roxo);background:#f3eeff}
+.opcao .letra{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:.85rem;color:var(--roxo);min-width:22px;padding-top:1px}
+.opcao.correta{border-color:var(--verde);background:#edfaeb}
+.opcao.correta .letra{color:var(--verde)}
+.opcao.errada-sel{border-color:#e74c3c;background:#fdecea}
+.opcao.errada-sel .letra{color:#e74c3c}
+.opcao.bloqueada{cursor:default;opacity:.75}
+.feedback-quiz{margin-top:16px;padding:14px 18px;border-radius:8px;font-size:.88rem;display:none;font-weight:600}
+.feedback-quiz.acerto{background:#edfaeb;color:#2d7a27;display:block}
+.feedback-quiz.erro{background:#fdecea;color:#c0392b;display:block}
+.campo-discursivo{width:100%;min-height:140px;padding:16px 18px;border:2px solid #e8e8f0;border-radius:8px;font-family:"Source Serif 4",serif;font-size:.95rem;line-height:1.7;color:var(--cinza-escuro);background:var(--cinza-claro);resize:vertical;outline:none;transition:border-color .2s}
+.campo-discursivo:focus{border-color:var(--roxo);background:white}
+.campo-discursivo.preenchida{border-color:var(--verde);background:#fafffa}
+.aviso-paste{font-size:.73rem;color:var(--cinza-medio);margin-top:5px;font-family:"JetBrains Mono",monospace}
+.aviso-paste::before{content:"⚠ "}
+.citacao-box{background:#faf8ff;border-left:4px solid var(--roxo);border-radius:0 8px 8px 0;padding:18px 22px;margin:16px 0;font-style:italic;font-size:.9rem;color:var(--cinza-medio)}
+.filmes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:20px 0}
+.filme-card{background:var(--cinza-claro);border-radius:10px;padding:20px;text-align:center;border:1px solid #ddd}
+.filme-icone{font-size:2.5rem;margin-bottom:10px}
+.filme-titulo{font-weight:700;font-size:.9rem;color:var(--cinza-escuro)}
+#alerta-incompleto{display:none;background:#fff3cd;border:2px solid #ffc107;border-radius:10px;padding:20px 28px;margin:24px 0;color:#7d5a00;font-weight:600}
+.acoes-finais{display:flex;gap:16px;margin:40px 0 20px;flex-wrap:wrap}
+.btn-imprimir,.btn-feedback{padding:16px 36px;border-radius:50px;font-size:1rem;font-family:"Source Serif 4",serif;font-weight:600;cursor:pointer;border:none;transition:all .2s;letter-spacing:.03em}
+.btn-imprimir{background:var(--roxo);color:white;box-shadow:0 6px 20px rgba(107,47,160,.35)}
+.btn-imprimir:hover{transform:translateY(-2px);background:#5a2590}
+.btn-feedback{background:white;color:var(--verde);border:2px solid var(--verde);box-shadow:0 4px 14px rgba(74,158,63,.15)}
+.btn-feedback:hover{background:var(--verde);color:white}
+#modal-feedback{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:999;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto}
+#modal-feedback.aberto{display:flex}
+.modal-box{background:white;border-radius:16px;padding:40px;max-width:720px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);margin:auto}
+.modal-box h3{font-family:"Playfair Display",serif;font-size:1.5rem;margin-bottom:20px;color:var(--cinza-escuro)}
+.modal-resultado{background:var(--cinza-claro);border-radius:8px;padding:20px;margin-bottom:20px}
+.resultado-linha{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e0e0ee;font-size:.9rem}
+.resultado-linha:last-child{border-bottom:none}
+.resultado-val{font-weight:700;font-family:"JetBrains Mono",monospace}
+.resultado-val.verde{color:var(--verde)}
+.resultado-val.vermelho{color:#e74c3c}
+.secao-fb{margin:20px 0;border:1px solid #e8e8f0;border-radius:10px;overflow:hidden}
+.secao-fb-titulo{background:var(--cinza-claro);padding:12px 18px;font-weight:700;font-size:.9rem;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e8e8f0}
+.item-fb{padding:14px 18px;border-bottom:1px solid #f0f0f8;font-size:.88rem}
+.item-fb:last-child{border-bottom:none}
+.item-fb .qnum{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--roxo);font-size:.8rem;margin-bottom:6px}
+.item-fb .resp-aluno{background:#f8f8ff;border-left:3px solid var(--roxo);padding:8px 12px;border-radius:0 6px 6px 0;margin:6px 0;font-size:.87rem;white-space:pre-wrap;word-break:break-word}
+.item-fb .gabarito-correcao{background:#edfaeb;border-left:3px solid var(--verde);padding:8px 12px;border-radius:0 6px 6px 0;margin:6px 0;font-size:.87rem;color:#1a5c16}
+.item-fb .status-acerto{color:var(--verde);font-weight:700}
+.item-fb .status-erro{color:#e74c3c;font-weight:700}
+.item-fb .nao-resp{color:#e67e22;font-style:italic}
+.btn-fechar-modal{margin-top:24px;padding:12px 32px;background:var(--cinza-escuro);color:white;border:none;border-radius:30px;cursor:pointer;font-family:"Source Serif 4",serif;font-size:.95rem}
+.print-capa{display:none}
+@media print{
+  .header-top,.barra-prog-wrap,.btn-imprimir,.btn-feedback,.acoes-finais,#alerta-incompleto,#modal-feedback,.aviso-paste,.atividades-header .icon{display:none!important}
+  body{background:white;font-size:10.5pt}
+  .secao-texto,.questao{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;margin:12px 0}
+  .secao-texto{padding:20px 24px}
+  .questao{padding:18px 24px}
+  .campo-discursivo{border:1px solid #999;background:white;min-height:70px}
+  .contador-chars,#anti-cola-toast{display:none!important}
+  #capa{display:none}
+  #conteudo{display:block!important}
+  .container{padding:0}
+  .print-capa{display:block;text-align:center;padding:24px 0 16px;border-bottom:3px double #333;margin-bottom:20px}
+  .opcao.correta{border:2px solid #2d7a27!important;background:#edfaeb!important}
+  .opcao.errada-sel{border:2px solid #e74c3c!important;background:#fdecea!important}
+  .feedback-quiz{display:block!important}
+}
+@media(max-width:680px){
+  .secao-texto{padding:22px 18px}
+  .questao{padding:22px 18px}
+  .filmes-grid{grid-template-columns:1fr}
+  .capa-box{padding:30px 22px}
+  .capa-titulo-revisa{font-size:2.1rem}
+  .modal-box{padding:24px 18px}
+}
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<section id="capa">
+  <div class="capa-logo-area">
+    <div class="capa-logo-circle">
+      <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48">
+        <circle cx="30" cy="30" r="28" stroke="#6b2fa0" stroke-width="3"/>
+        <path d="M18 38 L28 18 L38 38" stroke="#e67e22" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M14 42 L46 42" stroke="#4a9e3f" stroke-width="3" stroke-linecap="round"/>
+        <path d="M40 28 L46 18" stroke="#e67e22" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="capa-titulo-revisa">Revisa Goiás</div>
+      <div class="capa-subtitulo-revisa">Recompondo e ampliando aprendizagens…</div>
+    </div>
+  </div>
+  <div class="capa-box">
+    <div class="capa-serie">3ª SÉRIE</div>
+    <div class="capa-disciplina">Ciências Humanas e Sociais Aplicadas · História</div>
+    <div class="capa-bimestre">3º Bimestre — 2026</div>
+    <div class="campo-nome-area">
+      <label for="nome-aluno">Nome completo do(a) aluno(a)</label>
+      <input type="text" id="nome-aluno" class="campo-nome" placeholder="Digite seu nome completo aqui…" autocomplete="off">
+      <div class="erro-nome" id="erro-nome">Por favor, digite seu nome para continuar.</div>
+    </div>
+    <button class="btn-comecar" onclick="iniciar()">Iniciar Atividade →</button>
+  </div>
+  <div class="seduc-bar">SEDUC · Secretaria de Estado da Educação de Goiás · 2026</div>
+</section>
+
+<!-- CONTEÚDO -->
+<div id="conteudo">
+  <div class="header-top">
+    <div class="header-nome-aluno">Aluno(a): <span id="header-nome">—</span></div>
+    <div class="progresso-geral">Respondidas: <span id="progresso-count">0</span> / 23</div>
+  </div>
+  <div class="barra-prog-wrap"><div class="barra-prog" id="barra-prog"></div></div>
+
+  <div class="container">
+    <div class="print-capa">
+      <h1 style="font-family:serif;font-size:2rem">Revisa Goiás – 3ª Série | História</h1>
+      <p style="font-size:1.1rem;margin-top:6px">3º Bimestre – 2026</p>
+      <p style="margin-top:14px;font-size:1.2rem">Aluno(a): <strong id="print-nome"></strong></p>
+    </div>
+
+        <!-- ══════ TEMÁTICA 1 ══════ -->
+    <div class="secao-texto">
+      <div class="secao-label">📌 Temática 1 · Habilidade</div>
+      <div class="secao-titulo">TEMÁTICA: República populista</div>
+      <p><strong>Matriz de Habilidades Essenciais:</strong> <strong>(GO-EMCHS305A)</strong> Identificar as instituições e organismos de controle e fiscalização ambiental, analisando textos geográficos, históricos, dados estatísticos, mapas, filmes, documentários e outras fontes para avaliar o papel desses organismos na questão ambiental.</p>
+      <p><strong>Objeto de Conhecimento:</strong> Governos populistas</p>
+      <div class="citacao-box">Caro Estudante, a partir de agora, iniciaremos abordando aspectos da República brasileira, após a chamada Era Vargas. Nosso objetivo é proporcionar a vocês uma compreensão ampla e crítica do contexto político brasileiro pós 1945.</div>
+    </div>
+
+    <div class="secao-texto">
+      <div class="secao-label">📖 Leia o texto · Texto I</div>
+      <div class="secao-titulo">República Populista (1946-1964)</div>
+
+      <p>O período sob a vigência da Constituição de 1946, situado entre duas ditaduras, é chamado de "redemocratização". Mas, o predomínio de um sindicalismo atrelado ao Estado, a manipulação dos meios de comunicação e, principalmente, o uso das aspirações populares através do trabalhismo, fatores comuns aos governos deste período, caracterizam menos uma redemocratização e sim um período populista.</p>
+
+      <p>A Constituição de 1946 (5º do País, 4º da República) tem como principais definições: adoção do regime presidencialista, com eleição para vice e mandato de cinco anos; o voto universal, secreto, menos para analfabetos; direito de greve; fim da censura; pluripartidarismo.</p>
+
+      <p>O período populista é marcado por uma intensa participação política de todos os segmentos da sociedade, no embate ideológico marcado pelo enfrentamento da Guerra Fria. De um lado existiam os grupos progressistas que defendiam: o nacionalismo econômico, restrição ao capital estrangeiro, intervenção do Estado na economia, protecionismo, ampliação das leis trabalhistas, reforma agrária e política externa independente dos EUA. De outro havia os grupos conservadores, que defendiam: liberdade do capital estrangeiro no Brasil, não-intervenção do Estado na economia, eliminação de direitos trabalhistas já conquistados, colaboração externa com os EUA e o combate à reforma agrária. Assim, todos os governos do período foram marcados pela disputa entre progressistas e conservadores, com grande vantagem para estes últimos.</p>
+
+      <p>O governo Eurico G. Dutra (1946-1951) assumiu as propostas conservadoras e suas principais medidas foram: o tratado de cooperação militar entre EUA e Brasil (TIAR) e o rompimento com a URSS.</p>
+
+      <p>Seu governo foi marcado pelo crescimento da inflação. Dutra aplicou um programa impopular de combate à escalada dos preços (o congelamento dos salários) o que valeu a vitória da oposição em 1950, com a eleição de Getúlio Vargas.</p>
+
+      <p>O novo governo Vargas (1951-1954) virou o jogo de Dutra: atraiu a população com o aumento do salário mínimo em 100%, atraiu os sindicatos e também os setores progressistas com a criação da Petrobrás. Mas sua política nacionalista lhe valeu uma campanha acirrada dos setores conservadores liderada pelo jornalista Carlos Lacerda. O atentado contra a vida de Lacerda lançou suspeitas sobre Vargas que, cada vez mais acuado pela imprensa e pelos conservadores, suicidou-se em 1954.</p>
+
+      <div class="citacao-box" style="font-style:normal">
+        <img src="rev/img2.webp" alt="Cartaz de propaganda nacionalista da Petrobrás, 1953" class="questao-img" style="max-width:320px">
+        <strong>PROPAGANDA nacionalista da Petrobrás. 1953. 1 cartaz, color.</strong><br>
+        <span style="font-size:.85rem">Disponível em: https://abre.ai/ruhM. Acesso em: 16 jul. 2026.</span><br><br>
+        O cartaz é uma propaganda nacionalista produzida no contexto da criação da Petrobras, durante o governo de Getúlio Vargas. A imagem associa a empresa à soberania nacional ao apresentar o petróleo como o "ouro negro" capaz de garantir a independência econômica do Brasil. Ao destacar a bandeira nacional, as refinarias e a frase "Ninguém arrebata das minhas mãos a bandeira nacionalista", a propaganda reforça a defesa do controle estatal sobre os recursos naturais e busca mobilizar o apoio da população ao projeto de desenvolvimento industrial e fortalecimento da economia brasileira.
+      </div>
+
+      <p>Após o mandato tampão de Café Filho (1954-1955), foi eleito Juscelino Kubitschek (1956-1960). O governo J.K. significou o período de maior crescimento da economia até então, baseado no seu Plano de Metas, cujo lema era "cinquenta anos em cinco". Foi na área do desenvolvimento industrial que JK teve maior êxito. Abrindo a economia para o capital internacional, atraiu o investimento de grandes empresas. Foi no governo JK que entraram no país grandes montadoras de automóveis como, por exemplo, Ford, Volkswagen, Willys e GM (General Motors), instaladas na região sudeste do Brasil.</p>
+
+      <p>A oferta de empregos cresceu nesta região, atraindo trabalhadores de todo Brasil. Isto acelerou o êxodo rural e o desequilíbrio entre regiões do País.</p>
+
+      <p>A grande obra de JK foi a construção de Brasília. JK pretendia desenvolver a região central do país, porém a dívida externa, contraída para esta obra, aumentou significativamente.</p>
+
+      <p>A entrada de multinacionais gerou empregos, porém deixou nosso país mais dependente do capital externo. A política econômica de JK prejudicou o trabalhador do campo e a produção agrícola.</p>
+
+      <p>A inflação e a dívida contribuíram para a vitória da oposição na eleição de 1960, vencida por Jânio Quadros. O governo de Jânio (1961) durou apenas 7 meses, mas acirrou as lutas entre conservadores e progressistas. Na área econômica, Jânio adotou medidas impopulares, como a restrição do crédito e o congelamento dos salários. Mas foi na política externa que o presidente Jânio Quadros mais causou confusão e críticas: o Brasil restabeleceu relações diplomáticas com a União Soviética (URSS) e Jânio condecorou pessoalmente o guerrilheiro revolucionário Ernesto "Che" Guevara e o astronauta soviético Yuri Gagarin, além da visita de Fidel Castro.</p>
+
+      <img src="rev/img2.png" alt="Ernesto Che Guevara sendo condecorado por Jânio Quadros" class="questao-img" style="max-width:340px">
+      <p style="font-size:.82rem;color:#888;text-align:center">Ernesto Che Guevara sendo condecorado por Jânio Quadros. Disponível em: https://abre.ai/ruh4. Acesso em: 16 jul. 2026.</p>
+
+      <p>Atacado pelos conservadores e pelos progressistas, Jânio tentou um golpe de mestre para governar sozinho. Anunciou sua renúncia e com ela pretendia causar uma grande comoção popular que forçaria o Congresso a pedir seu retorno ao governo, com plenos poderes. Não foi o que aconteceu, porém. A renúncia foi aceita e a população se manteve indiferente.</p>
+
+      <p>A lei garantia a posse presidencial de João Goulart, até então o vice de Jânio. No entanto, seu perfil progressista não agradava aos militares, nem aos conservadores. Adota-se então uma solução intermediária: o vice assume a presidência, mas antes o regime político é mudado para o parlamentarismo, no qual o presidente perde poderes para o primeiro ministro, de confiança dos militares.</p>
+
+      <p>A impopularidade do parlamentarismo facilitou o retorno do regime presidencialista, proposto pelo próprio João Goulart. Em 1963, finalmente Goulart assume de fato a direção do Estado brasileiro. Mas as medidas populares que anunciou desagradaram profundamente os setores conservadores. Goulart lançou as Reformas de Base (bancárias, fiscal, urbana, administrativa, agrária, universitária e eleitoral), medidas que causariam uma participação maior do Estado em questões econômicas, regulando o investimento estrangeiro no país. As reformas também coincidiam com os anseios da classe média brasileira e dos trabalhadores (voto para analfabetos e terra para os sem-terra).</p>
+
+      <p>Em um grande comício organizado na Central do Brasil, no Rio de Janeiro, Jango anunciou a mais de 300 mil pessoas que daria início as reformas e livraria o país do caos em que estava vivendo. Este comício, entretanto, foi mais um motivo para que a oposição o acusasse de comunista. A partir daí houve uma mobilização social anti Jango. Parte da classe média, assustada, deu apoio aos militares. Alguns dias depois do comício, foi organizada a Marcha da Família com Deus pela Liberdade, com o objetivo de apoiar os golpistas. Em 31 de março de 1964, os militares tomaram o poder ilegalmente, com apoio dos Estados Unidos.</p>
+    </div>
+
+    <!-- ATIVIDADES 01-05 -->
+    <div class="atividades-header">
+      <span class="icon">✍️</span>
+      <div>
+        <div style="font-size:.75rem;opacity:.7;text-transform:uppercase;letter-spacing:.12em">República populista · GO-EMCHS305A</div>
+        <h2>Atividades – Questões 01 a 05</h2>
+      </div>
+    </div>
+
+    <div class="questao" id="q1" data-tipo="discursiva" data-num="01">
+      <div class="questao-num">Questão 01 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">De acordo com o texto, quais foram as principais características da Constituição de 1946 e de que forma elas contribuíram para o processo de reorganização política do Brasil após o Estado Novo?</div>
+      <textarea class="campo-discursivo" id="resp-q1" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q1',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="questao" id="q2" data-tipo="discursiva" data-num="02">
+      <div class="questao-num">Questão 02 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">O texto afirma que o período entre 1946 e 1964 é frequentemente denominado de "redemocratização", mas também pode ser caracterizado como um período populista. Explique os argumentos apresentados no texto para sustentar essa interpretação.</div>
+      <textarea class="campo-discursivo" id="resp-q2" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q2',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="questao" id="q3" data-tipo="discursiva" data-num="03">
+      <div class="questao-num">Questão 03 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">Como a propaganda da criação da Petrobras procurava associar a empresa ao desenvolvimento e à soberania nacional?</div>
+      <textarea class="campo-discursivo" id="resp-q3" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q3',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="questao" id="q4" data-tipo="discursiva" data-num="04">
+      <div class="questao-num">Questão 04 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">Quais foram os principais impactos da política econômica adotada por Juscelino Kubitschek para diferentes setores da sociedade brasileira?</div>
+      <textarea class="campo-discursivo" id="resp-q4" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q4',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="questao" id="q5" data-tipo="discursiva" data-num="05">
+      <div class="questao-num">Questão 05 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">De acordo com o texto, por que a política externa de Jânio Quadros provocou críticas durante seu governo?</div>
+      <textarea class="campo-discursivo" id="resp-q5" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q5',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="secao-texto" style="border-left-color:var(--laranja)">
+      <div class="secao-label" style="color:var(--laranja)">🎬 Sugestões de filmes</div>
+      <div class="secao-titulo">Os Anos JK – Uma Trajetória Política</div>
+      <p><strong>Classificação:</strong> Livre</p>
+      <p>O documentário traça um panorama do Brasil de 1945 a 1964, tendo como personagem central Juscelino Kubitschek. Fazendo uso de cinejornais, filmes de pequenos produtores, fotografias e material pesquisado em estações de TV, entrevistas com nomes expressivos da política nacional. Aborda fatos marcantes da história como o suicídio de Vargas, a construção de Brasília, os governos de Jânio Quadros e de João Goulart e o golpe de 1964.</p>
+    </div>
+
+    <!-- ══════ TEMÁTICA 2 ══════ -->
+    <div class="secao-texto">
+      <div class="secao-label">📌 Temática 2 · Habilidade</div>
+      <div class="secao-titulo">TEMÁTICA: Desenvolvimento e questões ambientais no contexto da Ditadura Militar</div>
+      <p><strong>Matriz de Habilidades Essenciais:</strong> <strong>(GO-EMCHS305A)</strong> Identificar as instituições e organismos de controle e fiscalização ambiental, analisando textos geográficos, históricos, dados estatísticos, mapas, filmes, documentários e outras fontes para avaliar o papel desses organismos na questão ambiental.</p>
+      <p><strong>Objeto de Conhecimento:</strong> Ditadura Militar e os impactos ambientais</p>
+      <div class="citacao-box">Caro Estudante, agora, avançaremos para uma análise crítica e contextualizada do modelo de desenvolvimento adotado durante o regime militar, marcado pela realização de grandes obras de infraestrutura como hidrelétricas, rodovias e projetos na Amazônia, e refletiremos sobre os impactos dessas ações no meio ambiente e na sociedade como um todo.</div>
+      <p style="font-size:.82rem;color:#888">Colaboração: Prof. Fernando Dominience — Colégio Estadual Pol. Prof.º Goiany Prates</p>
+    </div>
+
+    <div class="secao-texto">
+      <div class="secao-label">📖 Leia o texto · Texto II</div>
+      <div class="secao-titulo">Desenvolvimento, meio ambiente e informação no Brasil dos anos 1970</div>
+
+      <p>A preocupação com os impactos ambientais das atividades humanas ganhou destaque internacional a partir da década de 1970. Nesse período, governos, cientistas e organizações passaram a discutir os limites do crescimento econômico e os efeitos da exploração intensiva dos recursos naturais. Um marco desse processo foi a <strong>Conferência de Estocolmo</strong>, realizada em 1972, que reuniu diversos países para debater a relação entre desenvolvimento e meio ambiente. No mesmo contexto, o <strong>Clube de Roma</strong> divulgou o relatório <em>Limites do Crescimento</em>, alertando para o risco de esgotamento dos recursos naturais caso o modelo de desenvolvimento então vigente fosse mantido. Essas iniciativas contribuíram para consolidar a ideia de que o crescimento econômico deveria ser acompanhado por políticas de preservação ambiental, ao mesmo tempo em que impulsionaram a criação de formas de cooperação internacional voltadas à proteção do meio ambiente.</p>
+
+      <p>No Brasil, a década de 1970 foi marcada pela busca de crescimento econômico acelerado, conduzida pelo regime militar. O desenvolvimento era entendido como sinônimo de modernização e integração do território nacional, e grandes obras de infraestrutura passaram a ser vistas como fundamentais para esse projeto. Nesse contexto, a construção da rodovia <strong>Transamazônica</strong>, iniciada em 1970, foi apresentada como símbolo de progresso e como estratégia de ocupação da região amazônica, associada à defesa da soberania nacional. Essa concepção priorizava a expansão econômica e territorial. Embora os impactos ambientais já fossem discutidos em escala internacional, no Brasil essas preocupações ainda ocupavam um espaço secundário nas decisões governamentais. Ainda assim, críticas começaram a surgir, apontando para o desmatamento, para as dificuldades de adaptação das populações deslocadas e para os impactos sobre povos indígenas. Essas críticas não se manifestavam de forma homogênea: enquanto alguns setores defendiam a revisão das políticas de desenvolvimento, outros as interpretavam como obstáculos ao crescimento ou ameaças à soberania nacional.</p>
+
+      <p>Nesse cenário, os meios de comunicação tiveram papel importante na forma como o debate chegou ao público. Revistas de grande circulação, como <em>O Cruzeiro</em> e <em>Manchete</em>, acompanharam o projeto e divulgaram reportagens, entrevistas e artigos sobre o tema. As críticas ambientais não estavam ausentes, mas frequentemente apareciam de forma secundária ou eram relativizadas. Esse processo pode ser compreendido por meio do conceito de <strong>enquadramento</strong>. Enquadrar uma informação significa selecionar aspectos da realidade, destacando alguns e deixando outros em segundo plano. No caso das revistas, o destaque recaía sobre o progresso, a integração nacional e a superação de desafios, enquanto as críticas ambientais eram, muitas vezes, tratadas como exageradas ou associadas a interesses externos. Em alguns casos, o debate era deslocado para a defesa da soberania nacional, reduzindo o espaço para a discussão direta dos impactos ambientais.</p>
+
+      <p>Dessa forma, o debate ambiental já estava presente no Brasil dos anos 1970, ainda que de maneira incipiente. Embora as críticas existissem, sua circulação pública foi limitada por processos de seleção e interpretação que apresentavam as grandes obras como sinais de progresso e modernização. Assim, a questão ambiental não estava ausente, mas permanecia subordinada a outros objetivos considerados prioritários, como o crescimento econômico. Ao dar mais espaço a determinados temas e menos a outros, os meios de comunicação contribuíram para a construção de uma visão na qual o desenvolvimento ocupava o centro do debate, enquanto os impactos ambientais permaneciam em segundo plano.</p>
+
+      <p style="font-size:.82rem;color:#888;margin-top:20px;">Texto extraído da Dissertação de mestrado de Fernando Dominience Menezes. ADAPTADO. Disponível em: https://repositorio.unb.br/bitstream/10482/2510/1/2007_FernandoDominienceMenezes.PDF</p>
+    </div>
+
+    <!-- ATIVIDADES 06-10 -->
+    <div class="atividades-header">
+      <span class="icon">🌿</span>
+      <div>
+        <div style="font-size:.75rem;opacity:.7;text-transform:uppercase;letter-spacing:.12em">Ditadura Militar e impactos ambientais</div>
+        <h2>Atividades – Questões 06 a 10</h2>
+      </div>
+    </div>
+
+    <div class="questao" id="q6" data-tipo="discursiva" data-num="06">
+      <div class="questao-num">Questão 06 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">Quais acontecimentos internacionais da década de 1970 contribuíram para ampliar o debate sobre os impactos ambientais das atividades humanas e quais preocupações eles levantaram?</div>
+      <textarea class="campo-discursivo" id="resp-q6" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q6',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="questao" id="q7" data-tipo="discursiva" data-num="07">
+      <div class="questao-num">Questão 07 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">Explique por que a construção da rodovia Transamazônica foi considerada estratégica pelo governo brasileiro durante a década de 1970 e identifique duas críticas a esse projeto apresentadas no texto.</div>
+      <textarea class="campo-discursivo" id="resp-q7" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q7',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="questao" id="q8" data-tipo="discursiva" data-num="08">
+      <div class="questao-num">Questão 08 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">Segundo o texto, como os meios de comunicação influenciaram a percepção da sociedade sobre a construção da Transamazônica e os debates ambientais?</div>
+      <textarea class="campo-discursivo" id="resp-q8" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q8',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="questao" id="q10" data-tipo="objetiva" data-gabarito="D" data-num="10">
+      <div class="questao-num">Questão 10 <span class="badge">Fac. Ciências Médicas Santa Casa – 2025</span></div>
+      <div class="questao-enunciado">
+        <p>Na década de 1970 foi cunhada essa frase em Belém do Pará: "A ocupação da Amazônia seguirá as patas do boi". [...] Era esse o modelo de desenvolvimento daquela época e daquela lógica da ditadura militar, em que a Amazônia era ameaçada, a soberania territorial era ameaçada. O general Médici tem aquelas famosas frases da inauguração da Transamazônica, em 1970, "terras sem homens para homens sem terra", quer dizer, não existia ninguém na Amazônia, povos indígenas não existiam, e "integrar para não entregar".</p>
+        <p style="font-size:.82rem;font-style:italic">(Carlos Nobre. "Vamos pensar a Amazônia, vamos dar uma chance para Maísa". In: Maria Arminda do Nascimento Arruda et al (org.). Dilemas do Brasil, 2023.)</p>
+        <p>Segundo o excerto, a política do regime militar para a Amazônia, nos anos 1970,</p>
+      </div>
+      <div class="opcoes">
+        <div class="opcao" onclick="responderObjetiva('q10','A',this)"><span class="letra">A</span> integrou as populações tradicionais ribeirinhas ao projeto nacional de exploração das áreas florestais.</div>
+        <div class="opcao" onclick="responderObjetiva('q10','B',this)"><span class="letra">B</span> facilitou o surgimento, na região, de movimentos sociais de crítica à concentração fundiária.</div>
+        <div class="opcao" onclick="responderObjetiva('q10','C',this)"><span class="letra">C</span> inaugurou, na região, um novo modelo de desenvolvimento agrícola ecologicamente sustentável.</div>
+        <div class="opcao" onclick="responderObjetiva('q10','D',this)"><span class="letra">D</span> representou um modelo de ocupação das terras que desconsiderava a presença de povos nativos na região.</div>
+        <div class="opcao" onclick="responderObjetiva('q10','E',this)"><span class="letra">E</span> proporcionou a efetiva assimilação das tradições indígenas ao conjunto da produção cultural brasileira.</div>
+      </div>
+      <div class="feedback-quiz" id="fb-q10"></div>
+    </div>
+
+    <div class="secao-texto" style="border-left-color:var(--laranja)">
+      <div class="secao-label" style="color:var(--laranja)">💡 Para saber mais!</div>
+      <div class="secao-titulo">As "obras faraônicas" da Ditadura Militar</div>
+      <p>A Ditadura Militar, buscando promover o desenvolvimento econômico do Brasil, investiu em grandes projetos de infraestrutura. O termo "obras faraônicas" é frequentemente utilizado para se referir às obras do período militar como a Ponte Rio-Niterói, a Transamazônica e a Usina Hidrelétrica de Itaipu. No entanto, essas obras foram caracterizadas pela grandiosidade e pelo impacto em larga escala, mas também por muitas contestações e consequências negativas, sobretudo pelos desperdícios de recursos públicos, já que muitas apresentaram erros de projeto, atrasos e custos elevados.</p>
+      <p>Além disso, os impactos ambientais foram bastante significativos. A Transamazônica e a Usina Hidrelétrica de Itaipu causaram desmatamento, alterações no curso dos rios e grandes impactos na fauna e flora locais. Outro ponto foi a grande acentuação das desigualdades sociais, uma vez que o desenvolvimento promovido pela ditadura não chegou a todos: essas obras beneficiaram os grandes centros urbanos e as regiões com maior potencial econômico. Essas obras serviram à propaganda do "Brasil Potência", mas deixaram grandes dívidas e problemas estruturais.</p>
+      <p style="font-size:.82rem;color:#888">Disponível em: https://abre.ai/pbWt Acesso em: 23 jul. 2025.</p>
+    </div>
+
+    <!-- ATIVIDADES 11-12 -->
+    <div class="atividades-header">
+      <span class="icon">🛠️</span>
+      <div>
+        <div style="font-size:.75rem;opacity:.7;text-transform:uppercase;letter-spacing:.12em">Desenvolvimento e meio ambiente</div>
+        <h2>Atividades – Questões 11 e 12</h2>
+      </div>
+    </div>
+
+    <div class="questao" id="q11" data-tipo="objetiva" data-gabarito="D" data-num="11">
+      <div class="questao-num">Questão 11 <span class="badge">Objetiva</span></div>
+      <div class="questao-enunciado">Durante o contexto da Ditadura Militar (1964-1985) diversos projetos que visavam o desenvolvimento econômico foram implantados, muitos deles prezando pela promoção de projetos agropecuários e de mineração. Considerando esse cenário, qual das alternativas abaixo melhor descreve o modelo de desenvolvimento adotado pelo regime militar e a questão ambiental?</div>
+      <div class="opcoes">
+        <div class="opcao" onclick="responderObjetiva('q11','A',this)"><span class="letra">A</span> O modelo desenvolvimentista dos militares buscou equilibrar crescimento econômico e proteção ambiental, utilizando tecnologias limpas e políticas de conservação para integrar a Amazônia ao restante do país.</div>
+        <div class="opcao" onclick="responderObjetiva('q11','B',this)"><span class="letra">B</span> A integração da Amazônia durante a ditadura foi marcada por ampla consulta às populações locais e políticas públicas voltadas à sustentabilidade ecológica e ao respeito às culturas indígenas.</div>
+        <div class="opcao" onclick="responderObjetiva('q11','C',this)"><span class="letra">C</span> A política ambiental da ditadura foi pioneira ao implementar o licenciamento ambiental obrigatório em grandes obras e garantir a proteção dos biomas brasileiros por meio de legislações ambientais rigorosas.</div>
+        <div class="opcao" onclick="responderObjetiva('q11','D',this)"><span class="letra">D</span> A ocupação da Amazônia durante o regime militar seguiu uma lógica de segurança nacional e desenvolvimento econômico, frequentemente ignorando impactos ambientais e sociais, resultando em desmatamento, conflitos fundiários e degradação ambiental.</div>
+        <div class="opcao" onclick="responderObjetiva('q11','E',this)"><span class="letra">E</span> O regime militar adotou uma postura resistente em relação às mudanças no meio ambiente. Foram criados órgãos e grupos políticos que visavam preservar e cuidar, principalmente, da floresta amazônica, contando com a ajuda de agropecuários e mineradores para essa organização.</div>
+      </div>
+      <div class="feedback-quiz" id="fb-q11"></div>
+    </div>
+
+    <div class="questao" id="q12" data-tipo="discursiva" data-num="12">
+      <div class="questao-num">Questão 12 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">Explique como as políticas de colonização e exploração da Amazônia durante o regime militar contribuíram para o desmatamento e a invasão de terras indígenas, e analise as consequências dessas ações para os povos originários e para o meio ambiente.</div>
+      <textarea class="campo-discursivo" id="resp-q12" style="min-height:160px" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q12',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="secao-texto" style="border-left-color:var(--laranja)">
+      <div class="secao-label" style="color:var(--laranja)">🎬 Sugestões de filmes</div>
+      <div class="secao-titulo">Transamazônica: Uma Estrada Para o Passado</div>
+      <p><strong>Classificação:</strong> Não recomendado para menores de 14 anos.</p>
+      <p>A série documental <em>Transamazônica: Uma Estrada Para o Passado</em> narra detalhes sobre este marco que foi idealizado e teve as obras iniciadas durante o governo do presidente Emílio Garrastazu Médici, no fim dos anos 1960. Com o objetivo de unificar a nação, sua construção foi uma saga gigantesca e o maior exemplo das obras faraônicas da ditadura civil-militar brasileira (1964-1985). A estrada, que promoveria a integração nacional cortando o País de leste a oeste, ficou mais conhecida por ligar a fome do Nordeste com a miséria da Amazônia, e teve sua construção abandonada.</p>
+    </div>
+
+    <!-- ══════ TEMÁTICA 3 ══════ -->
+    <div class="secao-texto">
+      <div class="secao-label">📌 Temática 3 · Habilidade</div>
+      <div class="secao-titulo">TEMÁTICA: Princípios da Declaração dos Direitos do Homem e do Cidadão</div>
+      <p><strong>Matriz de Habilidades Essenciais:</strong> <strong>(EM13CHS605)</strong> Analisar os princípios da declaração dos Direitos Humanos, recorrendo às noções de justiça, igualdade e fraternidade, identificar os progressos e entraves à concretização desses direitos nas diversas sociedades contemporâneas e promover ações concretas diante da desigualdade e das violações desses direitos em diferentes espaços de vivência, respeitando a identidade de cada grupo e de cada pessoa.</p>
+      <p><strong>Objeto de Conhecimento:</strong> Declaração Universal dos Direitos Humanos</p>
+    </div>
+
+    <div class="secao-texto">
+      <div class="secao-label">📖 Leia o texto · Texto III</div>
+      <div class="secao-titulo">A Declaração dos Direitos do Homem e do Cidadão (1789)</div>
+
+      <p>A Declaração dos Direitos do Homem e do Cidadão foi votada e aprovada pela Assembleia Nacional Constituinte da França, em 26 de agosto de 1789. Inspirada pelos ideais iluministas, foi importante na fundação do Estado Democrático de Direito que conhecemos hoje.</p>
+
+      <p>No final do século XVIII, o absolutismo estava em franca decadência na Europa. A ideologia liberal iluminista pulsava por todo o continente, advinda dos burgueses que tinham o poder econômico e agora desejavam emancipação e participação políticas.</p>
+
+      <p>Os dezessete artigos eram inspirados nessa ideologia e na Declaração de Independência dos EUA, que também era permeada por tais ideias. O documento serviu de base para a primeira Constituição da Revolução Francesa, e entrou para a história como um dos primeiros na busca por um estado de Direito, legalmente justo e igualitário (em tese).</p>
+
+      <p>Foram inseridos os conceitos resumidos pelo famoso lema revolucionário: <strong>Liberdade, Igualdade e Fraternidade</strong>. Na prática, eram os direitos considerados naturais, universais e inalienáveis a todos os homens: vida, liberdade e propriedade. Essa última passaria, inclusive, a ser o critério de designação social, não mais os laços sanguíneos ou de tradição; o dízimo foi prontamente abolido, bem como o Direito Divino do Rei. O poder passava a emanar do povo.</p>
+
+      <p>Apesar de ainda ter diversos problemas e não ser tão universal quanto se pretendia, a Declaração dos Direitos do Homem e do Cidadão foi um importante marco na luta pela soberania do indivíduo em busca de suas liberdades.</p>
+
+      <p>Sua influência é sentida até hoje nas constituições de países pelo mundo afora, mas principalmente na Declaração Universal dos Direitos Humanos, adotada pela ONU em 1948.</p>
+
+      <p style="font-size:.82rem;color:#888;margin-top:20px;">Texto de Vinícius Buono – Adaptado. Disponível em: https://abre.ai/ncCq Acesso em: 22 jul. 2026.</p>
+    </div>
+
+    <!-- ATIVIDADES 13-14 -->
+    <div class="atividades-header">
+      <span class="icon">⚖️</span>
+      <div>
+        <div style="font-size:.75rem;opacity:.7;text-transform:uppercase;letter-spacing:.12em">Direitos do Homem e do Cidadão · EM13CHS605</div>
+        <h2>Atividades – Questões 13 e 14</h2>
+      </div>
+    </div>
+
+    <div class="questao" id="q13" data-tipo="discursiva" data-num="13">
+      <div class="questao-num">Questão 13 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">A partir do exposto no texto, como o contexto histórico da Revolução Francesa influenciou a criação da Declaração dos Direitos do Homem e do Cidadão?</div>
+      <textarea class="campo-discursivo" id="resp-q13" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q13',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="questao" id="q14" data-tipo="discursiva" data-num="14">
+      <div class="questao-num">Questão 14 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">Por que a Declaração dos Direitos do Homem e do Cidadão é reconhecida como um marco histórico na evolução dos direitos humanos?</div>
+      <textarea class="campo-discursivo" id="resp-q14" style="min-height:160px" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q14',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <!-- ══════ TEMÁTICA 4 ══════ -->
+    <div class="secao-texto">
+      <div class="secao-label">📌 Temática 4 · Habilidade</div>
+      <div class="secao-titulo">TEMÁTICA: Direitos humanos no mundo contemporâneo</div>
+      <p><strong>Matriz de Habilidades Essenciais:</strong> <strong>(GO-EMCHS605B)</strong> Analisar os princípios da Declaração Universal dos Direitos Humanos, identificando os progressos e entraves à concretização desses direitos para refletir sobre as desigualdades sociais no Mundo Contemporâneo.</p>
+      <p><strong>Objeto de Conhecimento:</strong> Direitos Humanos</p>
+    </div>
+
+    <div class="secao-texto">
+      <div class="secao-label">📖 Leia o texto · Texto IV</div>
+      <div class="secao-titulo">A evolução dos Direitos Humanos no Brasil</div>
+
+      <p>Os direitos humanos são um importante instrumento de proteção a toda e qualquer pessoa no mundo. Por isso, são garantidos por inúmeros tratados e documentos jurídicos em diversos países, um deles o Brasil. Nosso país conta com uma série de ferramentas para garantir que os direitos humanos sejam estendidos a todos os nossos cidadãos, mas infelizmente na prática ainda não atingimos este objetivo.</p>
+
+      <p>No Brasil, os direitos humanos são garantidos na <strong>Constituição Federal de 1988</strong>, o que é considerado um grande avanço jurídico, visto que o país conta com uma história marcada por graves desrespeitos a esses direitos, sobretudo no período da Ditadura Militar.</p>
+
+      <p>A mais recente constituição garante os direitos civis, políticos, econômicos, sociais e culturais dos nossos cidadãos. Essas garantias aparecem, por exemplo, logo no primeiro artigo, onde é estabelecido o princípio da cidadania, da dignidade da pessoa humana e os valores sociais do trabalho. Já no artigo 5º é estabelecido o direito à vida, à privacidade, à igualdade, à liberdade e outros importantes direitos fundamentais, sejam eles individuais ou coletivos. Ainda que a Constituição de 1988 seja o marco mais evidente dos direitos humanos no Brasil, eles já apareciam anteriormente, até mesmo em outras constituições.</p>
+
+      <p>É através das diversas Constituições brasileiras que entendemos a evolução dos direitos humanos no Brasil. Princípios de garantia dos direitos políticos e civis apareciam já na <strong>Constituição de 1824</strong>, ainda que o poder estivesse concentrado nas mãos do imperador. O objetivo era garantir principalmente a liberdade, a segurança individual e a propriedade. Ainda nesse período, continuava a existir a escravidão. As violências sofridas pelas pessoas negras, como o desrespeito à sua integridade física e a perda da própria vida, é uma violação extrema aos direitos humanos, ao qual essa constituição legitimava.</p>
+
+      <p>A <strong>Constituição de 1891</strong>, já no período republicano, defendia os princípios de liberdade, igualdade e justiça, garantindo o sufrágio direto para eleições de deputados, senadores, presidente e vice-presidente, mas não era universal. Mulheres, mendigos e analfabetos eram proibidos de votar. Entre algumas medidas dessa Constituição está o direito à liberdade religiosa.</p>
+
+      <p>A <strong>Constituição de 1934</strong> irá estabelecer diversos ganhos em direitos sociais, como a proibição de diferença salarial para uma mesma função, proibição do trabalho para menores de 14 anos e a estipulação de um salário mínimo ao trabalhador, descanso semanal remunerado e a limitação diária de jornada a 8h. Porém, essa Constituição só vigorou por apenas três anos. Chegou a seu fim com o início do Estado Novo, em 1937, período marcado pela quase inexistência dos direitos humanos.</p>
+
+      <p>Com o início do Estado Novo passa a vigorar a <strong>Constituição de 1937</strong>, que tinha influências fascistas e autoritárias. Em meio a este cenário problemático, os direitos fundamentais foram enfraquecidos e esquecidos, sobretudo por causa da Polícia Especial e do Departamento de Imprensa e Propaganda (DIP), que censurava as comunicações orais e escritas, inclusive em correspondências.</p>
+
+      <p>Este cenário só foi alterado em <strong>1946</strong>, quando terminou o Estado Novo e uma nova constituição passou a vigorar. Essa constituição restaurou os direitos e garantias individuais, além de ampliá-los, quando em comparação com o texto de 1934. Mas esta melhoria não durou muito, pois o desrespeito aos direitos fundamentais volta a aparecer em 1964, com a instauração do Regime Militar.</p>
+
+      <p>O período militar foi conturbado para os direitos humanos no Brasil. Em 1964 os militares assumiram o governo brasileiro com a promessa de que a intervenção duraria um curto tempo, até que o país superasse os problemas que levaram à intervenção. Apesar da promessa, o Regime Militar durou 21 anos e, marcado por um centralismo e autoritarismo, resultou em sérias consequências aos direitos fundamentais.</p>
+
+      <p>O Regime Militar foi um período marcado sobretudo pelas torturas, sequestros, assassinatos e desaparecimento de opositores. Havia diversos centros de tortura espalhados pelo país, ligados ao <strong>Destacamento de Operações e Informações – Centro de Operações de Defesa Interna (DOI-Codi)</strong>, um órgão de inteligência subordinado ao Estado.</p>
+
+      <p>Em 2012, foi instaurada a <strong>Comissão Nacional da Verdade (CNV)</strong> para investigar as violações contra os direitos humanos cometidas entre 1946 e 1988, com maior foco para o período da ditadura militar. O relatório final, divulgado em 2014, apontou 434 vítimas entre mortos e desaparecidos, e mostrou também 377 responsáveis pelos crimes cometidos no período. Embora a comissão não tenha poder de punição, defende que os 196 responsáveis ainda vivos sejam levados à Justiça.</p>
+
+      <p>Os direitos fundamentais resguardados pela atual constituição colocam o Brasil como um dos países com o mais completo ordenamento jurídico em relação aos direitos humanos. Com isso, os direitos humanos tornaram-se um compromisso do Governo Federal e hoje são conduzidos como uma política pública. Contudo, décadas após a instauração da nova constituição, ainda existem muitas dificuldades em tirar esses princípios do papel.</p>
+
+      <p>O relatório <em>Estado dos Direitos Humanos no Mundo</em>, organizado pela Anistia Internacional, mostra que entre as principais falhas do Brasil em direitos humanos aparecem problemas como:</p>
+      <ul style="margin:10px 0 14px 22px;font-size:.95rem">
+        <li>a alta taxa de homicídios no país, sobretudo de jovens negros;</li>
+        <li>os abusos policiais e as execuções extrajudiciais, cometidas por policiais em operações formais ou paralelas, em grupos de extermínio ou milícias;</li>
+        <li>a situação do sistema prisional;</li>
+        <li>a vulnerabilidade dos defensores de direitos humanos, principalmente em áreas rurais;</li>
+        <li>a violência sofrida pela população indígena, sobretudo pelas falhas em políticas de demarcação de terras;</li>
+        <li>as várias formas de violência contra as mulheres.</li>
+      </ul>
+
+      <p>A grande preocupação é que estes problemas persistem no país há cerca de 30 anos, sem que as autoridades tenham criado soluções efetivas para mudar o cenário. Para o diretor executivo da Anistia Internacional no Brasil, Atila Roque, o Brasil vive em um estado permanente de violação de direitos humanos. Mesmo que o país tenha avançado em algumas áreas, como na redução da pobreza, a situação se manteve crítica em diversos outros setores.</p>
+
+      <p style="font-size:.82rem;color:#888;margin-top:20px;">Texto de Isabela Souza. Adaptado. Disponível em: https://abre.ai/nd8w Acesso em: 22 jul. 2026.</p>
+    </div>
+
+    <!-- ATIVIDADES 15-17 -->
+    <div class="atividades-header">
+      <span class="icon">🕊️</span>
+      <div>
+        <div style="font-size:.75rem;opacity:.7;text-transform:uppercase;letter-spacing:.12em">Direitos humanos no mundo contemporâneo · GO-EMCHS605B</div>
+        <h2>Atividades – Questões 15 a 17</h2>
+      </div>
+    </div>
+
+    <div class="questao" id="q15" data-tipo="discursiva" data-num="15">
+      <div class="questao-num">Questão 15 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">O texto menciona que os Direitos Humanos já apareciam em constituições anteriores à de 1988. Nesse sentido, por que essa Constituição é considerada um marco mais evidente na consolidação desses direitos no país?</div>
+      <textarea class="campo-discursivo" id="resp-q15" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q15',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="questao" id="q16" data-tipo="discursiva" data-num="16">
+      <div class="questao-num">Questão 16 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">Compare a maneira em que os direitos humanos foram desrespeitados no Brasil no Estado Novo e na Ditadura Militar, e quais práticas autoritárias caracterizaram esses regimes.</div>
+      <textarea class="campo-discursivo" id="resp-q16" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q16',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="questao" id="q17" data-tipo="discursiva" data-num="17">
+      <div class="questao-num">Questão 17 <span class="badge">Dissertativa</span></div>
+      <div class="questao-enunciado">
+        <p>Leia o seguinte artigo da Declaração Universal dos Direitos Humanos de 1948.</p>
+        <div class="citacao-box">"Artigo I: Todos os seres humanos nascem livres e iguais em dignidade e direitos. São dotados de razão e consciência e devem agir em relação uns aos outros com espírito e fraternidade. (...)"<br><span style="font-size:.8rem;font-style:normal">Disponível em: https://abre.ai/neoF. Acesso em: 24 jul. 2025.</span></div>
+        <p>A partir da leitura do trecho e dos seus conhecimentos sobre o tema, explique como surgiram os Direitos Humanos e analise seus impactos na realidade global atual.</p>
+      </div>
+      <textarea class="campo-discursivo" id="resp-q17" style="min-height:160px" placeholder="Escreva sua resposta aqui…" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" oninput="marcarDiscursiva('q17',this)"></textarea>
+      <div class="aviso-paste">Copiar e colar não é permitido neste campo.</div>
+    </div>
+
+    <div class="secao-texto" style="border-left-color:var(--laranja)">
+      <div class="secao-label" style="color:var(--laranja)">🎬 Sugestões de filmes</div>
+      <div class="secao-titulo">Para contextualizar o tema dos Direitos Humanos</div>
+      <div class="filmes-grid" style="grid-template-columns:repeat(2,1fr)">
+        <div class="filme-card">
+          <div class="filme-icone">🎥</div>
+          <div class="filme-titulo">Direitos humanos para direitos</div>
+          <p style="font-size:.82rem;margin-top:8px">Classificação: Livre. Documentário do cineasta Gabriel Filipe, que busca romper com a desinformação que envolve o tema na sociedade brasileira, com a participação de autoridades, professores e pesquisadores.</p>
+        </div>
+        <div class="filme-card">
+          <div class="filme-icone">🎥</div>
+          <div class="filme-titulo">Sergio</div>
+          <p style="font-size:.82rem;margin-top:8px">Não recomendado para menores de 12 anos. Sergio Vieira de Mello, diplomata brasileiro da ONU, interpretado por Wagner Moura. O filme relembra a vida, a carreira e a morte do embaixador, morto em um ataque terrorista no Iraque, em 2003.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ QUESTÕES DE VESTIBULARES ══════ -->
+    <div class="atividades-header">
+      <span class="icon">📝</span>
+      <div>
+        <div style="font-size:.75rem;opacity:.7;text-transform:uppercase;letter-spacing:.12em">3ª Série · 3º Bimestre/2026 · Ciências Humanas e Sociais Aplicadas</div>
+        <h2>Questões de exames – 01 a 07</h2>
+      </div>
+    </div>
+
+    <div class="questao" id="q18" data-tipo="objetiva" data-gabarito="C" data-num="E01">
+      <div class="questao-num">Questão 01 (Exames) <span class="badge">ENEM 2013</span></div>
+      <div class="questao-enunciado">
+        <img src="rev/enem1.png" alt="Charge Meta de Faminto - diálogo entre JK e Jeca" class="questao-img" style="max-width:380px">
+        <p><strong>Meta de Faminto</strong></p>
+        <div class="citacao-box" style="font-style:normal">
+          <strong>JK</strong> — Você agora tem automóvel brasileiro, para correr em estradas pavimentadas com asfalto brasileiro, com gazolina brasileira. Que mais quer?<br>
+          <strong>JECA</strong> — Um prato de feijão brasileiro, seu doutô!
+        </div>
+        <p style="font-size:.82rem;font-style:italic">THÉO. In: LEMOS, R. (Org.). Uma história do Brasil através da caricatura (1840-2001). Rio de Janeiro: Bom Texto; Letras &amp; Expressões, 2001.</p>
+        <p>A charge ironiza a política desenvolvimentista do governo Juscelino Kubitschek, ao</p>
+      </div>
+      <div class="opcoes">
+        <div class="opcao" onclick="responderObjetiva('q18','A',this)"><span class="letra">A</span> evidenciar que o incremento da malha viária diminuiu as desigualdades regionais do país.</div>
+        <div class="opcao" onclick="responderObjetiva('q18','B',this)"><span class="letra">B</span> destacar que a modernização das indústrias dinamizou a produção de alimentos para o mercado interno.</div>
+        <div class="opcao" onclick="responderObjetiva('q18','C',this)"><span class="letra">C</span> enfatizar que o crescimento econômico implicou aumento das contradições socioespaciais.</div>
+        <div class="opcao" onclick="responderObjetiva('q18','D',this)"><span class="letra">D</span> ressaltar que o investimento no setor de bens duráveis incrementou os salários de trabalhadores.</div>
+        <div class="opcao" onclick="responderObjetiva('q18','E',this)"><span class="letra">E</span> mostrar que a ocupação de regiões interioranas abriu frentes de trabalho para a população local.</div>
+      </div>
+      <div class="feedback-quiz" id="fb-q18"></div>
+    </div>
+
+    <div class="questao" id="q19" data-tipo="objetiva" data-gabarito="B" data-num="E02">
+      <div class="questao-num">Questão 02 (Exames) <span class="badge">ENEM 2015</span></div>
+      <div class="questao-enunciado">
+        <img src="rev/enem2.jpg" alt="Charge de Ziraldo - 20 anos de prontidão" class="questao-img" style="max-width:380px">
+        <p style="font-size:.82rem;font-style:italic">ZIRALDO. 20 anos de prontidão. In: LEMOS, R. (Org.). Uma história do Brasil através da caricatura (1840-2001). Rio de Janeiro: Letras &amp; Expressões, 2001.</p>
+        <p>No período de 1964 a 1985, a estratégia do Regime Militar abordada na charge foi caracterizada pela</p>
+      </div>
+      <div class="opcoes">
+        <div class="opcao" onclick="responderObjetiva('q19','A',this)"><span class="letra">A</span> priorização da segurança nacional.</div>
+        <div class="opcao" onclick="responderObjetiva('q19','B',this)"><span class="letra">B</span> captação de financiamentos estrangeiros.</div>
+        <div class="opcao" onclick="responderObjetiva('q19','C',this)"><span class="letra">C</span> execução de cortes nos gastos públicos.</div>
+        <div class="opcao" onclick="responderObjetiva('q19','D',this)"><span class="letra">D</span> nacionalização de empresas multinacionais.</div>
+        <div class="opcao" onclick="responderObjetiva('q19','E',this)"><span class="letra">E</span> promoção de políticas de distribuição de renda.</div>
+      </div>
+      <div class="feedback-quiz" id="fb-q19"></div>
+    </div>
+
+    <div class="questao" id="q20" data-tipo="objetiva" data-gabarito="A" data-num="E03">
+      <div class="questao-num">Questão 03 (Exames) <span class="badge">ENEM LIBRAS 2017</span></div>
+      <div class="questao-enunciado">
+        <p>A construção da Transamazônica foi interpretada por alguns estudiosos como uma espécie de contrarreforma agrária, na medida em que abriu para as populações rurais pobres uma nova fronteira de expansão. Na prática, porém, os projetos de colonização da Amazônia fracassaram ou não tiveram continuidade. Em 1985, o MST retoma a ancestral luta pela reforma agrária brasileira. Essa luta não é nova, sendo defendida por abolicionistas do século XIX e pelas Ligas Camponesas nos anos 1950-60.</p>
+        <p style="font-size:.82rem;font-style:italic">DEL PRIORE, M.; VENÂNCIO, R. Uma breve história do Brasil. São Paulo: Planeta, 2010 (adaptado).</p>
+        <p>O processo histórico mencionado evidencia, em temporalidades distintas, um confronto entre</p>
+      </div>
+      <div class="opcoes">
+        <div class="opcao" onclick="responderObjetiva('q20','A',this)"><span class="letra">A</span> projetos políticos de ocupação fundiária e resistência social.</div>
+        <div class="opcao" onclick="responderObjetiva('q20','B',this)"><span class="letra">B</span> estratégias públicas de qualificação técnica e cultura tradicional.</div>
+        <div class="opcao" onclick="responderObjetiva('q20','C',this)"><span class="letra">C</span> mecanismos legais de delimitação territorial e articulação legislativa.</div>
+        <div class="opcao" onclick="responderObjetiva('q20','D',this)"><span class="letra">D</span> planejamentos estatais de reforma trabalhista e organização partidária.</div>
+        <div class="opcao" onclick="responderObjetiva('q20','E',this)"><span class="letra">E</span> modelos econômicos de desenvolvimento nacional e mobilização sindical.</div>
+      </div>
+      <div class="feedback-quiz" id="fb-q20"></div>
+    </div>
+
+    <div class="questao" id="q21" data-tipo="objetiva" data-gabarito="D" data-num="E04">
+      <div class="questao-num">Questão 04 (Exames) <span class="badge">ENEM 2020</span></div>
+      <div class="questao-enunciado">
+        <p><strong>Declaração de Direitos do Homem e do Cidadão — 1789</strong></p>
+        <div class="citacao-box">Os representantes do povo francês, tendo em vista que a ignorância, o esquecimento ou o desprezo dos direitos do homem são as únicas causas dos males públicos e da corrupção dos governos, resolveram declarar solenemente os direitos naturais, inalienáveis e sagrados do homem, a fim de que esta declaração, sempre presente em todos os membros do corpo social, lhes lembre permanentemente seus direitos e seus deveres, a fim de que as reivindicações dos cidadãos, fundadas em princípios simples e incontestáveis, se dirijam sempre à conservação da Constituição e à felicidade geral.</div>
+        <p style="font-size:.82rem;font-style:italic">Disponível em: www.direitoshumanosusp.br. Acesso em: 7 jun. 2018 (adaptado).</p>
+        <p>Esse documento, elaborado no contexto da Revolução Francesa, reflete uma profunda mudança social ao estabelecer a</p>
+      </div>
+      <div class="opcoes">
+        <div class="opcao" onclick="responderObjetiva('q21','A',this)"><span class="letra">A</span> manutenção das terras comunais.</div>
+        <div class="opcao" onclick="responderObjetiva('q21','B',this)"><span class="letra">B</span> supressão do poder constituinte.</div>
+        <div class="opcao" onclick="responderObjetiva('q21','C',this)"><span class="letra">C</span> falência da sociedade burguesa.</div>
+        <div class="opcao" onclick="responderObjetiva('q21','D',this)"><span class="letra">D</span> paridade do tratamento jurídico.</div>
+        <div class="opcao" onclick="responderObjetiva('q21','E',this)"><span class="letra">E</span> abolição dos partidos políticos.</div>
+      </div>
+      <div class="feedback-quiz" id="fb-q21"></div>
+    </div>
+
+    <div class="questao" id="q22" data-tipo="objetiva" data-gabarito="B" data-num="E05">
+      <div class="questao-num">Questão 05 (Exames) <span class="badge">ENEM 2019</span></div>
+      <div class="questao-enunciado">
+        <p>A Declaração Universal dos Direitos Humanos, adotada e proclamada pela Assembleia Geral da ONU na Resolução 217-A, de 10 de dezembro de 1948, foi um acontecimento histórico de grande relevância. Ao afirmar, pela primeira vez em escala planetária, o papel dos direitos humanos na convivência coletiva, pode ser considerada um evento inaugural de uma nova concepção de vida internacional.</p>
+        <p style="font-size:.82rem;font-style:italic">LAFER, C. Declaração Universal dos Direitos Humanos (1948). In: MAGNOLI, D. (Org.) História da paz. São Paulo: Contexto, 2008.</p>
+        <p>A declaração citada no texto introduziu uma nova concepção nas relações internacionais ao possibilitar a</p>
+      </div>
+      <div class="opcoes">
+        <div class="opcao" onclick="responderObjetiva('q22','A',this)"><span class="letra">A</span> superação da soberania estatal.</div>
+        <div class="opcao" onclick="responderObjetiva('q22','B',this)"><span class="letra">B</span> defesa dos grupos vulneráveis.</div>
+        <div class="opcao" onclick="responderObjetiva('q22','C',this)"><span class="letra">C</span> redução da truculência belicista.</div>
+        <div class="opcao" onclick="responderObjetiva('q22','D',this)"><span class="letra">D</span> impunidade dos atos criminosos.</div>
+        <div class="opcao" onclick="responderObjetiva('q22','E',this)"><span class="letra">E</span> inibição dos choques civilizacionais.</div>
+      </div>
+      <div class="feedback-quiz" id="fb-q22"></div>
+    </div>
+
+    <div class="questao" id="q23" data-tipo="objetiva" data-gabarito="E" data-num="E06">
+      <div class="questao-num">Questão 06 (Exames) <span class="badge">ENEM 2014</span></div>
+      <div class="questao-enunciado">
+        <p>A Comissão Nacional da Verdade (CNV) reuniu representantes de comissões estaduais e de várias instituições para apresentar um balanço dos trabalhos feitos e assinar termos de cooperação com quatro organizações. O coordenador da CNV estima que, até o momento, a comissão examinou, "por baixo", cerca de 30 milhões de páginas de documentos e fez centenas de entrevistas.</p>
+        <p style="font-size:.82rem;font-style:italic">Disponível em: www.jb.com.br. Acesso em: 2 mar. 2013 (adaptado).</p>
+        <p>A notícia descreve uma iniciativa do Estado que resultou da ação de diversos movimentos sociais no Brasil diante de eventos ocorridos entre 1964 e 1988. O objetivo dessa iniciativa é</p>
+      </div>
+      <div class="opcoes">
+        <div class="opcao" onclick="responderObjetiva('q23','A',this)"><span class="letra">A</span> anular a anistia concedida aos chefes militares.</div>
+        <div class="opcao" onclick="responderObjetiva('q23','B',this)"><span class="letra">B</span> rever as condenações judiciais aos presos políticos.</div>
+        <div class="opcao" onclick="responderObjetiva('q23','C',this)"><span class="letra">C</span> perdoar os crimes atribuídos aos militantes esquerdistas.</div>
+        <div class="opcao" onclick="responderObjetiva('q23','D',this)"><span class="letra">D</span> comprovar o apoio da sociedade aos golpistas anticomunistas.</div>
+        <div class="opcao" onclick="responderObjetiva('q23','E',this)"><span class="letra">E</span> esclarecer as circunstâncias de violações aos direitos humanos.</div>
+      </div>
+      <div class="feedback-quiz" id="fb-q23"></div>
+    </div>
+
+    <div class="questao" id="q24" data-tipo="objetiva" data-gabarito="B" data-num="E07">
+      <div class="questao-num">Questão 07 (Exames) <span class="badge">ENEM 2014</span></div>
+      <div class="questao-enunciado">
+        <img src="rev/enem7.webp" alt="Charge de Miguel Paiva sobre a Constituição de 1988" class="questao-img" style="max-width:380px">
+        <p style="font-size:.82rem;font-style:italic">PAIVA, M. Disponível em: www.redes.unb.br. Acesso em: 25 maio 2011.</p>
+        <p>A discussão levantada na charge, publicada logo após a promulgação da Constituição de 1988, faz referência ao seguinte conjunto de direitos:</p>
+      </div>
+      <div class="opcoes">
+        <div class="opcao" onclick="responderObjetiva('q24','A',this)"><span class="letra">A</span> Civis, como o direito à vida, à liberdade de expressão e à propriedade.</div>
+        <div class="opcao" onclick="responderObjetiva('q24','B',this)"><span class="letra">B</span> Sociais, como direito à educação, ao trabalho e à proteção à maternidade e à infância.</div>
+        <div class="opcao" onclick="responderObjetiva('q24','C',this)"><span class="letra">C</span> Difusos, como direito à paz, ao desenvolvimento sustentável e ao meio ambiente saudável.</div>
+        <div class="opcao" onclick="responderObjetiva('q24','D',this)"><span class="letra">D</span> Coletivos, como direito à organização sindical, à participação partidária e à expressão religiosa.</div>
+        <div class="opcao" onclick="responderObjetiva('q24','E',this)"><span class="letra">E</span> Políticos, como o direito de votar e ser votado, à soberania popular e à participação democrática.</div>
+      </div>
+      <div class="feedback-quiz" id="fb-q24"></div>
+    </div>
+
+
+<!-- ALERTA -->
+    <div id="alerta-incompleto">
+      ⚠️ Você ainda não respondeu todas as questões. Faltam <strong id="qtd-faltando"></strong> questão(ões). Lembre-se: as dissertativas só são validadas quando atingem o mínimo de caracteres indicado abaixo de cada campo.
+    </div>
+
+    <!-- BOTÕES FINAIS -->
+    <div class="acoes-finais">
+      <button class="btn-imprimir" onclick="tentarSalvarPDF()">📄 Salvar Atividade em PDF</button>
+      <button class="btn-feedback" onclick="abrirFeedback()">📊 Ver Feedback e Correção</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL FEEDBACK -->
+<div id="modal-feedback">
+  <div class="modal-box">
+    <h3>📊 Feedback Completo e Correção</h3>
+    <div class="modal-resultado" id="resultado-resumo"></div>
+    <div id="feedback-detalhado"></div>
+    <button class="btn-fechar-modal" onclick="fecharFeedback()">✕ Fechar</button>
+  </div>
+</div>
+
+<script>
+// ═══════ CONFIG ═══════
+const TOTAL = 23;
+const GABARITOS_CORRETOS = {
+  q10:'D', q11:'D',
+  q18:'C', q19:'B', q20:'A', q21:'D', q22:'B', q23:'E', q24:'B'
+};
+
+const DESC_A1 = "<br><em style='font-size:.8rem;color:#666'>A1 – Analisar os governos pós Era Vargas e as políticas ambientais, a partir dos impactos da política de desenvolvimento.</em>";
+const DESC_B1 = "<br><em style='font-size:.8rem;color:#666'>B1 – O contexto da Ditadura Militar (1964-1985) e as conferências ambientais.</em>";
+const DESC_DH = "<br><em style='font-size:.8rem;color:#666'>B1 – Compreender historicamente os caminhos da elaboração da Declaração dos Direitos do Homem e do Cidadão de 1789. | C1 – Avaliar a importância dos princípios de igualdade, liberdade, justiça e dignidade humana para as sociedades contemporâneas.</em>";
+const DESC_DH2 = "<br><em style='font-size:.8rem;color:#666'>A1 – Analisar os movimentos de defesa dos Direitos Humanos durante a Ditadura Militar no Brasil. | C1 – Avaliar as consequências do período militar para a sociedade brasileira contemporânea.</em>";
+
+const CORRECCOES = {
+  q1: "Sugestão de resposta: a Constituição de 1946 estabeleceu o regime presidencialista, com mandato de cinco anos e eleição para presidente e vice-presidente, garantiu o voto universal e secreto (exceto para analfabetos), reconheceu o direito de greve, extinguiu a censura e instituiu o pluripartidarismo. Essas medidas ampliaram as liberdades políticas, permitiram maior participação da população na vida política e restabeleceram instituições democráticas após o fim do Estado Novo." + DESC_A1,
+  q2: "Sugestão de resposta: apesar da restauração de direitos e das instituições democráticas, o período também foi marcado por práticas populistas. Entre elas estavam o controle do movimento sindical pelo Estado, a manipulação dos meios de comunicação e o uso das demandas populares por meio do trabalhismo para fortalecer o poder político dos governantes. Esses elementos indicam que, embora houvesse avanços democráticos, persistiam mecanismos de controle sobre a sociedade." + DESC_A1,
+  q3: "Sugestão de resposta: a propaganda apresentava a Petrobras como símbolo da soberania nacional, associando o petróleo ao \"ouro negro\", capaz de garantir a independência econômica do Brasil. Além disso, utilizava elementos como a bandeira nacional, as refinarias e a frase \"Ninguém arrebata das minhas mãos a bandeira nacionalista\" para defender o controle estatal sobre os recursos naturais e incentivar o apoio popular ao desenvolvimento industrial." + DESC_A1,
+  q4: "Sugestão de resposta: a política econômica favoreceu a expansão da indústria e a geração de empregos urbanos, especialmente na Região Sudeste, impulsionando o crescimento econômico. Entretanto, também aumentou a dependência do capital estrangeiro, elevou a dívida externa e a inflação, além de prejudicar os trabalhadores do campo e a produção agrícola." + DESC_A1,
+  q5: "Sugestão de resposta: a política externa de Jânio Quadros gerou críticas porque buscou uma postura mais independente no contexto da Guerra Fria. O governo restabeleceu relações diplomáticas com a União Soviética e realizou gestos considerados polêmicos, como a condecoração de Ernesto \"Che\" Guevara e de Yuri Gagarin, além da visita de Fidel Castro ao Brasil. Essas ações desagradaram setores conservadores e intensificaram as disputas políticas do período." + DESC_A1,
+  q6: "Sugestão de resposta: a Conferência de Estocolmo (1972) e o relatório Limites do Crescimento, divulgado pelo Clube de Roma, foram marcos importantes. Essas iniciativas alertaram para os riscos do esgotamento dos recursos naturais e defenderam que o crescimento econômico deveria ser acompanhado por políticas de preservação ambiental e cooperação internacional." + DESC_B1,
+  q7: "Sugestão de resposta: o governo militar considerava a Transamazônica uma estratégia para promover a integração do território nacional, estimular o crescimento econômico e reforçar a soberania sobre a Amazônia. Entre as críticas apresentadas estavam o desmatamento, as dificuldades enfrentadas pelas populações deslocadas e os impactos causados aos povos indígenas." + DESC_B1,
+  q8: "Sugestão de resposta: os meios de comunicação destacavam principalmente o progresso, a modernização e a integração nacional promovidos pela obra. As críticas ambientais apareciam de forma secundária ou eram relativizadas, muitas vezes sendo apresentadas como exageradas ou contrárias aos interesses nacionais. Dessa forma, contribuíram para reforçar uma visão favorável ao desenvolvimento econômico." + DESC_B1,
+  q10: "Gabarito: D — O texto destaca que, segundo a lógica do regime militar, a Amazônia era vista como uma região \"sem homens\", ignorando deliberadamente a existência dos povos indígenas e tradicionais que ali viviam. A frase do general Médici, \"terras sem homens para homens sem terra\", reforça essa visão colonial e excludente, em que o projeto de ocupação da Amazônia desconsiderava os direitos e a presença dos povos nativos, promovendo a integração territorial a partir de uma lógica desenvolvimentista e autoritária." + DESC_B1,
+  q11: "Gabarito: D — Durante a Ditadura Militar, o regime adotou um modelo desenvolvimentista com forte ênfase em obras de infraestrutura, expansão agropecuária e exploração mineral, especialmente na região amazônica. Essa integração territorial aconteceu muitas vezes em detrimento das questões socioambientais. Projetos como a Transamazônica e o Programa de Integração Nacional (PIN) resultaram em grandes desmatamentos, remoção de populações indígenas e ribeirinhas e conflitos fundiários, sem a devida preocupação ambiental ou participação popular." + DESC_B1,
+  q12: "Sugestão de resposta: durante o regime militar, o lema \"Integrar para não entregar\" justificou a ocupação da Amazônia por meio de programas de colonização e grandes obras, como a Rodovia Transamazônica. Essas políticas priorizaram o desenvolvimento econômico sem considerar os impactos ambientais e sociais. O resultado foi o aumento do desmatamento e a invasão de territórios indígenas, causando expulsão de comunidades, perda cultural e degradação ambiental. As populações originárias sofreram com violência, doenças e deslocamentos, enquanto a floresta foi devastada por um modelo de crescimento autoritário e excludente." + DESC_B1,
+  q13: "Sugestão de resposta: a revolução foi impulsionada por um intenso clamor por liberdade, igualdade e justiça social, que se refletiram diretamente nos princípios fundamentais da Declaração. Inspirados pelos ideais iluministas, os revolucionários franceses buscaram estabelecer uma nova ordem baseada nos direitos de todos os cidadãos. A Declaração proclamou direitos básicos, como liberdade de expressão, igualdade perante a lei, direito à propriedade e resistência à opressão, como resposta aos abusos do Antigo Regime, um sistema autoritário que concentrava poder e privilégios nas mãos da nobreza e do clero." + DESC_DH,
+  q14: "Sugestão de resposta: a Declaração dos Direitos do Homem e do Cidadão, promulgada durante a Revolução Francesa em 1789, é considerada um marco na história dos direitos humanos por diversos motivos. Primeiramente, foi um dos primeiros documentos a proclamar direitos universais e inalienáveis para todos os indivíduos, independentemente de sua origem social ou econômica. Inspirada pelos ideais iluministas de liberdade, igualdade e fraternidade, a Declaração estabeleceu princípios fundamentais como liberdade de expressão, igualdade perante a lei, direito à propriedade e resistência à opressão. Além disso, ela influenciou diretamente a redação de outras declarações de direitos e constituições ao redor do mundo, servindo de modelo para a defesa da dignidade humana e dos direitos civis." + DESC_DH,
+  q15: "Sugestão de resposta: de acordo com o texto, a Constituição de 1988 é considerada um marco mais evidente na consolidação dos direitos humanos no Brasil porque, apesar de esses direitos já aparecerem em constituições anteriores, foi ela que os garantiu de forma ampla e clara. Essa constituição representa um grande avanço jurídico, especialmente após um período marcado por graves desrespeitos aos direitos humanos durante a Ditadura Militar." + DESC_DH2,
+  q16: "Sugestão de resposta: durante o Estado Novo (1937-1945), liderado por Vargas, houve supressão de liberdades individuais, prisões arbitrárias, tortura e perseguições a políticos de oposição. Na Ditadura Militar (1964-1985), a repressão foi intensificada, principalmente com o Ato Institucional nº 5. A atuação de órgãos de repressão, como o DOI-CODI, ficou marcada por graves violações aos direitos humanos." + DESC_DH2,
+  q17: "Sugestão de resposta: os Direitos Humanos surgiram como resposta a séculos de desigualdade, autoritarismo e violência, especialmente após os horrores das Guerras Mundiais. A Declaração Universal dos Direitos Humanos estabelece princípios universais que deveriam ser garantidos a todas as pessoas, independentemente de nacionalidade, raça, gênero ou classe social. A atuação de organismos internacionais e ONGs monitora, denuncia e combate violações, promovendo a pressão internacional sobre governos autoritários e contribuindo para avanços sociais e democráticos ao redor do mundo. Embora ainda haja desafios, os Direitos Humanos representam um marco essencial na luta por justiça, liberdade e dignidade universal." + DESC_DH2,
+  q18: "Gabarito: C — A charge ironiza o governo JK ao mostrar que, embora houvesse investimentos em infraestrutura, como estradas, automóveis e combustíveis nacionais, as necessidades básicas da população, como a alimentação (representada pelo \"prato de feijão\"), continuavam não sendo atendidas. Isso evidencia a contradição entre o desenvolvimento econômico e a persistência das desigualdades sociais, um traço marcante do período desenvolvimentista.",
+  q19: "Gabarito: B — O período militar no Brasil é marcado pela grande captação de financiamentos estrangeiros, feita pelo governo. Supostamente, os juros seriam baixos e o pagamento só começaria em 10 anos, por isso a charge trabalha a ideia da criança ficando adulta e sofrendo com este cenário futuro. Na prática, sabemos que tudo foi bem pior, pois a primeira crise do petróleo desestabiliza o mundo em 1973 e o Brasil sofre com os juros flutuantes e a cobrança antecipada das dívidas.",
+  q20: "Gabarito: A — O texto aborda, em diferentes momentos históricos, conflitos relacionados à terra no Brasil. A construção da Transamazônica, interpretada como uma contrarreforma agrária, representou um projeto político de ocupação fundiária promovido pelo regime militar, que buscava deslocar populações pobres para a Amazônia sem, de fato, promover uma distribuição justa da terra. Posteriormente, movimentos como o MST (Movimento dos Trabalhadores Rurais Sem Terra) retomam a luta em defesa da reforma agrária. Assim, há um confronto entre os interesses do Estado e os das populações que lutam pelo acesso à terra.",
+  q21: "Gabarito: D — A Declaração dos Direitos do Homem e do Cidadão de 1789, elaborada durante a Revolução Francesa, estabeleceu princípios fundamentais como igualdade perante a lei, liberdade, propriedade e resistência à opressão. Ela rompe com os privilégios do Antigo Regime e afirma que todos os cidadãos devem ser tratados igualmente perante a lei, ou seja, defende a paridade do tratamento jurídico.",
+  q22: "Gabarito: B — A Declaração Universal dos Direitos Humanos representou um marco fundamental nas relações internacionais ao afirmar que todos os seres humanos têm direitos iguais e inalienáveis. Essa nova concepção fortaleceu o entendimento de que os direitos humanos devem ser respeitados universalmente, promovendo a dignidade, a liberdade e a igualdade para todos, e influenciando legislações nacionais e tratados internacionais nas décadas seguintes.",
+  q23: "Gabarito: E — A Comissão Nacional da Verdade (CNV) foi criada com o objetivo de investigar as graves violações de direitos humanos ocorridas durante a ditadura militar (1964-1985), como torturas, assassinatos, desaparecimentos forçados e perseguições políticas. Seu papel não era punir, mas reunir informações, ouvir testemunhos e produzir um relatório final com recomendações, contribuindo para a memória, a verdade e a justiça no país." + DESC_DH2,
+  q24: "Gabarito: B — A Constituição de 1988, conhecida como \"Constituição Cidadã\", ampliou significativamente os direitos sociais no Brasil. A charge destaca a expectativa da população quanto à efetivação desses direitos sociais, que passaram a ser deveres do Estado."
+};
+
+let nomeAluno = '';
+const respostas = {};
+
+// ═══════ INICIAR ═══════
+function iniciar() {
+  nomeAluno = document.getElementById('nome-aluno').value.trim();
+  const erroEl = document.getElementById('erro-nome');
+  if (!nomeAluno) {
+    erroEl.style.display = 'block';
+    document.getElementById('nome-aluno').focus();
+    return;
+  }
+  erroEl.style.display = 'none';
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('conteudo').style.display = 'block';
+  document.getElementById('header-nome').textContent = nomeAluno;
+  document.getElementById('print-nome').textContent = nomeAluno;
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+// ═══════ OBJETIVAS ═══════
+function responderObjetiva(qId, letra, elem) {
+  const questao = document.getElementById(qId);
+  if (questao.dataset.respondida === '1') return;
+  questao.dataset.respondida = '1';
+  const gabarito = GABARITOS_CORRETOS[qId];
+  questao.querySelectorAll('.opcao').forEach(o => o.classList.add('bloqueada'));
+  const fb = document.getElementById('fb-' + qId);
+  if (letra === gabarito) {
+    elem.classList.add('correta');
+    fb.textContent = '✅ Correto! Boa resposta.';
+    fb.className = 'feedback-quiz acerto';
+    questao.classList.add('respondida');
+    respostas[qId] = {tipo:'objetiva', escolha:letra, gabarito, acertou:true};
+  } else {
+    elem.classList.add('errada-sel');
+    questao.querySelectorAll('.opcao').forEach(o => {
+      if (o.querySelector('.letra').textContent.trim() === gabarito) o.classList.add('correta');
+    });
+    fb.textContent = '❌ Incorreto. A resposta correta é a alternativa ' + gabarito + '.';
+    fb.className = 'feedback-quiz erro';
+    questao.classList.add('errada');
+    respostas[qId] = {tipo:'objetiva', escolha:letra, gabarito, acertou:false};
+  }
+  atualizarProgresso();
+}
+
+// ═══════ DISCURSIVAS ═══════
+const MIN_PADRAO = 180;   // mínimo de caracteres para validar uma dissertativa
+const MIN_LONGAS = 250;   // questões que exigem resposta mais desenvolvida
+const QUESTOES_LONGAS = ['q12','q14','q17'];
+
+function minimoDe(qId) {
+  const q = document.getElementById(qId);
+  if (q && q.dataset.min) return parseInt(q.dataset.min, 10);
+  return QUESTOES_LONGAS.indexOf(qId) >= 0 ? MIN_LONGAS : MIN_PADRAO;
+}
+
+function marcarDiscursiva(qId, campo) {
+  const questao = document.getElementById(qId);
+  const val = campo.value.trim();
+  const minimo = minimoDe(qId);
+  const cont = document.getElementById('cont-' + qId);
+
+  if (cont) {
+    const falta = minimo - val.length;
+    cont.querySelector('.qtd').textContent = val.length + ' / ' + minimo + ' caracteres';
+    cont.querySelector('.meta').textContent = falta > 0
+      ? 'faltam ' + falta + ' para validar'
+      : '✔ resposta validada';
+    cont.classList.toggle('ok', falta <= 0);
+  }
+
+  if (val.length >= minimo) {
+    questao.dataset.respondida = '1';
+    campo.classList.add('preenchida');
+    questao.classList.add('respondida');
+    respostas[qId] = {tipo:'discursiva', texto:val};
+  } else {
+    delete questao.dataset.respondida;
+    campo.classList.remove('preenchida');
+    questao.classList.remove('respondida');
+    delete respostas[qId];
+  }
+  atualizarProgresso();
+}
+
+// ═══════ PROGRESSO ═══════
+function atualizarProgresso() {
+  const count = document.querySelectorAll('.questao[data-respondida="1"]').length;
+  document.getElementById('progresso-count').textContent = count;
+  document.getElementById('barra-prog').style.width = (count/TOTAL*100) + '%';
+}
+
+function totalRespondidas() {
+  return document.querySelectorAll('.questao[data-respondida="1"]').length;
+}
+
+// ═══════ IMPRIMIR ═══════
+function tentarSalvarPDF() {
+  const faltando = TOTAL - totalRespondidas();
+  const al = document.getElementById('alerta-incompleto');
+  if (faltando > 0) {
+    document.getElementById('qtd-faltando').textContent = faltando;
+    al.style.display = 'block';
+    al.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  al.style.display = 'none';
+  window.print();
+}
+
+// ═══════ FEEDBACK ═══════
+function abrirFeedback() {
+  const todasQuestoes = document.querySelectorAll('.questao');
+  const objetivas = Object.values(respostas).filter(r => r.tipo==='objetiva');
+  const acertos = objetivas.filter(r => r.acertou).length;
+  const erros = objetivas.filter(r => !r.acertou).length;
+  const discResp = Object.values(respostas).filter(r => r.tipo==='discursiva').length;
+  const naoResp = TOTAL - totalRespondidas();
+
+  document.getElementById('resultado-resumo').innerHTML = `
+    <div class="resultado-linha"><span>Aluno(a)</span><span class="resultado-val">${nomeAluno}</span></div>
+    <div class="resultado-linha"><span>Total de questões</span><span class="resultado-val">${TOTAL}</span></div>
+    <div class="resultado-linha"><span>Questões respondidas</span><span class="resultado-val">${totalRespondidas()}</span></div>
+    <div class="resultado-linha"><span>Objetivas corretas</span><span class="resultado-val verde">${acertos} / ${Object.keys(GABARITOS_CORRETOS).length}</span></div>
+    <div class="resultado-linha"><span>Objetivas incorretas</span><span class="resultado-val vermelho">${erros}</span></div>
+    <div class="resultado-linha"><span>Dissertativas respondidas</span><span class="resultado-val">${discResp}</span></div>
+    ${naoResp > 0 ? '<div class="resultado-linha"><span>Não respondidas</span><span class="resultado-val vermelho">'+naoResp+'</span></div>' : ''}
+  `;
+
+  let html = '';
+  todasQuestoes.forEach(q => {
+    const qId = q.id;
+    const num = q.dataset.num;
+    const tipo = q.dataset.tipo;
+    const r = respostas[qId];
+    const correcao = CORRECCOES[qId] || '';
+
+    html += '<div class="secao-fb">';
+    if (tipo === 'objetiva') {
+      const status = !r ? 'nao-resp' : (r.acertou ? 'status-acerto' : 'status-erro');
+      const statusTxt = !r ? '— Não respondida' : (r.acertou ? '✅ Correto' : '❌ Incorreto');
+      html += `<div class="secao-fb-titulo"><span class="qnum">Q${num}</span> Objetiva <span class="${status}" style="margin-left:auto">${statusTxt}</span></div>`;
+      html += '<div class="item-fb">';
+      if (r) {
+        html += `<div class="qnum">Sua resposta: ${r.escolha}</div>`;
+        if (!r.acertou) html += `<div class="qnum" style="color:#e74c3c">Gabarito: ${r.gabarito}</div>`;
+      } else {
+        html += '<div class="nao-resp">Questão não respondida.</div>';
+      }
+      if (correcao) html += `<div class="gabarito-correcao" style="margin-top:8px"><strong>📝 Comentário:</strong><br>${correcao}</div>`;
+      html += '</div>';
+    } else {
+      const respondida = !!r;
+      html += `<div class="secao-fb-titulo"><span class="qnum">Q${num}</span> Dissertativa <span style="margin-left:auto;font-size:.8rem;color:${respondida?'var(--verde)':'#e67e22'}">${respondida?'✅ Respondida':'⚠️ Não respondida'}</span></div>`;
+      html += '<div class="item-fb">';
+      if (r && r.texto) {
+        html += `<div class="qnum">Sua resposta:</div><div class="resp-aluno">${escapeHtml(r.texto)}</div>`;
+      } else {
+        html += '<div class="nao-resp">Questão não respondida.</div>';
+      }
+      if (correcao) html += `<div class="gabarito-correcao" style="margin-top:8px"><strong>✏️ Resposta esperada / comentário:</strong><br>${correcao}</div>`;
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+
+  document.getElementById('feedback-detalhado').innerHTML = html;
+  document.getElementById('modal-feedback').classList.add('aberto');
+}
+
+function fecharFeedback() {
+  document.getElementById('modal-feedback').classList.remove('aberto');
+}
+
+function escapeHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+// Fechar modal clicando fora
+document.getElementById('modal-feedback').addEventListener('click', function(e) {
+  if (e.target === this) fecharFeedback();
+});
+
+/* ═══════ PROTEÇÃO ANTI-COLA ═══════ */
+(function () {
+  const LIMITE_BLOCO = 25;   // nº de caracteres inseridos de uma só vez que caracteriza colagem
+  const MSG = 'Colar não é permitido nesta atividade. Escreva sua resposta.';
+
+  function mostrarToast(mensagem) {
+    let toast = document.getElementById('anti-cola-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'anti-cola-toast';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = mensagem;
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(function () { toast.style.opacity = '0'; }, 2500);
+  }
+
+  function bloquear(e) {
+    e.preventDefault();
+    mostrarToast(MSG);
+    return false;
+  }
+
+  document.querySelectorAll('textarea.campo-discursivo').forEach(function (campo) {
+    const qId = campo.id.replace('resp-', '');
+
+    // contador de caracteres + aviso do mínimo
+    const questao = document.getElementById(qId);
+    const minimo = (questao && questao.dataset.min) ? parseInt(questao.dataset.min, 10) : minimoDe(qId);
+    const cont = document.createElement('div');
+    cont.className = 'contador-chars';
+    cont.id = 'cont-' + qId;
+    cont.innerHTML = '<span class="qtd">0 / ' + minimo + ' caracteres</span><span class="meta">faltam ' + minimo + ' para validar</span>';
+    campo.insertAdjacentElement('afterend', cont);
+
+    // aviso textual abaixo do campo
+    const aviso = cont.nextElementSibling;
+    if (aviso && aviso.classList.contains('aviso-paste')) {
+      aviso.textContent = 'Copiar e colar não é permitido. Mínimo de ' + minimo + ' caracteres para validar a questão.';
+    }
+
+    ['paste','copy','cut','drop','dragover','dragstart','contextmenu'].forEach(function (evt) {
+      campo.addEventListener(evt, bloquear);
+    });
+
+    campo.addEventListener('beforeinput', function (e) {
+      if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop' ||
+          e.inputType === 'insertFromPasteAsQuotation' || e.inputType === 'insertFromYank') {
+        e.preventDefault();
+        mostrarToast(MSG);
+      }
+    });
+
+    // neutraliza o painel de área de transferência do Gboard/Android
+    let valorAnterior = campo.value;
+    campo.addEventListener('input', function (e) {
+      const diferenca = campo.value.length - valorAnterior.length;
+      if (diferenca >= LIMITE_BLOCO && e.inputType !== 'insertReplacementText') {
+        campo.value = valorAnterior;
+        mostrarToast(MSG);
+      } else {
+        valorAnterior = campo.value;
+      }
+      marcarDiscursiva(qId, campo);
+    });
+  });
+
+  // reforço global
+  document.addEventListener('paste', function (e) {
+    if (e.target && e.target.classList && e.target.classList.contains('campo-discursivo')) bloquear(e);
+  });
+  document.addEventListener('drop', function (e) {
+    if (e.target && e.target.classList && e.target.classList.contains('campo-discursivo')) bloquear(e);
+  });
+  document.addEventListener('contextmenu', function (e) {
+    if (e.target && e.target.tagName !== 'INPUT') e.preventDefault();
+  });
+})();
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+.pdf-spinner{width:40px;height:40px;border:4px solid #e8e8f0;border-top-color:#6b2fa0;border-radius:50%;animation:spin .8s linear infinite;margin:16px auto 0}
+@keyframes spin{to{transform:rotate(360deg)}}
+#pdf-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:center;justify-content:center}
+.pdf-overlay-box{background:white;border-radius:16px;padding:44px 52px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);max-width:380px;width:90%}
+.pdf-overlay-box .icon{font-size:2.8rem;margin-bottom:12px}
+.pdf-overlay-box h4{font-family:serif;font-size:1.25rem;font-weight:700;margin-bottom:8px;color:#1a1a2e}
+.pdf-overlay-box p{color:#666;font-size:.88rem;margin-bottom:4px}
+#pdf-progress-bar-wrap{height:6px;background:#e8e8f0;border-radius:4px;margin-top:18px;overflow:hidden}
+#pdf-progress-bar{height:6px;background:#6b2fa0;border-radius:4px;width:0%;transition:width .3s}
+#pdf-progress-text{font-size:.78rem;color:#888;margin-top:6px;font-family:monospace}
+</style>
+<script>
+async function tentarSalvarPDF() {
+  const faltando = TOTAL - totalRespondidas();
+  const al = document.getElementById('alerta-incompleto');
+  if (faltando > 0) {
+    document.getElementById('qtd-faltando').textContent = faltando;
+    al.style.display = 'block';
+    al.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  al.style.display = 'none';
+
+  // Build overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.innerHTML = `<div class="pdf-overlay-box">
+    <div class="icon">📄</div>
+    <h4>Gerando PDF…</h4>
+    <p>Renderizando questões e respostas.</p>
+    <p>Aguarde, isso pode levar alguns instantes.</p>
+    <div id="pdf-progress-bar-wrap"><div id="pdf-progress-bar"></div></div>
+    <div id="pdf-progress-text">0%</div>
+  </div>`;
+  document.body.appendChild(overlay);
+  await sleep(80);
+
+  const setProgress = (pct, msg) => {
+    document.getElementById('pdf-progress-bar').style.width = pct + '%';
+    document.getElementById('pdf-progress-text').textContent = msg || pct + '%';
+  };
+
+  const agora = new Date();
+  const dtStr = agora.toLocaleDateString('pt-BR') + ' às ' +
+                agora.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+  const carimbo = agora.getFullYear() + '-' +
+                  String(agora.getMonth()+1).padStart(2,'0') + '-' +
+                  String(agora.getDate()).padStart(2,'0') + '_' +
+                  String(agora.getHours()).padStart(2,'0') + 'h' +
+                  String(agora.getMinutes()).padStart(2,'0');
+
+  try {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: 'a4', hotfixes: ['px_scaling'] });
+    const PW = pdf.internal.pageSize.getWidth();
+    const PH = pdf.internal.pageSize.getHeight();
+    const MARGIN = 28;
+    const CONTENT_W = PW - MARGIN * 2;
+    let y = MARGIN;
+
+    // ── Helper: add image to pdf, paginating if needed ──
+    // Troca <img> por um marcador de texto (evita canvas "tainted" com imagens locais)
+    const removerImagens = (el) => {
+      el.querySelectorAll('img').forEach(img => {
+        const legenda = img.getAttribute('alt') || 'imagem';
+        const box = document.createElement('div');
+        box.style.cssText = 'background:#f5f5fa;border:1px dashed #b9b9cc;border-radius:6px;padding:10px 14px;margin:10px 0;font-size:11.5px;color:#666;font-style:italic';
+        box.textContent = '[Imagem: ' + legenda + ' — ver atividade on-line]';
+        img.parentNode.replaceChild(box, img);
+      });
+    };
+
+    const capturar = async (el) => html2canvas(el, {
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      backgroundColor: '#ffffff',
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: 900,
+    });
+
+    const addImg = async (el, extraStyle) => {
+      // Temporarily apply extra styles for capture
+      const prev = el.style.cssText;
+      if (extraStyle) el.style.cssText += extraStyle;
+
+      let canvas, dataUrl;
+      try {
+        canvas = await capturar(el);
+        dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      } catch (secErr) {
+        // Canvas contaminado por imagem local (file://) — refaz sem as imagens
+        console.warn('Imagem local impediu a captura; gerando sem a imagem.', secErr);
+        removerImagens(el);
+        canvas = await capturar(el);
+        dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      }
+      if (extraStyle) el.style.cssText = prev;
+
+      const imgW = CONTENT_W;
+      const imgH = (canvas.height / canvas.width) * imgW;
+
+      // Paginate
+      if (y + imgH > PH - MARGIN) {
+        pdf.addPage();
+        y = MARGIN;
+      }
+      // If single element taller than a full page, scale to fit
+      if (imgH > PH - MARGIN * 2) {
+        const scaledH = PH - MARGIN * 2;
+        pdf.addImage(dataUrl, 'JPEG', MARGIN, y, CONTENT_W, scaledH);
+        y += scaledH + 6;
+      } else {
+        pdf.addImage(dataUrl, 'JPEG', MARGIN, y, imgW, imgH);
+        y += imgH + 6;
+      }
+    };
+
+    setProgress(5, 'Preparando capa…');
+    await sleep(50);
+
+    // ── COVER PAGE ──
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;border-radius:0';
+    coverEl.innerHTML = `
+      <div style="background:linear-gradient(135deg,#1a1a2e 0%,#6b2fa0 60%,#4a9e3f 100%);padding:48px 52px 42px;color:white">
+        <div style="font-size:32px;font-weight:900;letter-spacing:-0.5px;margin-bottom:6px">Revisa Goiás</div>
+        <div style="font-size:14px;opacity:.8;font-style:italic;margin-bottom:28px">Recompondo e ampliando aprendizagens…</div>
+        <div style="font-size:22px;font-weight:700;margin-bottom:4px">3ª Série — Ciências Humanas e Sociais Aplicadas</div>
+        <div style="font-size:26px;font-weight:900;background:rgba(255,255,255,.15);display:inline-block;padding:6px 18px;border-radius:8px;margin-top:4px">HISTÓRIA</div>
+        <div style="font-size:16px;margin-top:18px;opacity:.85">3º Bimestre — 2026</div>
+      </div>
+      <div style="background:#f5f5fa;padding:28px 52px 28px">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#6b2fa0;font-weight:700;margin-bottom:8px">Aluno(a)</div>
+        <div style="font-size:22px;font-weight:700;color:#1a1a2e;border-bottom:3px solid #6b2fa0;padding-bottom:8px;display:inline-block;margin-bottom:18px">${nomeAluno}</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">
+            <div style="font-size:22px;font-weight:900;color:#6b2fa0">${TOTAL}</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Questões</div></div>
+          <div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">
+            <div style="font-size:22px;font-weight:900;color:#e67e22">${Object.keys(GABARITOS_CORRETOS).length}</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Objetivas</div></div>
+          <div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:160px">
+            <div style="font-size:13px;font-weight:700;color:#333">${dtStr}</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>
+        </div>
+        <div style="margin-top:16px;font-size:11px;color:#aaa">SEDUC — Secretaria de Estado da Educação de Goiás · Colégio Estadual Rodolfo de Oliveira · 2026</div>
+      </div>`;
+    document.body.appendChild(coverEl);
+    await sleep(60);
+    await addImg(coverEl);
+    document.body.removeChild(coverEl);
+
+    // ── QUESTIONS ──
+    const questoes = Array.from(document.querySelectorAll('.questao'));
+    const total = questoes.length;
+
+    for (let i = 0; i < questoes.length; i++) {
+      const q = questoes[i];
+      const qId = q.id;
+      const num = q.dataset.num;
+      const tipo = q.dataset.tipo;
+      const r = respostas[qId];
+
+      setProgress(Math.round(8 + (i / total) * 82), `Questão ${num} de ${total}…`);
+      await sleep(20);
+
+      // Build a clean render div for this question
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:#fff;padding:0;border-radius:8px;overflow:hidden;border:1px solid #e0e0ee';
+
+      // Header bar
+      const isOK = r && (tipo === 'objetiva' ? r.acertou : true);
+      const isWrong = r && tipo === 'objetiva' && !r.acertou;
+      const noResp = !r;
+      const barBg = noResp ? '#aaa' : isOK ? '#4a9e3f' : '#e74c3c';
+      const barLabel = tipo === 'objetiva' ? 'OBJETIVA' : 'DISSERTATIVA';
+      const statusIcon = noResp ? '—' : isOK ? '✓' : '✗';
+
+      wrap.innerHTML = `<div style="background:${barBg};padding:10px 20px;display:flex;justify-content:space-between;align-items:center">
+        <span style="color:white;font-weight:700;font-size:13px;letter-spacing:.5px">QUESTÃO ${num}  ·  ${barLabel}</span>
+        <span style="color:white;font-size:13px;font-weight:700">${statusIcon}</span>
+      </div>`;
+
+      // Enunciado
+      const enuncEl = q.querySelector('.questao-enunciado');
+      const enuncDiv = document.createElement('div');
+      enuncDiv.style.cssText = 'padding:16px 20px 10px;font-size:13px;line-height:1.65;color:#1a1a2e';
+      if (enuncEl) {
+        // Clone and clean up: remove img for now, keep text/paragraphs
+        const clone = enuncEl.cloneNode(true);
+        // Keep images but resize them
+        clone.querySelectorAll('img').forEach(img => {
+          img.style.maxWidth = '300px';
+          img.style.height = 'auto';
+          img.style.display = 'block';
+          img.style.margin = '10px 0';
+        });
+        enuncDiv.appendChild(clone);
+      }
+      wrap.appendChild(enuncDiv);
+
+      if (tipo === 'objetiva') {
+        // Options
+        const optsDiv = document.createElement('div');
+        optsDiv.style.cssText = 'padding:4px 20px 14px';
+        const opcoes = q.querySelectorAll('.opcao');
+        opcoes.forEach(op => {
+          const letra = op.querySelector('.letra').textContent.trim();
+          const textoOp = Array.from(op.childNodes)
+            .filter(n => !n.classList || !n.classList.contains('letra'))
+            .map(n => n.textContent).join('').trim();
+          const isCorr = op.classList.contains('correta');
+          const isErr = op.classList.contains('errada-sel');
+          const bg = isCorr ? '#edfaeb' : isErr ? '#fdecea' : '#f5f5fa';
+          const border = isCorr ? '2px solid #4a9e3f' : isErr ? '2px solid #e74c3c' : '1px solid #e0e0ee';
+          const mark = isCorr ? ' ✓' : isErr ? ' ✗' : '';
+          const fc = isCorr ? '#2d7a27' : isErr ? '#c0392b' : '#333';
+          optsDiv.innerHTML += `<div style="background:${bg};border:${border};border-radius:6px;padding:8px 14px;margin-bottom:6px;font-size:12.5px;color:${fc};font-weight:${isCorr||isErr?'700':'400'}">
+            <strong>${letra}</strong>) ${textoOp}${mark}
+          </div>`;
+        });
+        wrap.appendChild(optsDiv);
+
+        // Result box
+        if (r) {
+          const resBg = r.acertou ? '#edfaeb' : '#fdecea';
+          const resColor = r.acertou ? '#2d7a27' : '#c0392b';
+          const resTxt = r.acertou
+            ? `✓ Correto! Alternativa ${r.gabarito}.`
+            : `✗ Incorreto. Sua resposta: ${r.escolha}  |  Gabarito: ${r.gabarito}`;
+          const resDiv = document.createElement('div');
+          resDiv.style.cssText = `background:${resBg};padding:10px 20px;font-size:12px;font-weight:700;color:${resColor};border-top:1px solid rgba(0,0,0,.06)`;
+          resDiv.textContent = resTxt;
+          wrap.appendChild(resDiv);
+        }
+
+        // Comment
+        const comm = CORRECCOES[qId];
+        if (comm) {
+          const commDiv = document.createElement('div');
+          commDiv.style.cssText = 'background:#f0f8ff;border-top:1px solid #d0e8ff;padding:12px 20px';
+          commDiv.innerHTML = `<div style="font-size:11px;font-weight:700;color:#1a5ca8;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">📝 Comentário do professor</div>
+            <div style="font-size:12px;color:#1a1a2e;line-height:1.6">${comm}</div>`;
+          wrap.appendChild(commDiv);
+        }
+
+      } else {
+        // Dissertativa
+        const alunoDiv = document.createElement('div');
+        alunoDiv.style.cssText = 'padding:12px 20px;border-top:1px solid #f0f0f0';
+        if (r && r.texto) {
+          alunoDiv.innerHTML = `<div style="font-size:11px;font-weight:700;color:#6b2fa0;text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">✏️ Resposta do aluno</div>
+            <div style="background:#faf8ff;border-left:4px solid #6b2fa0;border-radius:0 6px 6px 0;padding:12px 14px;font-size:12.5px;color:#1a1a2e;line-height:1.7;white-space:pre-wrap;word-break:break-word">${escapeHtml(r.texto)}</div>`;
+        } else {
+          alunoDiv.innerHTML = `<div style="background:#fff8e8;border-left:4px solid #e67e22;border-radius:0 6px 6px 0;padding:10px 14px;font-size:12px;color:#7d5a00;font-style:italic">Questão não respondida.</div>`;
+        }
+        wrap.appendChild(alunoDiv);
+
+        // Expected answer
+        const comm = CORRECCOES[qId];
+        if (comm) {
+          const commDiv = document.createElement('div');
+          commDiv.style.cssText = 'padding:12px 20px;border-top:1px solid #eafaea';
+          commDiv.innerHTML = `<div style="font-size:11px;font-weight:700;color:#2d7a27;text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">✅ Resposta esperada / Comentário do professor</div>
+            <div style="background:#edfaeb;border-left:4px solid #4a9e3f;border-radius:0 6px 6px 0;padding:12px 14px;font-size:12.5px;color:#1a3a1a;line-height:1.7">${comm}</div>`;
+          wrap.appendChild(commDiv);
+        }
+      }
+
+      // Append to body (off-screen) to render
+      wrap.style.position = 'absolute';
+      wrap.style.left = '-9999px';
+      wrap.style.top = '0';
+      document.body.appendChild(wrap);
+      await sleep(30);
+
+      await addImg(wrap);
+      document.body.removeChild(wrap);
+    }
+
+    // ── PAGE NUMBERS ──
+    setProgress(94, 'Finalizando…');
+    await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for (let p = 1; p <= totalPages; p++) {
+      pdf.setPage(p);
+      // Footer strip
+      pdf.setFillColor(245, 245, 250);
+      pdf.rect(0, PH - 22, PW, 22, 'F');
+      // We'll add a simple text using addImage of a tiny canvas for footer
+      // Actually use setFont with latin subset trick
+      // Simple approach: draw footer as canvas
+      const footerEl = document.createElement('div');
+      footerEl.style.cssText = `width:${Math.round(PW)}px;height:22px;background:#f5f5fa;display:flex;align-items:center;justify-content:space-between;padding:0 ${MARGIN}px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0`;
+      footerEl.innerHTML = `<span>Revisa Goiás · 3ª Série | História | 3º Bimestre 2026 · Aluno(a): ${nomeAluno} · Gerado em ${dtStr}</span><span>Página ${p} de ${totalPages}</span>`;
+      document.body.appendChild(footerEl);
+      const fc = await html2canvas(footerEl, { scale: 2, logging: false, backgroundColor: '#f5f5fa' });
+      document.body.removeChild(footerEl);
+      let fUrl;
+      try { fUrl = fc.toDataURL('image/jpeg', 0.9); } catch (e) { continue; }
+      const fH = (fc.height / fc.width) * PW;
+      pdf.addImage(fUrl, 'JPEG', 0, PH - fH, PW, fH);
+    }
+
+    setProgress(100, 'Salvando…');
+    await sleep(200);
+
+    const safeName = nomeAluno.replace(/[^a-zA-Z0-9_\-À-ɏ]/g, '_');
+    pdf.save(`RevisaGoias_Historia_3serie_${safeName}_${carimbo}.pdf`);
+
+  } catch(err) {
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message +
+      '\n\nDica: se o problema persistir, use o botão do navegador (Ctrl+P / Compartilhar › Imprimir) e escolha "Salvar como PDF".');
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if (ov) document.body.removeChild(ov);
+  }
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+</script>
+
+</body>
+</html>
