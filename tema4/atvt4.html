@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revisão Geral — Tema 4: Direitos Humanos e Ditadura Militar | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#eceef1;
+    --bg-alt:#e1e5ea;
+    --paper:#fdfeff;
+    --ink:#1c2228;
+    --ink-soft:#4d5761;
+    --verde:#24384f;
+    --verde-dark:#121c28;
+    --verde-2:#3f7a52;
+    --gold:#b5842e;
+    --gold-light:#ecd9ad;
+    --line:#ccd3da;
+    --shadow:0 10px 30px rgba(18,28,40,.16);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-touch-callout:none;
+    user-select:none;
+  }
+  .selecionavel, main{user-select:text;}
+  .campo-resposta{user-select:text;}
+
+  /* ===== CAPA / GATE ===== */
+  #capa{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(to bottom, #0e1620, #24384f, #4d6f8c);
+    padding:24px;
+  }
+  #capa .grade-centralizada{
+    position:absolute;
+    top:0; bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:896px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.08;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px);
+    background-size:40px 40px;
+  }
+  .capa-card{
+    position:relative;
+    z-index:1;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:480px;
+    width:100%;
+    padding:36px 32px;
+    text-align:center;
+  }
+  .capa-card .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(38,64,47,.1); padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .capa-card h1{font-family:var(--font-title); font-size:1.6rem; margin:0 0 10px; color:var(--verde-dark);}
+  .capa-card p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 22px;}
+  .capa-card input{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:1rem; margin-bottom:14px;
+  }
+  .capa-card button{
+    width:100%; padding:13px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:1rem; cursor:pointer;
+    font-family:var(--font-body); transition:filter .15s ease;
+  }
+  .capa-card button:hover{filter:brightness(1.08);}
+  .capa-aviso{font-size:.78rem; color:#a33; margin-top:8px; display:none;}
+
+  /* ===== APP ===== */
+  #app{display:none;}
+  .sticky-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--verde-dark); color:#e8f0f7;
+    padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:8px;
+    font-family:var(--font-mono); font-size:.82rem;
+  }
+  .sticky-header .aluno{font-family:var(--font-body); font-weight:600; font-size:.92rem;}
+  .barra-progresso-trilho{
+    flex:1; min-width:120px; height:8px; background:rgba(255,255,255,.2); border-radius:6px; overflow:hidden; margin:0 14px;
+  }
+  .barra-progresso-fill{height:100%; background:var(--gold); width:0%; transition:width .3s ease;}
+
+  .wrap{max-width:800px; margin:0 auto; padding:32px 24px 60px;}
+
+  header.topo{margin-bottom:28px;}
+  header.topo .hero-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(38,64,47,.1); padding:5px 12px; border-radius:999px; margin-bottom:12px;
+  }
+  header.topo h1{font-family:var(--font-title); font-size:clamp(1.5rem,4vw,2rem); margin:0 0 8px; color:var(--ink);}
+  header.topo p.sub{color:var(--ink-soft); margin:0; font-size:.98rem;}
+  header.topo .aluno-info{
+    font-family:var(--font-mono); font-size:.82rem; color:var(--verde-dark);
+    background:var(--bg-alt); display:inline-block; padding:6px 12px; border-radius:8px; margin-top:12px;
+  }
+  .descritor-bar{
+    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:8px 14px; margin-bottom:14px; display:inline-block;
+  }
+  .ficha-id{
+    display:flex; flex-wrap:wrap; gap:10px 26px;
+    background:var(--paper); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin-top:12px; font-family:var(--font-mono); font-size:.84rem; color:var(--ink);
+  }
+  .ficha-id span b{color:var(--verde-dark);}
+
+  /* ===== TEXTO DE APOIO ===== */
+  .texto-apoio{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px 30px; margin-bottom:30px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.25rem; color:var(--verde-dark); margin:0 0 4px;}
+  .texto-apoio .fonte-tag{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-bottom:16px; display:block;}
+  .texto-apoio p{margin:0 0 14px; color:var(--ink);}
+  .texto-apoio p:last-of-type{margin-bottom:0;}
+
+  .referencia-box{
+    margin-top:20px; padding:14px 16px;
+    background:var(--bg-alt); border-left:3px solid var(--gold); border-radius:0 8px 8px 0;
+  }
+  .referencia-box .rot{
+    font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--verde-dark); display:block; margin-bottom:6px;
+  }
+  .referencia-box p{margin:0 0 6px; font-size:.86rem; color:var(--ink-soft); font-family:var(--font-mono); line-height:1.6;}
+  .referencia-box p:last-child{margin-bottom:0;}
+
+  /* ===== IMAGEM / RECURSO VISUAL ===== */
+  .box-imagem-questao{
+    margin:14px 0 18px;
+    background:var(--bg-alt);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px;
+    text-align:center;
+  }
+  .box-imagem-questao img{
+    max-width:100%;
+    height:auto;
+    border-radius:6px;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    display:block;
+    margin:0 auto;
+  }
+  .box-imagem-questao .legenda-img{
+    font-family:var(--font-mono);
+    font-size:.75rem;
+    color:var(--ink-soft);
+    margin-top:8px;
+    line-height:1.4;
+  }
+  .link-reportagem{
+    display:inline-flex; align-items:center; gap:6px;
+    margin-top:12px; padding:8px 14px;
+    background:var(--verde); color:#fff; text-decoration:none;
+    border-radius:8px; font-family:var(--font-mono); font-size:.76rem;
+    letter-spacing:.02em; transition:filter .15s ease;
+  }
+  .link-reportagem:hover{filter:brightness(1.1); text-decoration:underline;}
+
+  /* ===== SUBITENS (questões com múltiplos campos) ===== */
+  .subitem{margin-top:18px;}
+  .subitem:first-of-type{margin-top:16px;}
+  .subitem-label{display:block; font-weight:600; color:var(--ink); margin-bottom:8px; font-size:.94rem;}
+
+  /* ===== QUESTOES ===== */
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.2rem; color:var(--verde-dark);
+    margin:0 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .questao{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; margin-bottom:18px;
+  }
+  .questao .num-q{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--verde);
+    color:#fff; font-family:var(--font-mono); font-size:.78rem; margin-right:8px; flex-shrink:0;
+  }
+  .questao .enunciado{font-weight:600; color:var(--ink); margin-bottom:12px; display:flex; align-items:flex-start;}
+  .questao textarea{
+    width:100%; min-height:120px; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:.96rem; resize:vertical; color:var(--ink);
+  }
+  .questao textarea:focus{outline:2px solid var(--verde-2); outline-offset:1px;}
+  .contador-chars{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-top:6px; text-align:right;}
+
+  /* ===== OPCOES (OBJETIVAS) ===== */
+  .opcao{
+    display:flex; gap:12px; align-items:flex-start;
+    padding:12px 14px; border:1.5px solid var(--line); border-radius:8px;
+    margin-bottom:8px; cursor:pointer; transition:all .15s ease; background:var(--paper);
+  }
+  .opcao:hover{border-color:var(--verde); background:var(--bg-alt);}
+  .opcao.sel{border-color:var(--verde); background:var(--bg-alt);}
+  .opcao.correta{border-color:var(--verde-2); background:#e9f5ee;}
+  .opcao.errada{border-color:#c0392b; background:#fdeeee;}
+  .opcao.travada{cursor:default;}
+  .opcao-letra{
+    flex:0 0 auto; width:26px; height:26px; border-radius:50%;
+    background:var(--bg-alt); color:var(--ink-soft);
+    font-family:var(--font-mono); font-weight:700; font-size:.78rem;
+    display:flex; align-items:center; justify-content:center; transition:all .15s ease;
+  }
+  .opcao.sel .opcao-letra{background:var(--verde); color:#fff;}
+  .opcao.correta .opcao-letra{background:var(--verde-2); color:#fff;}
+  .opcao.errada .opcao-letra{background:#c0392b; color:#fff;}
+  .opcao-txt{font-size:.94rem; color:var(--ink); line-height:1.6; padding-top:2px;}
+  .opcao-marca{margin-left:auto; font-size:1rem; align-self:center; display:none; flex:0 0 auto;}
+  .gabarito-info{
+    display:none; margin-top:12px; padding:12px 16px;
+    background:#f3ead9; border:1px solid var(--gold-light); border-radius:8px;
+    font-size:.88rem; color:#5c4718;
+  }
+  .gabarito-info.show{display:block;}
+  .gabarito-info b{color:#8a651f;}
+  .questao .badge-resultado{
+    display:none; font-family:var(--font-mono); font-size:.68rem; font-weight:700;
+    padding:2px 10px; border-radius:20px; margin-left:8px; color:#fff;
+  }
+  .questao .badge-resultado.ok{display:inline-block; background:var(--verde-2);}
+  .questao .badge-resultado.no{display:inline-block; background:#c0392b;}
+
+  .comentario-prof{
+    display:none; margin-top:14px; padding:14px 16px;
+    background:#e6f2ea; border:1px solid #c9e0d1; border-radius:8px; font-size:.9rem; color:var(--verde-dark);
+  }
+  .comentario-prof.show{display:block;}
+  .comentario-prof b{display:block; margin-bottom:4px; font-family:var(--font-title); font-size:.92rem;}
+
+  /* ===== ALERTA / FINALIZAR ===== */
+  .alerta-incompleto{
+    display:none; background:#f5eddb; border:1px solid #d9c48a; color:#8a6a1a;
+    padding:12px 16px; border-radius:8px; font-size:.9rem; margin-bottom:16px;
+  }
+  .alerta-incompleto.show{display:block;}
+
+  .acoes-finais{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
+  .btn{
+    font-family:var(--font-body); font-weight:600; font-size:.94rem; padding:12px 22px;
+    border-radius:8px; border:none; cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn-primario{background:var(--verde); color:#fff;}
+  .btn-secundario{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-pdf{background:var(--gold); color:#fff;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  /* ===== POPUP ===== */
+  .popup-overlay{
+    display:none; position:fixed; inset:0; background:rgba(20,30,24,.6);
+    align-items:center; justify-content:center; z-index:200; padding:20px;
+  }
+  .popup-overlay.show{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:420px; width:100%; padding:32px 28px; text-align:center;
+  }
+  .popup-card .emoji{font-size:2.4rem; margin-bottom:10px;}
+  .popup-card h3{font-family:var(--font-title); margin:0 0 8px; color:var(--verde-dark);}
+  .popup-card p{color:var(--ink-soft); font-size:.94rem; margin:0 0 20px;}
+
+  footer.rodape{text-align:center; padding:24px; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;}
+
+  @media (max-width:600px){
+    .wrap{padding:24px 16px 50px;}
+    .texto-apoio, .questao{padding:18px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== CAPA ===== -->
+<div id="capa">
+  <div class="grade-centralizada"></div>
+  <div class="capa-card">
+    <span class="tag">3ª Série · Ensino Médio · História · CERO</span>
+    <h1>Revisão Geral — Tema 4</h1>
+    <p class="desc">Direitos Humanos e Ditadura Militar: do golpe de 1964 à Comissão da Verdade. Textos de revisão, 5 questões dissertativas e 5 questões objetivas. Preencha os dados para começar.</p>
+    <input type="text" id="nome-aluno" placeholder="Seu nome completo">
+    <input type="text" id="turma-aluno" placeholder="Turma (ex.: 3º A)">
+    <button onclick="iniciarAtividade()">Iniciar atividade</button>
+    <div class="capa-aviso" id="capa-aviso">Por favor, digite seu nome para continuar.</div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <div class="sticky-header">
+    <span class="aluno" id="header-nome"></span>
+    <div class="barra-progresso-trilho"><div class="barra-progresso-fill" id="barra-fill"></div></div>
+    <span id="contador-geral">Respondidas: 0/11</span>
+  </div>
+
+  <div class="wrap">
+    <header class="topo selecionavel">
+      <span class="descritor-bar">História / 3ª Série do Ensino Médio &nbsp;|&nbsp; (GO-EMCHS605B) – Direitos Humanos e Ditadura Militar</span>
+      <span class="hero-tag" style="display:block; margin-top:10px;">Revisão Geral do Tema</span>
+      <h1>Revisão Geral — Tema 4</h1>
+      <p class="sub">Revise cada texto abaixo e responda às 5 questões dissertativas e às 5 questões objetivas.</p>
+      <div class="ficha-id" id="ficha-id">
+        <span><b>NOME:</b> <span id="ficha-nome"></span></span>
+        <span><b>DATA:</b> <span id="ficha-data"></span></span>
+        <span><b>TURMA:</b> <span id="ficha-turma"></span></span>
+      </div>
+    </header>
+
+    <main>
+      <h2 class="questoes-titulo">✍️ Revisão e Questões Dissertativas</h2>
+
+      <section class="texto-apoio selecionavel">
+        <h2>1. Da Declaração Universal ao golpe de 1964</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>Em 1948, a recém-criada Organização das Nações Unidas aprovou a Declaração Universal dos Direitos Humanos (DUDH), elegendo a vida, a liberdade, a igualdade perante a lei e a segurança pessoal como direitos inalienáveis de toda pessoa, em qualquer país. Dezesseis anos depois, em pleno contexto da Guerra Fria e de uma onda de golpes de Estado na América Latina — Bolívia (1964), Argentina (1966), Peru (1968), Uruguai (1973) e Chile (1973) —, as Forças Armadas brasileiras, com apoio de setores civis e empresariais, depuseram o presidente João Goulart, eleito democraticamente, em março de 1964.</p>
+        <p>Os novos dirigentes passaram a usar os chamados <strong>Atos Institucionais (AI)</strong> para intervir na legislação sem a aprovação do Congresso: o AI-3, de 1966, estabeleceu eleições indiretas para governadores e prefeitos das capitais; em 1967, uma nova Constituição e a Lei de Segurança Nacional ampliaram os poderes do Executivo e restringiram ainda mais as liberdades civis. Por ter contado com apoio de empresários, políticos civis e parte da imprensa, e não apenas das Forças Armadas, historiadores preferem chamar o regime de <strong>ditadura civil-militar</strong>.</p>
+      </section>
+
+      <div class="questao" data-questao="1">
+        <div class="enunciado"><span class="num-q">1</span> A Declaração Universal dos Direitos Humanos já existia havia dezesseis anos quando o golpe de 1964 depôs o presidente João Goulart. Explique de que forma essa cronologia ajuda a entender o golpe de 1964 como uma ruptura com princípios já consagrados internacionalmente, e por que os historiadores preferem o termo "ditadura civil-militar" a apenas "ditadura militar".</div>
+        <textarea id="resp-1" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno explique que a DUDH (1948) já havia consagrado vida, liberdade, igualdade e segurança pessoal como direitos inalienáveis, de modo que o golpe de 1964 e os Atos Institucionais posteriores romperam, na prática, princípios que o próprio Brasil, como signatário da ONU, já reconhecia; e que o termo "civil-militar" é usado porque o golpe teve apoio de empresários, políticos civis e parte da imprensa, e não foi obra exclusiva das Forças Armadas.
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>2. O AI-5 e a suspensão dos direitos humanos (1968)</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>Em 1968, as manifestações contra o governo militar tomaram as ruas: metalúrgicos de Contagem (MG) e de Osasco (SP) fizeram greve por melhores salários e liberdade política; em março, o estudante secundarista Edson Luís de Lima Souto foi morto por policiais durante um protesto no Rio de Janeiro; em junho, o movimento estudantil organizou a <strong>Passeata dos Cem Mil</strong>. Em setembro, o deputado federal Márcio Moreira Alves conclamou a população a não comparecer à parada militar de 7 de setembro; os generais exigiram sua cassação, mas o Congresso não acatou a ordem.</p>
+        <p>Como resposta, o presidente Costa e Silva decretou, em 13 de dezembro de 1968, o <strong>Ato Institucional nº 5 (AI-5)</strong>. O ato deu ao Executivo o poder de fechar o Congresso Nacional e as Assembleias Legislativas, cassar mandatos parlamentares, demitir juízes, intervir em estados e municípios e decretar estado de sítio, além de suspender o direito ao <strong>habeas corpus</strong> para crimes políticos. Com a perda dessas garantias, milhares de pessoas foram presas e perseguidas de forma arbitrária. Para a população, o AI-5 representou um "golpe dentro do golpe".</p>
+      </section>
+
+      <div class="questao" data-questao="2">
+        <div class="enunciado"><span class="num-q">2</span> O texto afirma que, para a população da época, o AI-5 representou um "golpe dentro do golpe". Desenvolva essa afirmação, explicando de que forma a suspensão do habeas corpus para crimes políticos ampliou o poder repressivo do Estado e contrariou princípios já assegurados pela Declaração Universal dos Direitos Humanos de 1948.</div>
+        <textarea id="resp-2" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno explique que o habeas corpus protege o direito de ir e vir diante de prisões ilegais; ao suspendê-lo para crimes políticos, o AI-5 permitiu prisões arbitrárias sem necessidade de justificativa perante a Justiça, concentrando ainda mais poder no Executivo (fechamento do Congresso, cassação de mandatos, intervenção em estados e municípios) e contrariando diretamente os princípios de liberdade e devido processo legal da DUDH — daí a percepção de que o AI-5 foi um "golpe dentro do golpe".
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>3. Os Anos de Chumbo: repressão e "milagre econômico"</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>Em 1969, o general Emílio Garrastazu Médici assumiu a presidência. Seu governo (1969–1974) ficou conhecido como os <strong>Anos de Chumbo</strong> — o período de maior repressão da ditadura. Para conter a oposição, o governo criou a Operação Bandeirantes (Oban) e o DOI-Codi, órgãos responsáveis por prender e interrogar opositores, muitos deles torturados até a morte. Grupos de esquerda, como a ALN, a VPR e o MR-8, recorreram à luta armada; no campo, o PCdoB organizou a <strong>Guerrilha do Araguaia</strong>, em território que então pertencia a Goiás, e o Exército enviou tropas que assassinaram 59 militantes e moradores da região.</p>
+        <p>Ao mesmo tempo, o governo Médici promoveu forte crescimento econômico financiado por empréstimos externos — o chamado <strong>"milagre econômico"</strong> —, que aprofundou a concentração de renda: entre 1960 e a primeira metade dos anos 1970, a fatia da renda nacional apropriada pelo 1% mais rico da população subiu de 11,7% para 17,8%, enquanto a dos 50% mais pobres caiu de 27,8% para 13,1%. Segundo a Comissão Especial sobre Mortos e Desaparecidos Políticos, pelo menos 200 militantes foram assassinados nesse período, e outros 146 permanecem desaparecidos até hoje.</p>
+        <div class="referencia-box">
+          <span class="rot">Fonte citada</span>
+          <p>"O Milagre Brasileiro e os anos de chumbo foram simultâneos. Ambos reais, coexistiram negando-se." — Elio Gaspari, <em>A ditadura escancarada</em>, 2002.</p>
+        </div>
+      </section>
+
+      <div class="questao" data-questao="3">
+        <div class="enunciado"><span class="num-q">3</span> O trecho de Elio Gaspari citado acima afirma que "o Milagre Brasileiro e os anos de chumbo foram simultâneos". Considerando os dados de concentração de renda apresentados no texto, explique por que o crescimento econômico do período Médici não pode ser separado da repressão política promovida pelo mesmo governo.</div>
+        <textarea id="resp-3" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno relacione o financiamento do "milagre econômico" por empréstimos externos e grandes obras à ausência de fiscalização democrática e de oposição organizada, sufocada pela Oban, pelo DOI-Codi e pela suspensão do habeas corpus; e explique que os dados de concentração de renda mostram que o crescimento não beneficiou toda a população, de modo que "milagre" e repressão foram, segundo Gaspari, faces de um mesmo processo, e não fenômenos independentes.
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>4. Movimentos de resistência e a luta pela Anistia</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>A partir de meados da década de 1970, a mobilização da sociedade civil contra o regime cresceu. O assassinato do jornalista <strong>Vladimir Herzog</strong>, torturado até a morte na sede do DOI-Codi de São Paulo em 1975, provocou um grande ato ecumênico em sua memória e impulsionou a retomada das manifestações públicas contra a ditadura.</p>
+        <p>Diferentes setores da sociedade civil organizada passaram a pressionar por liberdades democráticas: a <strong>Ordem dos Advogados do Brasil (OAB)</strong> reivindicava a volta da legalidade democrática; a <strong>Associação Brasileira de Imprensa (ABI)</strong>, a liberdade de expressão. Em 1975, foi criado o <strong>Movimento Feminino pela Anistia (MFPA)</strong>, liderado por mulheres que lutavam pela libertação dos presos políticos e pelo retorno dos exilados; em 1978, surgiu o <strong>Movimento Negro Unificado (MNU)</strong>, que organizava ações contra o racismo e contra a ditadura. Em 1977, diferentes setores da sociedade lançaram a campanha pela <strong>Anistia Ampla, Geral e Irrestrita</strong> para todos os punidos pela ditadura.</p>
+      </section>
+
+      <div class="questao" data-questao="4">
+        <div class="enunciado"><span class="num-q">4</span> <span>A partir de meados da década de 1970, diferentes setores da sociedade civil brasileira passaram a se organizar contra a ditadura, em um processo que culminou na campanha pela Anistia Ampla, Geral e Irrestrita, lançada em 1977. A partir do texto acima, responda aos itens a seguir.</span></div>
+
+        <div class="subitem">
+          <span class="subitem-label">a) Escolha um dos movimentos citados no texto (OAB, ABI, Movimento Feminino pela Anistia ou Movimento Negro Unificado) e explique qual direito específico ele reivindicava durante a ditadura.</span>
+          <textarea id="resp-4a" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+          <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        </div>
+
+        <div class="subitem">
+          <span class="subitem-label">b) Explique por que a expressão "Anistia Ampla, Geral e Irrestrita" resume a reivindicação desses movimentos, e de que forma o assassinato do jornalista Vladimir Herzog, em 1975, ajuda a explicar o crescimento dessa mobilização.</span>
+          <textarea id="resp-4b" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+          <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        </div>
+
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno articule os seguintes pontos:
+          <br>a) <strong>Movimento e pauta:</strong> relacionar corretamente o movimento escolhido à reivindicação que defendia — OAB (volta da legalidade democrática), ABI (liberdade de expressão e de imprensa), Movimento Feminino pela Anistia (libertação de presos políticos e retorno de exilados) ou Movimento Negro Unificado (combate ao racismo e à ditadura).
+          <br>b) <strong>Anistia e mobilização:</strong> a expressão sintetiza a reivindicação de perdão legal sem exceções para todos os perseguidos políticos; o assassinato de Vladimir Herzog na sede do DOI-Codi, disfarçado de suicídio, expôs publicamente a violência do regime e provocou um grande ato ecumênico que impulsionou a retomada das manifestações contra a ditadura.
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>5. A Lei da Anistia (1979) e a Comissão da Verdade</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>Em 1979, já sob o governo do general João Batista Figueiredo, o Congresso aprovou a <strong>Lei da Anistia</strong>, em 28 de agosto. A lei permitiu a libertação dos presos políticos e o retorno legal dos exilados — mas, na forma como foi aprovada, também concedeu perdão aos agentes da repressão que praticaram tortura e cometeram assassinatos durante o regime, sob o argumento de uma anistia "recíproca" entre perseguidos e perseguidores. Passadas mais de quatro décadas, nenhum agente da repressão foi condenado no Brasil por esses crimes.</p>
+        <p>Passadas quase três décadas do fim da ditadura, o Brasil instituiu, em 2012, a <strong>Comissão Nacional da Verdade (CNV)</strong>, com o objetivo de investigar as graves violações de direitos humanos cometidas entre 1946 e 1988. A comissão trabalhou por dois anos, ouvindo depoimentos e reunindo documentos, mas — limitada pela Lei de Anistia de 1979 — não teve poder para responsabilizar judicialmente os agentes da repressão. Seu relatório final, de 2014, identificou centenas de vítimas, entre elas 8,3 mil indígenas assassinados na Amazônia entre 1964 e 1985, e recomendou que os responsáveis vivos fossem levados à Justiça — recomendação que, até hoje, não se traduziu em condenações.</p>
+      </section>
+
+      <div class="questao" data-questao="5">
+        <div class="enunciado"><span class="num-q">5</span> A campanha popular de 1977–1979 reivindicava anistia "ampla, geral e irrestrita" apenas para os perseguidos políticos, mas a Lei da Anistia de 1979, efetivamente aprovada, também perdoou os agentes do Estado responsáveis por tortura e assassinatos, sob o argumento de "crimes conexos". Relacione essa lacuna da Lei da Anistia com os limites de atuação da Comissão Nacional da Verdade (2012–2014), explicando por que o processo de justiça de transição no Brasil é considerado, até hoje, inacabado.</div>
+        <textarea id="resp-5" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno explique que a interpretação da anistia como "recíproca" impediu, até hoje, a condenação de qualquer agente da repressão no Brasil — diferentemente do que ocorreu, por exemplo, na Argentina; e que a Comissão Nacional da Verdade, criada só em 2012, conseguiu apurar a verdade e viabilizar reparações (como a concedida aos povos Krenak e Guarani-Kaiowá), mas, limitada pela própria Lei de Anistia de 1979, não teve poder para responsabilizar judicialmente os agentes da repressão — mostrando que a justiça de transição avançou em apuração e reparação, mas não em responsabilização judicial.
+        </div>
+      </div>
+
+      <h2 class="questoes-titulo">📝 Questões Objetivas</h2>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Texto para as questões 1, 2 e 3</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>Em 13 de dezembro de 1968, o presidente Costa e Silva decretou o Ato Institucional nº 5 (AI-5), que deu ao Executivo poderes quase absolutos — fechar o Congresso, cassar mandatos, intervir em estados e municípios — e suspendeu o habeas corpus para crimes políticos. A partir de 1969, sob o governo do general Emílio Garrastazu Médici, o Brasil viveu os Anos de Chumbo: a Operação Bandeirantes (Oban) e o DOI-Codi prendiam, interrogavam e torturavam opositores, enquanto grupos de esquerda como a ALN, a VPR e o MR-8 recorriam à luta armada, e o PCdoB organizava a Guerrilha do Araguaia, na região que então pertencia a Goiás.</p>
+        <p>Ao mesmo tempo, o governo Médici promovia o "milagre econômico", financiado por empréstimos externos, que aprofundou a concentração de renda: entre 1960 e a primeira metade da década de 1970, a participação do 1% mais rico da população na renda nacional subiu de 11,7% para 17,8%, enquanto a dos 50% mais pobres caiu de 27,8% para 13,1%. Segundo a Comissão Especial sobre Mortos e Desaparecidos Políticos, pelo menos 200 militantes foram assassinados nesse período, e outros 146 permanecem desaparecidos até hoje.</p>
+      </section>
+
+      <div class="questao objetiva" data-questao="obj-1" data-correta="1">
+        <div class="enunciado"><span class="num-q">1</span> O Ato Institucional nº 5 (AI-5), decretado em dezembro de 1968, é apresentado no texto, sobretudo, como um marco porque: <span class="badge-resultado" id="badge-obj-1"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(1,0)"><div class="opcao-letra">A</div><div class="opcao-txt">foi o primeiro Ato Institucional editado pelo regime militar desde 1964.</div><div class="opcao-marca" id="marca-1-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(1,1)"><div class="opcao-letra">B</div><div class="opcao-txt">concentrou poderes quase absolutos no Executivo e suspendeu o habeas corpus para crimes políticos, abrindo caminho para prisões arbitrárias.</div><div class="opcao-marca" id="marca-1-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(1,2)"><div class="opcao-letra">C</div><div class="opcao-txt">determinou eleições indiretas para governadores e prefeitos das capitais.</div><div class="opcao-marca" id="marca-1-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(1,3)"><div class="opcao-letra">D</div><div class="opcao-txt">foi revogado imediatamente após sua decretação, por pressão do Congresso Nacional.</div><div class="opcao-marca" id="marca-1-3"></div></div>
+        <div class="gabarito-info" id="gab-1"><b>Gabarito: B.</b> Foi o AI-3 (1966), e não o AI-5, que determinou eleições indiretas para governadores e prefeitos das capitais (o que descarta C); o AI-5 não foi o primeiro Ato Institucional do regime (o que descarta A) nem foi revogado imediatamente — permaneceu em vigor até 1978 (o que descarta D). O texto explica que o AI-5 deu ao Executivo poder de fechar o Congresso, cassar mandatos, intervir em estados e municípios e suspender o habeas corpus para crimes políticos, sendo por isso considerado o marco mais autoritário do regime.</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-2" data-correta="3">
+        <div class="enunciado"><span class="num-q">2</span> A criação da Operação Bandeirantes (Oban) e do DOI-Codi, a partir de 1969, teve como finalidade, segundo o texto: <span class="badge-resultado" id="badge-obj-2"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(2,0)"><div class="opcao-letra">A</div><div class="opcao-txt">promover a reforma agrária nas regiões de maior tensão social, como o Araguaia.</div><div class="opcao-marca" id="marca-2-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(2,1)"><div class="opcao-letra">B</div><div class="opcao-txt">fiscalizar a aplicação dos recursos do "milagre econômico" nas obras públicas.</div><div class="opcao-marca" id="marca-2-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(2,2)"><div class="opcao-letra">C</div><div class="opcao-txt">organizar as eleições indiretas previstas pelos Atos Institucionais.</div><div class="opcao-marca" id="marca-2-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(2,3)"><div class="opcao-letra">D</div><div class="opcao-txt">prender, interrogar e reprimir opositores do regime, muitos deles torturados até a morte.</div><div class="opcao-marca" id="marca-2-3"></div></div>
+        <div class="gabarito-info" id="gab-2"><b>Gabarito: D.</b> O texto afirma que a Oban e o DOI-Codi prendiam, interrogavam e torturavam opositores — não tinham qualquer função de reforma agrária, fiscalização econômica ou organização eleitoral (o que descarta A, B e C).</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-3" data-correta="0">
+        <div class="enunciado"><span class="num-q">3</span> Os dados de concentração de renda apresentados no texto (1% mais rico: de 11,7% para 17,8%; 50% mais pobres: de 27,8% para 13,1%) servem, no conjunto do material, sobretudo para demonstrar que: <span class="badge-resultado" id="badge-obj-3"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(3,0)"><div class="opcao-letra">A</div><div class="opcao-txt">o crescimento econômico do período Médici não significou melhoria de vida para a maior parte da população brasileira.</div><div class="opcao-marca" id="marca-3-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(3,1)"><div class="opcao-letra">B</div><div class="opcao-txt">o "milagre econômico" foi interrompido exclusivamente por causa da luta armada promovida por grupos como a ALN e o MR-8.</div><div class="opcao-marca" id="marca-3-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(3,2)"><div class="opcao-letra">C</div><div class="opcao-txt">a concentração de renda no Brasil só teve início durante o governo Médici, sem relação com períodos anteriores.</div><div class="opcao-marca" id="marca-3-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(3,3)"><div class="opcao-letra">D</div><div class="opcao-txt">o crescimento econômico brasileiro nesse período foi menor do que o de outros países da América Latina.</div><div class="opcao-marca" id="marca-3-3"></div></div>
+        <div class="gabarito-info" id="gab-3"><b>Gabarito: A.</b> Os dados mostram que, enquanto a fatia de renda dos mais ricos aumentava, a dos 50% mais pobres caía significativamente — evidência direta de que o crescimento não foi distribuído de forma equilibrada, e não de uma comparação internacional (o que descarta D) nem de uma origem exclusivamente ligada ao governo Médici, já que o texto trata apenas da variação nesse período (o que descarta C); o fim do "milagre" é atribuído no texto à crise internacional do petróleo a partir de 1973, não à luta armada (o que descarta B).</div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Texto para as questões 4 e 5</h2>
+        <span class="fonte-tag">Revisão — leitura para a 3ª série</span>
+        <p>Aprovada em 28 de agosto de 1979, ainda sob pressão da campanha popular por uma anistia "ampla, geral e irrestrita", a Lei da Anistia libertou presos políticos e permitiu o retorno de exilados. Mas, ao classificar os crimes de tortura e assassinato cometidos por agentes do Estado como "crimes conexos" aos crimes políticos, a lei também os anistiou — de modo que, passadas mais de quatro décadas, nenhum agente da repressão foi condenado no Brasil, diferentemente do que ocorreu, por exemplo, na Argentina.</p>
+        <p>Criada apenas em 2012, a Comissão Nacional da Verdade (CNV) investigou, ao longo de dois anos, as violações de direitos humanos cometidas entre 1946 e 1988. Seu relatório final, de 2014, identificou centenas de vítimas e recomendou que os responsáveis vivos fossem levados à Justiça — recomendação que, limitada pela própria Lei de Anistia, não se traduziu em condenações. A comissão também revelou capítulos pouco conhecidos da repressão, como o assassinato de 8,3 mil indígenas na Amazônia entre 1964 e 1985.</p>
+      </section>
+
+      <div class="questao objetiva" data-questao="obj-4" data-correta="2">
+        <div class="enunciado"><span class="num-q">4</span> A Lei da Anistia, aprovada em 28 de agosto de 1979, é descrita no texto como uma conquista parcial porque: <span class="badge-resultado" id="badge-obj-4"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(4,0)"><div class="opcao-letra">A</div><div class="opcao-txt">não conseguiu libertar nenhum preso político nem permitir o retorno de exilados ao Brasil.</div><div class="opcao-marca" id="marca-4-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(4,1)"><div class="opcao-letra">B</div><div class="opcao-txt">foi integralmente rejeitada pela campanha popular que lutava pela Anistia Ampla, Geral e Irrestrita.</div><div class="opcao-marca" id="marca-4-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(4,2)"><div class="opcao-letra">C</div><div class="opcao-txt">ao lado da libertação de presos políticos, também anistiou agentes do Estado responsáveis por tortura e assassinatos, que nunca foram condenados.</div><div class="opcao-marca" id="marca-4-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(4,3)"><div class="opcao-letra">D</div><div class="opcao-txt">previu, desde sua aprovação, a criação imediata de uma comissão para investigar os crimes da ditadura.</div><div class="opcao-marca" id="marca-4-3"></div></div>
+        <div class="gabarito-info" id="gab-4"><b>Gabarito: C.</b> O texto explica que a lei libertou presos políticos e permitiu o retorno de exilados, mas também perdoou os agentes da repressão sob o argumento de "crimes conexos" — e que, passadas mais de quatro décadas, nenhum deles foi condenado; isso descarta A (a lei efetivamente libertou presos) e D (a Comissão Nacional da Verdade só foi criada em 2012, mais de trinta anos depois). A campanha popular não rejeitou a anistia em si, mas pedia que fosse ampla, geral e irrestrita apenas para os perseguidos políticos — o que também descarta B.</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-5" data-correta="1">
+        <div class="enunciado"><span class="num-q">5</span> Segundo o texto, o principal limite da atuação da Comissão Nacional da Verdade (2012–2014) foi que ela: <span class="badge-resultado" id="badge-obj-5"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(5,0)"><div class="opcao-letra">A</div><div class="opcao-txt">não conseguiu reunir depoimentos suficientes para identificar as vítimas da repressão.</div><div class="opcao-marca" id="marca-5-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(5,1)"><div class="opcao-letra">B</div><div class="opcao-txt">apurou a verdade sobre as violações, mas, limitada pela Lei da Anistia, não teve poder para responsabilizar judicialmente os agentes da repressão.</div><div class="opcao-marca" id="marca-5-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(5,2)"><div class="opcao-letra">C</div><div class="opcao-txt">atuou apenas sobre os crimes cometidos contra povos indígenas, sem investigar outros grupos.</div><div class="opcao-marca" id="marca-5-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(5,3)"><div class="opcao-letra">D</div><div class="opcao-txt">foi extinta antes de concluir seus trabalhos e nunca chegou a divulgar um relatório final.</div><div class="opcao-marca" id="marca-5-3"></div></div>
+        <div class="gabarito-info" id="gab-5"><b>Gabarito: B.</b> O texto afirma que a CNV não teve poder para responsabilizar judicialmente os agentes da repressão, por estar limitada pela Lei da Anistia de 1979 — o que descarta D, já que a comissão funcionou por dois anos e divulgou relatório final em 2014. A CNV identificou centenas de vítimas para além dos povos indígenas (o que descarta C), e o próprio relatório reúne depoimentos suficientes para nomear responsáveis pelos crimes, o que descarta A.</div>
+      </div>
+
+      <div class="alerta-incompleto" id="alerta-incompleto">
+        ⚠️ Ainda há questões incompletas (dissertativas com o mínimo de caracteres e todas as 5 objetivas marcadas). Revise antes de finalizar.
+      </div>
+
+      <div class="acoes-finais">
+        <button class="btn btn-primario" onclick="finalizarAtividade()">Finalizar e corrigir</button>
+        <button class="btn btn-secundario" onclick="refazerAtividade()">Refazer</button>
+        <button class="btn btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
+      </div>
+    </main>
+  </div>
+
+  <footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+</div>
+
+<!-- ===== POPUP ===== -->
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <div class="emoji">🎉</div>
+    <h3>Atividade concluída!</h3>
+    <p id="popup-nota" style="font-family:var(--font-mono); font-weight:700; color:var(--verde-dark); font-size:1rem; margin:0 0 12px;"></p>
+    <p>Suas respostas foram registradas. Os comentários do professor e o gabarito comentado já estão disponíveis abaixo de cada questão para você comparar com o que escreveu.</p>
+    <button class="btn btn-primario" onclick="fecharPopup()">Continuar</button>
+  </div>
+</div>
+
+<script>
+/* ===== GATE DE NOME ===== */
+function iniciarAtividade(){
+  const nome = document.getElementById('nome-aluno').value.trim();
+  const turma = document.getElementById('turma-aluno').value.trim();
+  const aviso = document.getElementById('capa-aviso');
+  if(!nome){
+    aviso.style.display = 'block';
+    return;
+  }
+  aviso.style.display = 'none';
+  const hoje = new Date();
+  const dataFormatada = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+  document.getElementById('header-nome').textContent = nome;
+  document.getElementById('ficha-nome').textContent = nome;
+  document.getElementById('ficha-data').textContent = dataFormatada;
+  document.getElementById('ficha-turma').textContent = turma || '—';
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+/* ===== CONTADOR DE CARACTERES E PROGRESSO ===== */
+const textareas = document.querySelectorAll('textarea.dissertativa');
+const TOTAL_OBJ = 5;
+let respMC = {};
+let corrigido = false;
+
+function marcarOpcao(num, idx){
+  if (corrigido) return;
+  respMC[num] = idx;
+  const questaoEl = document.querySelector('.questao[data-questao="obj-' + num + '"]');
+  questaoEl.querySelectorAll('.opcao').forEach(function(op){
+    op.classList.toggle('sel', parseInt(op.dataset.idx,10) === idx);
+  });
+  atualizarProgresso();
+}
+
+function atualizarProgresso(){
+  let respondidas = 0;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length >= min) respondidas++;
+  });
+  respondidas += Object.keys(respMC).length;
+  const total = textareas.length + TOTAL_OBJ;
+  document.getElementById('contador-geral').textContent = 'Respondidas: ' + respondidas + '/' + total;
+  document.getElementById('barra-fill').style.width = (respondidas / total * 100) + '%';
+}
+
+textareas.forEach(function(t){
+  const contadorEl = t.parentElement.querySelector('.contador-chars');
+  const min = parseInt(t.dataset.min, 10);
+  t.addEventListener('input', function(){
+    contadorEl.textContent = t.value.length + ' caracteres (mínimo ' + min + ')';
+    atualizarProgresso();
+  });
+});
+
+/* ===== FINALIZAR ===== */
+function finalizarAtividade(){
+  let completo = true;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length < min) completo = false;
+  });
+  for(let n=1; n<=TOTAL_OBJ; n++){
+    if(respMC[n] === undefined) completo = false;
+  }
+
+  const alerta = document.getElementById('alerta-incompleto');
+  if(!completo){
+    alerta.classList.add('show');
+    alerta.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  alerta.classList.remove('show');
+
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.add('show');
+  });
+
+  corrigido = true;
+  let acertos = 0;
+  document.querySelectorAll('.questao.objetiva').forEach(function(qEl){
+    const num = qEl.dataset.questao.replace('obj-','');
+    const correta = parseInt(qEl.dataset.correta, 10);
+    const escolha = respMC[num];
+    const acertou = escolha === correta;
+    if(acertou) acertos++;
+    qEl.querySelectorAll('.opcao').forEach(function(op){
+      const idx = parseInt(op.dataset.idx, 10);
+      op.classList.add('travada');
+      if(idx === correta){ op.classList.add('correta'); document.getElementById('marca-'+num+'-'+idx).textContent='✓'; document.getElementById('marca-'+num+'-'+idx).style.display='block'; }
+      if(idx === escolha && !acertou){ op.classList.add('errada'); document.getElementById('marca-'+num+'-'+idx).textContent='✗'; document.getElementById('marca-'+num+'-'+idx).style.display='block'; }
+    });
+    document.getElementById('gab-'+num).classList.add('show');
+    const badge = document.getElementById('badge-obj-'+num);
+    badge.textContent = acertou ? '✓ Acertou' : '✗ Errou';
+    badge.className = 'badge-resultado ' + (acertou ? 'ok' : 'no');
+  });
+  window.__acertos = acertos;
+
+  const pct = Math.round(acertos/TOTAL_OBJ*100);
+  document.getElementById('popup-nota').textContent = acertos + '/' + TOTAL_OBJ + ' nas objetivas (' + pct + '%)';
+  document.getElementById('popup-overlay').classList.add('show');
+}
+
+function fecharPopup(){
+  document.getElementById('popup-overlay').classList.remove('show');
+}
+
+function refazerAtividade(){
+  textareas.forEach(function(t){
+    t.value = '';
+    t.parentElement.querySelector('.contador-chars').textContent = '0 caracteres (mínimo ' + t.dataset.min + ')';
+  });
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.remove('show');
+  });
+  document.querySelectorAll('.opcao').forEach(function(op){
+    op.classList.remove('sel','correta','errada','travada');
+  });
+  document.querySelectorAll('.opcao-marca').forEach(function(m){ m.style.display='none'; m.textContent=''; });
+  document.querySelectorAll('.gabarito-info').forEach(function(g){ g.classList.remove('show'); });
+  document.querySelectorAll('.badge-resultado').forEach(function(b){ b.textContent=''; b.className='badge-resultado'; });
+  respMC = {};
+  corrigido = false;
+  document.getElementById('alerta-incompleto').classList.remove('show');
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+/* ===== EXPORTAR PDF ===== */
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+function esc(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML.replace(/\n/g, '<br>');
+}
+
+async function exportarPDF(){
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(20,30,24,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:300px;box-shadow:0 10px 30px rgba(38,64,47,.3);font-family:\'Source Serif 4\',serif;">' +
+      '<div style="font-size:2rem;margin-bottom:8px;">📄</div>' +
+      '<h4 style="margin:0 0 4px;color:#121c28;font-family:\'Playfair Display\',serif;">Gerando PDF…</h4>' +
+      '<p style="margin:0 0 14px;color:#4d5761;font-size:.86rem;">Aguarde alguns instantes.</p>' +
+      '<div style="background:#e1e5ea;border-radius:6px;overflow:hidden;height:8px;">' +
+        '<div id="pdf-prog" style="height:100%;width:0%;background:#24384f;transition:width .2s ease;"></div>' +
+      '</div>' +
+      '<div id="pdf-prog-txt" style="margin-top:8px;font-family:\'JetBrains Mono\',monospace;font-size:.74rem;color:#4d5761;">0%</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  await sleep(80);
+  function setP(pct, msg){
+    const pp = document.getElementById('pdf-prog'), pt = document.getElementById('pdf-prog-txt');
+    if(pp) pp.style.width = pct + '%';
+    if(pt) pt.textContent = msg || (pct + '%');
+  }
+
+  try{
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait', unit:'px', format:'a4', hotfixes:['px_scaling']});
+    const PW = pdf.internal.pageSize.getWidth(), PH = pdf.internal.pageSize.getHeight();
+    const ML = 28, CW = PW - ML*2;
+    let y = ML;
+
+    async function addImg(el){
+      const canvas = await html2canvas(el, {scale:2, useCORS:true, logging:false, backgroundColor:'#ffffff', scrollX:0, scrollY:0, windowWidth:860});
+      const imgW = CW, imgH = (canvas.height / canvas.width) * imgW;
+      const dataUrl = canvas.toDataURL('image/jpeg', .92), avail = PH - ML*2;
+      if(imgH <= avail){
+        if(y + imgH > PH - ML){ pdf.addPage(); y = ML; }
+        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
+        y += imgH + 8;
+      } else {
+        const pxPerPdfPt = canvas.width / imgW;
+        let srcY = 0;
+        while(srcY < canvas.height){
+          const availPt = PH - y - ML, sliceH_pt = Math.min(availPt, avail);
+          const sliceH_px = Math.round(sliceH_pt * pxPerPdfPt), actualH_px = Math.min(sliceH_px, canvas.height - srcY);
+          const tmp = document.createElement('canvas');
+          tmp.width = canvas.width; tmp.height = actualH_px;
+          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
+          const sliceUrl = tmp.toDataURL('image/jpeg', .92), slicePt = (actualH_px / canvas.width) * imgW;
+          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
+          srcY += actualH_px; y += slicePt;
+          if(srcY < canvas.height){ pdf.addPage(); y = ML; }
+        }
+        y += 8;
+      }
+    }
+
+    async function band(tag, txt){
+      const b = document.createElement('div');
+      b.style.cssText = 'width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      b.innerHTML = '<div style="background:linear-gradient(90deg,#24384f,#121c28);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px">' +
+        '<span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">' + tag + '</span>' +
+        '<span style="color:#fff;font-size:15px;font-weight:700">' + txt + '</span></div>';
+      document.body.appendChild(b);
+      await sleep(20);
+      await addImg(b);
+      document.body.removeChild(b);
+    }
+
+    const nome = document.getElementById('header-nome').textContent || 'Aluno(a)';
+    const turma = document.getElementById('ficha-turma').textContent || '—';
+    const acertos = window.__acertos !== undefined ? window.__acertos : '—';
+    const pct = window.__acertos !== undefined ? Math.round(window.__acertos/TOTAL_OBJ*100)+'%' : '—';
+    const now = new Date();
+    const dtStr = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+
+    setP(5, 'Preparando capa…'); await sleep(40);
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
+    coverEl.innerHTML =
+      '<div style="background:linear-gradient(135deg,#0e1620 0%,#24384f 60%,#4d6f8c 100%);padding:32px 48px 28px;color:white">' +
+        '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">História · 3ª Série do Ensino Médio · GO-EMCHS605B</div>' +
+        '<div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">Revisão Geral — Tema 4</div>' +
+        '<div style="font-size:13px;opacity:.8;font-style:italic">Direitos Humanos e Ditadura Militar: do golpe de 1964 à Comissão da Verdade · 5 dissertativas + 5 objetivas</div>' +
+      '</div>' +
+      '<div style="background:#eceef1;padding:22px 48px 26px;border-bottom:3px solid #ecd9ad">' +
+        '<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#24384f;font-weight:700;margin-bottom:5px">Aluno(a)</div>' +
+        '<div style="font-size:20px;font-weight:700;color:#1c2228;border-bottom:2.5px solid #24384f;padding-bottom:6px;display:inline-block;margin-bottom:16px">' + esc(nome) + '</div>' +
+        '<div style="display:flex;gap:12px;flex-wrap:wrap">' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#24384f">' + esc(turma) + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Turma</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#b5842e">5</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Dissertativas</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#24384f">' + acertos + '/5</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Objetivas (' + pct + ')</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">' +
+            '<div style="font-size:13px;font-weight:700;color:#333">' + dtStr + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>' +
+      '</div>';
+    document.body.appendChild(coverEl); await sleep(60); await addImg(coverEl); document.body.removeChild(coverEl);
+
+    // QUESTÕES DISSERTATIVAS
+    setP(15, 'Preparando questões…'); await sleep(20);
+    await band('DISSERTATIVAS', 'Questões Dissertativas — Respostas e Orientações');
+
+    const QUESTOES = [
+      { num:'1', enunc:'Explique de que forma a cronologia entre a DUDH (1948) e o golpe de 1964 ajuda a entender o golpe como uma ruptura com princípios já consagrados, e por que se prefere o termo "ditadura civil-militar".', id:'resp-1',
+        coment:'A DUDH (1948) já consagrava vida, liberdade, igualdade e segurança pessoal como direitos inalienáveis; o golpe de 1964 e os Atos Institucionais romperam, na prática, princípios já reconhecidos pelo Brasil. O termo "civil-militar" reflete o apoio de empresários, políticos civis e parte da imprensa ao regime.' },
+      { num:'2', enunc:'Explique por que o AI-5 representou, para a população da época, um "golpe dentro do golpe", relacionando a suspensão do habeas corpus com os princípios da DUDH.', id:'resp-2',
+        coment:'O habeas corpus protege o direito de ir e vir; sua suspensão para crimes políticos permitiu prisões arbitrárias e concentrou poder no Executivo, contrariando os princípios de liberdade e devido processo legal da DUDH.' },
+      { num:'3', enunc:'Explique, com base nos dados de concentração de renda, por que o "milagre econômico" e a repressão dos Anos de Chumbo não podem ser separados.', id:'resp-3',
+        coment:'O "milagre" foi financiado por empréstimos externos, sem fiscalização democrática (sufocada pela Oban, pelo DOI-Codi e pela suspensão do habeas corpus); os dados de concentração de renda mostram que o crescimento não beneficiou toda a população — repressão e crescimento foram simultâneos, como afirma Gaspari.' },
+      { num:'4a', enunc:'Escolha um dos movimentos citados (OAB, ABI, Movimento Feminino pela Anistia ou Movimento Negro Unificado) e explique qual direito específico ele reivindicava durante a ditadura.', id:'resp-4a',
+        coment:'Espera-se que o aluno relacione corretamente o movimento escolhido à pauta que defendia: OAB (legalidade democrática), ABI (liberdade de expressão e de imprensa), Movimento Feminino pela Anistia (libertação de presos políticos e retorno de exilados) ou Movimento Negro Unificado (combate ao racismo e à ditadura).' },
+      { num:'4b', enunc:'Explique por que a expressão "Anistia Ampla, Geral e Irrestrita" resume a reivindicação desses movimentos, e o papel do assassinato de Vladimir Herzog no crescimento dessa mobilização.', id:'resp-4b',
+        coment:'A expressão sintetiza o pedido de perdão legal sem exceções para os perseguidos políticos; o assassinato de Herzog no DOI-Codi, disfarçado de suicídio, expôs a violência do regime e impulsionou a retomada das manifestações contra a ditadura.' },
+      { num:'5', enunc:'Relacione a lacuna da Lei da Anistia (1979) com os limites de atuação da Comissão Nacional da Verdade, explicando por que a justiça de transição no Brasil é considerada inacabada.', id:'resp-5',
+        coment:'A interpretação da anistia como "recíproca" impediu, até hoje, a condenação de agentes da repressão no Brasil; a CNV (criada em 2012) apurou a verdade e viabilizou reparações, mas, limitada pela própria Lei de Anistia, não teve poder de responsabilização judicial — apuração e reparação avançaram, a responsabilização judicial não.' }
+    ];
+
+    for(let i=0; i<QUESTOES.length; i++){
+      const q = QUESTOES[i];
+      setP(15 + Math.round(i/QUESTOES.length*38), 'Dissertativa ' + q.num + '/' + QUESTOES.length + '…'); await sleep(10);
+
+      const valor = document.getElementById(q.id) ? document.getElementById(q.id).value : '';
+      const respostaHTML =
+        '<div style="background:#eef1f4;border:1.5px solid #c7d0da;border-radius:8px;padding:12px 15px;min-height:40px">' +
+          '<div style="font-size:12px;color:#1c2228;line-height:1.75;white-space:pre-wrap">' + (esc(valor) || '<span style="color:#aaa">(sem resposta)</span>') + '</div>' +
+        '</div>';
+
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #ccd3da;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML =
+        '<div style="background:linear-gradient(90deg,#24384f,#121c28);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + q.num + '</span>' +
+          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>' +
+        '<div style="padding:18px 24px 16px;background:#fbfcfe">' +
+          '<div style="font-size:13px;font-weight:700;color:#1c2228;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">' + esc(q.enunc) + '</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+            '<div style="width:4px;height:15px;background:#24384f;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#24384f;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>' +
+          respostaHTML +
+          '<div style="display:flex;align-items:center;gap:8px;margin:12px 0 7px">' +
+            '<div style="width:4px;height:15px;background:#b5842e;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#8a651f;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
+          '<div style="background:#f3ead9;border:1.5px solid #ecd9ad;border-radius:8px;padding:13px 16px">' +
+            '<div style="font-size:12px;color:#5a4416;line-height:1.8">' + esc(q.coment) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(10); await addImg(qEl); document.body.removeChild(qEl);
+    }
+
+    // QUESTÕES OBJETIVAS
+    setP(55, 'Preparando objetivas…'); await sleep(20);
+    await band('OBJETIVAS', 'Questões Objetivas — Gabarito Comentado');
+
+    const LETRAS_PDF = ['A','B','C','D'];
+    const objetivasEls = document.querySelectorAll('.questao.objetiva');
+    let oi = 0;
+    for(const qEl0 of objetivasEls){
+      const num = qEl0.dataset.questao.replace('obj-','');
+      const correta = parseInt(qEl0.dataset.correta, 10);
+      const escolha = respMC[num];
+      const acertou = escolha === correta;
+      const enuncClone = qEl0.querySelector('.enunciado').cloneNode(true);
+      const badgeInClone = enuncClone.querySelector('.badge-resultado');
+      if(badgeInClone) badgeInClone.remove();
+      const numQInClone = enuncClone.querySelector('.num-q');
+      if(numQInClone) numQInClone.remove();
+      const enunc = enuncClone.textContent.trim();
+      setP(55 + Math.round(oi/objetivasEls.length*35), 'Objetiva ' + num + '/5…'); await sleep(10);
+
+      let altsHTML = '';
+      qEl0.querySelectorAll('.opcao').forEach(function(op){
+        const idx = parseInt(op.dataset.idx, 10);
+        const txt = op.querySelector('.opcao-txt').textContent;
+        let bg='#fbfcfe', bd='#d7dde3', cor='#2d2d20', tag='';
+        if(idx===correta){ bg='#e9f5ee'; bd='#9fc7ac'; cor='#16301f'; tag='<span style="color:#3a7350;font-weight:700"> ✓ correta</span>'; }
+        if(idx===escolha && !acertou){ bg='#fdeeee'; bd='#e3a3a3'; cor='#7a1f1f'; tag='<span style="color:#a83232;font-weight:700"> ✗ sua resposta</span>'; }
+        else if(idx===escolha && acertou){ tag='<span style="color:#3a7350;font-weight:700"> ← sua resposta</span>'; }
+        altsHTML += '<div style="display:flex;gap:9px;align-items:flex-start;background:'+bg+';border:1px solid '+bd+';border-radius:6px;padding:8px 12px;margin-bottom:6px"><div style="flex:0 0 auto;font-weight:700;color:#24384f;font-size:12px">'+LETRAS_PDF[idx]+')</div><div style="font-size:12px;color:'+cor+';line-height:1.55">'+esc(txt)+tag+'</div></div>';
+      });
+
+      const headBg = acertou ? 'linear-gradient(90deg,#3a7350,#234a30)' : 'linear-gradient(90deg,#a83232,#7a1f1f)';
+      const gabTxt = qEl0.querySelector('.gabarito-info').textContent.trim();
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #ccd3da;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML =
+        '<div style="background:'+headBg+';padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + num + '</span>' +
+          '<span style="background:rgba(255,255,255,.2);color:white;font-size:11px;padding:3px 12px;border-radius:20px;font-weight:700">' + (acertou?'ACERTOU':'ERROU') + '</span></div>' +
+        '<div style="padding:16px 24px 14px;background:#fbfcfe">' +
+          '<div style="font-size:13px;font-weight:700;color:#1c2228;line-height:1.6;margin-bottom:12px">' + esc(enunc) + '</div>' +
+          altsHTML +
+          '<div style="margin-top:10px;background:#f3ead9;border:1px solid #ecd9ad;border-radius:6px;padding:10px 14px">' +
+            '<div style="font-size:12px;color:#5a4416;line-height:1.6">' + esc(gabTxt) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(10); await addImg(qEl); document.body.removeChild(qEl);
+      oi++;
+    }
+
+    // RODAPÉ EM TODAS AS PÁGINAS
+    setP(92, 'Finalizando…'); await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for(let p=1; p<=totalPages; p++){
+      pdf.setPage(p);
+      const fEl = document.createElement('div');
+      fEl.style.cssText = 'width:' + Math.round(CW) + 'px;height:22px;background:#eceef1;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      fEl.innerHTML = '<span>Revisão Geral — Tema 4 · ' + esc(nome) + ' · Objetivas: ' + acertos + '/5</span><span>Página ' + p + ' de ' + totalPages + '</span>';
+      document.body.appendChild(fEl);
+      const fc = await html2canvas(fEl, {scale:2, logging:false, backgroundColor:'#eceef1'});
+      document.body.removeChild(fEl);
+      const fUrl = fc.toDataURL('image/jpeg', .9), fH = (fc.height / fc.width) * CW;
+      pdf.setFillColor(245,241,234); pdf.rect(ML, PH-fH, CW, fH, 'F');
+      pdf.addImage(fUrl, 'JPEG', ML, PH-fH, CW, fH);
+    }
+
+    setP(100, 'Salvando…'); await sleep(200);
+    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    pdf.save('Revisao_Tema4_' + safeName + '.pdf');
+
+  } catch(err){
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message);
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if(ov) document.body.removeChild(ov);
+  }
+}
+
+/* ===== PROTEÇÃO ANTI-COLA ===== */
+(function () {
+  const CAMPOS_PROTEGIDOS = document.querySelectorAll('textarea.dissertativa, .campo-resposta');
+  const LIMITE_BLOCO = 25;
+
+  function bloquear(e) {
+    e.preventDefault();
+    mostrarToast('Colar não permitido nesta atividade.');
+  }
+
+  CAMPOS_PROTEGIDOS.forEach(function (campo) {
+    ['paste', 'copy', 'cut', 'drop', 'dragover', 'contextmenu'].forEach(function (evt) {
+      campo.addEventListener(evt, bloquear);
+    });
+
+    campo.addEventListener('beforeinput', function (e) {
+      if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+        e.preventDefault();
+        mostrarToast('Colar não permitido nesta atividade.');
+      }
+    });
+
+    let valorAnterior = campo.value;
+    campo.addEventListener('input', function (e) {
+      const diferenca = campo.value.length - valorAnterior.length;
+      if (diferenca >= LIMITE_BLOCO && e.inputType !== 'insertReplacementText') {
+        campo.value = valorAnterior;
+        mostrarToast('Colar não permitido nesta atividade.');
+      } else {
+        valorAnterior = campo.value;
+      }
+    });
+  });
+
+  function mostrarToast(mensagem) {
+    let toast = document.getElementById('anti-cola-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'anti-cola-toast';
+      toast.style.cssText =
+        'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);' +
+        'background:#333;color:#fff;padding:10px 20px;border-radius:8px;' +
+        'font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = mensagem;
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(function () {
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+})();
+</script>
+
+</body>
+</html>
