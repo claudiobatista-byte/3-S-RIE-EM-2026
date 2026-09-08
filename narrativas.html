@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Atividade de análise comparada de narrativas: dois textos sobre 1984, de George Orwell, e uma reportagem sobre a intervenção de uma comissão da Câmara em um livro de história. Comentário crítico segundo as competências gerais da BNCC. História, 3ª série EM, CERO.">
+<meta name="theme-color" content="#0f3d3e">
+<meta name="color-scheme" content="light only">
+<title>Quem controla o passado? — Narrativas em disputa · CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+
+:root{
+  --petroleo:#0f3d3e;
+  --petroleo-claro:#1b5c5d;
+  --terracota:#b4532a;
+  --terracota-claro:#d97a4d;
+  --areia:#f6f2e9;
+  --areia-escura:#e8e0d0;
+  --grafite:#2b2b2b;
+  --cinza:#5d5d5d;
+  --musgo:#5b6e3a;
+  --borda:#d8d0be;
+  --branco:#fffdf9;
+  --serif-titulo:'Playfair Display',Georgia,'Times New Roman',serif;
+  --serif-corpo:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --raio:10px;
+  --sombra:0 2px 10px rgba(15,61,62,.10);
+  --medida:900px;          /* largura util do conteudo */
+  --gutter:clamp(16px,4vw,28px);
+  --topbar-h:44px;         /* atualizado por JS */
+}
+html{
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;
+  scroll-behavior:smooth;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;background:var(--areia);color:var(--grafite);
+  font-family:var(--serif-corpo);font-size:17px;line-height:1.7;
+  -webkit-user-select:none;user-select:none;
+  -webkit-tap-highlight-color:rgba(180,83,42,.18);
+}
+main,.conteudo,.glossario,.modal-corpo{-webkit-user-select:text;user-select:text;}
+h1,h2,h3,h4{font-family:var(--serif-titulo);line-height:1.25;overflow-wrap:break-word;}
+img,svg,video{max-width:100%;height:auto;}
+
+/* foco visivel e consistente para teclado */
+a:focus-visible,button:focus-visible,summary:focus-visible{
+  outline:3px solid var(--terracota);outline-offset:2px;border-radius:4px;
+}
+.topbar a:focus-visible,.topbar button:focus-visible,.hero a:focus-visible{
+  outline-color:#f0c9a8;
+}
+
+/* ---------- HERO ---------- */
+
+/* ---------- LAYOUT ---------- */
+main{max-width:var(--medida);margin:0 auto;padding:0 var(--gutter) 60px;}
+section{margin-top:44px;}
+h2.secao{
+  font-size:1.6rem;color:var(--petroleo);margin:0 0 6px;
+  border-bottom:2px solid var(--areia-escura);padding-bottom:10px;
+}
+h2.secao .num{
+  display:inline-block;background:var(--terracota);color:#fff;font-family:var(--serif-corpo);
+  font-size:.85rem;font-weight:600;width:30px;height:30px;line-height:30px;text-align:center;
+  border-radius:50%;margin-right:12px;vertical-align:2px;
+}
+h3{font-size:1.15rem;color:var(--petroleo-claro);margin:26px 0 8px;}
+p{margin:0 0 14px;text-align:justify;}
+.lead{font-size:1.06rem;color:var(--cinza);}
+
+/* ---------- OBJETIVOS ---------- */
+.objetivos{
+  background:var(--branco);border-left:6px solid var(--petroleo);border-radius:var(--raio);
+  padding:22px 26px;box-shadow:var(--sombra);margin-top:34px;
+}
+.objetivos .acc{margin:0;}
+.objetivos .acc-head{font-size:1.15rem;}
+.objetivos ul{margin:0;padding-left:20px;}
+.objetivos li{margin-bottom:8px;}
+.hab{
+  display:inline-block;background:var(--areia-escura);color:var(--petroleo);
+  font-size:.75rem;letter-spacing:.08em;padding:3px 10px;border-radius:100px;
+  font-weight:600;margin-bottom:10px;
+}
+
+
+/* ---------- BOTÃO DE RECURSO EXTERNO ---------- */
+.btn-recurso{
+  display:flex;align-items:center;gap:13px;
+  background:var(--branco);border:1px solid var(--borda);border-left:5px solid var(--musgo);
+  border-radius:var(--raio);padding:14px 18px;margin-top:14px;
+  text-decoration:none;color:var(--petroleo);
+  transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease;
+}
+.btn-recurso:hover{
+  transform:translateY(-2px);border-left-color:var(--terracota);
+  box-shadow:var(--sombra);
+}
+.br-ico{
+  flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:9px;background:var(--musgo);color:#fff;
+  font-family:var(--serif-titulo);font-size:.8rem;letter-spacing:.06em;
+}
+.btn-recurso:hover .br-ico{background:var(--terracota);}
+.br-txt{flex:1;display:block;line-height:1.35;}
+.br-txt strong{display:block;font-family:var(--serif-titulo);font-size:1.05rem;}
+.br-txt em{display:block;font-style:normal;font-size:.82rem;color:var(--cinza);margin-top:2px;}
+.br-seta{flex:0 0 auto;font-size:1.2rem;color:var(--terracota);}
+@media (max-width:820px){
+  .btn-recurso{padding:14px;min-height:64px;}
+  .br-ico{width:40px;height:40px;}
+}
+.btn-recurso.atividade{border-left-color:var(--terracota);}
+.btn-recurso.atividade .br-ico{background:var(--terracota);}
+.btn-recurso.atividade:hover .br-ico{background:var(--petroleo);}
+.btn-recurso.atividade .br-seta{color:var(--petroleo-claro);}
+@media print{.btn-recurso{display:none;}}
+
+/* ---------- BOXES ---------- */
+.termo-box{
+  background:var(--branco);border:1px solid var(--borda);border-left:5px solid var(--terracota);
+  border-radius:var(--raio);padding:16px 20px;margin:18px 0;
+}
+.termo-box .rot{
+  display:block;font-family:var(--serif-titulo);color:var(--terracota);
+  font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;
+}
+.termo-box p:last-child{margin-bottom:0;}
+
+.saiba-box{
+  background:#eef3ef;border:1px dashed var(--musgo);border-radius:var(--raio);
+  padding:16px 20px;margin:18px 0;
+}
+.saiba-box .rot{display:block;color:var(--musgo);font-weight:600;font-size:.85rem;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.saiba-box p:last-child{margin-bottom:0;}
+
+.goias-box{
+  background:linear-gradient(135deg,#fdf6ec,#f7e9d6);
+  border:1px solid var(--terracota-claro);border-radius:var(--raio);
+  padding:20px 24px;margin:22px 0;box-shadow:var(--sombra);
+}
+.goias-box .rot{display:block;color:var(--terracota);font-family:var(--serif-titulo);
+  font-size:1rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.goias-box p:last-child{margin-bottom:0;}
+
+.cita{
+  border-left:4px solid var(--petroleo-claro);background:var(--branco);
+  padding:14px 20px;margin:20px 0;font-style:italic;color:#3a3a3a;border-radius:0 var(--raio) var(--raio) 0;
+}
+.cita .fonte{display:block;font-style:normal;font-size:.82rem;color:var(--cinza);margin-top:8px;text-align:right;}
+
+.pesquise{
+  background:var(--petroleo);color:var(--areia);border-radius:var(--raio);
+  padding:18px 22px;margin:20px 0;
+}
+.pesquise .rot{display:block;font-family:var(--serif-titulo);font-size:.9rem;
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;color:#f0c9a8;}
+.pesquise p:last-child{margin-bottom:0;}
+.pesquise ul{margin:8px 0 0;padding-left:20px;}
+.pesquise li{margin-bottom:6px;}
+
+/* ---------- ACCORDION ---------- */
+.acc{border:1px solid var(--borda);border-radius:var(--raio);overflow:hidden;margin:14px 0;background:var(--branco);}
+.acc-head{
+  width:100%;text-align:left;background:var(--branco);border:0;cursor:pointer;
+  font-family:var(--serif-titulo);font-size:1.02rem;color:var(--petroleo);
+  padding:15px 46px 15px 18px;position:relative;
+}
+.acc-head:hover{background:#f9f6ef;}
+.acc-head::after{
+  content:'+';position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  font-size:1.4rem;color:var(--terracota);font-family:var(--serif-corpo);
+}
+.acc.aberto .acc-head::after{content:'–';}
+.acc-body{display:none;padding:4px 18px 18px;border-top:1px solid var(--areia-escura);}
+.acc.aberto .acc-body{display:block;}
+
+/* ---------- TABELAS ---------- */
+.tabela-wrap{overflow-x:auto;margin:20px 0;}
+table{border-collapse:collapse;width:100%;background:var(--branco);font-size:.93rem;}
+caption{caption-side:top;text-align:left;font-size:.85rem;color:var(--cinza);padding-bottom:8px;font-style:italic;}
+th,td{border:1px solid var(--borda);padding:10px 12px;vertical-align:top;text-align:left;}
+th{background:var(--petroleo);color:var(--areia);font-family:var(--serif-titulo);font-weight:600;}
+tbody tr:nth-child(even){background:#faf7f0;}
+
+/* ---------- LINHA DO TEMPO ---------- */
+.linha{border-left:3px solid var(--terracota-claro);margin:22px 0 22px 10px;padding-left:20px;}
+.linha .item{margin-bottom:16px;position:relative;}
+.linha .item::before{
+  content:'';position:absolute;left:-27px;top:8px;width:11px;height:11px;
+  background:var(--terracota);border-radius:50%;border:2px solid var(--areia);
+}
+.linha .ano{font-family:var(--serif-titulo);color:var(--petroleo);font-weight:700;}
+
+/* ---------- ROTEIRO ---------- */
+.roteiro{counter-reset:passo;padding:0;list-style:none;margin:20px 0;}
+.roteiro li{
+  counter-increment:passo;background:var(--branco);border:1px solid var(--borda);
+  border-radius:var(--raio);padding:14px 18px 14px 56px;position:relative;margin-bottom:10px;
+}
+.roteiro li::before{
+  content:counter(passo);position:absolute;left:16px;top:14px;
+  width:28px;height:28px;line-height:28px;text-align:center;border-radius:50%;
+  background:var(--musgo);color:#fff;font-size:.9rem;font-weight:600;
+}
+
+/* ---------- SÍNTESE ---------- */
+.sintese{background:var(--branco);border:1px solid var(--borda);border-top:6px solid var(--musgo);
+  border-radius:var(--raio);padding:22px 26px;box-shadow:var(--sombra);}
+.sintese ul{margin:0;padding-left:20px;}
+.sintese li{margin-bottom:10px;}
+
+/* ---------- GLOSSÁRIO ---------- */
+.glossario dl{margin:0;}
+.glossario dt{font-family:var(--serif-titulo);color:var(--petroleo);font-weight:700;margin-top:14px;}
+.glossario dd{margin:2px 0 0;padding-left:0;color:#3a3a3a;}
+
+/* ---------- REFERÊNCIAS ---------- */
+.refs{font-size:.88rem;color:var(--cinza);}
+.refs li{margin-bottom:8px;}
+
+/* ---------- RODAPÉ ---------- */
+footer{
+  background:var(--petroleo);color:var(--areia);text-align:center;
+  padding:28px var(--gutter) calc(28px + env(safe-area-inset-bottom));
+  font-size:.86rem;letter-spacing:.04em;
+}
+footer p{text-align:center;margin:0;}
+footer strong{color:#f0c9a8;}
+
+
+
+
+/* ================= CABEÇALHO NOVO ================= */
+.progresso{
+  position:fixed;top:0;left:0;right:0;height:3px;background:rgba(15,61,62,.12);z-index:800;
+}
+.progresso span{
+  display:block;height:100%;width:0;background:linear-gradient(90deg,var(--terracota),#e0a15f);
+  transition:width .08s linear;
+}
+.topbar{
+  position:sticky;top:0;z-index:790;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:var(--petroleo);color:var(--areia);
+  padding:9px var(--gutter);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
+  border-bottom:1px solid rgba(246,242,233,.16);
+  min-height:40px;
+}
+.topbar-inner{
+  max-width:var(--medida);margin:0 auto;width:100%;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.tb-marca{font-family:var(--serif-titulo);font-weight:700;letter-spacing:.22em;}
+.tb-sep{width:1px;height:14px;background:rgba(246,242,233,.35);}
+.tb-disc{opacity:.85;}
+.tb-hab{
+  margin-left:auto;background:var(--terracota);color:#fff;
+  padding:3px 10px;border-radius:100px;letter-spacing:.12em;font-size:.7rem;
+}
+
+.hero{
+  background:
+    radial-gradient(1100px 380px at 82% -12%,rgba(180,83,42,.42),transparent 62%),
+    linear-gradient(158deg,#0c3334 0%,#12494a 52%,#1c6461 100%);
+  color:var(--areia);border-bottom:0;text-align:left;
+  padding:clamp(34px,7vw,68px) var(--gutter) clamp(30px,5vw,52px);
+  position:relative;
+}
+.hero::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:4px;
+  background:linear-gradient(90deg,var(--terracota) 0%,var(--musgo) 55%,var(--petroleo-claro) 100%);
+}
+.hero-inner{max-width:var(--medida);margin:0 auto;}
+.hero-eyebrow{
+  font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:#f0c9a8;
+  margin:0 0 14px;padding-left:16px;position:relative;text-align:left;
+}
+.hero-eyebrow::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:8px;height:8px;background:var(--terracota);border-radius:2px;
+}
+.hero h1{
+  font-size:clamp(1.85rem,6.2vw,3.1rem);margin:0 0 14px;max-width:16ch;line-height:1.12;
+  letter-spacing:-.01em;
+}
+.hero .sub{
+  font-size:clamp(1rem,2.6vw,1.16rem);max-width:60ch;margin:0;opacity:.94;
+  font-style:normal;line-height:1.6;text-align:left;
+}
+.hero-tags{
+  list-style:none;display:flex;flex-wrap:wrap;gap:8px;
+  margin:22px 0 0;padding:0;
+}
+.hero-tags li{
+  border:1px solid rgba(246,242,233,.34);border-radius:100px;
+  padding:5px 13px;font-size:.78rem;letter-spacing:.03em;background:rgba(255,255,255,.06);
+}
+.hero .meta{
+  margin:24px 0 0;font-size:.8rem;letter-spacing:.08em;opacity:.72;text-align:left;
+  padding-top:16px;border-top:1px solid rgba(246,242,233,.18);
+}
+
+/* ---------- TRILHA DO TEMA (acordeão fixo na topbar) ---------- */
+.sumario-box{position:relative;}
+.sum-toggle{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(246,242,233,.10);border:1px solid rgba(246,242,233,.26);
+  border-radius:100px;padding:5px 12px 5px 8px;
+  color:var(--areia);font-family:var(--serif-corpo);
+  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;min-height:32px;line-height:1;
+  transition:background .16s ease,border-color .16s ease;
+}
+.sum-toggle:hover{background:rgba(246,242,233,.2);border-color:rgba(246,242,233,.5);}
+.sumario-box.aberto .sum-toggle{background:var(--terracota);border-color:var(--terracota);}
+.sum-ico{font-size:.9rem;line-height:1;}
+.sum-rot{font-family:var(--serif-corpo);}
+.sum-cont{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:18px;height:18px;padding:0 5px;border-radius:100px;
+  background:rgba(246,242,233,.22);font-size:.66rem;letter-spacing:0;
+}
+.sumario-box.aberto .sum-cont{background:rgba(0,0,0,.22);}
+.sum-seta{font-size:.9rem;line-height:1;transition:transform .22s ease;}
+.sumario-box.aberto .sum-seta{transform:rotate(180deg);}
+
+/* painel em cascata, ancorado abaixo da topbar */
+.sum-chips{
+  display:none;flex-direction:column;
+  position:absolute;top:calc(100% + 15px);left:0;
+  width:min(340px,calc(100vw - 2 * var(--gutter)));
+  max-height:70vh;max-height:70dvh;overflow-y:auto;overscroll-behavior:contain;
+  background:var(--branco);border:1px solid var(--borda);border-top:4px solid var(--terracota);
+  border-radius:var(--raio);box-shadow:0 16px 38px rgba(15,61,62,.28);
+  padding:6px 0;z-index:795;text-transform:none;letter-spacing:normal;
+}
+.sumario-box.aberto .sum-chips{display:flex;}
+.sum-chips a{
+  display:flex;align-items:center;gap:11px;
+  padding:11px 16px;min-height:46px;
+  color:var(--petroleo);text-decoration:none;font-size:.92rem;line-height:1.35;
+  border-bottom:1px solid var(--areia-escura);
+  opacity:0;transform:translateY(-8px);
+  animation:cascata .24s ease forwards;
+  animation-delay:calc(var(--i,0) * 40ms);
+}
+.sum-chips a:last-child{border-bottom:0;}
+.sum-chips a:hover,.sum-chips a:focus{background:var(--areia);color:var(--terracota);}
+.sum-chips a b{
+  display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+  width:22px;height:22px;border-radius:50%;background:var(--petroleo);color:var(--areia);
+  font-size:.72rem;font-family:var(--serif-corpo);font-weight:400;
+}
+.sum-chips a:hover b{background:var(--terracota);}
+
+@keyframes cascata{to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion:reduce){
+  .sum-chips a{animation:none;opacity:1;transform:none;}
+}
+
+@media (max-width:820px){
+  .sum-chips{
+    position:fixed;top:var(--topbar-h);left:0;right:0;width:auto;
+    border-radius:0;border-left:0;border-right:0;
+    max-height:calc(100vh - var(--topbar-h) - 12px);
+    max-height:calc(100dvh - var(--topbar-h) - 12px);
+  }
+  .sum-chips a{min-height:50px;font-size:.95rem;}
+}
+@media (max-width:520px){
+  .sum-toggle{padding:5px 10px 5px 7px;}
+  .sum-rot{display:none;}
+}
+
+h2.secao,section[id],[id]{scroll-margin-top:calc(var(--topbar-h) + 18px);}
+
+/* ================= OTIMIZAÇÃO MOBILE ================= */
+.tabela-wrap{position:relative;}
+.tabela-wrap::after{
+  content:'arraste para o lado \2192';
+  display:none;font-size:.72rem;color:var(--cinza);letter-spacing:.08em;
+  text-transform:uppercase;padding-top:6px;
+}
+.tabela-wrap.tem-scroll::after{display:block;}
+
+@media (max-width:820px){
+  body{font-size:16.5px;}
+  p{text-align:left;hyphens:auto;}
+  main{padding:0 var(--gutter) 48px;}
+  section{margin-top:34px;}
+  h2.secao{font-size:1.35rem;}
+  h2.secao .num{width:26px;height:26px;line-height:26px;font-size:.78rem;margin-right:9px;}
+  .acc-head{padding:16px 44px 16px 16px;min-height:56px;font-size:1rem;}
+  .acc-body{padding:4px 16px 16px;}
+  .ficha-btn{padding:16px;min-height:58px;}
+  .tabela-wrap{
+    overflow-x:auto;-webkit-overflow-scrolling:touch;
+    border-right:1px solid var(--areia-escura);
+  }
+  table{font-size:.88rem;min-width:480px;}
+  th,td{padding:9px 10px;}
+  .linha{margin-left:6px;padding-left:16px;}
+  .roteiro li{padding:14px 14px 14px 50px;}
+  .goias-box,.pesquise{padding:16px 18px;}
+  .cita{padding:12px 16px;}
+  .glossario dd{font-size:.95rem;}
+}
+
+@media (max-width:520px){
+  :root{--gutter:15px;}
+  .topbar{font-size:.68rem;gap:8px;padding:8px var(--gutter);}
+  .tb-disc{display:none;}
+  .tb-sep{display:none;}
+  .hero-tags li{font-size:.73rem;padding:4px 11px;}
+  .hero h1{max-width:100%;}
+}
+
+/* ---------- MODAL EM TELA CHEIA NO CELULAR ---------- */
+@media (max-width:720px){
+  .modal-fundo{padding:0;}
+  .modal-cx{
+    max-width:100%;border-radius:0;margin:0;
+    height:100vh;height:100dvh;max-height:none;
+  }
+  .modal-topo{padding:16px;}
+  .modal-topo h3{font-size:1.12rem;}
+  .modal-corpo{padding:18px 16px 24px;}
+  .modal-corpo li{font-size:.95rem;}
+  .modal-rodape{
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    justify-content:center;
+  }
+  .modal-rodape span{display:none;}
+  .modal-rodape button{width:100%;min-height:46px;font-size:.95rem;}
+  .modal-fechar{width:40px;height:40px;font-size:1.35rem;}
+}
+
+@media print{
+  .topbar,.progresso,.sumario-box,.ficha-btn,.caso-btn,.btn-recurso,
+  .rec-grid,.modal-fundo{display:none !important;}
+  .hero{background:none;color:#000;padding:0 0 18px;}
+  .hero::after{display:none;}
+  .hero-eyebrow,.hero .meta{color:#444;}
+  .hero-tags li{border-color:#999;}
+  body{background:#fff;font-size:11pt;}
+  main{max-width:none;padding:0;}
+  .acc-body{display:block !important;}   /* imprime tudo, inclusive acordeoes fechados */
+  .acc-head::after{content:'';}
+  section,.acc,.sintese,.objetivos{break-inside:avoid;}
+  h2.secao{break-after:avoid;}
+  table{min-width:0 !important;font-size:9.5pt;}
+  .tabela-wrap{overflow:visible !important;}
+  .tabela-wrap::after{display:none !important;}
+  footer{background:none;color:#000;border-top:1px solid #999;}
+  footer strong{color:#000;}
+}
+
+/* ---------- GRID DE MATERIAL DE CONSULTA ---------- */
+.rec-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:20px 0 6px;
+}
+.rec-card{
+  display:flex;flex-direction:column;align-items:flex-start;gap:4px;cursor:pointer;
+  background:var(--branco);border:1px solid var(--borda);border-top:5px solid var(--musgo);
+  border-radius:var(--raio);padding:18px 16px;text-align:left;
+  font-family:var(--serif-corpo);box-shadow:var(--sombra);
+  transition:transform .12s ease,border-color .12s ease;
+}
+.rec-card:hover{transform:translateY(-3px);border-top-color:var(--terracota);}
+.rec-ico{
+  display:flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:8px;background:var(--petroleo);color:var(--areia);
+  font-family:var(--serif-titulo);font-size:.9rem;margin-bottom:6px;
+}
+.rec-tit{font-family:var(--serif-titulo);font-size:1.02rem;color:var(--petroleo);line-height:1.3;}
+.rec-sub{font-size:.82rem;color:var(--cinza);line-height:1.45;}
+@media (max-width:900px){.rec-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:520px){.rec-grid{grid-template-columns:1fr;}.rec-card{flex-direction:row;align-items:center;gap:14px;flex-wrap:wrap;}
+  .rec-card .rec-ico{margin-bottom:0;}
+  .rec-card .rec-tit{flex:1 1 auto;}
+  .rec-card .rec-sub{flex:1 1 100%;}}
+
+/* ---------- FICHAMENTO (botão + modal) ---------- */
+.ficha-btn{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+  background:linear-gradient(135deg,#0f3d3e,#1b5c5d);color:var(--areia);
+  border:0;border-left:5px solid var(--terracota);border-radius:var(--raio);
+  padding:14px 18px;margin:18px 0;font-family:var(--serif-corpo);font-size:1rem;
+  box-shadow:var(--sombra);transition:transform .12s ease,filter .12s ease;
+}
+.ficha-btn:hover{filter:brightness(1.12);transform:translateY(-1px);}
+.ficha-btn .ico{
+  flex:0 0 auto;width:34px;height:34px;border-radius:8px;background:var(--terracota);
+  display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:700;
+  font-family:var(--serif-titulo);
+}
+.ficha-btn .txt{flex:1;}
+.ficha-btn .txt strong{display:block;font-family:var(--serif-titulo);font-size:1.02rem;}
+.ficha-btn .txt em{font-style:normal;font-size:.85rem;opacity:.82;}
+.ficha-btn .seta{font-size:1.3rem;color:#f0c9a8;}
+
+.modal-fundo{
+  display:none;position:fixed;inset:0;background:rgba(15,61,62,.72);
+  z-index:900;padding:24px 16px;overscroll-behavior:contain;
+}
+.modal-fundo.ativo{display:flex;align-items:flex-start;justify-content:center;}
+.modal-cx{
+  background:var(--branco);width:100%;max-width:880px;margin:0 auto;border-radius:14px;
+  box-shadow:0 18px 50px rgba(0,0,0,.35);overflow:hidden;animation:sobe .18s ease-out;
+  display:flex;flex-direction:column;
+  max-height:calc(100vh - 48px);max-height:calc(100dvh - 48px);
+}
+@keyframes sobe{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+.modal-topo{
+  background:var(--petroleo);color:var(--areia);padding:18px 22px;
+  display:flex;align-items:flex-start;gap:14px;flex:0 0 auto;
+}
+.modal-topo .rot{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:#f0c9a8;display:block;}
+.modal-topo h3{margin:2px 0 0;font-size:1.3rem;color:var(--areia);}
+.modal-fechar{
+  margin-left:auto;background:transparent;border:1px solid rgba(246,242,233,.45);
+  color:var(--areia);width:34px;height:34px;border-radius:8px;font-size:1.2rem;
+  cursor:pointer;line-height:1;flex:0 0 auto;
+}
+.modal-fechar:hover{background:rgba(246,242,233,.15);}
+.modal-corpo{
+  padding:20px 24px 26px;flex:1 1 auto;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+}
+.modal-corpo h4{
+  font-family:var(--serif-titulo);color:var(--terracota);font-size:.85rem;
+  letter-spacing:.1em;text-transform:uppercase;margin:20px 0 6px;
+  border-bottom:1px solid var(--areia-escura);padding-bottom:5px;
+}
+.modal-corpo h4:first-child{margin-top:0;}
+.modal-corpo ul{margin:0;padding-left:20px;}
+.modal-corpo li{margin-bottom:7px;text-align:left;font-size:.97rem;}
+.modal-rodape{
+  border-top:1px solid var(--areia-escura);padding:14px 24px;background:#faf7f0;
+  display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  flex:0 0 auto;
+}
+.modal-rodape span{font-size:.82rem;color:var(--cinza);}
+.modal-rodape button{
+  background:var(--musgo);color:#fff;border:0;border-radius:8px;padding:9px 16px;
+  font-family:var(--serif-corpo);font-size:.9rem;cursor:pointer;
+}
+.modal-rodape button:hover{filter:brightness(1.1);}
+@media print{.ficha-btn{display:none;}}
+@media (max-width:620px){
+  body{font-size:16px;}
+  .modal-topo h3{font-size:1.08rem;}
+}
+
+/* ---------- TEXTOS DE APOIO LONGOS (dentro dos acordeões) ---------- */
+.texto-apoio{font-size:.97rem;}
+.texto-apoio h3{font-size:1.05rem;color:var(--petroleo);margin:22px 0 8px;}
+.texto-apoio .ta-fonte{display:block;font-size:.82rem;color:var(--cinza);font-style:italic;margin-bottom:14px;}
+.texto-apoio .ta-destaque{background:var(--areia);border-left:4px solid var(--terracota);
+  border-radius:0 var(--raio) var(--raio) 0;padding:14px 18px;margin:0 0 18px;}
+.texto-apoio .ta-nota{background:#eef3ef;border:1px dashed var(--musgo);border-radius:var(--raio);
+  padding:14px 18px;margin:18px 0;}
+.texto-apoio .ta-nota .ta-rot{display:block;color:var(--musgo);font-weight:600;font-size:.82rem;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.texto-apoio .ta-citacao{border-left:4px solid var(--petroleo-claro);background:var(--branco);
+  margin:20px 0;padding:14px 20px;font-style:italic;border-radius:0 var(--raio) var(--raio) 0;}
+.texto-apoio .ta-citacao .ta-autor{display:block;font-style:normal;font-size:.82rem;
+  color:var(--cinza);margin-top:8px;text-align:right;}
+.texto-apoio .ta-tempo{margin:14px 0;padding-left:20px;}
+.texto-apoio .ta-tempo li{margin-bottom:8px;}
+.texto-apoio .ta-tempo b{color:var(--petroleo);font-family:var(--serif-titulo);}
+.texto-apoio table{margin:0;}
+.acc-body .tabela-wrap{margin:16px 0;}
+
+/* ---------- BOTÃO DE CASO EM ANÁLISE (abre modal) ---------- */
+.caso-btn{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+  background:linear-gradient(135deg,#b4532a,#8f3f1f);color:#fff8f0;
+  border:0;border-left:5px solid var(--petroleo);border-radius:var(--raio);
+  padding:16px 18px;margin:20px 0;font-family:var(--serif-corpo);font-size:1rem;
+  box-shadow:var(--sombra);transition:transform .12s ease,filter .12s ease;
+}
+.caso-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
+.caso-btn .ico{
+  flex:0 0 auto;width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;font-size:1.15rem;font-weight:700;
+  font-family:var(--serif-titulo);
+}
+.caso-btn .txt{flex:1;}
+.caso-btn .txt strong{display:block;font-family:var(--serif-titulo);font-size:1.06rem;}
+.caso-btn .txt em{font-style:normal;font-size:.85rem;opacity:.9;display:block;margin-top:2px;}
+.caso-btn .seta{font-size:1.3rem;opacity:.85;}
+@media (max-width:820px){.caso-btn{padding:16px;min-height:64px;}}
+
+/* ================= AJUSTES FINAIS: TOQUE, MOVIMENTO, QUEBRA ================= */
+
+/* em telas de toque o :hover fica "grudado" apos o tap - desliga os efeitos */
+@media (hover:none){
+  .btn-recurso:hover,.rec-card:hover,.ficha-btn:hover,.caso-btn:hover{
+    transform:none;filter:none;box-shadow:var(--sombra);
+  }
+  .btn-recurso:hover{border-left-color:var(--musgo);}
+  .btn-recurso.atividade:hover{border-left-color:var(--terracota);}
+  .btn-recurso:hover .br-ico{background:var(--musgo);}
+  .btn-recurso.atividade:hover .br-ico{background:var(--terracota);}
+  .rec-card:hover{border-top-color:var(--musgo);}
+  .acc-head:hover{background:var(--branco);}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+
+/* palavras longas (URLs, siglas) nao estouram a linha no celular */
+p,li,dd,dt,td,th,.br-txt,.rec-tit,.rec-sub,.txt{overflow-wrap:break-word;}
+.refs li{overflow-wrap:anywhere;}
+
+/* alvos de toque minimos */
+@media (max-width:820px){
+  .rec-card{min-height:64px;}
+  .sum-chips a{padding:12px 16px;}
+  .modal-fechar{min-width:40px;min-height:40px;}
+}
+
+/* telas largas: um respiro maior de leitura */
+@media (min-width:1200px){
+  :root{--medida:960px;}
+}
+
+/* ================= PROPOSTA DE REDAÇÃO ================= */
+.instrucoes{
+  background:var(--branco);border:1px solid var(--borda);border-left:6px solid var(--petroleo);
+  border-radius:var(--raio);padding:22px 26px;box-shadow:var(--sombra);margin-top:34px;
+}
+.instrucoes p:last-child{margin-bottom:0;}
+
+.motivador{
+  background:var(--branco);border:1px solid var(--borda);border-radius:var(--raio);
+  padding:18px 22px;margin:20px 0;box-shadow:var(--sombra);
+}
+.motivador .rot{
+  display:block;font-family:var(--serif-titulo);color:var(--terracota);
+  font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;
+  border-bottom:1px solid var(--areia-escura);padding-bottom:6px;
+}
+.motivador p:last-of-type{margin-bottom:0;}
+.motivador .fonte{
+  display:block;font-size:.8rem;color:var(--cinza);font-style:italic;
+  margin-top:10px;text-align:right;
+}
+
+.tema-box{
+  background:linear-gradient(158deg,#0c3334 0%,#12494a 55%,#1c6461 100%);
+  color:var(--areia);border-radius:var(--raio);padding:26px 28px;margin:26px 0;
+  box-shadow:0 6px 22px rgba(15,61,62,.28);position:relative;overflow:hidden;
+}
+.tema-box::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:4px;
+  background:linear-gradient(90deg,var(--terracota) 0%,var(--musgo) 55%,var(--petroleo-claro) 100%);
+}
+.tema-box .rot{
+  display:block;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;
+  color:#f0c9a8;margin-bottom:10px;
+}
+.tema-box .tema{
+  font-family:var(--serif-titulo);font-size:clamp(1.3rem,4.2vw,1.75rem);
+  line-height:1.25;margin:0;
+}
+
+.alerta{
+  background:#fdf3ef;border:1px solid var(--terracota-claro);border-left:5px solid var(--terracota);
+  border-radius:var(--raio);padding:16px 20px;margin:20px 0;
+}
+.alerta .rot{display:block;color:var(--terracota);font-weight:600;font-size:.82rem;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.alerta ul{margin:6px 0 0;padding-left:20px;}
+.alerta li{margin-bottom:6px;}
+.alerta p:last-child,.alerta ul:last-child{margin-bottom:0;}
+
+/* competências */
+.comp{counter-reset:none;}
+.comp .acc-head{padding-left:56px;}
+.comp .acc-head .cn{
+  position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;line-height:28px;text-align:center;border-radius:50%;
+  background:var(--petroleo);color:var(--areia);font-family:var(--serif-corpo);
+  font-size:.85rem;font-weight:600;
+}
+.comp .acc.aberto .acc-head .cn{background:var(--terracota);}
+
+/* modelo de intervenção */
+.intervencao{
+  background:var(--branco);border:1px solid var(--borda);border-top:5px solid var(--musgo);
+  border-radius:var(--raio);padding:20px 24px;margin:20px 0;box-shadow:var(--sombra);
+}
+.intervencao dl{margin:0;}
+.intervencao dt{
+  font-family:var(--serif-titulo);color:var(--musgo);font-size:.8rem;
+  letter-spacing:.1em;text-transform:uppercase;margin-top:14px;
+}
+.intervencao dt:first-child{margin-top:0;}
+.intervencao dd{margin:2px 0 0;color:#3a3a3a;}
+.intervencao .exemplo{
+  margin-top:18px;padding-top:16px;border-top:1px solid var(--areia-escura);
+  font-style:italic;color:#3a3a3a;
+}
+
+.checklist{list-style:none;padding:0;margin:18px 0;}
+.checklist li{
+  position:relative;padding:10px 14px 10px 40px;margin-bottom:8px;
+  background:var(--branco);border:1px solid var(--borda);border-radius:var(--raio);
+}
+.checklist li::before{
+  content:'\2610';position:absolute;left:14px;top:9px;
+  font-size:1.1rem;color:var(--terracota);
+}
+
+
+/* ================= ÁREA DE ESCRITA DIGITAL ================= */
+.envio{
+  --folha-w:718px;                 /* 60px + 640px de linha + 16px + 2px de borda */
+  background:var(--branco);border:1px solid var(--borda);border-top:5px solid var(--petroleo);
+  border-radius:var(--raio);padding:24px;box-shadow:var(--sombra);margin-top:24px;
+}
+/* tudo dentro do cartao compartilha a mesma largura da folha */
+.envio-campos,.folha-digital,.envio-barra{max-width:var(--folha-w);}
+
+.envio-campos{
+  display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px;
+}
+@media (max-width:620px){.envio-campos{grid-template-columns:1fr;gap:14px;}}
+
+.campo{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.campo-rot{
+  font-family:var(--serif-titulo);font-size:.74rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--petroleo);line-height:1.2;
+}
+.campo input{
+  font-family:var(--serif-corpo);font-size:1rem;padding:11px 14px;height:46px;
+  box-sizing:border-box;width:100%;
+  border:1px solid var(--borda);border-radius:6px;background:#fdfcf9;color:var(--grafite);
+  -webkit-user-select:text;user-select:text;
+}
+.campo input::placeholder{color:#a8a29a;}
+.campo input:focus{outline:3px solid var(--terracota);outline-offset:1px;border-color:var(--terracota);}
+
+.folha-digital{display:flex;flex-direction:column;gap:6px;}
+.folha-caixa{position:relative;}
+
+/* margem numerada: so aparece quando a linha na tela tem a largura da folha */
+.folha-num{
+  display:none;position:absolute;left:1px;top:1px;bottom:1px;width:44px;
+  overflow:hidden;pointer-events:none;background:#f5f1e7;
+  border-right:1px solid var(--areia-escura);border-radius:6px 0 0 6px;
+}
+.folha-num .fn-in{padding-top:13px;will-change:transform;}
+.folha-num span{
+  display:block;height:26px;line-height:26px;text-align:right;padding-right:9px;
+  font-family:var(--serif-corpo);font-size:11px;color:#a8a196;
+  font-variant-numeric:tabular-nums;
+}
+.folha-num span.atual{color:var(--terracota);font-weight:600;}
+.folha-num span.cheia{color:#6f6a60;}
+
+.linha-atual{
+  display:block;font-size:.78rem;color:var(--petroleo);margin-top:2px;
+  font-variant-numeric:tabular-nums;
+}
+#txtRedacao{
+  display:block;width:100%;box-sizing:border-box;
+  font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:26px;
+  padding:13px 16px;border:1px solid var(--borda);border-radius:6px;background:#fdfcf9;
+  color:var(--grafite);resize:vertical;min-height:520px;overflow-y:auto;
+  overflow-wrap:break-word;word-break:break-word;
+  -webkit-user-select:text;user-select:text;
+  background-image:repeating-linear-gradient(
+    to bottom,transparent 0,transparent 25px,var(--areia-escura) 25px,var(--areia-escura) 26px);
+  background-attachment:local;
+  background-origin:content-box;background-clip:content-box;
+}
+#txtRedacao:focus{outline:3px solid var(--terracota);outline-offset:1px;}
+#txtRedacao::placeholder{color:#a8a29a;font-style:italic;}
+
+@media (min-width:860px){
+  .folha-num{display:block;}
+  /* 25 linhas x 26px + 13px de recuo em cima e embaixo + 1px de borda de cada lado */
+  #txtRedacao{
+    padding-left:60px !important;
+    height:678px;min-height:678px;
+    overflow-y:hidden;resize:none;
+  }
+}
+
+
+.envio-barra{
+  display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+  margin-top:16px;padding-top:16px;border-top:1px solid var(--areia-escura);
+}
+.contador{font-size:.9rem;color:var(--cinza);}
+.contador b{font-family:var(--serif-titulo);color:var(--petroleo);font-size:1.05rem;}
+.contador.limite b{color:var(--terracota);}
+.contador .aviso{display:block;font-size:.78rem;margin-top:2px;}
+
+.btn-envio{
+  font-family:var(--serif-titulo);font-size:1rem;padding:13px 26px;min-height:48px;
+  background:var(--petroleo);color:var(--areia);border:0;border-radius:6px;cursor:pointer;
+  letter-spacing:.04em;transition:background .15s ease;
+}
+.btn-envio:hover{background:var(--petroleo-claro);}
+.btn-envio:disabled{background:#b9b3a6;cursor:not-allowed;}
+@media (hover:none){.btn-envio:hover{background:var(--petroleo);}}
+
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(14px);
+  background:var(--terracota);color:#fff;padding:12px 20px;border-radius:8px;
+  font-size:.92rem;box-shadow:0 8px 24px rgba(0,0,0,.28);z-index:950;
+  opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;
+  max-width:min(420px,calc(100vw - 32px));text-align:center;
+}
+.toast.ativo{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ---------- folha de envio (só na impressão) ---------- */
+#folhaEnvio{display:none;}
+#folhaEnvio .fe-cab{border-bottom:2pt solid #B4532A;padding-bottom:0.12cm;margin-bottom:0.22cm;}
+#folhaEnvio .fe-escola{
+  font-family:'Playfair Display',Georgia,serif;font-size:10pt;letter-spacing:.08em;
+  text-transform:uppercase;color:#0f3d3e;margin:0;line-height:1.25;
+}
+#folhaEnvio .fe-disc{font-size:8pt;color:#5d5d5d;margin:0.04cm 0 0;line-height:1.25;}
+#folhaEnvio .fe-tema{
+  font-family:'Playfair Display',Georgia,serif;font-size:11.5pt;color:#0f3d3e;
+  margin:0.22cm 0 0.16cm;line-height:1.25;
+}
+#folhaEnvio .fe-id{
+  display:flex;flex-wrap:wrap;gap:0.06cm 0.7cm;font-size:8.5pt;color:#2b2b2b;
+  margin:0 0 0.62cm;padding:0.14cm 0;
+  border-top:0.5pt solid #d8d0be;border-bottom:0.5pt solid #d8d0be;
+}
+#folhaEnvio .fe-id span{white-space:nowrap;}
+#folhaEnvio .fe-id b{color:#0f3d3e;}
+#folhaEnvio .fe-linhas{width:100%;margin:0;}
+#folhaEnvio .fe-l{
+  display:flex;align-items:flex-end;gap:0.25cm;
+  height:0.72cm;border-bottom:0.5pt solid #9a9a9a;
+  break-inside:avoid;page-break-inside:avoid;
+}
+#folhaEnvio .fe-n{
+  flex:0 0 0.7cm;text-align:right;font-size:7pt;color:#8a8a8a;line-height:0.72cm;
+}
+#folhaEnvio .fe-t{
+  flex:1 1 auto;font-family:'Source Serif 4',Georgia,serif;font-size:10.5pt;
+  line-height:0.64cm;white-space:pre;overflow:hidden;
+}
+#folhaEnvio .fe-rod{
+  margin-top:0.24cm;padding-top:0.12cm;border-top:0.5pt solid #d8d0be;
+  font-size:7pt;color:#5d5d5d;display:flex;justify-content:space-between;gap:0.6cm;
+}
+
+
+/* ---------- overlay de geracao do PDF ---------- */
+.pdf-overlay{
+  display:none;position:fixed;inset:0;z-index:960;
+  background:rgba(15,61,62,.72);align-items:center;justify-content:center;padding:20px;
+}
+.pdf-overlay.ativo{display:flex;}
+.pdf-cx{
+  background:var(--branco);border-radius:12px;padding:26px 30px;text-align:center;
+  max-width:320px;width:100%;box-shadow:0 14px 40px rgba(0,0,0,.3);
+}
+.pdf-cx h4{margin:0 0 6px;color:var(--petroleo);font-size:1.15rem;}
+.pdf-cx p{margin:0 0 14px;color:var(--cinza);font-size:.86rem;}
+.pdf-barra{background:var(--areia-escura);border-radius:6px;overflow:hidden;height:8px;}
+.pdf-barra span{display:block;height:100%;width:0;background:var(--terracota);transition:width .25s ease;}
+
+/* ================= AJUSTES DE TELA: CELULAR E PC ================= */
+
+/* --- tablets e telas medias --- */
+@media (max-width:820px){
+  .instrucoes{padding:18px 18px 20px;}
+  .motivador{padding:16px 18px;}
+  .intervencao{padding:16px 18px;}
+  .envio{padding:18px;}
+  .tema-box{padding:22px 20px;}
+  .alerta{padding:14px 16px;}
+  .comp .acc-head{padding-left:52px;}
+  .comp .acc-head .cn{left:13px;width:26px;height:26px;line-height:26px;font-size:.8rem;}
+  .checklist li{padding:10px 12px 10px 36px;}
+  .checklist li::before{left:12px;}
+  .intervencao .exemplo{font-size:.95rem;}
+}
+
+/* --- celulares --- */
+@media (max-width:620px){
+  .instrucoes,.motivador,.intervencao,.envio{padding:16px 14px;}
+  .tema-box{padding:20px 16px;}
+  .motivador .rot{font-size:.76rem;}
+  .motivador .fonte{text-align:left;}
+
+  /* a folha ocupa a tela toda, sem desperdicio lateral */
+  #txtRedacao{
+    min-height:clamp(320px,58vh,520px);
+    padding:12px 13px;font-size:17px;
+  }
+  .campo input{font-size:17px;}   /* 17px evita o zoom automatico do iOS ao focar */
+
+  /* barra de acoes empilhada, botao de largura total */
+  .envio-barra{flex-direction:column;align-items:stretch;gap:12px;}
+  .envio-barra .contador{text-align:center;}
+  .btn-envio{width:100%;}
+
+  .intervencao dt{font-size:.75rem;}
+  .checklist li{font-size:.95rem;}
+}
+
+/* --- telas largas: a folha respira junto com o texto --- */
+@media (min-width:1200px){
+  .motivador{padding:20px 26px;}
+  .instrucoes{padding:24px 30px;}
+}
+
+/* --- barra de aviso acima da area segura do aparelho --- */
+.toast{bottom:calc(24px + env(safe-area-inset-bottom));}
+
+/* --- impressao normal da pagina (nao a folha de envio) --- */
+@media print{
+  .envio,.toast,.btn-envio{display:none !important;}
+  .instrucoes,.motivador,.alerta,.intervencao,.tema-box,.checklist li,.acc{
+    break-inside:avoid;page-break-inside:avoid;
+  }
+  .tema-box{
+    background:none !important;color:#000 !important;
+    border:2px solid #0f3d3e;box-shadow:none;
+  }
+  .tema-box::after{display:none;}
+  .tema-box .rot{color:#B4532A !important;}
+  .tema-box .tema{color:#0f3d3e !important;}
+  .motivador,.instrucoes,.intervencao{box-shadow:none;}
+  .comp .acc-head .cn{background:#0f3d3e !important;color:#fff !important;}
+}
+
+@media print{
+  @page{size:A4 portrait;margin:1.2cm 1.4cm;}
+  html,body{height:auto !important;}
+  body.modo-envio > *{display:none !important;}
+  body.modo-envio #folhaEnvio{display:block !important;}
+  body.modo-envio{background:#fff;}
+  /* a folha precisa caber em uma única página */
+  #folhaEnvio{break-inside:avoid;page-break-inside:avoid;break-after:avoid;page-break-after:avoid;}
+  #folhaEnvio .fe-rod{break-before:avoid;page-break-before:avoid;}
+}
+
+</style>
+</head>
+<body>
+
+<div class="progresso"><span id="barraProgresso"></span></div>
+
+<div class="topbar">
+ <div class="topbar-inner">
+  <span class="tb-marca">CERO</span>
+  <div class="sumario-box" id="sumBox">
+    <button class="sum-toggle" id="sumToggle" type="button" aria-expanded="false" aria-controls="sumChips">
+      <span class="sum-ico">&#9776;</span>
+      <span class="sum-rot">Roteiro da atividade</span>
+      <span class="sum-cont" id="sumCount">0</span>
+      <span class="sum-seta" aria-hidden="true">&#9662;</span>
+    </button>
+    <div class="sum-chips" id="sumChips"></div>
+  </div>
+  <span class="tb-sep"></span>
+  <span class="tb-disc">Hist&oacute;ria &middot; 3&ordf; s&eacute;rie EM</span>
+  <span class="tb-hab">EM13CHS101 &middot; EM13CHS102</span>
+ </div>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Atividade de an&aacute;lise comparada &middot; coment&aacute;rio cr&iacute;tico</p>
+    <h1>Quem controla o passado?</h1>
+    <p class="sub">Dois textos leem <em>1984</em>, de George Orwell, e chegam a alvos diferentes.
+      Uma reportagem de agosto de 2026 mostra a mesma disputa acontecendo fora da fic&ccedil;&atilde;o,
+      dentro do Congresso brasileiro. Sua tarefa n&atilde;o &eacute; escolher um time: &eacute; comparar as
+      tr&ecirc;s narrativas e sustentar uma posi&ccedil;&atilde;o.</p>
+    <ul class="hero-tags">
+      <li>Orwell, 1949</li>
+      <li>Novil&iacute;ngua</li>
+      <li>Minist&eacute;rio da Verdade</li>
+      <li>Edi&ccedil;&otilde;es C&acirc;mara, 2026</li>
+      <li>Compet&ecirc;ncias gerais da BNCC</li>
+    </ul>
+    <p class="meta">Col&eacute;gio Estadual Rodolfo de Oliveira &middot; 2026 &middot; Prof. Claudio</p>
+  </div>
+</header>
+
+<main>
+
+  <section class="instrucoes">
+    <span class="hab">EM13CHS101 e EM13CHS102 &middot; Hist&oacute;ria &middot; 3&ordf; s&eacute;rie do Ensino M&eacute;dio</span>
+    <p class="lead">Voc&ecirc; vai ler tr&ecirc;s textos que tratam do mesmo problema &mdash; o poder de decidir
+      como o passado ser&aacute; contado &mdash; a partir de lugares e inten&ccedil;&otilde;es diferentes. Dois
+      s&atilde;o textos de opini&atilde;o; um &eacute; reportagem. A diferen&ccedil;a entre eles faz parte do
+      que se pede analisar.</p>
+    <p><strong>Instru&ccedil;&atilde;o.</strong> A partir da leitura dos tr&ecirc;s textos e dos conhecimentos
+      constru&iacute;dos ao longo do curso, redija um <strong>coment&aacute;rio cr&iacute;tico</strong> de
+      <strong>15 a 25 linhas</strong>, em l&iacute;ngua portuguesa formal, no qual voc&ecirc; compare as
+      narrativas apresentadas, aponte converg&ecirc;ncias e diverg&ecirc;ncias entre elas e assuma uma
+      posi&ccedil;&atilde;o fundamentada sobre a quest&atilde;o proposta. Atribua cada afirma&ccedil;&atilde;o a
+      quem a fez e sustente seu ponto de vista em fatos verific&aacute;veis.</p>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false">O que ser&aacute; avaliado</button>
+      <div class="acc-body">
+        <ul>
+          <li>Compreens&atilde;o correta do que cada texto sustenta (sem inventar posi&ccedil;&otilde;es que ele n&atilde;o defende).</li>
+          <li>Distin&ccedil;&atilde;o entre g&ecirc;neros: opini&atilde;o assinada e reportagem n&atilde;o t&ecirc;m o mesmo estatuto.</li>
+          <li>Compara&ccedil;&atilde;o efetiva &mdash; ao menos uma converg&ecirc;ncia e uma diverg&ecirc;ncia reais entre os textos.</li>
+          <li>Posicionamento pr&oacute;prio, explicitado e sustentado em fato datado ou documento citado.</li>
+          <li>Uso das compet&ecirc;ncias gerais da BNCC indicadas na se&ccedil;&atilde;o 3.</li>
+          <li>Respeito &agrave; posi&ccedil;&atilde;o criticada: reconstitu&iacute;-la antes de refut&aacute;-la.</li>
+        </ul>
+        <p><strong>Zera a atividade:</strong> c&oacute;pia dos textos sem produ&ccedil;&atilde;o pr&oacute;pria,
+          fuga completa &agrave; quest&atilde;o, ofensa a pessoas ou grupos e texto com menos de 10 linhas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 1 ================= -->
+  <section>
+    <h2 class="secao" id="t1" data-sum="Os tr&ecirc;s textos"><span class="num">1</span>Os tr&ecirc;s textos</h2>
+
+    <p class="lead">Abaixo est&atilde;o resumos dos tr&ecirc;s textos, com a fonte completa. Os resumos servem
+      para a compara&ccedil;&atilde;o em sala; se puder, leia os originais nos endere&ccedil;os indicados &mdash;
+      o texto integral sempre diz mais do que o resumo.</p>
+
+    <div class="motivador">
+      <span class="rot">Texto I &middot; artigo de opini&atilde;o</span>
+      <p><strong>Releitura de <em>1984</em> como diagn&oacute;stico do Brasil atual.</strong> O autor, economista,
+        conta que releu o romance de Orwell mais de quarenta anos depois da primeira leitura e passou a us&aacute;-lo
+        como chave para interpretar o pa&iacute;s de hoje. Recapitula os mecanismos descritos na obra &mdash; a
+        vigil&acirc;ncia permanente, o Minist&eacute;rio da Verdade que reescreve o passado e a Novil&iacute;ngua,
+        que suprime e redefine palavras &mdash; e sustenta que o Brasil teria avan&ccedil;ado nessa
+        dire&ccedil;&atilde;o.</p>
+      <p>Segundo o artigo, &oacute;rg&atilde;os ligados ao Executivo e ao Judici&aacute;rio passaram a monitorar e
+        restringir a circula&ccedil;&atilde;o de conte&uacute;do nas redes sociais; o passado teria sido reescrito
+        para atribuir ao governo anterior os problemas do presente; e o &ldquo;politicamente correto&rdquo;
+        cumpriria a fun&ccedil;&atilde;o da Novil&iacute;ngua, servindo para rotular advers&aacute;rios sem
+        necessidade de explica&ccedil;&atilde;o. O exemplo central do autor &eacute; o vocabul&aacute;rio empregado
+        para descrever os atos de 8 de janeiro de 2023: ele contesta a classifica&ccedil;&atilde;o dos epis&oacute;dios
+        como golpe, defende que cada acusado seja julgado por ato concreto e n&atilde;o pela narrativa, e discute a
+        proposta de anistia em tramita&ccedil;&atilde;o no Congresso.</p>
+      <span class="fonte">SOLIMEO, Marcel. <em>Relendo &ldquo;1984&rdquo; de George Orwell</em>. Instituto
+        Atl&acirc;ntico, se&ccedil;&atilde;o Opini&atilde;o, 10 fev. 2025. O pr&oacute;prio site registra que o artigo
+        n&atilde;o representa necessariamente a posi&ccedil;&atilde;o da institui&ccedil;&atilde;o.
+        Dispon&iacute;vel em: atlantico.org.br/relendo-1984-de-george-orwell/</span>
+    </div>
+
+    <div class="motivador">
+      <span class="rot">Texto II &middot; resenha de cinema</span>
+      <p><strong>A obra como an&aacute;lise das rela&ccedil;&otilde;es de poder sobre a informa&ccedil;&atilde;o.</strong>
+        A resenha trata do filme <em>1984</em>, de Michael Radford, adapta&ccedil;&atilde;o do romance de Orwell, e
+        parte da frase que abre o filme &mdash; &ldquo;quem controla o passado controla o futuro; quem controla o
+        presente controla o passado&rdquo; &mdash; para afirmar que ela sintetiza as rela&ccedil;&otilde;es de poder
+        na sociedade: quem governa no presente seleciona o que ser&aacute; lembrado e, assim, dirige o futuro.</p>
+      <p>O texto percorre a trajet&oacute;ria de Winston Smith, funcion&aacute;rio do Minist&eacute;rio da Verdade
+        encarregado de filtrar not&iacute;cias, ao mesmo tempo v&iacute;tima e produtor de informa&ccedil;&atilde;o
+        distorcida. Descreve a vigil&acirc;ncia por telas espalhadas por toda parte, as guerras permanentes contra
+        inimigos que a popula&ccedil;&atilde;o mal identifica, o &oacute;dio ritualizado ao inimigo p&uacute;blico e a
+        revis&atilde;o cont&iacute;nua do dicion&aacute;rio da Novil&iacute;ngua, cujo objetivo &eacute; eliminar as
+        palavras capazes de nomear a insatisfa&ccedil;&atilde;o. Ao final, desloca o argumento para o presente: diante
+        da expans&atilde;o de c&acirc;meras, telas e dispositivos conectados, sustenta que controlar a
+        informa&ccedil;&atilde;o continua sendo controlar as massas, e encerra perguntando at&eacute; que ponto somos
+        protagonistas da pr&oacute;pria hist&oacute;ria. N&atilde;o nomeia governos nem institui&ccedil;&otilde;es
+        brasileiras.</p>
+      <span class="fonte">FLAITT, Ricardo. <em>1984: o dom&iacute;nio sobre a hist&oacute;ria</em>. Brasil 247,
+        editoria de Cultura, 25 ago. 2016. Dispon&iacute;vel em:
+        brasil247.com/cultura/1984-o-dominio-sobre-a-historia/</span>
+    </div>
+
+    <div class="motivador">
+      <span class="rot">Texto III &middot; reportagem</span>
+      <p><strong>A disputa pelo vocabul&aacute;rio fora da fic&ccedil;&atilde;o.</strong> A reportagem informa que uma
+        comiss&atilde;o da C&acirc;mara dos Deputados vetou o uso da express&atilde;o &ldquo;ditadura militar&rdquo;
+        em um livro sobre a Independ&ecirc;ncia do Brasil que seria publicado pelas Edi&ccedil;&otilde;es C&acirc;mara,
+        editora da pr&oacute;pria Casa, e prop&ocirc;s a supress&atilde;o de frases e par&aacute;grafos inteiros da
+        obra. O livro re&uacute;ne textos publicados entre 2022 e 2023 no Blog das Independ&ecirc;ncias, projeto ligado
+        &agrave; Associa&ccedil;&atilde;o Nacional de Hist&oacute;ria (ANPUH), &agrave; revista acad&ecirc;mica
+        <em>Almanack</em> e &agrave; Sociedade de Estudos do Oitocentos. As mudan&ccedil;as partiram da
+        Comiss&atilde;o Especial dos 200 anos, criada para as comemora&ccedil;&otilde;es do bicenten&aacute;rio do
+        Parlamento e presidida pelo deputado Lafayette de Andrada (PL-MG).</p>
+      <p>H&aacute; apontamentos em pelo menos treze trechos sugerindo a troca de &ldquo;ditadura&rdquo; por termos como
+        &ldquo;regime&rdquo; ou &ldquo;governo militar&rdquo;, al&eacute;m de tentativas de suavizar passagens sobre
+        tortura. Os cortes propostos alcan&ccedil;aram tamb&eacute;m trechos sobre direitos ind&iacute;genas, uma
+        compara&ccedil;&atilde;o entre Brasil e Haiti e uma refer&ecirc;ncia ao samba-enredo da Mangueira de 2019. Em
+        carta aberta, os organizadores classificaram as interven&ccedil;&otilde;es como censura e como tentativa de
+        amenizar interpreta&ccedil;&otilde;es sobre o passado; uma das organizadoras afirma que houve tamb&eacute;m
+        desqualifica&ccedil;&atilde;o profissional dos pesquisadores envolvidos. Procurada, a C&acirc;mara dos
+        Deputados informou que discutiu ajustes nos textos, mas que n&atilde;o publicar&aacute; o livro.</p>
+      <span class="fonte">PITOMBO, Jo&atilde;o Pedro. <em>C&acirc;mara veta termo ditadura militar e prop&otilde;e
+        cortes em livro sobre Independ&ecirc;ncia</em>. Folha de S.Paulo / Folhapress, Pol&iacute;tica, 14 ago. 2026.</span>
+    </div>
+
+    <div class="alerta">
+      <span class="rot">Antes de comparar, classifique</span>
+      <p>Os Textos I e II s&atilde;o <strong>opini&atilde;o assinada</strong>: o autor tem o direito de defender uma
+        tese, e voc&ecirc; tem o dever de perguntar em que ele a apoia. O Texto III &eacute;
+        <strong>reportagem</strong>: apura fatos, cita documento e ouve o outro lado. Isso n&atilde;o torna a
+        reportagem neutra nem os artigos inv&aacute;lidos &mdash; torna diferente o tipo de exig&ecirc;ncia que se pode
+        fazer a cada um.</p>
+    </div>
+  </section>
+
+  <!-- ================= 2 ================= -->
+  <section>
+    <h2 class="secao" id="t2" data-sum="A quest&atilde;o"><span class="num">2</span>A quest&atilde;o e o que comparar</h2>
+
+    <div class="tema-box">
+      <span class="rot">Quest&atilde;o do coment&aacute;rio</span>
+      <p class="tema">Em uma democracia, quem pode decidir como o passado ser&aacute; nomeado &mdash; e o que est&aacute;
+        em jogo quando uma palavra &eacute; substitu&iacute;da por outra?</p>
+    </div>
+
+    <p>A quest&atilde;o n&atilde;o pergunta se Orwell acertou nem qual dos autores voc&ecirc; prefere. Pergunta por
+      um <strong>crit&eacute;rio</strong>: se trocar &ldquo;ditadura&rdquo; por &ldquo;regime&rdquo; muda o sentido do
+      que se afirma sobre o passado, quem tem legitimidade para fazer essa troca, em que situa&ccedil;&atilde;o e sob
+      qual procedimento. Um crit&eacute;rio s&oacute; vale se voc&ecirc; estiver disposto a aplic&aacute;-lo tamb&eacute;m
+      quando o resultado n&atilde;o lhe agradar.</p>
+
+    <div class="tabela-wrap">
+      <table>
+        <caption>As tr&ecirc;s narrativas lado a lado</caption>
+        <thead>
+          <tr><th>Crit&eacute;rio</th><th>Texto I</th><th>Texto II</th><th>Texto III</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>G&ecirc;nero e data</td>
+            <td>Artigo de opini&atilde;o assinado, 2025</td>
+            <td>Resenha de cinema em editoria de cultura, 2016</td>
+            <td>Reportagem com o outro lado, 2026</td>
+          </tr>
+          <tr>
+            <td>Para que serve <em>1984</em> no texto</td>
+            <td>Como grade de leitura do Brasil atual</td>
+            <td>Como objeto principal da an&aacute;lise, estendido ao presente digital</td>
+            <td>N&atilde;o aparece: o caso &eacute; emp&iacute;rico e documentado</td>
+          </tr>
+          <tr>
+            <td>Onde localiza a amea&ccedil;a</td>
+            <td>No Executivo e no Judici&aacute;rio brasileiros</td>
+            <td>Na concentra&ccedil;&atilde;o do controle da informa&ccedil;&atilde;o, sem nomear governos</td>
+            <td>Em uma comiss&atilde;o parlamentar que revisa o vocabul&aacute;rio de uma obra acad&ecirc;mica</td>
+          </tr>
+          <tr>
+            <td>Que evid&ecirc;ncia apresenta</td>
+            <td>Interpreta&ccedil;&atilde;o do autor sobre decis&otilde;es e epis&oacute;dios recentes</td>
+            <td>Cenas, falas e recursos narrativos do filme</td>
+            <td>Carta aberta dos organizadores, contagem de trechos apontados, resposta da C&acirc;mara</td>
+          </tr>
+          <tr>
+            <td>O que espera do leitor</td>
+            <td>Ades&atilde;o a um diagn&oacute;stico pol&iacute;tico</td>
+            <td>Reflex&atilde;o, encerrada em pergunta aberta</td>
+            <td>Julgamento formado a partir dos fatos relatados</td>
+          </tr>
+          <tr>
+            <td>O que fica fora</td>
+            <td>Argumentos de quem discorda do diagn&oacute;stico</td>
+            <td>Casos concretos, brasileiros ou n&atilde;o</td>
+            <td>An&aacute;lise do significado hist&oacute;rico do epis&oacute;dio</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alerta">
+      <span class="rot">A converg&ecirc;ncia que quase todo mundo perde</span>
+      <p>&Eacute; f&aacute;cil notar que os Textos I e II apontam para lados opostos do espectro pol&iacute;tico. O
+        mais interessante &eacute; que os tr&ecirc;s <strong>partilham a mesma premissa</strong>: quem controla o
+        vocabul&aacute;rio com que se descreve o passado exerce poder sobre o presente. Divergem sobre <em>quem</em>
+        est&aacute; exercendo esse poder. Um coment&aacute;rio que s&oacute; registre a diferen&ccedil;a de lado
+        parou na metade do caminho.</p>
+    </div>
+  </section>
+
+  <!-- ================= 3 ================= -->
+  <section>
+    <h2 class="secao" id="t3" data-sum="Compet&ecirc;ncias da BNCC"><span class="num">3</span>As compet&ecirc;ncias gerais da BNCC no seu coment&aacute;rio</h2>
+
+    <p class="lead">As dez compet&ecirc;ncias gerais valem para toda a Educa&ccedil;&atilde;o B&aacute;sica. Seis delas
+      s&atilde;o diretamente mobilizadas aqui. Abra cada uma para ver o que ela cobra <em>deste</em>
+      coment&aacute;rio &mdash; e n&atilde;o de um texto qualquer.</p>
+
+    <div class="comp">
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false"><span class="cn">1</span>Conhecimento</button>
+      <div class="acc-body">
+        <p>Utilizar conhecimentos historicamente constru&iacute;dos para entender a realidade e continuar aprendendo.</p>
+        <p><strong>Aqui:</strong> <em>1984</em> foi publicado em 1949 como al&eacute;goria dos regimes totalit&aacute;rios
+          que Orwell via se consolidar. Trazer isso para o coment&aacute;rio impede dois erros comuns: tratar o romance
+          como profecia sobre o Brasil e tratar a censura como novidade. O pa&iacute;s tem hist&oacute;ria pr&oacute;pria
+          no assunto &mdash; o Departamento de Imprensa e Propaganda no Estado Novo, a censura pr&eacute;via depois do
+          AI-5, e a Comiss&atilde;o Nacional da Verdade, criada pela Lei n&ordm; 12.528/2011 para apurar as
+          viola&ccedil;&otilde;es do per&iacute;odo. Conhecimento aqui &eacute; ferramenta de an&aacute;lise, n&atilde;o
+          enfeite de par&aacute;grafo.</p>
+      </div>
+    </div>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false"><span class="cn">2</span>Pensamento cr&iacute;tico e cient&iacute;fico</button>
+      <div class="acc-body">
+        <p>Investigar causas, elaborar e testar hip&oacute;teses, formular e resolver problemas com base em
+          conhecimentos das diferentes &aacute;reas.</p>
+        <p><strong>Aqui:</strong> para cada texto, separe <strong>afirma&ccedil;&atilde;o</strong> de
+          <strong>evid&ecirc;ncia</strong>. Pergunte, sem simpatia nem antipatia pr&eacute;via: o que este autor
+          considera prova? Um artigo que classifica uma institui&ccedil;&atilde;o como censora precisa mostrar qual ato
+          concreto sustenta a classifica&ccedil;&atilde;o; uma reportagem que noticia a supress&atilde;o de trechos
+          precisa exibir o documento. Aplique a mesma exig&ecirc;ncia aos tr&ecirc;s &mdash; inclusive &agrave;quele de
+          que voc&ecirc; gostou.</p>
+      </div>
+    </div>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false"><span class="cn">4</span>Comunica&ccedil;&atilde;o</button>
+      <div class="acc-body">
+        <p>Utilizar diferentes linguagens para se expressar e partilhar informa&ccedil;&otilde;es, experi&ecirc;ncias,
+          ideias e sentimentos, produzindo sentidos que levem ao entendimento m&uacute;tuo.</p>
+        <p><strong>Aqui:</strong> voc&ecirc; est&aacute; diante de tr&ecirc;s linguagens sobre o mesmo problema &mdash;
+          fic&ccedil;&atilde;o liter&aacute;ria, cr&iacute;tica de cinema e jornalismo de apura&ccedil;&atilde;o. Cada
+          uma mostra algo que as outras n&atilde;o alcan&ccedil;am: a fic&ccedil;&atilde;o d&aacute; forma ao mecanismo,
+          a cr&iacute;tica interpreta, a reportagem documenta. Diga no seu texto o que cada linguagem permite ver &mdash;
+          e o que ela n&atilde;o pode provar sozinha.</p>
+      </div>
+    </div>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false"><span class="cn">7</span>Argumenta&ccedil;&atilde;o</button>
+      <div class="acc-body">
+        <p>Argumentar com base em fatos, dados e informa&ccedil;&otilde;es confi&aacute;veis, para formular, negociar e
+          defender ideias, pontos de vista e decis&otilde;es comuns que respeitem os direitos humanos.</p>
+        <p><strong>Aqui:</strong> esta &eacute; a compet&ecirc;ncia central da atividade. Posicionar-se n&atilde;o
+          &eacute; declarar de que lado voc&ecirc; est&aacute;; &eacute; enunciar uma tese e sustent&aacute;-la com algo
+          que outra pessoa possa conferir: um documento, uma data, um trecho citado, um n&uacute;mero. Adjetivo
+          n&atilde;o &eacute; argumento. E a informa&ccedil;&atilde;o precisa ser confi&aacute;vel: entre o que um autor
+          <em>afirma</em> e o que ele <em>demonstra</em> existe uma dist&acirc;ncia que seu coment&aacute;rio deve
+          medir.</p>
+      </div>
+    </div>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false"><span class="cn">9</span>Empatia e coopera&ccedil;&atilde;o</button>
+      <div class="acc-body">
+        <p>Exercitar empatia, di&aacute;logo, resolu&ccedil;&atilde;o de conflitos e coopera&ccedil;&atilde;o,
+          fazendo-se respeitar e promovendo o respeito ao outro, com acolhimento e valoriza&ccedil;&atilde;o da
+          diversidade.</p>
+        <p><strong>Aqui:</strong> a regra pr&aacute;tica &eacute; simples e dif&iacute;cil &mdash; reconstitua a
+          posi&ccedil;&atilde;o que voc&ecirc; vai criticar na sua vers&atilde;o mais forte, e s&oacute; ent&atilde;o
+          critique. Se o resumo que voc&ecirc; faz de um dos textos fizesse o pr&oacute;prio autor dizer &ldquo;n&atilde;o
+          &eacute; isso que eu disse&rdquo;, voc&ecirc; n&atilde;o refutou o argumento: refutou uma caricatura. Isso
+          n&atilde;o &eacute; delicadeza, &eacute; rigor.</p>
+      </div>
+    </div>
+
+    <div class="acc">
+      <button class="acc-head" type="button" aria-expanded="false"><span class="cn">10</span>Responsabilidade e cidadania</button>
+      <div class="acc-body">
+        <p>Agir pessoal e coletivamente com autonomia, responsabilidade, flexibilidade, resili&ecirc;ncia e
+          determina&ccedil;&atilde;o, tomando decis&otilde;es com base em princ&iacute;pios &eacute;ticos,
+          democr&aacute;ticos, inclusivos, sustent&aacute;veis e solid&aacute;rios.</p>
+        <p><strong>Aqui:</strong> feche o coment&aacute;rio dizendo o que deveria valer como regra &mdash; quem decide,
+          por qual procedimento, com que transpar&ecirc;ncia. Uma regra formulada de modo a beneficiar apenas um lado
+          n&atilde;o &eacute; uma regra democr&aacute;tica; &eacute; uma vantagem disfar&ccedil;ada de princ&iacute;pio.
+          Teste a sua: ela continuaria justa se quem estivesse no poder fosse o grupo oposto?</p>
+      </div>
+    </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 4 ================= -->
+  <section>
+    <h2 class="secao" id="t4" data-sum="Construindo o coment&aacute;rio"><span class="num">4</span>Construindo o coment&aacute;rio</h2>
+
+    <h3>Um esqueleto poss&iacute;vel</h3>
+    <ol class="roteiro">
+      <li><strong>Abertura.</strong> Enuncie a quest&atilde;o em uma frase, sem pre&acirc;mbulo gen&eacute;rico.
+        &ldquo;Desde os prim&oacute;rdios, a humanidade&hellip;&rdquo; desperdi&ccedil;a duas das suas vinte e cinco
+        linhas.</li>
+      <li><strong>Reconstitui&ccedil;&atilde;o.</strong> Em duas ou tr&ecirc;s linhas, diga o que cada texto sustenta,
+        com atribui&ccedil;&atilde;o expl&iacute;cita: &ldquo;o artigo do Instituto Atl&acirc;ntico defende que&hellip;&rdquo;,
+        &ldquo;a reportagem informa que&hellip;&rdquo;.</li>
+      <li><strong>Compara&ccedil;&atilde;o.</strong> Aponte uma converg&ecirc;ncia real e uma diverg&ecirc;ncia real.
+        A converg&ecirc;ncia costuma estar na premissa; a diverg&ecirc;ncia, no alvo e no tipo de evid&ecirc;ncia.</li>
+      <li><strong>Posicionamento.</strong> Assuma a sua posi&ccedil;&atilde;o e sustente-a com o fato mais
+        verific&aacute;vel de que voc&ecirc; disp&otilde;e. Aqui voc&ecirc; escreve, e n&atilde;o s&oacute; relata.</li>
+      <li><strong>Fechamento.</strong> Formule o crit&eacute;rio ou a regra que voc&ecirc; defende, aplic&aacute;vel a
+        qualquer poder que edite o vocabul&aacute;rio p&uacute;blico.</li>
+    </ol>
+
+    <h3>Anatomia de um posicionamento defens&aacute;vel</h3>
+    <div class="intervencao">
+      <dl>
+        <dt>Afirma&ccedil;&atilde;o</dt><dd>a tese que voc&ecirc; assume, em uma frase, sem &ldquo;talvez&rdquo;</dd>
+        <dt>Fundamento</dt><dd>o fato, documento ou data que a sustenta e que qualquer leitor pode conferir</dd>
+        <dt>Contraponto</dt><dd>a objei&ccedil;&atilde;o mais forte &agrave; sua tese, enunciada com honestidade</dd>
+        <dt>Crit&eacute;rio</dt><dd>a regra geral que voc&ecirc; extrai do caso e aplicaria a todos os lados</dd>
+        <dt>Consequ&ecirc;ncia</dt><dd>o que mudaria na pr&aacute;tica se o crit&eacute;rio fosse adotado</dd>
+      </dl>
+      <p class="exemplo">Redigido: &ldquo;Os tr&ecirc;s textos concordam que nomear o passado &eacute; um ato de poder,
+        mas divergem sobre quem o exerce. Entre eles, a reportagem oferece o caso mais verific&aacute;vel: existe uma
+        carta aberta dos organizadores, uma contagem de trechos apontados e uma resposta da pr&oacute;pria C&acirc;mara.
+        Poder-se-ia alegar que revisar um texto encomendado &eacute; prerrogativa de quem o publica &mdash; e, em
+        parte, &eacute;. Ainda assim, penso que o crit&eacute;rio n&atilde;o pode variar conforme quem faz a
+        interven&ccedil;&atilde;o: se substituir uma palavra altera o que a obra afirma sobre a hist&oacute;ria, o mesmo
+        teste vale para qualquer poder que edite o vocabul&aacute;rio p&uacute;blico, inclusive aquele que hoje me
+        parece estar certo. Na pr&aacute;tica, isso significa que a revis&atilde;o de obra acad&ecirc;mica deveria
+        caber a pareceristas da &aacute;rea, com registro p&uacute;blico das altera&ccedil;&otilde;es recusadas.&rdquo;</p>
+    </div>
+
+    <div class="alerta">
+      <span class="rot">Armadilhas desta atividade</span>
+      <ul>
+        <li><strong>Resumir sem comparar.</strong> Tr&ecirc;s par&aacute;grafos de resumo em fila n&atilde;o s&atilde;o
+          uma compara&ccedil;&atilde;o. A compara&ccedil;&atilde;o come&ccedil;a quando voc&ecirc; p&otilde;e os textos
+          para responder &agrave; mesma pergunta.</li>
+        <li><strong>Comentar o autor em vez do argumento.</strong> De onde algu&eacute;m escreve ajuda a entender o
+          texto, mas n&atilde;o o refuta. Argumento se responde com argumento.</li>
+        <li><strong>Usar &ldquo;orwelliano&rdquo; como adjetivo.</strong> Se a palavra aparecer, mostre qual mecanismo
+          do romance &mdash; vigil&acirc;ncia, reescrita do passado, Novil&iacute;ngua &mdash; se aplica ao caso, e
+          onde a analogia falha.</li>
+        <li><strong>Igualar os g&ecirc;neros.</strong> Cobrar imparcialidade de um artigo de opini&atilde;o &eacute;
+          t&atilde;o equivocado quanto aceitar uma reportagem sem verificar se ela ouviu o outro lado.</li>
+        <li><strong>Escolher o lado antes de ler.</strong> Se voc&ecirc; j&aacute; sabia a conclus&atilde;o antes do
+          primeiro par&aacute;grafo, os textos n&atilde;o entraram na conta.</li>
+        <li><strong>Anacronismo.</strong> Orwell escreveu em 1949 sobre o que via em 1949. Usar o romance como
+          previs&atilde;o do Brasil de 2026 transforma an&aacute;lise em profecia.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= 5 ================= -->
+  <section>
+    <h2 class="secao" id="t5" data-sum="Repert&oacute;rio"><span class="num">5</span>Repert&oacute;rio dispon&iacute;vel</h2>
+
+    <p class="lead">Escolha dois ou tr&ecirc;s e use-os bem; citar tudo produz vitrine, n&atilde;o argumento. Cada
+      item abaixo &eacute; datado e nomeado &mdash; e s&oacute; vale se estiver a servi&ccedil;o de uma afirma&ccedil;&atilde;o
+      sua.</p>
+
+    <div class="tabela-wrap">
+      <table>
+        <caption>Repert&oacute;rio por finalidade argumentativa</caption>
+        <thead>
+          <tr><th>Serve para argumentar que&hellip;</th><th>Repert&oacute;rio</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>nomear &eacute; um ato de poder</td>
+            <td>A Novil&iacute;ngua e o Minist&eacute;rio da Verdade em <em>1984</em>, de George Orwell (1949); a frase
+              sobre o controle do passado, retomada nos Textos I e II</td>
+          </tr>
+          <tr>
+            <td>a censura tem hist&oacute;ria pr&oacute;pria no Brasil</td>
+            <td>Departamento de Imprensa e Propaganda (DIP) no Estado Novo, 1939-1945; censura pr&eacute;via a
+              imprensa, teatro e m&uacute;sica ap&oacute;s o AI-5, 1968</td>
+          </tr>
+          <tr>
+            <td>o Estado brasileiro j&aacute; se pronunciou oficialmente sobre o per&iacute;odo</td>
+            <td>Lei n&ordm; 12.528/2011, que criou a Comiss&atilde;o Nacional da Verdade; relat&oacute;rio final
+              entregue em 2014</td>
+          </tr>
+          <tr>
+            <td>hist&oacute;ria e mem&oacute;ria n&atilde;o s&atilde;o a mesma coisa</td>
+            <td>Mem&oacute;ria social como constru&ccedil;&atilde;o do presente; conhecimento hist&oacute;rico como
+              resultado de m&eacute;todo, fonte e cr&iacute;tica documental</td>
+          </tr>
+          <tr>
+            <td>o conhecimento hist&oacute;rico tem regras de valida&ccedil;&atilde;o</td>
+            <td>Revis&atilde;o por pares e associa&ccedil;&otilde;es cient&iacute;ficas da &aacute;rea, como a ANPUH;
+              o papel do parecerista especializado</td>
+          </tr>
+          <tr>
+            <td>o suporte tamb&eacute;m est&aacute; em disputa</td>
+            <td>Editora p&uacute;blica ligada ao Legislativo; comiss&atilde;o parlamentar de comemora&ccedil;&atilde;o
+              atuando como inst&acirc;ncia de revis&atilde;o editorial</td>
+          </tr>
+          <tr>
+            <td>a linguagem circula por outros meios al&eacute;m do livro</td>
+            <td>O samba-enredo como narrativa hist&oacute;rica de massa; a compara&ccedil;&atilde;o entre
+              trajet&oacute;rias nacionais como recurso interpretativo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Antes de entregar</h3>
+    <ul class="checklist">
+      <li>Meu coment&aacute;rio diz o que cada texto sustenta &mdash; ou s&oacute; o que eu penso?</li>
+      <li>Atribu&iacute; cada afirma&ccedil;&atilde;o a quem a fez?</li>
+      <li>Distingui claramente o que &eacute; reportagem do que &eacute; opini&atilde;o?</li>
+      <li>Apontei ao menos uma converg&ecirc;ncia e uma diverg&ecirc;ncia entre os textos?</li>
+      <li>Minha posi&ccedil;&atilde;o est&aacute; sustentada em fato verific&aacute;vel, e n&atilde;o em adjetivo?</li>
+      <li>Enunciei a objei&ccedil;&atilde;o mais forte &agrave; minha pr&oacute;pria tese?</li>
+      <li>O crit&eacute;rio que defendo continuaria valendo se aplicado a quem eu apoio?</li>
+      <li>O texto tem entre 15 e 25 linhas e est&aacute; em l&iacute;ngua portuguesa formal?</li>
+    </ul>
+  </section>
+
+  <!-- ================= 6 ================= -->
+  <section>
+    <h2 class="secao" id="t6" data-sum="Escrever e enviar"><span class="num">6</span>Escreva seu coment&aacute;rio</h2>
+
+    <p class="lead">Digite abaixo o texto definitivo. O espa&ccedil;o tem <strong>25 linhas</strong> &mdash; ao chegar
+      ao limite, o campo para de aceitar texto. Ao finalizar, o sistema gera uma folha para salvar em PDF, com o seu
+      nome, a turma e a data e hora do envio.</p>
+
+    <div class="alerta">
+      <span class="rot">Aten&ccedil;&atilde;o</span>
+      <p>Copiar e colar est&aacute; desativado nesta &aacute;rea. O texto precisa ser digitado por voc&ecirc;.
+        Consulte os tr&ecirc;s textos acima quantas vezes quiser, mas escreva com suas pr&oacute;prias palavras
+        &mdash; c&oacute;pia sem produ&ccedil;&atilde;o pr&oacute;pria zera a atividade.</p>
+    </div>
+
+    <div class="envio">
+      <div class="envio-campos">
+        <div class="campo">
+          <label class="campo-rot" for="campoNome">Nome completo</label>
+          <input type="text" id="campoNome" autocomplete="off" spellcheck="false" placeholder="Seu nome">
+        </div>
+        <div class="campo">
+          <label class="campo-rot" for="campoTurma">Turma</label>
+          <input type="text" id="campoTurma" autocomplete="off" spellcheck="false" placeholder="Ex.: 3&ordm; A">
+        </div>
+      </div>
+
+      <div class="folha-digital">
+        <label class="campo-rot" for="txtRedacao">Coment&aacute;rio cr&iacute;tico</label>
+        <div class="folha-caixa">
+          <div class="folha-num" id="folhaNum" aria-hidden="true"><div class="fn-in" id="folhaNumIn"></div></div>
+          <textarea id="txtRedacao" rows="17" spellcheck="true"
+            placeholder="Comece a escrever aqui&hellip;"
+            aria-describedby="contadorLinhas"></textarea>
+        </div>
+      </div>
+
+      <div class="envio-barra">
+        <p class="contador" id="contadorLinhas">
+          <b><span id="numLinhas">0</span> de 25</b> linhas
+          <span class="aviso" id="avisoLinhas">M&iacute;nimo de 10 linhas para envio.</span>
+          <span class="linha-atual" id="linhaAtual"></span>
+        </p>
+        <button class="btn-envio" id="btnEnviar" type="button" disabled>Finalizar e salvar em PDF</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p><strong>Col&eacute;gio Estadual Rodolfo de Oliveira &middot; CERO &middot; 2026</strong><br>
+  Hist&oacute;ria &mdash; 3&ordf; s&eacute;rie do Ensino M&eacute;dio &middot; Habilidades EM13CHS101 e EM13CHS102 (BNCC / DC-GO)<br>
+  Compet&ecirc;ncias gerais da BNCC 1, 2, 4, 7, 9 e 10 &middot; Atividade elaborada pelo Prof. Claudio</p>
+</footer>
+
+<div id="folhaEnvio" aria-hidden="true">
+  <div class="fe-cab">
+    <p class="fe-escola">Col&eacute;gio Estadual Rodolfo de Oliveira &middot; CERO &middot; 2026</p>
+    <p class="fe-disc">Hist&oacute;ria &middot; 3&ordf; s&eacute;rie do Ensino M&eacute;dio &middot; EM13CHS101 / EM13CHS102 &middot; Prof. Claudio</p>
+  </div>
+  <p class="fe-tema">Coment&aacute;rio cr&iacute;tico &mdash; Quem controla o passado? Narrativas em disputa sobre o poder de nomear a hist&oacute;ria</p>
+  <div class="fe-id">
+    <span><b>Aluno(a):</b> <span id="feNome"></span></span>
+    <span><b>Turma:</b> <span id="feTurma"></span></span>
+    <span><b>Envio:</b> <span id="feData"></span></span>
+    <span><b>Linhas:</b> <span id="feLinhas"></span></span>
+  </div>
+  <div class="fe-linhas" id="feLinhasBox"></div>
+  <div class="fe-rod">
+    <span>C&oacute;digo de verifica&ccedil;&atilde;o: <strong id="feCodigo"></strong></span>
+    <span>Texto digitado na p&aacute;gina da atividade &middot; cola desativada</span>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="pdf-overlay" id="pdfOverlay" aria-hidden="true">
+  <div class="pdf-cx">
+    <h4>Gerando o PDF&hellip;</h4>
+    <p id="pdfMsg">Preparando a folha.</p>
+    <div class="pdf-barra"><span id="pdfProg"></span></div>
+  </div>
+</div>
+
+<script>
+
+(function(){
+  var d = document, raiz = d.documentElement;
+
+  var topbar = d.querySelector('.topbar');
+  function medirTopbar(){
+    if(!topbar) return;
+    raiz.style.setProperty('--topbar-h', Math.round(topbar.getBoundingClientRect().height) + 'px');
+  }
+  medirTopbar();
+  window.addEventListener('resize', medirTopbar);
+  window.addEventListener('orientationchange', medirTopbar);
+  if(d.fonts && d.fonts.ready){ d.fonts.ready.then(medirTopbar); }
+
+  function marcarTabelas(){
+    d.querySelectorAll('.tabela-wrap').forEach(function(w){
+      w.classList.toggle('tem-scroll', w.scrollWidth > w.clientWidth + 2);
+    });
+  }
+  window.addEventListener('resize', marcarTabelas);
+  window.addEventListener('load', marcarTabelas);
+  marcarTabelas();
+
+  d.querySelectorAll('.acc-head').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var aberto = btn.parentElement.classList.toggle('aberto');
+      btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      if(aberto) setTimeout(marcarTabelas, 0);
+    });
+  });
+
+  function escapar(t){
+    return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  var chips = d.getElementById('sumChips');
+  var box   = d.getElementById('sumBox');
+  var bt    = d.getElementById('sumToggle');
+
+  function fecharTrilha(){
+    if(!box || !box.classList.contains('aberto')) return;
+    box.classList.remove('aberto');
+    bt.setAttribute('aria-expanded','false');
+  }
+
+  if(chips){
+    d.querySelectorAll('h2.secao[id]').forEach(function(h){
+      var n = h.querySelector('.num');
+      var texto = h.dataset.sum;
+      if(!texto){
+        texto = h.textContent.replace(n ? n.textContent : '', '').trim();
+      }
+      var a = d.createElement('a');
+      a.href = '#' + h.id;
+      a.innerHTML = '<b>' + (n ? n.textContent : '') + '</b>' + escapar(texto);
+      a.style.setProperty('--i', chips.children.length);
+      chips.appendChild(a);
+    });
+    var cont = d.getElementById('sumCount');
+    if(cont) cont.textContent = chips.children.length;
+
+    if(bt && box){
+      bt.addEventListener('click', function(e){
+        e.stopPropagation();
+        var aberto = box.classList.toggle('aberto');
+        bt.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+        if(aberto) medirTopbar();
+      });
+      chips.addEventListener('click', function(e){ if(e.target.closest('a')) fecharTrilha(); });
+      d.addEventListener('click', function(e){
+        if(box.classList.contains('aberto') && !box.contains(e.target)) fecharTrilha();
+      });
+      window.addEventListener('resize', fecharTrilha);
+    }
+  }
+
+  d.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' || e.key === 'Esc') fecharTrilha();
+  });
+
+  var barra = d.getElementById('barraProgresso');
+  if(barra){
+    var pedido = false;
+    function atualizarProgresso(){
+      pedido = false;
+      var alt = raiz.scrollHeight - window.innerHeight;
+      var pct = alt > 0 ? (window.pageYOffset / alt) * 100 : 0;
+      barra.style.width = Math.min(100, Math.max(0, pct)) + '%';
+    }
+    function agendar(){
+      if(pedido) return;
+      pedido = true;
+      window.requestAnimationFrame(atualizarProgresso);
+    }
+    window.addEventListener('scroll', agendar, {passive:true});
+    window.addEventListener('resize', agendar);
+    window.addEventListener('load', agendar);
+    atualizarProgresso();
+  }
+})();
+
+
+/* ================= ÁREA DE ESCRITA, ANTICOLA E EXPORTAÇÃO ================= */
+(function(){
+  var d = document;
+  var ta = d.getElementById('txtRedacao');
+  if(!ta) return;
+
+  var MAX = 25, MIN = 10;
+  var LARGURA_CANON = 640;                                   /* px: largura da linha na folha */
+  var FONTE_CANON = '17px "Source Serif 4", Georgia, serif';
+
+  var nome  = d.getElementById('campoNome');
+  var turma = d.getElementById('campoTurma');
+  var btn   = d.getElementById('btnEnviar');
+  var elN   = d.getElementById('numLinhas');
+  var elAv  = d.getElementById('avisoLinhas');
+  var elLa  = d.getElementById('linhaAtual');
+  var numIn = d.getElementById('folhaNumIn');
+  var numBx = d.getElementById('folhaNum');
+  var cont  = d.getElementById('contadorLinhas');
+  var toast = d.getElementById('toast');
+
+  /* ---------------------------------------------------------------
+     A quebra de linha e feita pelo proprio navegador, num espelho
+     invisivel com a largura exata da folha. Assim a linha contada, a
+     linha vista na tela e a linha do PDF sao sempre a mesma coisa.
+     --------------------------------------------------------------- */
+  var espelho = d.createElement('div');
+  espelho.setAttribute('aria-hidden', 'true');
+  espelho.style.cssText =
+    'position:absolute;left:-99999px;top:0;visibility:hidden;' +
+    'width:' + LARGURA_CANON + 'px;padding:0;margin:0;border:0;' +
+    'font:' + FONTE_CANON + ';line-height:26px;' +
+    'white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;';
+  d.body.appendChild(espelho);
+
+  var faixa = d.createRange();
+  var EPS = 2;
+
+  /* topos das linhas ocupadas pelos primeiros `m` caracteres */
+  function toposAte(no, m){
+    if(m <= 0) return [];
+    faixa.setStart(no, 0);
+    faixa.setEnd(no, m);
+    var rects = faixa.getClientRects(), tops = [];
+    for(var i = 0; i < rects.length; i++){
+      var t = rects[i].top;
+      if(!tops.length || Math.abs(t - tops[tops.length - 1]) > EPS) tops.push(t);
+    }
+    return tops;
+  }
+
+  function quebrarParagrafo(par){
+    if(par === '') return [''];
+    espelho.textContent = par;
+    var no = espelho.firstChild;
+    if(!no) return [par];
+
+    var tops = toposAte(no, par.length);
+    if(tops.length <= 1) return [par];
+
+    var saida = [], ini = 0;
+    for(var k = 1; k < tops.length; k++){
+      var alvo = tops[k];
+      var lo = ini + 1, hi = par.length, m = par.length;
+      while(lo <= hi){                       /* primeiro caractere da linha k */
+        var mid = (lo + hi) >> 1;
+        var lr = toposAte(no, mid);
+        var ultimo = lr.length ? lr[lr.length - 1] : tops[0];
+        if(ultimo >= alvo - EPS){ m = mid; hi = mid - 1; } else { lo = mid + 1; }
+      }
+      var corte = Math.max(ini, m - 1);
+      saida.push(par.slice(ini, corte).replace(/\s+$/, ''));
+      ini = corte;
+      while(/\s/.test(par.charAt(ini) || '')) ini++;   /* linha nao comeca com espaco */
+    }
+    saida.push(par.slice(ini).replace(/\s+$/, ''));
+    return saida;
+  }
+
+  /* duas memorias: o texto inteiro e o trecho ate o cursor.
+     Sem isso, uma chamada invalidaria a outra a cada tecla. */
+  var memoria = [{t:null, l:null}, {t:null, l:null}];
+
+  function quebrarCom(txt, slot){
+    txt = String(txt);
+    var m = memoria[slot];
+    if(txt === m.t) return m.l;
+    var linhas = [];
+    txt.split('\n').forEach(function(par){
+      linhas = linhas.concat(quebrarParagrafo(par));
+    });
+    m.t = txt; m.l = linhas;
+    return linhas;
+  }
+  function quebrar(txt){ return quebrarCom(txt, 0); }
+
+  /* a fonte da web muda a medida: recalcula quando ela terminar de carregar */
+  if(d.fonts && d.fonts.ready){
+    d.fonts.ready.then(function(){
+      memoria[0].t = null; memoria[1].t = null;
+      atualizar();
+    });
+  }
+
+  var ultimoBom = '';
+
+  /* ---- margem numerada de 1 a 25 ---- */
+  var celulas = [];
+  (function montarNumeros(){
+    if(!numIn) return;
+    for(var i = 1; i <= MAX; i++){
+      var sp = d.createElement('span');
+      sp.textContent = i;
+      numIn.appendChild(sp);
+      celulas.push(sp);
+    }
+  })();
+
+  function sincronizarRolagem(){
+    if(numIn) numIn.style.transform = 'translateY(' + (-ta.scrollTop) + 'px)';
+  }
+  ta.addEventListener('scroll', sincronizarRolagem, {passive:true});
+
+  function linhaDoCursor(){
+    var pos = ta.selectionStart;
+    if(pos == null) return 0;
+    if(pos === 0) return 1;
+    return quebrarCom(ta.value.slice(0, pos), 1).length;
+  }
+
+  function pintarNumeros(usadas, atual){
+    for(var i = 0; i < celulas.length; i++){
+      celulas[i].classList.toggle('cheia', i < usadas);
+      celulas[i].classList.toggle('atual', (i + 1) === atual);
+    }
+  }
+
+  function avisar(msg){
+    if(!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('ativo');
+    clearTimeout(avisar._t);
+    avisar._t = setTimeout(function(){ toast.classList.remove('ativo'); }, 2600);
+  }
+
+  function atualizar(){
+    var linhas = quebrar(ta.value);
+    var n = ta.value.trim() === '' ? 0 : linhas.length;
+    elN.textContent = n;
+    cont.classList.toggle('limite', n >= MAX);
+
+    if(n === 0)            elAv.textContent = 'M\u00ednimo de 8 linhas para envio.';
+    else if(n < MIN)       elAv.textContent = 'Faltam ' + (MIN - n) + ' linha(s) para o m\u00ednimo.';
+    else if(n >= MAX)      elAv.textContent = 'Limite de 25 linhas atingido.';
+    else                   elAv.textContent = 'Restam ' + (MAX - n) + ' linha(s).';
+
+    var atual = d.activeElement === ta ? Math.min(linhaDoCursor(), MAX) : 0;
+    pintarNumeros(n, atual);
+    if(elLa) elLa.textContent = atual ? ('Cursor na linha ' + atual + '.') : '';
+    sincronizarRolagem();
+
+    var ok = n >= MIN && nome.value.trim().length >= 3 && turma.value.trim().length >= 1;
+    btn.disabled = !ok;
+    return n;
+  }
+
+  ['click','keyup','select','focus','blur'].forEach(function(ev){
+    ta.addEventListener(ev, atualizar);
+  });
+
+  /* ---- limite de 25 linhas ---- */
+  ta.addEventListener('input', function(){
+    if(quebrar(ta.value).length > MAX){
+      var pos = ta.selectionStart;
+      ta.value = ultimoBom;
+      try{ ta.setSelectionRange(Math.min(pos, ultimoBom.length), Math.min(pos, ultimoBom.length)); }catch(e){}
+      avisar('Limite de 25 linhas atingido.');
+    } else {
+      ultimoBom = ta.value;
+    }
+    atualizar();
+  });
+
+  [nome, turma].forEach(function(c){ c.addEventListener('input', atualizar); });
+
+  /* ---- anticola ---- */
+  function bloquear(e){
+    e.preventDefault();
+    avisar('Copiar e colar est\u00e1 desativado nesta atividade.');
+    return false;
+  }
+  ['paste','copy','cut','drop','dragstart','dragover','contextmenu'].forEach(function(ev){
+    ta.addEventListener(ev, bloquear);
+  });
+
+  ta.addEventListener('beforeinput', function(e){
+    if(e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop' ||
+       e.inputType === 'insertFromPasteAsQuotation'){
+      e.preventDefault();
+      avisar('Copiar e colar est\u00e1 desativado nesta atividade.');
+    }
+  });
+
+  /* painel de \u00e1rea de transfer\u00eancia do Android insere blocos sem disparar beforeinput */
+  var anterior = '';
+  ta.addEventListener('input', function(e){
+    if(e.inputType === 'insertReplacementText'){ anterior = ta.value; return; }  /* autocorre\u00e7\u00e3o: liberado */
+    var delta = ta.value.length - anterior.length;
+    if(delta >= 25){
+      ta.value = anterior;
+      ultimoBom = anterior;
+      avisar('Inser\u00e7\u00e3o de bloco de texto bloqueada.');
+      atualizar();
+      return;
+    }
+    anterior = ta.value;
+  });
+
+  /* ---- c\u00f3digo de verifica\u00e7\u00e3o ---- */
+  function codigo(str){
+    var h = 5381;
+    for(var i = 0; i < str.length; i++){ h = ((h << 5) + h + str.charCodeAt(i)) >>> 0; }
+    return ('000000' + h.toString(36).toUpperCase()).slice(-7);
+  }
+
+  function agora(){
+    var dt = new Date();
+    function z(v){ return (v < 10 ? '0' : '') + v; }
+    return z(dt.getDate()) + '/' + z(dt.getMonth()+1) + '/' + dt.getFullYear() +
+           ' \u00e0s ' + z(dt.getHours()) + ':' + z(dt.getMinutes());
+  }
+
+  /* ---- montar a folha e imprimir ---- */
+  /* ================= EXPORTACAO EM PDF (1 PAGINA) ================= */
+  /* Renderiza uma folha propria fora da tela em largura fixa e a converte
+     em imagem: o resultado e identico no celular e no PC, e nao depende do
+     dialogo de impressao do navegador. */
+
+  var overlay = d.getElementById('pdfOverlay');
+  var pdfProg = d.getElementById('pdfProg');
+  var pdfMsg  = d.getElementById('pdfMsg');
+
+  function progresso(pct, msg){
+    if(pdfProg) pdfProg.style.width = pct + '%';
+    if(pdfMsg && msg) pdfMsg.textContent = msg;
+  }
+  function abrirOverlay(){
+    if(!overlay) return;
+    overlay.classList.add('ativo');
+    overlay.setAttribute('aria-hidden','false');
+    progresso(0, 'Preparando a folha.');
+  }
+  function fecharOverlay(){
+    if(!overlay) return;
+    overlay.classList.remove('ativo');
+    overlay.setAttribute('aria-hidden','true');
+  }
+  function esperar(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+  function esc(t){
+    return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  /* folha de exportacao: medidas em px, independentes do CSS de impressao */
+  function montarFolha(dados){
+    var L = '';
+    for(var i = 0; i < MAX; i++){
+      L += '<div style="display:flex;align-items:flex-end;height:26px;' +
+           'border-bottom:1px solid #9a9a9a;">' +
+             '<span style="flex:0 0 26px;text-align:right;padding-right:9px;font-size:10px;' +
+             'line-height:26px;color:#8a8a8a;font-family:Georgia,serif;">' + (i+1) + '</span>' +
+             '<span style="flex:1 1 auto;font-family:\'Source Serif 4\',Georgia,serif;' +
+             'font-size:15px;line-height:24px;white-space:pre;overflow:hidden;color:#2b2b2b;">' +
+             esc(dados.linhas[i] || '') + '</span>' +
+           '</div>';
+    }
+
+    var el = d.createElement('div');
+    el.style.cssText = 'position:absolute;left:-99999px;top:0;width:700px;' +
+      'background:#ffffff;padding:26px 28px;box-sizing:border-box;';
+    el.innerHTML =
+      '<div style="border-bottom:2px solid #B4532A;padding-bottom:6px;margin-bottom:10px;">' +
+        '<div style="font-family:\'Playfair Display\',Georgia,serif;font-size:13px;' +
+        'letter-spacing:1.4px;text-transform:uppercase;color:#0f3d3e;">' +
+        'Col&eacute;gio Estadual Rodolfo de Oliveira &middot; CERO &middot; 2026</div>' +
+        '<div style="font-size:11px;color:#5d5d5d;margin-top:2px;font-family:Georgia,serif;">' +
+        'Hist&oacute;ria &middot; 3&ordf; s&eacute;rie do Ensino M&eacute;dio &middot; EM13CHS101 / EM13CHS102 &middot; Prof. Claudio</div>' +
+      '</div>' +
+      '<div style="font-family:\'Playfair Display\',Georgia,serif;font-size:15px;color:#0f3d3e;' +
+      'line-height:1.3;margin:0 0 10px;">' + esc(dados.tema) + '</div>' +
+      '<div style="font-size:11.5px;color:#2b2b2b;font-family:Georgia,serif;padding:7px 0;' +
+      'border-top:1px solid #d8d0be;border-bottom:1px solid #d8d0be;margin-bottom:16px;">' +
+        '<span style="display:inline-block;margin-right:20px;">' +
+          '<b style="color:#0f3d3e;">Aluno(a):</b> ' + esc(dados.nome) + '</span>' +
+        '<span style="display:inline-block;margin-right:20px;white-space:nowrap;">' +
+          '<b style="color:#0f3d3e;">Turma:</b> ' + esc(dados.turma) + '</span>' +
+        '<span style="display:inline-block;margin-right:20px;white-space:nowrap;">' +
+          '<b style="color:#0f3d3e;">Envio:</b> ' + esc(dados.carimbo) + '</span>' +
+        '<span style="display:inline-block;white-space:nowrap;">' +
+          '<b style="color:#0f3d3e;">Linhas:</b> ' + dados.usadas + ' de 25</span>' +
+      '</div>' +
+      '<div>' + L + '</div>' +
+      '<div style="margin-top:12px;padding-top:7px;border-top:1px solid #d8d0be;' +
+      'display:flex;justify-content:space-between;gap:16px;font-size:10px;color:#5d5d5d;' +
+      'font-family:Georgia,serif;">' +
+        '<span>C&oacute;digo de verifica&ccedil;&atilde;o: <b>' + esc(dados.cod) + '</b></span>' +
+        '<span>Texto digitado na p&aacute;gina da atividade &middot; cola desativada</span>' +
+      '</div>';
+    return el;
+  }
+
+  function nomeArquivo(dados){
+    var base = 'Comentario - ' + dados.nome + ' - ' + dados.turma;
+    return base.replace(/[\\/:*?"<>|]/g, '-').replace(/\s+/g, ' ').trim() + '.pdf';
+  }
+
+  /* plano B: se as bibliotecas nao carregarem, usa a impressao do navegador */
+  function exportarPorImpressao(dados){
+    d.getElementById('feNome').textContent   = dados.nome;
+    d.getElementById('feTurma').textContent  = dados.turma;
+    d.getElementById('feData').textContent   = dados.carimbo;
+    d.getElementById('feLinhas').textContent = dados.usadas + ' de 25';
+    d.getElementById('feCodigo').textContent = dados.cod;
+    var cx = d.getElementById('feLinhasBox');
+    cx.innerHTML = '';
+    for(var i = 0; i < MAX; i++){
+      var l = d.createElement('div'); l.className = 'fe-l';
+      var n = d.createElement('span'); n.className = 'fe-n'; n.textContent = (i + 1);
+      var t = d.createElement('span'); t.className = 'fe-t'; t.textContent = dados.linhas[i] || '';
+      l.appendChild(n); l.appendChild(t); cx.appendChild(l);
+    }
+    d.body.classList.add('modo-envio');
+    setTimeout(function(){
+      window.print();
+      setTimeout(function(){ d.body.classList.remove('modo-envio'); }, 1200);
+    }, 80);
+  }
+  window.addEventListener('afterprint', function(){ d.body.classList.remove('modo-envio'); });
+
+  btn.addEventListener('click', function(){
+    var linhas = quebrar(ta.value);
+    if(linhas.length < MIN){ avisar('Escreva pelo menos 10 linhas.'); return; }
+
+    var carimbo = agora();
+    var dados = {
+      nome:   nome.value.trim(),
+      turma:  turma.value.trim(),
+      carimbo:carimbo,
+      usadas: linhas.length,
+      linhas: linhas,
+      tema:   'Coment\u00e1rio cr\u00edtico \u2014 Quem controla o passado? Narrativas em disputa sobre o poder de nomear a hist\u00f3ria',
+      cod:    codigo(nome.value.trim() + '|' + turma.value.trim() + '|' + carimbo + '|' + ta.value)
+    };
+
+    if(!window.html2canvas || !window.jspdf){
+      avisar('Gerando pela impress\u00e3o do navegador.');
+      exportarPorImpressao(dados);
+      return;
+    }
+
+    btn.disabled = true;
+    abrirOverlay();
+
+    var folha = montarFolha(dados);
+    d.body.appendChild(folha);
+
+    var prontas = (d.fonts && d.fonts.ready) ? d.fonts.ready : Promise.resolve();
+
+    prontas.then(function(){
+      progresso(20, 'Desenhando a folha.');
+      return esperar(120);
+    }).then(function(){
+      return window.html2canvas(folha, {
+        scale: 2, backgroundColor: '#ffffff', logging: false,
+        windowWidth: 900, scrollX: 0, scrollY: 0
+      });
+    }).then(function(canvas){
+      progresso(70, 'Montando o PDF.');
+      var jsPDF = window.jspdf.jsPDF;
+      var pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      var PW = pdf.internal.pageSize.getWidth();
+      var PH = pdf.internal.pageSize.getHeight();
+      var M  = 12;
+      var maxW = PW - M * 2, maxH = PH - M * 2;
+
+      /* encaixa a folha inteira em uma unica pagina */
+      var escala = Math.min(maxW / canvas.width, maxH / canvas.height);
+      var w = canvas.width * escala, h = canvas.height * escala;
+      var x = (PW - w) / 2, y = M;
+
+      pdf.addImage(canvas.toDataURL('image/jpeg', 0.94), 'JPEG', x, y, w, h);
+      progresso(95, 'Salvando.');
+      pdf.save(nomeArquivo(dados));
+      return esperar(300);
+    }).then(function(){
+      progresso(100, 'Pronto.');
+      return esperar(300);
+    })['catch'](function(err){
+      avisar('N\u00e3o foi poss\u00edvel gerar o arquivo. Tentando pela impress\u00e3o.');
+      exportarPorImpressao(dados);
+    }).then(function(){
+      if(folha.parentNode) folha.parentNode.removeChild(folha);
+      fecharOverlay();
+      btn.disabled = false;
+      atualizar();
+    });
+  });
+
+  atualizar();
+})();
+
+</script>
+</body>
+</html>
